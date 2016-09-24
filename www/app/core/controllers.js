@@ -20,6 +20,7 @@
         'module.view.commits',
         'module.view.likes',
         'module.view.comments',
+        'module.view.search',
         'module.view.match',
         'module.view.cost',
         'module.view.createPlan',

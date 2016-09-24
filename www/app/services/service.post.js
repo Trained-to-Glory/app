@@ -23,8 +23,30 @@ angular.module('service.post', [])
               });
         };
 
+        this.getUserPlans = function (userId,plansId) {
+            var plans = (plansId) ? firebase.database().ref(['accounts', userId , plansId].join('/'))  : firebase.database().ref('accounts');
+            return plans.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
         this.getAppointments = function (appointmentsId) {
             var appointments = (appointmentsId) ? firebase.database().ref('appointments/' + appointmentsId) : firebase.database().ref('appointments');
+            return appointments.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
+        this.getUserAppointments = function (appointmentsId) {
+            var appointments = (appointmentsId) ? firebase.database().ref(['accounts', userId , appointmentsId].join('/')) : firebase.database().ref('accounts');
             return appointments.once('value').then(function (snapshot) {
                   var currentObj = snapshot.val();
                   if (currentObj) {
@@ -64,7 +86,7 @@ angular.module('service.post', [])
        // Write the new post's data simultaneously in the posts list and the user's post list.
          var updates = {};
          updates['/posts/' + postsKey] = obj;
-         updates['/accounts/' + userId + '/' + postsKey] = obj;
+         updates['/accounts/' + userId + '/posts/' + postsKey] = obj;
 
          return firebase.database().ref().update(updates);
         };
@@ -94,9 +116,31 @@ angular.module('service.post', [])
            // Write the new post's data simultaneously in the posts list and the user's post list.
              var updates = {};
              updates['/plans/' + postsKey] = obj;
-             updates['/accounts/' + userId + '/' + postsKey] = obj;
+             updates['/accounts/' + userId +'/plans/' + postsKey] = obj;
 
              return firebase.database().ref().update(updates);
+        };
+
+        this.updatePlan = function (data, planId) {
+            var plans = firebase.database().ref('plans/' + planId);
+            return plans.once('value').then(function (snapshot) {
+                var currentObj = snapshot.val();
+                if (currentObj) {
+                    var obj = {
+                        "description": data.description ? data.description : currentObj.description,
+                        "title": data.title ? data.title : currentObj.title,
+                        "photo": data.photo ? data.photo : currentObj.photo,
+                        "notes": data.notes ? data.notes : currentObj.notes,
+                        "time": data.time ? data.time : currentObj.time,
+                        "postType": data.postType ? data.postType : currentObj.postType,
+                        "created": data.created ? data.created : currentObj.created,
+                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
+                        "createdBy": data.createdBy ? data.createdBy : currentObj.createdBy
+                    };
+                    return posts.update(obj);
+                }
+                return null;
+            });
         };
 
         this.createAppointment = function (data) {
@@ -126,7 +170,7 @@ angular.module('service.post', [])
            // Write the new post's data simultaneously in the posts list and the user's post list.
              var updates = {};
              updates['/appointments/' + postsKey] = obj;
-             updates['/accounts/' + userId + '/' + postsKey] = obj;
+             updates['/accounts/' + userId + '/appointments/' + postsKey] = obj;
 
              return firebase.database().ref().update(updates);
         };
@@ -237,8 +281,8 @@ angular.module('service.post', [])
             return this.getPlans();
         };
 
-        this.getCalendar = function () {
-            return this.getAppointments();
+        this.getUserCalendar = function () {
+            return this.getUserAppointments();
         };
 
         this.getRandomObject = function (arr) {

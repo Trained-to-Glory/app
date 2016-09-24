@@ -4,16 +4,16 @@ angular.module('module.view.createPlan', [])
 		console.log($stateParams);
 		$scope.postId = $stateParams.post;
 
-		$scope.createEvent = function() {
+		$scope.createPlan = function() {
 			var $inputs = $('.event-form .event__input input');
 			var data = {};
 			$inputs.map( function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
-			data.postType = 'event';
+			data.postType = 'plan';
 			data.photo = $scope.photo;
-			var key = postService.create(data);
-			$state.go('tabs.news');
+			var key = postService.createPlan(data);
+			$state.go('tabs.sentPlans');
 		};
 
 		if($stateParams.post){
@@ -28,17 +28,17 @@ angular.module('module.view.createPlan', [])
 			});
 		}
 
-		$scope.updateEvent = function() {
+		$scope.updatePlan = function() {
 			var $inputs = $('.event-form .event__input input');
 			var data = {};
 			$inputs.map(function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
 			$scope.postId = $stateParams.post;
-			data.postType = 'event';
+			data.postType = 'plan';
 			data.photo = $scope.photo;
-			var key = postService.update(data,$scope.postId);
-			$state.go('tabs.news');
+			var key = postService.updatePlan(data,$scope.postId);
+			$state.go('tabs.sentPlan');
 			console.log('hit update');
 		};
 

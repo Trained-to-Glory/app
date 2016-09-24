@@ -27,7 +27,7 @@
                             <i class="icon ion-ios-person-outline"></i>
                             Partners
                         </a>
-                        <a class="item" menu-toggle ui-sref="tabs.sentPlans">
+                        <a class="item" menu-toggle ui-sref="tabs.sentPlans({user:key})">
                             <i class="icon ion-ios-list-outline"></i>
                             Plans
                         </a>
@@ -42,7 +42,7 @@
                         <a class="item item-avatar" nav-clear style="padding-left: 79px;padding-top:13px;">
                             <img ng-src="{{ profile.userPhoto }}" ui-sref="tabs.account">
 
-                            <p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<i class="icon ion-ios-location-outline" style="display:block;color: blue"> Orlando</i></p>
+                            <p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>
                         </a>
                     </ul>
                 </ion-content>

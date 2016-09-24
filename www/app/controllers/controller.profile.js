@@ -7,27 +7,26 @@ angular.module('module.view.profile', [])
   };
 
 
-	usersService.get().then(function(results) {
-		//create a local object so we can create the datastructure we want
-		//so we can use it to show/hide, toggle ui items
-		 var contacts = {
-		 		items: results
-		 };
-		 for(var id in contacts.items){
-		 	//check to see if there is a like on this post
-			engagementService.partnered({category:'partners', categoryId:id, itemId: $localStorage.account.userId}).then(function(partnered){
-				contacts.items.partnered = partnered;
-			});
-		 	engagementService.totalPartners({category:'partners', categoryId: $localStorage.account.userId}).then(function(totalPartners){
-		 		contacts.items[id].totalPartners = totalPartners;
-				console.log(totalPartners);
-
-		 	});
-		 }
-	 	//make it available to the directive to officially show/hide, toggle
-		 $scope.contacts = contacts;
-		 console.log($scope.contacts.userPartners);
-	});
+	// usersService.getPartners().then(function(results) {
+	// 	//create a local object so we can create the datastructure we want
+	// 	//so we can use it to show/hide, toggle ui items
+	// 	 var contacts = {
+	// 	 		items: results
+	// 	 };
+	// 	 for(var id in contacts.items){
+	// 	 	//check to see if there is a like on this post
+	// 		engagementService.partnered({category:'partners', categoryId:id, itemId: $localStorage.account.userId}).then(function(partnered){
+	// 			contacts.items.partnered = partnered;
+	// 		});
+	// 	 	engagementService.totalPartners({category:'partners', categoryId: $localStorage.account.userId}).then(function(totalPartners){
+	// 	 		contacts.items[id].totalPartners = totalPartners;
+	// 			console.log(totalPartners);
+	//
+	// 	 	});
+	// 	 }
+	//  	//make it available to the directive to officially show/hide, toggle
+	// 	 $scope.contacts = contacts;
+	// });
 
 	usersService.getUserPost().then(function(results) {
 		//create a local object so we can create the datastructure we want
@@ -36,11 +35,32 @@ angular.module('module.view.profile', [])
 		 console.log($scope.userPosts);
 	});
 
-	usersService.getUserCommits().then(function(results) {
+	usersService.getUserTotalPartners($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
-		 $scope.userCommits = results[$localStorage.account.userId];
+		 $scope.userPartners = results;
+		 console.log($scope.userPartners);
+	});
+
+	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
+		//create a local object so we can create the datastructure we want
+		//so we can use it to show/hide, toggle ui items
+		 $scope.userCommits = results;
 		 console.log($scope.userCommits);
+	});
+
+	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
+		//create a local object so we can create the datastructure we want
+		//so we can use it to show/hide, toggle ui items
+		 $scope.userTotalCommits = results;
+		 console.log($scope.userTotalCommits);
+	});
+
+	usersService.getUserTotalPost($localStorage.account.userId).then(function(results) {
+		//create a local object so we can create the datastructure we want
+		//so we can use it to show/hide, toggle ui items
+		 $scope.userTotalPost = results;
+		 console.log($scope.userTotalPost);
 	});
 
 		$scope.goBack = function (ui_sref) {

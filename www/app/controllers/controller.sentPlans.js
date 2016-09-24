@@ -67,64 +67,6 @@ angular.module('module.view.sentPlans', [])
 				            return postService.deletePlans(id);
 				        };
 
-                $scope.sendChat = function (item) {
-                    conversationService.KeepKeyboardOpen('#textChat');
-                    var message = {
-                        sentAt: new Date(),
-                        name: $rootScope.user.name,
-                        photo: $rootScope.user.photo,
-                        text: item,
-                        senderid: $rootScope.user.id
-                    };
-
-                    $timeout(function () {
-                        $scope.chat.messages.push(message);
-                        conversationService.KeepKeyboardOpen('#textChat');
-                        viewScroll.scrollBottom(true);
-                    }, 0);
-
-                    $scope.input = '';
-
-                    $timeout(function () {
-                        $scope.chat.messages.push({
-                            sentAt: new Date(),
-                            name: $scope.chat.recepientname,
-                            photo: $scope.chat.recepientphoto,
-                            text: randomMessages[Math.floor(Math.random() * randomMessages.length)],
-                            senderid: $scope.chat.recepientid
-                        });
-
-                        conversationService.KeepKeyboardOpen('#textChat');
-                        viewScroll.scrollBottom(true);
-                    }, 2000);
-                }
-
-                $scope.onMessageHold = function (e, itemIndex, chat) {
-
-                    $ionicActionSheet.show({
-                        buttons: [{
-                            text: 'Copy Text'
-                        }, {
-                                text: 'Delete Message'
-                            }],
-                        buttonClicked: function (index) {
-                            switch (index) {
-                                case 0:
-                                    $cordovaClipboard.copy(chat.text).then(function () {
-                                    }, function () {
-                                    });
-                                    break;
-                                case 1:
-                                    $scope.chat.messages.splice(itemIndex, 1);
-                                    $timeout(function () {
-                                        viewScroll.resize();
-                                    }, 0);
-                                    break;
-                            }
-                            return true;
-                        }
-                    });
-                };
 
 								$scope.plansPopover = $ionicPopover.fromTemplate(plansTemplate, {
 										scope: $scope
@@ -134,109 +76,13 @@ angular.module('module.view.sentPlans', [])
 				            $state.go('tabs.create-plan');
 				        };
 
-                $scope.sendPhoto = function () {
-                    var message = {
-                        sentAt: new Date(),
-                        name: $rootScope.user.name,
-                        photo: $rootScope.user.photo,
-                        senderid: $rootScope.user.id
-                    };
-                    $ionicActionSheet.show({
-                        buttons: [{
-                            text: 'Take Picture'
-                        }, {
-                                text: 'Select From Gallery'
-                            }],
-                        buttonClicked: function (index) {
-                            switch (index) {
-                                case 0: // Take Picture
-                                    document.addEventListener("deviceready", function () {
-                                        $cordovaCamera.getPicture(conversationService.getCameraOptions()).then(function (imageData) {
-                                            message.text = '<img src="' + "data:image/jpeg;base64," + imageData + '" style="max-width: 300px">';
-                                            $timeout(function () {
-                                                $scope.chat.messages.push(message);
-                                                viewScroll.scrollBottom(true);
-                                            }, 0);
-                                        }, function (err) {
-                                            appService.showAlert('Error', err, 'Close', 'button-assertive', null);
-                                        });
-                                    }, false);
-                                    break;
-                                case 1: // Select From Gallery
-                                    document.addEventListener("deviceready", function () {
-                                        $cordovaCamera.getPicture(conversationService.getLibraryOptions()).then(function (imageData) {
-                                            message.text = '<img src="' + "data:image/jpeg;base64," + imageData + '" style="width: 500px;height:500px">';
-                                            $timeout(function () {
-                                                $scope.chat.messages.push(message);
-                                                viewScroll.scrollBottom(true);
-                                            }, 0);
-                                        }, function (err) {
-                                            appService.showAlert('Error', err, 'Close', 'button-assertive', null);
-                                        });
-                                    }, false);
-                                    break;
-                            }
-                            return true;
-                        }
-                    });
-                };
-
-            $scope.$on('taResize', function (e, ta) {
-                    console.log('taResize');
-                    if (!ta) return;
-
-                    var taHeight = ta[0].offsetHeight;
-                    console.log('taHeight: ' + taHeight);
-
-                    if (!footerBar) return;
-
-                    var newFooterHeight = taHeight + 30;
-                    newFooterHeight = (newFooterHeight > 44) ? newFooterHeight : 44;
-
-                    footerBar.style.height = newFooterHeight + 'px';
-                    scroller.style.bottom = newFooterHeight + 'px';
-                });
-
-								postService.getPlans().then(function(results) {
+								postService.getUserPlans().then(function(results) {
 				          //create a local object so we can create the datastructure we want
 				          //so we can use it to show/hide, toggle ui items
-				          var news = {
-				              type: 'image',
-				              items: results
-				          };
-				          console.log('results',results);
-				          // var data;
-				          // console.log(news);
-				          // for(var id in news.items){
-				          //   //check to see if there is a like on this post
-				          //   //console.log({postId: engagementService.liked('post', id, $localStorage.account.userId)});
-				          //   data = {
-				          //     category: 'post',
-				          //     categoryId: id,
-				          //     userId: $localStorage.account.userId
-				          //   }
-				          //   engagementService.liked(data).then(function(liked){
-				          //     news.items[id].liked = liked;
-				          //   });
-				          //   engagementService.committed(data).then(function(committed){
-				          //     news.items[id].committed = committed;
-				          //   });
-				          //   engagementService.totalCommits(data).then(function(totalCommits){
-				          //     news.items[id].totalCommits = totalCommits;
-				          //   });
-				          // }
-				          //make it available to the directive to officially show/hide, toggle
-				          $scope.news = news;
+				          $scope.plans = results[$localStorage.account.userId];
+									console.log($scope.plans);
 				        });
 
-								// postService.getSentPlans().then(function(results) {
-				        //   var appointments = {
-				        //       items: results,
-								// 			type: 'plan'
-				        //   };
-								// 	console.log('results',results);
-								// 	console.log('sentPlans',appointments);
-								// });
 
 });
 var searchTemplate =

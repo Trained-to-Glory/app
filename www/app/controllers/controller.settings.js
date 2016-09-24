@@ -1,6 +1,7 @@
 angular.module('module.view.settings', [])
-	.controller('settingsCtrl', function($scope,$rootScope,$state,$ionicLoading,$timeout,Popup,$localStorage) {
-        $scope.goBack = function (ui_sref) {
+	.controller('settingsCtrl', function($scope,$rootScope,$state,$stateParams,$ionicLoading,$timeout,Popup,$localStorage) {
+
+				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
 
@@ -20,10 +21,10 @@ angular.module('module.view.settings', [])
 				$scope.profile = $localStorage.account;
 
         $scope.logout = function() {
-					console.log('SIGN OUT');
 
         if (firebase.auth()) {
           firebase.auth().signOut().then(function() {
+						console.log('SIGN OUT');
             //Clear the saved credentials.
             $localStorage.$reset();
             //Proceed to login screen.

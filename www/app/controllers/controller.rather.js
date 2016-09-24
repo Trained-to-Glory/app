@@ -44,11 +44,12 @@ angular.module('module.view.rather', [])
 						console.log('args',arguments);
 		        if (isChecked) {
 		            $scope.selected.push(interest);
-								engagementService.engagedActivities('interest', interest.id, $localStorage.account.userId);
+								engagementService.engagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
+								console.log($localStorage.account.userId);
 		        } else {
 		            var _index = $scope.selected.indexOf(interest);
 		            $scope.selected.splice(_index, 1);
-								engagementService.disEngagedActivities('interest', interest.id, $localStorage.account.userId);
+								engagementService.disEngagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
 		        }
 		    };
 

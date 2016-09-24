@@ -37,6 +37,7 @@ angular.module('full_starter.routes', [])
       .state('tabs', {
         url: '/tabs',
         abstract: true,
+        params: { account: null },
         templateUrl: 'app/core/sidemenu.html',
         controller: 'settingsCtrl'
       })
@@ -57,6 +58,16 @@ angular.module('full_starter.routes', [])
           'menuContent': {
             templateUrl: 'app/news/explore.html',
             controller: 'exploreCtrl'
+          }
+        }
+      })
+
+      .state('tabs.search', {
+        url: '/search',
+        views: {
+          'menuContent': {
+            templateUrl: 'app/news/search.html',
+            controller: 'searchCtrl'
           }
         }
       })
@@ -423,6 +434,7 @@ angular.module('full_starter.routes', [])
 
       .state('tabs.sentPlans', {
         url: '/sentPlans',
+        params: { user: null },
         views: {
           'menuContent': {
             templateUrl: 'app/chat/sentPlans.html',

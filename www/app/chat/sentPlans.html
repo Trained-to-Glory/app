@@ -7,23 +7,20 @@
 
     <ion-content class="has-header" scroll="false">
         <div style="height:95%; overflow:scroll" class="bg-lightgrey">
-            <div ng-if="news.type === 'image'">
-                <div class="card image" ng-repeat="(key, value) in news.items" ng-if="value.state.visible === true">
+                <div class="card image" ng-repeat = "(userId, plan) in plans">
                     <div class="item item-image">
-                        <img ng-src="{{value.photo}}">
-                        <div class="item item-avatar" ui-sref="tabs.planView-detail({post:key})">
-                            <img ng-src="{{value.photo}}">
-                            <h2>{{value.title}}</h2>
-                            <p>{{value.description}}</p>
-                            <p>{{value.notes}}</p>
-                            <p>{{ value.time }}</p>
+                        <img ng-src="{{plan.photo}}">
+                        <div class="item item-avatar" ui-sref="tabs.planView-detail({post:userId})">
+                            <img ng-src="{{plan.photo}}">
+                            <h2>{{plan.title}}</h2>
+                            <p>{{plan.description}}</p>
+                            <p>{{plan.notes}}</p>
+                            <p>{{plan.time }}</p>
                         </div>
                         <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
-                        <i class="icon ion-edit" ui-sref="tabs.create-plan({post:key, mode:'edit'})"></i>
+                        <i class="icon ion-edit" ui-sref="tabs.create-plan({post:userId, mode:'edit'})"></i>
                     </div>
                 </div>
-            </div>
-
         </div>
     </ion-content>
 

@@ -116,7 +116,7 @@ angular.module('service.engagements', [])
                             return firebase.database().ref(refId).push(obj).key;
                         } else if (len === 0) {
                             //push
-                            var accountType = ['accounts',$localStorage.account.userId, type].join('/');
+                            var accountType = ['accounts',$localStorage.userId, type].join('/');
                             final[type] = {};
                             final[accountType] = {};
                             final[type][category] = {};
@@ -152,7 +152,7 @@ angular.module('service.engagements', [])
 
                     } else {
                         if (len === 0) {
-                            var accountType = ['accounts',$localStorage.account.userId, type].join('/');
+                            var accountType = ['accounts',$localStorage.userId, type].join('/');
                             final[type] = {};
                             final[type][category] = {};
                             final[type][category][categoryId] = {};
@@ -398,14 +398,14 @@ angular.module('service.engagements', [])
         };
 
         this.commit = function (data) {
-            var type = 'engagementCommits';
+            var type = 'engagementCommits' && 'appointments';
             console.log('commit called');
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, true);
         };
 
         this.committed = function (data) {
-            var type = 'engagementCommits';
+            var type = 'engagementCommits' && 'appointments';
             var data = get(type, data.category, data.categoryId, data.userId);
             //check if engagement item is already in hash
             return data.then(function(result){
@@ -414,7 +414,7 @@ angular.module('service.engagements', [])
         };
 
         this.commits = function(data){
-          var type = 'engagementCommits';
+          var type = 'engagementCommits' && 'appointments';
           var data = get(type, data.category, data.categoryId);
           //check if engagement item is already in hash
           return data.then(function(result){
@@ -435,7 +435,7 @@ angular.module('service.engagements', [])
         };
 
         this.decommit = function (data) {
-            var type = 'engagementCommits';
+            var type = 'engagementCommits' && 'appointments';
             console.log('uncommit called');
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);

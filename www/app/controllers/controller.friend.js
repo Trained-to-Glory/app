@@ -17,6 +17,7 @@ angular.module('module.view.friend', [])
 		usersService.get($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			$scope.ones = results;
+			console.log($scope.ones);
 				//check to see if there is a like on this post
 				engagementService.partnered({category:'partners', categoryId:$scope.ones.userId, userId: $localStorage.account.userId}).then(function(partnered){
 					$scope.ones.partnered = partnered;

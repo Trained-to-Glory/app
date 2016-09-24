@@ -12,37 +12,97 @@ angular.module('service.users', [])
          });
    };
 
-   this.getUserPost = function (userId,postId) {
-       var posts = (userId) ? firebase.database().ref(['accounts', userId , postId].join('/')) : firebase.database().ref('accounts');
-       return posts.once('value').then(function (snapshot) {
-             var currentObj = snapshot.val();
-             if (currentObj) {
-                 return currentObj;
-             }
-             return undefined;
-         });
-   };
-
-   this.getUserCommits = function (userId,postId,engagementCommits,post) {
-       var posts = (userId) ? firebase.database().ref(['accounts', userId , engagementCommits, post, postId].join('/')) : firebase.database().ref('accounts');
-       return posts.once('value').then(function (snapshot) {
-             var currentObj = snapshot.val();
-             if (currentObj) {
-                 return currentObj;
-             }
-             return undefined;
-         });
-   };
-
-   this.getUserNames = function (userId,userName) {
-     console.log('user hit');
-       var user = (userId) ? firebase.database().ref(table + '/' + userId + userName) : firebase.database().ref(table);
+   this.getPartners = function (userId) {
+       var user = (userId) ? firebase.database().ref(['accounts', userId ,'userPartners', 'partners'].join('/')) : firebase.database().ref(table);
        return user.once('value').then(function (snapshot) {
              var currentObj = snapshot.val();
              if (currentObj) {
                  return currentObj;
              }
              return undefined;
+         });
+   };
+
+   this.getUserPost = function (userId) {
+       var posts = (userId) ? firebase.database().ref(['accounts', userId , 'posts'].join('/')) : firebase.database().ref('accounts');
+       return posts.once('value').then(function (snapshot) {
+             var currentObj = snapshot.val();
+             if (currentObj) {
+                 return currentObj;
+             }
+             return undefined;
+         });
+   };
+
+   this.getUserCommits = function (userId) {
+       var myPostsPromise = (userId) ? firebase.database().ref(['accounts', userId , 'engagementCommits', 'post'].join('/')) : firebase.database().ref('accounts');
+       return myPostsPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPosts = snapshot.val();
+             if (myPosts) {
+                var postsPromise = firebase.database().ref('posts');
+                return postsPromise.once('value').then(function(snapshot){
+                  var posts = snapshot.val();
+                  if(posts){
+                    for(var key in myPosts){
+                      obj[key] = posts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getUserTotalCommits = function(userId){
+    var count = 0;
+     return this.getUserCommits(userId).then(function(results){
+       for(var key in results){
+         count++;
+       }
+       return count;
+     }, function(){
+       return count;
+     });
+   };
+
+   this.getUserTotalPost = function(userId){
+    var count = 0;
+     return this.getUserPost(userId).then(function(results){
+       for(var key in results){
+         count++;
+       }
+       return count;
+     }, function(){
+       return count;
+     });
+   };
+
+   this.getUserTotalPartners = function(userId){
+    var count = 0;
+     return this.getPartners(userId).then(function(results){
+       for(var key in results){
+         count++;
+       }
+       return count;
+     }, function(){
+       return count;
+     });
+   };
+
+
+   this.getAllAccounts = function () {
+     console.log('user hit');
+       var users = firebase.database().ref('accounts');
+       return users.once('value').then(function (snapshot) {
+             var accounts = snapshot.val();
+             if (accounts) {
+                 return accounts;
+             }
+             return {};
          });
    };
 

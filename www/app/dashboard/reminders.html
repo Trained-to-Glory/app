@@ -26,7 +26,7 @@
         <ion-scroll class="bg-lightgrey" direction="y" style="height:100%">
           <div style="height:700px">
             <div class="card no-margin bb-grey no-br no-box">
-              <div class="item item-text-wrap item-icon-left teal lighten-1"  ng-repeat="(key, value) in reminders.items" ng-if="value.state.visible === true" ng-click="open[$index] = !open[$index]" on-hold="onCardHold($index, notification);" ng-if="value.type == 'task'">
+              <div class="item item-text-wrap item-icon-left teal lighten-1"  ng-repeat="(key, value) in reminders" on-hold="onCardHold($index, notification);" ng-if="value.type == 'task'">
                       <i class="icon light ion-ios-checkmark-outline"></i>
                       <span class="light text-medium">{{value.title}}</span><br/>
                       <span class="light text-smaller justified" ng-if="value.notes">{{value.notes}}<br/></span>
@@ -46,18 +46,31 @@
                       <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
                   </div>
 
-                  <a href="tel:{{value.phone}}" class="item item-text-wrap item-icon-left blue lighten-1" ng-if="value.type == 'call'" on-hold="goTo('tabs.reminder')">
+                  <div class="item item-text-wrap item-icon-left indigo lighten-1" ng-if="value.postType == 'event'">
+                      <i class="icon light ion-ios-calendar-outline"></i>
+                      <span class="light text-medium">{{value.title}}</span><br/>
+                      <span class="light text-small justified" ng-if="value.notes">{{value.notes}}<br/></span>
+                      <span class="light text-small" ng-if="value.location"><i class="icon ion-ios-location"></i> {{value.location}}<br/></span>
+                      <span class="text-smaller light" ng-if="!value.allDay">Start's at {{value.startAt | date: 'HH:mm a'}}</span>
+                      <span class="light text-smaller pull-right" ng-if="!value.allDay">End's at {{value.endAt | date: 'HH:mm a'}}</span>
+                      <span class="light text-smaller pull-right" ng-if="value.allDay">on going for entire day</span>
+                      <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
+                  </div>
+
+                  <a href="tel:{{value.phone}}" class="item item-text-wrap item-icon-left blue lighten-1" ng-repeat="(key, value) in reminders" ng-if="value.type == 'call'" on-hold="goTo('tabs.reminder')">
                       <i class="icon light ion-ios-telephone-outline"></i>
                       <span class="light text-medium">{{value.title}}</span><br/>
+                      <span class="light text-smaller justified" ng-if="value.notes">{{value.notes}}<br/></span>
                       <span class="text-smaller light" ng-if="!value.allDay">Start's at {{value.startAt | date: 'HH:mm a'}}</span>
                       <span class="light text-smaller pull-right" ng-if="!value.allDay">End's at {{value.endAt | date: 'HH:mm a'}}</span>
                       <span class="light text-smaller pull-right" ng-if="value.allDay">on going for entire day</span>
                       <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
                   </a>
 
-                  <a href="email:{{value.email}}" class="item item-text-wrap item-icon-left light blue lighten-1" ng-if="value.type == 'email'" on-hold="goTo('tabs.reminder')">
+                  <a href="email:{{value.email}}" class="item item-text-wrap item-icon-left light blue lighten-1" ng-repeat="(key, value) in reminders" ng-if="value.type == 'email'" on-hold="goTo('tabs.reminder')">
                         <i class="icon light ion-ios-list-outline"></i>
                         <span class="light text-medium">{{value.title}}</span><br/>
+                        <span class="light text-smaller justified" ng-if="value.notes">{{value.notes}}<br/></span>
                         <span class="text-smaller light" ng-if="!value.allDay">Start's at {{value.startAt | date: 'HH:mm a'}}</span>
                         <span class="light text-smaller pull-right" ng-if="!value.allDay">End's at {{value.endAt | date: 'HH:mm a'}}</span>
                         <span class="light text-smaller pull-right" ng-if="value.allDay">on going for entire day</span>

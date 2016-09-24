@@ -1,0 +1,14 @@
+<ion-view title="Search">
+
+    <ion-nav-buttons side = "left">
+         <button class="button button-icon button-clear button-dark">
+            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         </button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+     <input type="text" ng-model="search" placeholder="search book" />
+      <pre> {{accountResults | fuzzy: search}}</pre>
+
+    </ion-content>
+</ion-view>

@@ -18,6 +18,7 @@ module.exports = function(config) {
             'lib/angular-mocks/angular-mocks.js',
             'lib/ngCordova/dist/ng-cordova-mocks.js',
             'lib/angular-moment/angular-moment.js',
+            'lib/angular-filter/dist/angular-filter.js',
             'app/**/*.js'
         ],
 

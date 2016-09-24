@@ -19,19 +19,19 @@
             </div>
              <div class="row">
                 <div class="input-field col">
-                    <input id="user_name" type="text" ng-model="user.userName" class="validate">
+                    <input id="user_name" type="text" ng-model="user.userName" class="validate" required>
                     <label for="user_name">Username</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col">
-                    <input name="email" type="email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30">
+                    <input name="email" type="email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>
                     <label for="email">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col">
-                    <input name="password" type="password" class="validate" ng-model="user.password" ng-minlength="5" ng-maxlength="30">
+                    <input name="password" type="password" class="validate" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
                     <label for="password">Password</label>
                 </div>
             </div>

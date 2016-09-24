@@ -77,6 +77,7 @@ angular.module('module.view.news', [])
 
         $scope.toggleCommit = function(postId, userId){
           var posts = $scope.news.items;
+          console.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
           if(postId in posts){
             var post = $scope.news.items[postId];
             var actionable = post.state.actionable;
