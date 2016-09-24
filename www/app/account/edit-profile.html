@@ -1,0 +1,69 @@
+<ion-view hide-nav-bar="true" class="bg-lightgrey">
+
+    <ion-header-bar>
+        <div class="row text-center">
+            <div class="col font-thin text-large dark" ui-sref="tabs.account" style="color:gray;">Cancel</div>
+            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-click="save()">Save</div>
+        </div>
+    </ion-header-bar>
+
+    <ion-content class="profile has-header bt-grey">
+
+        <div class="header edit">
+            <div>
+              <img class="header__thumb" src = "{{ profile.userPhoto }}" ng-click="uploadUserPhoto()">
+            </div>
+        </div>
+
+        <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">info</p>
+        <div class="edit padding-horizontal">
+            <label class="item item-input profile__input">
+                <input type="text" value="{{ profile.firstName }}" name="firstName">
+                <span class="input-label">First name</span>
+            </label>
+            <label class="item item-input profile__input">
+                <input type="text" value="{{ profile.lastName }}"  name="lastName">
+                <span class="input-label">Last name</span>
+            </label>
+            <label class="item item-input profile__input">
+                <input type="text" value="{{ profile.userName }}" name="userName" label="Username" required>
+                <span class="input-label">Username</span>
+            </label>
+            <label class="item item-input profile__input">
+                <input type="email" value="{{ profile.email }}" name="email" label="Email" required>
+                <span class="input-label">Email</span>
+            </label>
+        </div>
+
+
+            <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">password</p>
+            <div class="edit padding-horizontal">
+                <label class="item item-input profile__input">
+                    <input type="password" name="oldPassword">
+                    <span class="input-label" ng-model="changePasswordData.oldPassword">old password</span>
+                </label>
+                <label class="item item-input profile__input">
+                    <input type="password" name="newPassword">
+                    <span class="input-label" ng-model="changePasswordData.newPassword">new password</span>
+                </label>
+                <label class="item item-input profile__input">
+                    <input type="password" name="confirmNewPassword">
+                    <span class="input-label" ng-click="doChangePassword()">confirm new password</span>
+                </label>
+            </div>
+
+        <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">Interests</p>
+        <div class="edit padding-horizontal">
+          <a href="" ui-sref="tabs.rather"><div ng-click="setPrevScope('user')">Edit Interests</div></a>
+        </div>
+
+        <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">Description</p>
+        <div class="edit padding-horizontal">
+          <label class="item item-input profile__input">
+                <input type="text" value="{{ profile.userDescription }}" name="userDescription">
+                <span class="input-label">Description</span>
+          </label>
+        </div>
+
+    </ion-content>
+</ion-view>

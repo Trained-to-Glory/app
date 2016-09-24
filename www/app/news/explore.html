@@ -1,0 +1,48 @@
+<ion-view title="Explore" class="view-browse" cache-view="false">
+    <ion-nav-buttons side = "left">
+         <button class="button button-icon button-clear button-dark">
+            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         </button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button button-icon dark icon ion-ios-search" ng-click="searchPopover.show($event)"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scroll="false">
+        <div class="row text-center">
+            <div class="col font-thin" ng-click="gotoBrowse()">Browse</div>
+            <div class="col font-thin" ng-click="gotoMatch()">Match</div>
+            <div class="col font-thin" ng-click="gotoAccount()">Profile</div>
+        </div>
+
+        <div style="height:95%; overflow:scroll" class="bg-lightgrey">
+            <div ng-if="news.type === 'image'">
+                <div class="card image" ng-repeat="(key, value) in news.items" ng-if="value.state.visible === true">
+                    <div class="item item-image">
+                        <img ng-src="{{post.image}}">
+                        <span class="interact">
+                            <i class="icon ion-checkmark-round" ng-class="{'calm': value.committed, 'light': !value.committed }" ng-click="toggleCommit(key,userId)"> {{value.totalCommits}}</i>
+                            <i class="icon ion-heart" ng-class="{'calm': value.liked, 'light': !value.liked }" ng-click="toggleLike(key, userId)"> {{value.totalLikes}}</i>
+                            <i class="icon ion-ios-chatbubble light"> {{post.comments.length}}</i>
+                        </span>
+                        <img ng-src="{{value.photo}}">
+                        <div class="item item-avatar" ui-sref="tabs.post-detail({post:key})">
+                            <img ng-src="{{post.sourceLogo}}">
+                            <h2>{{value.owner}}</h2>
+                            <p>{{ value.postType | uppercase }}</p>
+                            <p>{{value.description}}</p>
+                            <p>{{ value.location }}</p>
+                            <p class="text-smaller" am-time-ago="{{}}">{{ value.date | date}} : {{ value.time }}</p>
+                        </div>
+                        <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
+                        <i class="icon ion-edit" ng-if="!post.post" ui-sref="tabs.event({post:key, mode:'edit'})"></i>
+                        <i class="icon ion-edit" ng-if="post.post" ui-sref="tabs.regular({post:key, mode:'edit'})"></i>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

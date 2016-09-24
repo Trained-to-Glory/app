@@ -1,0 +1,23 @@
+<ion-modal-view hide-nav-bar="true"  class="forgot">
+    
+    
+    <ion-content scroll="false">
+    <form name="forgotPasswordForm" novalidate ng-submit="forgotPasswordForm.$valid && resetPassword(user)">
+        <div ng-form="login_form" class="padding text-center" novalidate>
+            <ion-list>
+                <label class="item item-input">
+                    <i class="icon ion-android-person placeholder-icon"></i>
+                    <input type="email" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
+                </label>
+            </ion-list>
+            <input type="submit" class="button button-block button-positive" value="Forgot Password" ng-disabled="forgotPasswordForm.$invalid">
+             <p class="">An email will be sent to you with steps to reset your password</p>
+        </div>
+        <p class="padding-horizontal">
+            <span class="balanced pull-left" ng-click="closeForgot();openLogin();">Log in</span>
+            <span class="dark pull-right" ng-click="closeForgot()">Close</span>
+        </p>
+        </form>
+           
+    </ion-content>
+</ion-modal-view>

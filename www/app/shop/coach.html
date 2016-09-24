@@ -1,0 +1,39 @@
+<ion-view title="Trainers">
+
+    <ion-nav-buttons side = "left">
+         <button class="button button-icon button-clear button-dark">
+            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         </button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header bt-grey profile" scroll="false">
+        <div class="row text-center" style="background:white;">
+            <div class="col font-thin" ui-sref="tabs.news">Browse</div>
+            <div class="col font-thin" ui-sref="tabs.match">Match</div>
+            <div class="col font-thin" ui-sref="tabs.account">Profile</div>
+        </div>
+
+        <div class="list" style="height:95%; overflow:scroll">
+            <!-- * photos / photos user -->
+            <div class="photos">
+                <div class="row" ng-repeat = "ab in abs track by $index">
+                    <div class="col"  ng-click="gotoContacts()">
+                        <div class="item item-image profile">
+                            <!-- * cont-photo / container photo -->
+                            <div class="cont-photo">
+                                <!-- * img / photo -->
+                                <div class = "img" style="background-image:url({{ab.photo}});"></div>
+                                <!-- * bg-color / background color -->
+                                <div class="bg-color dance" style="background-image: url({ab.icon});"></div>
+                            </div>
+                            <!-- * photos-actions / photos actions -->
+                            <div class="photo-actions"> {{ab.label}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+
+    </ion-content>
+</ion-view>

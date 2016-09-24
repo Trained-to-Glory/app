@@ -1,0 +1,26 @@
+<ion-modal-view hide-nav-bar="true"  class="auth">
+
+
+    <ion-content scroll="false">
+        <div ng-form="login_form" class="padding text-center"  name="loginForm" ng-submit="loginForm.$valid && login(user)" novalidate>
+         <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
+            <ion-list>
+                <label class="item item-input">
+                    <i class="icon ion-android-person placeholder-icon"></i>
+                    <input type="email" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
+                </label>
+                <label class="item item-input">
+                    <i class="icon ion-android-lock placeholder-icon"></i>
+                    <input type="password" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
+                </label>
+                <input type="submit" class="button button-block button-positive" value="Login" ng-disabled="loginForm.$invalid">
+            </ion-list>
+            </form>
+        </div>
+
+        <p class="padding-horizontal">
+            <span class="balanced pull-left" ng-click="closeLogin();openForgot();">Forgot password</span>
+            <span class="dark pull-right" ng-click="closeLogin()">Close</span>
+        </p>
+    </ion-content>
+</ion-modal-view>
