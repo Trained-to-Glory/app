@@ -18,9 +18,6 @@ angular.module('module.view.match', [])
 		ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
 			firebase.database().ref('/accounts/' + snapshot.key ).update({
 				location: $localStorage.account.near
-			}).then( function() {
-				$localStorage.account.near = location;
-				return;
 			});
 		});
 

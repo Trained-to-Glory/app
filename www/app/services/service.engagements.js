@@ -116,7 +116,7 @@ angular.module('service.engagements', [])
                             return firebase.database().ref(refId).push(obj).key;
                         } else if (len === 0) {
                             //push
-                            var accountType = ['accounts',$localStorage.userId, type].join('/');
+                            var accountType = ['accounts',$localStorage.account.userId, type].join('/');
                             final[type] = {};
                             final[accountType] = {};
                             final[type][category] = {};
@@ -151,35 +151,17 @@ angular.module('service.engagements', [])
                         });
 
                     } else {
-                        if (len === 0) {
-                            var accountType = ['accounts',$localStorage.userId, type].join('/');
-                            final[type] = {};
-                            final[type][category] = {};
-                            final[type][category][categoryId] = {};
-                            final[type][category][categoryId][itemId] = obj;
-                            final[accountType] = {};
-                            final[accountType][category] = {};
-                            final[accountType][category][categoryId] = {};
-                            final[accountType][category][categoryId][itemId] = true;
-                        } else if (len == 1) {
-                            final[category] = {};
-                            final[category][categoryId] = {};
-                            final[category][categoryId][itemId] = obj;
-                        } else if (len == 2) {
-                            final[categoryId] = {};
-                            final[categoryId][itemId] = obj;
-                        } else if (len == 3) {
-                            final[itemId] = obj;
-                        } else if (len == 4) {
-                            final = obj;
-                        }
+                        var accountType = ['accounts',$localStorage.account.userId, type].join('/');
+                        final[[accountType,category,categoryId,itemId].join('/')] = true;
+                        final[[type,category,categoryId,itemId].join('/')] = obj;
+                        console.log(final);
                     }
 
                     //set location to firebase record
                     refId = (len > 1) ? exists.join('/') : null;
                     refId = (len === 1) ? exists.join('') : refId;
 
-                    var db = (typeof (exists) === 'boolean' || len === 0) ? firebase.database().ref() : firebase.database().ref(refId);
+                    var db = firebase.database().ref();
                     return db.update(final).then(function () {
                         //successfully saved
                         return true;
@@ -398,14 +380,14 @@ angular.module('service.engagements', [])
         };
 
         this.commit = function (data) {
-            var type = 'engagementCommits' && 'appointments';
+            var type = 'engagementCommits';
             console.log('commit called');
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, true);
         };
 
         this.committed = function (data) {
-            var type = 'engagementCommits' && 'appointments';
+            var type = 'engagementCommits';
             var data = get(type, data.category, data.categoryId, data.userId);
             //check if engagement item is already in hash
             return data.then(function(result){
@@ -414,7 +396,7 @@ angular.module('service.engagements', [])
         };
 
         this.commits = function(data){
-          var type = 'engagementCommits' && 'appointments';
+          var type = 'engagementCommits';
           var data = get(type, data.category, data.categoryId);
           //check if engagement item is already in hash
           return data.then(function(result){
@@ -435,7 +417,7 @@ angular.module('service.engagements', [])
         };
 
         this.decommit = function (data) {
-            var type = 'engagementCommits' && 'appointments';
+            var type = 'engagementCommits';
             console.log('uncommit called');
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
