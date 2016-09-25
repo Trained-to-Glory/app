@@ -1,45 +1,32 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$stateParams,engagementService,usersService,$state,postService,partnersService,$ionicSideMenuDelegate,userInterestService, $localStorage) {
- 	userInterestService.createInterestList();
+	.controller('profileCtrl', function($scope,$rootScope,$log,$stateParams,engagementService,usersService,$state,postService,partnersService,$ionicSideMenuDelegate,userInterestService, $localStorage) {
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
+	$scope.togglePartner = function(partnerId){
+			var partner = $scope.contacts;
+			console.log(partner);
+			$log.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
+			 if(!partner){
+				 return false;
+			 }
+			partner.partnered = !partner.partnered;
+			var state = (partner.partnered)?'partner':'unpartner';
+			return engagementService[state]({category:'partners', categoryId:partnerId, userId: $localStorage.account.userId});
+	};
 
-	// usersService.getPartners().then(function(results) {
-	// 	//create a local object so we can create the datastructure we want
-	// 	//so we can use it to show/hide, toggle ui items
-	// 	 var contacts = {
-	// 	 		items: results
-	// 	 };
-	// 	 for(var id in contacts.items){
-	// 	 	//check to see if there is a like on this post
-	// 		engagementService.partnered({category:'partners', categoryId:id, itemId: $localStorage.account.userId}).then(function(partnered){
-	// 			contacts.items.partnered = partnered;
-	// 		});
-	// 	 	engagementService.totalPartners({category:'partners', categoryId: $localStorage.account.userId}).then(function(totalPartners){
-	// 	 		contacts.items[id].totalPartners = totalPartners;
-	// 			console.log(totalPartners);
-	//
-	// 	 	});
-	// 	 }
-	//  	//make it available to the directive to officially show/hide, toggle
-	// 	 $scope.contacts = contacts;
-	// });
-
-	usersService.getUserPost().then(function(results) {
+	usersService.getUserPost($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
-		 $scope.userPosts = results[$localStorage.account.userId];
-		 console.log($scope.userPosts);
+		 $scope.userPosts = results;
 	});
 
 	usersService.getUserTotalPartners($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userPartners = results;
-		 console.log($scope.userPartners);
 	});
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
@@ -49,18 +36,35 @@ angular.module('module.view.profile', [])
 		 console.log($scope.userCommits);
 	});
 
+	usersService.getUserNews($localStorage.account.userId).then(function(results) {
+		//create a local object so we can create the datastructure we want
+		//so we can use it to show/hide, toggle ui items
+		 $scope.userNews = results;
+		 $log.log($scope.userNews);
+	});
+
 	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalCommits = results;
-		 console.log($scope.userTotalCommits);
 	});
 
 	usersService.getUserTotalPost($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalPost = results;
-		 console.log($scope.userTotalPost);
+	});
+
+	usersService.getPartners($localStorage.account.userId).then(function(results){
+		var contacts = {
+				items: results
+		};
+		for(var id in contacts.items){
+			engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+				contacts.items[id].partnered = partnered;
+			});
+		};
+		$scope.contacts = contacts;
 	});
 
 		$scope.goBack = function (ui_sref) {

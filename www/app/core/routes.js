@@ -28,10 +28,12 @@ angular.module('full_starter.routes', [])
     googleWebClientId: "778952668094-pu4uhti4hi5m0g51ih0uiapvdu4mjj5i.apps.googleusercontent.com"
   })
 
-  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider) {
     $ionicConfigProvider.backButton.previousTitleText(false);
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("center");
+    //turning off $log
+    $logProvider.debugEnabled(true);
 
     $stateProvider
       .state('tabs', {

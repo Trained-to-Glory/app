@@ -27,9 +27,9 @@
         </div>
 
         <div class="row no-padding bb-grey text-center" style="text-transform: capitalize;">
-            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 1 || profile.type === 4}" ng-click="profile.type = 1">27<br/>Posts</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 2 || profile.type === 5}" ng-click="profile.type = 2">20<br/>Commits</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 3}" ng-click="profile.type = 3">1500<br/>Partners</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 1 || profile.type === 4}" ng-click="profile.type = 1">{{userTotalPost}}<br/>Posts</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 2 || profile.type === 5}" ng-click="profile.type = 2">{{userTotalCommits}}<br/>Commits</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 3}" ng-click="profile.type = 3">{{userPartners}}<br/>Partners</div>
         </div>
 
         <div class="list" style="height:100%;">
@@ -40,12 +40,12 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos"  ng-repeat="photo in photos | limitTo:4">
+            <div class="photos" ng-if = "userPost.photo" ng-repeat = "(userId, userPost) in userPosts | limitTo:4">
                 <div class="row">
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url{{post.photo}}"></div>
+                                <div class = "img" style="background-image:url{{userPost.photo}}"></div>
                                 <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/5.jpg)"></div>
+                                <div class = "img" style="background-image:url{{userPost.photo}}"></div>
 
                                    <div class="bg-color profile"></div>
                             </div>
@@ -64,7 +64,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/6.jpg)"></div>
+                                <div class = "img" style="background-image:url{{userPost.photo}}"></div>
                                 <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -72,8 +72,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/7.jpg)"></div>
-
+                                <div class = "img" style="background-image:url{{userPost.photo}}"></div>
                                <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -84,10 +83,10 @@
 
         <div ng-if="profile.type === 4" style="height:100%;">
                 <div style="height: 700px">
-                    <div class="row post" ng-repeat="post in news.items" ng-if="$index % 3 == 0">
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index].image}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index + 1].image}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index + 2].image}}" /></div>
+                    <div class="row post" ng-repeat = "(userId, userPost) in userPosts">
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
                     </div>
                 </div>
             </div>
@@ -100,12 +99,12 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos">
+            <div class="photos" ng-repeat = "(key,userCommit) in userCommits | limitTo:4">
                 <div class="row">
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/4.jpg)"></div>
+                                <div><img src = "{{ userCommit.photo }}"></div>
                                 <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -113,8 +112,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/5.jpg)"></div>
-
+                              <div><img src = "{{ userCommit.photo }}"></div>
                                    <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -124,7 +122,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/6.jpg)"></div>
+                              <div><img src = "{{ userCommit.photo }}"></div>
                                 <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -132,8 +130,7 @@
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
                             <div class="cont-photo">
-                                <div class = "img" style="background-image:url(img/images/7.jpg)"></div>
-
+                              <div><img src = "{{ userCommit.photo }}"></div>
                                <div class="bg-color profile"></div>
                             </div>
                         </div>
@@ -144,29 +141,28 @@
 
     <div ng-if="profile.type === 5" style="height:100%;">
                 <div style="height: 700px">
-                    <div class="row post" ng-repeat="post in news.items" ng-if="$index % 3 == 0">
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index].image}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index + 1].image}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index + 2].image}}" /></div>
+                    <div class="row post" ng-repeat = "(userId, userCommit) in userCommits">
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userCommit.photo}}" /></div>
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userCommit.photo}}" /></div>
+                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userCommit.photo}}" /></div>
                     </div>
                 </div>
             </div>
 
         <div ng-if="profile.type === 3" style="height:100%;">
-
             <div class="item item-divider">
                 PARTNERS
                 <span class="item-note" ui-sref="tabs.partners({partner:ones.userId})">
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-
-            <div class="item item-avatar item-button-right followers" ng-repeat="contact in contacts">
+            <pre> {{contacts | json}}</pre>
+            <div class="item item-avatar item-button-right followers" ng-repeat="(key,contact) in contacts.items">
                         <img ng-src="{{contact.photo}}">
                         <h2 class="font-thin">{{contact.name}}</h2>
                         <p>{{contact.city}}</p>
-                        <button class="button button-small button-balanced icon ion-ios-checkmark-empty" ng-if="$index % 3 == 1"> Partnered</button>
-                        <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline" ng-if="$index % 3 !== 1"> Partner</button>
+                        <button class="button button-small button-balanced icon ion-ios-checkmark-empty"> Partnered</button>
+                        <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline"> Partner</button>
             </div>
 
             </div>

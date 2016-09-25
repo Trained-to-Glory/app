@@ -38,7 +38,7 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos" ng-repeat = "(userId, userPost) in userPosts | limitTo:4">
+            <div class="photos" ng-if = "userPost.photo" ng-repeat = "(userId, userPost) in userPosts | limitTo:4">
                 <div class="row" >
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
@@ -96,7 +96,7 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos" ng-repeat = "userCommit in userTotalCommits | limitTo:4">
+            <div class="photos" ng-repeat = "(key,userCommit) in userCommits | limitTo:4">
                 <div class="row">
                     <div class="col" ui-sref="tabs.post-detail">
                         <div class="item item-image profile">
@@ -154,12 +154,11 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-
-            <div class="item item-avatar item-button-right followers" ng-repeat="(key,value) in contacts.items">
+            <div class="item item-avatar item-button-right followers" ui-sref="tabs.friend({contact:value.userId})" ng-repeat="(key,value) in contacts.items">
                 <img ng-src="{{value.userPhoto}}">
                 <h2 class="font-thin">{{value.userName}}</h2>
-                <button class="button button-small button-balanced icon ion-ios-checkmark-empty"> Partnered</button>
-                <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline"> Partner</button>
+                <button class="button button-small button-balanced icon ion-ios-checkmark-empty" ng-if="contacts.partnered = true"> Partnered</button>
+                <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline" ng-if="contacts.partnered = false"> Partner</button>
             </div>
 
             </div>

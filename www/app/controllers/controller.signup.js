@@ -16,7 +16,7 @@ angular.module('module.view.signup', ['full_starter.factory'])
       Utils.show();
       firebase.database().ref('accounts').orderByChild('userName').equalTo(user.userName).once('value').then(function(accounts) {
         if (accounts.exists()) {
-          Utils.message(Popup.errorIcon, Popup.emailAlreadyExists);
+          Utils.message();
         } else {
           //Create Firebase account.
           firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -34,7 +34,7 @@ angular.module('module.view.signup', ['full_starter.factory'])
                 provider: 'Firebase'
               }).then(function(response) {
                 //Account created successfully, logging user in automatically after a short delay.
-                Utils.message(Popup.successIcon, Popup.accountCreateSuccess)
+                Utils.message()
                   .then(function() {
                     getAccountAndLogin(firebase.auth().currentUser.uid);
                   })
@@ -132,5 +132,21 @@ angular.module('module.view.signup', ['full_starter.factory'])
 		});
 		$state.go('tabs.rather');
 	};
+
+	$scope.isChecked = false;
+		$scope.selected = [];
+		$scope.checkedOrNot = function (isChecked, index) {
+				console.log('selected hit');
+				console.log('args',arguments);
+				if (isChecked) {
+						$scope.selected.push(interest);
+						//engagementService.engagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
+						console.log('hit');
+				} else {
+						var _index = $scope.selected.indexOf(interest);
+						$scope.selected.splice(_index, 1);
+						//engagementService.disEngagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
+				}
+		};
 
 });

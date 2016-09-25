@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="row">
-            <ion-radio ng-model="isChecked" style="border-color: transparent;color: gray;background-color: transparent">Yes</ion->
+            <ion-checkbox ng-model="isChecked" ng-change="checkedOrNot(isChecked, $index, $localStorage)" ng-init='isChecked=false' style="border-color: transparent;color: gray;background-color: transparent">Yes</ion->
             </div>
 
             <div class= "row">

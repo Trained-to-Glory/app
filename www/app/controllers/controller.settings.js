@@ -24,7 +24,6 @@ angular.module('module.view.settings', [])
 
         if (firebase.auth()) {
           firebase.auth().signOut().then(function() {
-						console.log('SIGN OUT');
             //Clear the saved credentials.
             $localStorage.$reset();
             //Proceed to login screen.

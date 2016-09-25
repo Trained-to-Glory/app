@@ -154,7 +154,6 @@ angular.module('service.engagements', [])
                         var accountType = ['accounts',$localStorage.account.userId, type].join('/');
                         final[[accountType,category,categoryId,itemId].join('/')] = true;
                         final[[type,category,categoryId,itemId].join('/')] = obj;
-                        console.log(final);
                     }
 
                     //set location to firebase record
@@ -381,7 +380,6 @@ angular.module('service.engagements', [])
 
         this.commit = function (data) {
             var type = 'engagementCommits';
-            console.log('commit called');
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, true);
         };

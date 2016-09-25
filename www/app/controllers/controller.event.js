@@ -1,7 +1,6 @@
 angular.module('module.view.event', [])
 	.controller('eventCtrl', function($scope,$rootScope,$state,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
-		console.log($stateParams);
 		$scope.postId = $stateParams.post;
 
 		$scope.createEvent = function() {

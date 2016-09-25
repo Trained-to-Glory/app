@@ -9,7 +9,8 @@ describe('Service: activitiesServices', function () {
         this.$httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('should be defined', function () {
+    it('activitiesService should be defined', function () {
         expect(this.activitiesService).toBeDefined();
     });
+
 });

@@ -1,5 +1,5 @@
 angular.module('module.view.news', [])
-    .controller('newsCtrl', function ($scope, $rootScope,$http, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, engagementService, postService, appService, conversationService, appointmentsService) {
+    .controller('newsCtrl', function ($scope, $rootScope,$http, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService, conversationService, appointmentsService) {
 
         var publicServices = {
             'post': true,
@@ -76,7 +76,7 @@ angular.module('module.view.news', [])
 
         $scope.toggleCommit = function(postId, userId){
           var posts = $scope.news.items;
-          console.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
+          $log.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
           if(postId in posts){
             var post = $scope.news.items[postId];
             var actionable = post.state.actionable;

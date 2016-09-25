@@ -20,7 +20,7 @@ angular.module('module.view.contacts', [])
                 }
 
 				$scope.togglePartner = function(partnerId){
-						var partner = $scope.account;
+						var partner = $scope.ones;
 					console.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
 					   if(!partner){
 							 return false;
@@ -56,7 +56,6 @@ angular.module('module.view.contacts', [])
 					  $scope.myLocation = $localStorage.account.near;
 						delete results[$localStorage.account.userId];
 						$scope.users = results;
-
 						console.log($scope.users);
 				});
 }).filter('orderByLocation', function() {

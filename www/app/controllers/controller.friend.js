@@ -1,11 +1,12 @@
 angular.module('module.view.friend', [])
-	.controller('friendCtrl', function($scope,engagementService,$localStorage, $rootScope,$state,partnersService,postService, usersService,$stateParams) {
+	.controller('friendCtrl', function($scope,$log,engagementService,$localStorage, $rootScope,$state,partnersService,postService, usersService,$stateParams) {
 		 console.log($stateParams.contact);
 		 $scope.profile = $localStorage.account;
 
 		$scope.togglePartner = function(partnerId){
 				var partner = $scope.ones;
-			console.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
+				console.log(partner);
+				$log.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
 			   if(!partner){
 					 return false;
 				 }
@@ -17,7 +18,6 @@ angular.module('module.view.friend', [])
 		usersService.get($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			$scope.ones = results;
-			console.log($scope.ones);
 				//check to see if there is a like on this post
 				engagementService.partnered({category:'partners', categoryId:$scope.ones.userId, userId: $localStorage.account.userId}).then(function(partnered){
 					$scope.ones.partnered = partnered;
@@ -27,29 +27,43 @@ angular.module('module.view.friend', [])
 		usersService.getUserPost($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
-			$scope.photo = results;
-			for(var id in $scope.photo){
-				//check to see if there is a like on this post
-				engagementService.partnered({category:'partners', categoryId:id, itemId: $localStorage.account.userId}).then(function(partnered){
-					$scope.photo.partnered = partnered;
-					console.log({user: $scope.photo, partnered: partnered});
-				});
-			}
-			console.log($scope.photo);
+			 $scope.userPosts = results;
+		});
+
+		usersService.getUserTotalPartners($stateParams.contact).then(function(results) {
+			//create a local object so we can create the datastructure we want
+			//so we can use it to show/hide, toggle ui items
+			 $scope.userPartners = results;
 		});
 
 		usersService.getUserCommits($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
-			$scope.commit = results;
-			for(var id in $scope.commit){
-				//check to see if there is a like on this post
-				engagementService.partnered({category:'partners', categoryId:id, itemId: $localStorage.account.userId}).then(function(partnered){
-					$scope.photo.partnered = partnered;
-					console.log({user: $scope.photo, partnered: partnered});
+			 $scope.userCommits = results;
+		});
+
+		usersService.getUserTotalCommits($stateParams.contact).then(function(results) {
+			//create a local object so we can create the datastructure we want
+			//so we can use it to show/hide, toggle ui items
+			 $scope.userTotalCommits = results;
+		});
+
+		usersService.getUserTotalPost($stateParams.contact).then(function(results) {
+			//create a local object so we can create the datastructure we want
+			//so we can use it to show/hide, toggle ui items
+			 $scope.userTotalPost = results;
+		});
+
+		usersService.getPartners($localStorage.account.userId).then(function(results){
+			var contacts = {
+					items: results
+			};
+			for(var id in contacts.items){
+				engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+					contacts.items[id].partnered = partnered;
 				});
-			}
-			console.log($scope.photo);
+			};
+			$scope.contacts = contacts;
 		});
 
 
