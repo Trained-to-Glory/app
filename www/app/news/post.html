@@ -12,13 +12,13 @@
         </button>
    </ion-nav-buttons>
 
-    <ion-content class="has-header" scroll-event-interval="5" padding="false">
+    <ion-content class="has-header" style="top: 44px;"scroll-event-interval="5" padding="false">
 
         <div class="card post-detail">
             <div class="item item-body">
                 <img class="full-image" ng-src="{{post.image}}">
                 <div class="item item-avatar" ui-sref="tabs.post-detail({post:postId})">
-                    <img ng-src="{{post.sourceLogo}}">
+                    <img ng-src="{{post.avatar}}">
                     <h2>{{post.owner}}</h2>
                     <p>{{ post.postType | uppercase }}</p>
                     <p>{{post.description}}</p>

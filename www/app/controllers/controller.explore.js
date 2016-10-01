@@ -1,17 +1,8 @@
 angular.module('module.view.explore', [])
-	.controller('exploreCtrl', function($scope,$rootScope,appointmentsService,$localStorage,$state,postService,usersService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
+	.controller('exploreCtrl', function($scope,$rootScope,$localStorage,$state,postService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
         $scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
                     scope: $scope
         });
-				usersService.getUserNames().then(function(results) {
-          //create a local object so we can create the datastructure we want
-          //so we can use it to show/hide, toggle ui items
-          var names = results;
-          //make it available to the directive to officially show/hide, toggle
-          $scope.names = names;
-        });
-
-
 
 		$scope.gotoBrowse = function () {
                     $state.go('tabs.news');

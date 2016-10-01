@@ -8,15 +8,22 @@
         </div>
     </ion-header-bar>
 
-  <ion-content>
+  <ion-content style="top: 44px;">
+    <div class="row row-no-padding category-2-outer">
+      <div class="col">
+          <div class="category-2-item-wrapper">
+            <div class="category-2-item-content" ng-click="uploadEventPhoto()">
+              <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/woman-photographer.jpg);">
+                <img bg="" class="multi-bg category-with-image" ng-src = "{{photo}}" name = "photo" ng-model="photo">>
+                <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position: absolute;bottom: 6px;"ng-click="uploadEventPhoto()"><i class="icon ion-ios-camera" style="color: #F10707"ng-click="uploadEventPhoto()"></i></a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
     <div class="event-form">
         <div class="list edit padding-horizontal padding-vertical">
-
-          <label class="item item-input event__input" ng-click="uploadEventPhoto()">
-            <img class="plan_picture"ng-src = "{{photo}}" name = "photo" ng-model="photo">
-            <span class="input-label" name="photo" ng-model="photo">Add Photo</span>
-          </label>
-
           <label class="item item-input event__input">
             <input type="text" name="description" placeholder="">{{post.description}}
             <span class="input-label">Description</span>

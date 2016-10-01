@@ -1,0 +1,8 @@
+$feed-bg: $theme-color-1;
+$feed-color: $theme-color-2-a;
+$feed-alt-color: $theme-color-2-d;
+
+$feed-card-main-image-ratio: 32 21;
+
+// Merge maps
+$pre-img-ratios: append($pre-img-ratios, $feed-card-main-image-ratio);

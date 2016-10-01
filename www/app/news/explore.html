@@ -10,13 +10,8 @@
     </ion-nav-buttons>
 
     <ion-content class="has-header" scroll="false">
-        <div class="row text-center">
-            <div class="col font-thin" ng-click="gotoBrowse()">Browse</div>
-            <div class="col font-thin" ng-click="gotoMatch()">Match</div>
-            <div class="col font-thin" ng-click="gotoAccount()">Profile</div>
-        </div>
 
-        <div style="height:95%; overflow:scroll" class="bg-lightgrey">
+        <!-- <div style="height:95%; overflow:scroll" class="bg-lightgrey">
             <div ng-if="news.type === 'image'">
                 <div class="card image" ng-repeat="(key, value) in news.items" ng-if="value.state.visible === true">
                     <div class="item item-image">
@@ -43,6 +38,12 @@
                 </div>
             </div>
 
+        </div> -->
+        <div style="height:100%;" ng-repeat="(key, value) in news.items" ng-if="value.state.visible === true && news.type === 'image'">
+            <div class="row post" style="height: 700px">
+                <div class="col" ui-sref="tabs.post-detail"><img ng-src="img/sample_images/dish-1.png" style="width: inherit; height:128px;"/></div>
+                <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{value.photo}}" style="width: inherit; height:128px;"/></div>
+            </div>
         </div>
     </ion-content>
 </ion-view>

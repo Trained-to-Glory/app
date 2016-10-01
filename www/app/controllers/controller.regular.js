@@ -22,7 +22,7 @@ angular.module('module.view.regular', [])
 				data[$(this).attr('name')] = $(this).val();
 			});
 			$scope.postId = $stateParams.post;
-			data.postType = 'event';
+			data.postType = 'post';
 			data.photo = $scope.photo;
 			var key = postService.update(data,$scope.postId);
 			$state.go('tabs.news');

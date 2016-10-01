@@ -9,8 +9,10 @@ angular.module('module.view.event', [])
 			$inputs.map( function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
-			data.postType = 'event';
+			var userPhoto = $localStorage.account.photo;
+			data.postType = 'eventPost';
 			data.photo = $scope.photo;
+			data.userPhoto = userPhoto;
 			var key = postService.create(data);
 			$state.go('tabs.news');
 		};
@@ -33,12 +35,13 @@ angular.module('module.view.event', [])
 			$inputs.map(function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
+			var userPhoto = $localStorage.account.photo;
 			$scope.postId = $stateParams.post;
-			data.postType = 'event';
+			data.postType = 'eventPost';
 			data.photo = $scope.photo;
+			data.userPhoto = userPhoto;
 			var key = postService.update(data,$scope.postId);
 			$state.go('tabs.news');
-			console.log('hit update');
 		};
 
 		$scope.uploadEventPhoto = function () {

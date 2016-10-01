@@ -2,8 +2,8 @@
 
     'use strict'
 
-    angular.module('full_starter.services', ['firebase','service.activities','service.appointments','service.conversation','service.engagements',
-        'service.interest','service.partners','service.post','service.reportPost','service.userInterest','service.users'])
+    angular.module('full_starter.services', ['firebase','service.appointments','service.engagements',
+        'service.interest','service.post','service.users', 'service.appointments'])
 
       .service('appService', ['$state', '$ionicPopup', '$ionicActionSheet', '$ionicHistory', '$ionicLoading', '$timeout',
             function ($state, $ionicPopup, $ionicActionSheet, $ionicHistory, $ionicLoading, $timeout) {

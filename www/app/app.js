@@ -1,5 +1,5 @@
 
-angular.module('full_starter', ['ionic','ngStorage','ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
+angular.module('full_starter', ['ionic','ionic.cloud','angularPayments','ngStorage','ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
 
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.
@@ -30,7 +30,7 @@ angular.module('full_starter', ['ionic','ngStorage','ngCordovaOauth', 'ngCordova
   })
 
 
-  .run(function ($ionicPlatform, appService) {
+  .run(function ($ionicPlatform,appService) {
 
     $ionicPlatform.ready(function ($scope,$on) {
 

@@ -1,5 +1,5 @@
 angular.module('service.appointments', [])
- .service('appointmentsService', function($localStorage){
+ .service('appointmentsService',function($localStorage, $q){
    var table = 'appointments';
         var get = function (id) {
             var refId = (id) ? [table, id].join('/'): table;
@@ -15,15 +15,20 @@ angular.module('service.appointments', [])
 
         var create = function (data) {
             //create a location in the table
+            if(!data || !data.type || !data.title){
+              var deferred = $q.defer();
+              deferred.reject(false);
+              return deferred.promise;
+            }
             var obj = {
-                "notes": data.notes,
-                "startAt": data.startAt,
-                "allDay": data.allDay,
-                "title": data.title,
-                "phone": data.phone,
-                "endAt": data.endAt,
-                "location": data.location,
-                "type": data.type,
+                "notes": data.notes || '',
+                "startAt": data.startAt || '',
+                "allDay": data.allDay || '',
+                "title": data.title || '',
+                "phone": data.phone || '',
+                "endAt": data.endAt || '',
+                "location": data.location || '',
+                "type": data.type || '',
                 "created": firebase.database.ServerValue.TIMESTAMP,
                 "createdBy": $localStorage.account.userId,
                 "state": {
@@ -32,7 +37,6 @@ angular.module('service.appointments', [])
                     "active": true
                 }
             };
-            console.log(obj);
             var db = firebase.database().ref(table);
             var key = db.push(obj).key;
             return key;

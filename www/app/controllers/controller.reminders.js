@@ -1,8 +1,8 @@
 angular.module('module.view.reminders', [])
-	.controller('remindersCtrl', function($scope,postService,usersService, $rootScope,$state,$ionicPopover,$ionicModal,appService,engagementService,$localStorage) {
+	.controller('remindersCtrl', function($scope,postService,usersService,$localStorage, $rootScope,$state,$ionicPopover,$ionicModal,appService,engagementService,$localStorage) {
 
-	postService.getUserCalendar().then(function(results) {
-		$scope.reminders = results[$localStorage.account.userId];
+	postService.getUserAppointments($localStorage.account.userId).then(function(results) {
+		$scope.reminders = results;
 		console.log($scope.reminders);
 	});
 
@@ -10,11 +10,12 @@ angular.module('module.view.reminders', [])
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userCommits = results;
-		 console.log($scope.userCommits);
 	});
 
+	$scope.profile = $localStorage.account;
+	console.log($localStorage);
+
 	$scope.delete = function (id) {
-		console.log('hit');
 			return postService.deleteAppointment(id);
 	};
 

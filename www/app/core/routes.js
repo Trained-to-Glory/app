@@ -28,12 +28,19 @@ angular.module('full_starter.routes', [])
     googleWebClientId: "778952668094-pu4uhti4hi5m0g51ih0uiapvdu4mjj5i.apps.googleusercontent.com"
   })
 
-  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider) {
+  .config(function ($stateProvider, $urlRouterProvider,$ionicCloudProvider,$ionicConfigProvider, $logProvider) {
     $ionicConfigProvider.backButton.previousTitleText(false);
+    window.Stripe.setPublishableKey('pk_test_86ybhlRNQgVLyNlBjTp33Rqp');
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("center");
     //turning off $log
     $logProvider.debugEnabled(true);
+
+      $ionicCloudProvider.init({
+      "core": {
+        "app_id": "e77285d3"
+      }
+    });
 
     $stateProvider
       .state('tabs', {
@@ -50,6 +57,16 @@ angular.module('full_starter.routes', [])
           'menuContent': {
             templateUrl: 'app/news/news.html',
             controller: 'newsCtrl'
+          }
+        }
+      })
+
+      .state('tabs.meetup', {
+        url: '/meetup',
+        views: {
+          'menuContent': {
+            templateUrl: 'app/news/meetup.html',
+            controller: 'meetupCtrl'
           }
         }
       })

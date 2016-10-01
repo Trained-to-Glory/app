@@ -1,5 +1,5 @@
 angular.module('module.view.contacts', [])
-	.controller('contactsCtrl', function($scope,$rootScope,$state,$localStorage,engagementService,partnersService,$stateParams,interestService) {
+	.controller('contactsCtrl', function($scope,$rootScope,$state,$localStorage,engagementService,$stateParams,interestService) {
 		console.log($stateParams);
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();

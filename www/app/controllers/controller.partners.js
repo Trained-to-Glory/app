@@ -1,5 +1,5 @@
 angular.module('module.view.partners', [])
-	.controller('partnersCtrl', function($scope,$rootScope, postService,$state,$ionicHistory,$localStorage,$stateParams,partnersService,usersService,engagementService) {
+	.controller('partnersCtrl', function($scope,$rootScope, postService,$state,$ionicHistory,$localStorage,$stateParams,usersService,engagementService) {
 		console.log($stateParams);
 		$scope.toggleLeft = function() {
 	    $ionicSideMenuDelegate.toggleLeft();

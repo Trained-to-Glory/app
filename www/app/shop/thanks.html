@@ -1,14 +1,35 @@
 <ion-view title="Thank You" cache-view="false" hide-nav-bar="true">
 
     <ion-content class="has-header padding text-center">
-	<h2 class="lead">Thank You</h2>
+      <form stripe-form="stripeCallback" name="checkoutForm">>
+        <input ng-model="number" placeholder="Card Number"
+                 payments-format="card" payments-validate="card" name="card" />
+                 <div ng-if="checkoutForm.$submitted && checkoutForm.card.$invalid">
+                     Error: invalid card number!
+                 </div>
+        <input ng-model="expiry" placeholder="Expiration"
+                 payments-format="expiry" payments-validate="expiry"
+                 name="expiry" />
+                 <div ng-if="checkoutForm.$submitted && checkoutForm.expiry.$invalid">
+                     Error: invalid expiry!
+                 </div>
+        <input ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" name="cvc" />
+        <div ng-if="checkoutForm.$submitted && checkoutForm.cvc.$invalid">
+            Error: invalid cvc!
+        </div>
+        <button type="submit">Submit</button>
+
+    </form>
+
+
+	<!-- <h2 class="lead">Thank You</h2>
         <div class="card">
             <div class="item item-text-wrap">
                 Your Payment has gone through.<br/> Thanks for your purchase.<br/> hope to see you again soon<br/>
             </div>
         </div>
 
-        <button class="button button-balanced button-outline button-block" >Go Back</button>
+        <button class="button button-balanced button-outline button-block" >Go Back</button> -->
 
     </ion-content>
 

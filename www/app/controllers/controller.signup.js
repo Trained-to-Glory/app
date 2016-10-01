@@ -1,5 +1,5 @@
 angular.module('module.view.signup', ['full_starter.factory'])
-	.controller('signupCtrl', function($scope,$rootScope,engagementService,$ionicPopup,$state,conversationService,Utils,Popup,$localStorage,interestService,userInterestService) {
+	.controller('signupCtrl', function($scope,$rootScope,engagementService,$ionicPopup,$state,Utils,Popup,$localStorage,interestService) {
    $scope.$on('$ionicView.enter', function() {
     //Clear the Registration Form.
     $scope.user = {
@@ -7,7 +7,7 @@ angular.module('module.view.signup', ['full_starter.factory'])
       password: ''
     };
   })
-	var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/TTG-Symbol-2015-02.png?alt=media&token=b10c70be-92a1-47af-84c4-ab82500922fb';
+	var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=8459468a-c1df-41dc-9645-a10582b0656d';
 
    $scope.register = function(user) {
 		 	//Function to retrieve the account object from the Firebase database and store it on $localStorage.account.

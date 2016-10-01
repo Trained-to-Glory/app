@@ -1,5 +1,5 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage, $ionicPopover,appService,postService, engagementService,conversationService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -20,47 +20,6 @@ angular.module('module.view.sentPlans', [])
 
         $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
                     scope: $scope
-                });
-
-                var randomMessages = conversationService.getRandomMessages()
-                $scope.conversations = conversationService.getMessages();
-                var viewScroll = $ionicScrollDelegate.$getByHandle('chatScroll');
-                var footerBar, scroller, txtInput;
-
-                $scope.$on('$ionicView.beforeEnter', function () {
-                    $state.is('tabs.chat') ? $scope.chat = {} : null;
-                });
-
-                $scope.$on('$ionicView.enter', function () {
-                    if ($state.is('tabs.chat')) {
-                        $scope.chat = {};
-                        conversationService.Loading('show');
-                        if ($stateParams.chat == null) {
-                            $scope.chat = postService.getRandomObject($scope.conversations);
-                        } else {
-                            if ($stateParams.chat.conversation) {
-                                $scope.chat = _.find($scope.conversations, ['conversation', $stateParams.chat.conversation]);
-                            } else {
-                                $scope.chat = {
-                                    conversation: $scope.conversations.length + 1,
-                                    recepientid: $stateParams.chat.id,
-                                    recepientname: $stateParams.chat.name,
-                                    recepientphoto: $stateParams.chat.photo,
-                                    messages: []
-                                }
-                            }
-
-                        }
-                        $timeout(function () {
-                            conversationService.Loading();
-                        }, 250);
-
-                        $timeout(function () {
-                            viewScroll.scrollBottom(true);
-                            footerBar = document.body.querySelector('#chat .bar-footer');
-                            scroller = document.body.querySelector('#chat .scroll-content');
-                        }, 0);
-                    }
                 });
 
 								$scope.delete = function (id) {

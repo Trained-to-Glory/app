@@ -1,7 +1,7 @@
-<ion-view cache-view="false" hide-nav-bar="true" style="background:url('img/TTG-CollageImage.png') center; background-size: cover;">
+<!-- <ion-view cache-view="false" hide-nav-bar="true"> -->
 
-    <ion-content padding="true" scroll="false" class="auth">
-        <div class="container" style="width:100%">
+    <ion-content cache-view="false" scroll="false" class="auth">
+        <!-- <div class="container" style="width:100%">
             <div class="text-center" style="margin-right:12px; margin-bottom:20vh;"><img src="img/TTG-FinalLogo-2015-Revised-02.png" class="text-center" style="width:60%;" /></div>
         </div>
 
@@ -9,7 +9,33 @@
         	<div class="row row-login">
         		<div class="col col-login" ng-click="openLogin();">LOG IN</div>
         		<div class="col col-login" ui-sref="tabs.signup">SIGN UP</div>
-        </ion-footer-bar>
-
+        </ion-footer-bar> -->
+      <form class="log_form" novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
+        <div class="above_div" ng-form="login_form" class="padding text-center"  name="loginForm" ng-submit="loginForm.$valid && login(user)" novalidate>
+           <div class="logo">
+             <img src="img/TTG-FinalLogo-2015-Revised-02.png"/>
+           </div>
+             <div class="list list-inset">
+                <label class="item item-input">
+                  <input type="text" placeholder="EMAIL" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
+                </label>
+                 <label class="item item-input">
+                  <input type="password" placeholder="PASSWORD" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
+                </label>
+             </div>
+        </div>
+        <div class="row btn_log">
+         <div class="col col-20"ng-click="openForgot();">
+             <i class="ion-locked"></i>
+         </div>
+         <div class="col">
+          <input class="button sign_up" value="SIGN IN" type="submit">
+        </input>
+          <a href="#/register" ui-sref="tabs.signup" class="button button-clear forget_psd">
+           Create New Account
+          </a>
+         </div>
+        </div>
+      </form>
     </ion-content>
-</ion-view>
+<!-- </ion-view> -->

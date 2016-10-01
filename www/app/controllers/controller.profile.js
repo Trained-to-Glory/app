@@ -1,5 +1,5 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$log,$stateParams,engagementService,usersService,$state,postService,partnersService,$ionicSideMenuDelegate,userInterestService, $localStorage) {
+	.controller('profileCtrl', function($scope,$rootScope,$log,$stateParams,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
@@ -33,10 +33,9 @@ angular.module('module.view.profile', [])
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userCommits = results;
-		 console.log($scope.userCommits);
 	});
 
-	usersService.getUserNews($localStorage.account.userId).then(function(results) {
+	usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userNews = results;

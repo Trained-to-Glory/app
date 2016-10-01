@@ -1,0 +1,81 @@
+.feed-view
+{
+	background-color: $feed-bg;
+	color: $feed-color;
+
+	.feed-card
+	{
+		margin: 0px;
+	  margin-bottom: 25px;
+	  padding: 0px;
+	  box-shadow: none;
+	  border-radius: 0px;
+	  border: none;
+
+		.image-row
+		{
+			.main-image img
+			{
+				width: 100%;
+			}
+		}
+
+		.details-row
+		{
+			margin: 0px;
+			padding: 10px;
+			padding-bottom: 2px;
+
+			.avatar-image img
+			{
+				width: 100%;
+				border-radius: 50%;
+			}
+
+			.dish-name
+			{
+				white-space: normal;
+				text-align: center;
+				font-size: 15px;
+  			font-weight: normal;
+				margin: 0px;
+				margin-left: 5px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				letter-spacing: 1px;
+				color: $feed-color;
+			}
+		}
+
+		.chef-name
+		{
+			text-align: center;
+	    font-size: 11px;
+	    font-weight: 400;
+			letter-spacing: 1px;
+			margin-top: 0px;
+			color: $feed-color;
+		}
+
+		.dish-tags
+		{
+			margin: 0px 10px;
+			display: inline-block;
+
+			.dish-tag
+			{
+				text-transform: uppercase;
+				color: $feed-alt-color;
+				font-size: 12px;
+				float: left;
+				margin-left: 8px;
+				letter-spacing: 1px;
+
+				&:first-child
+				{
+					margin: 0px;
+				}
+			}
+		}
+	}
+}

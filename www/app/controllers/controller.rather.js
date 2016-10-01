@@ -1,5 +1,5 @@
 angular.module('module.view.rather', [])
-	.controller('ratherCtrl', function($scope,$rootScope,$state,interestService,userInterestService,$localStorage, engagementService) {
+	.controller('ratherCtrl', function($scope,$rootScope,$state,interestService,$localStorage, engagementService) {
 		$scope.data = {};
 		console.log('prevScope', $state.prevScope);
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;

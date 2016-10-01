@@ -1,5 +1,5 @@
 angular.module('module.view.post', [])
-	.controller('postCtrl', function($scope,$rootScope,$state,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
+	.controller('postCtrl', function($scope,$rootScope,$state,appointmentsService,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
 		console.log($stateParams);
 
 		$scope.postId = $stateParams.post;
@@ -32,23 +32,20 @@ angular.module('module.view.post', [])
 						categoryId: $stateParams.post
 					}
 					engagementService.totalLikes(data).then(function(totalLikes){
-						console.log({totalLikes: totalLikes});
 						results.totalLikes = totalLikes;
 					});
 
 					engagementService.totalComments(data).then(function(totalComments){
-						console.log({totalComments: totalComments});
 						results.totalComments = totalComments;
 						$scope.commentMode = !!totalComments;
 					});
-
 
 					$scope.post = results;
 				});
 			}
 
 		if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
-      	$stateParams.post === null ? $scope.post = postService.getPost() : $scope.post = $stateParams.post;
+      	$stateParams.post === null ? $scope.post = postService.get() : $scope.post = $stateParams.post;
       }
 
         $scope.share = function (post) {

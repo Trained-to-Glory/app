@@ -6,33 +6,25 @@
          </button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header bt-grey profile" scroll="false">
-        <div class="row text-center" style="background:white;">
-            <div class="col font-thin" ui-sref="tabs.news">Browse</div>
-            <div class="col font-thin" ui-sref="tabs.match">Match</div>
-            <div class="col font-thin" ui-sref="tabs.account">Profile</div>
-        </div>
+    <ion-content class="has-header bt-grey profile" scroll="true">
 
-        <div class="list" style="height:95%; overflow:scroll">
-            <!-- * photos / photos user -->
-            <div class="photos">
-                <div class="row" ng-repeat = "ab in abs track by $index">
-                    <div class="col"  ng-click="gotoContacts()">
-                        <div class="item item-image profile">
-                            <!-- * cont-photo / container photo -->
-                            <div class="cont-photo">
-                                <!-- * img / photo -->
-                                <div class = "img" style="background-image:url({{ab.photo}});"></div>
-                                <!-- * bg-color / background color -->
-                                <div class="bg-color dance" style="background-image: url({ab.icon});"></div>
-                            </div>
-                            <!-- * photos-actions / photos actions -->
-                            <div class="photo-actions"> {{ab.label}}
-                            </div>
-                        </div>
+          <div class="row row-no-padding category-2-outer" ng-repeat = "ab in abs track by $index">
+            <div class="col">
+              <a ui-sref="tabs.contacts({activity:ab.id})">
+                <div class="category-2-item-wrapper">
+                  <div class="category-2-item-content">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
+                      <img bg="" class="multi-bg category-with-image">
+                      <span class="bg-overlay"></span>
+                      <h1 class="category-heading">
+                        <span><img ng-src="{{ab.icon}}"></span>
+                        <span style="border-bottom: 1px solid;">{{ab.label}}</span>
+                      </h1>
                     </div>
+                  </div>
                 </div>
-              </div>
+              </a>
+            </div>
           </div>
 
     </ion-content>

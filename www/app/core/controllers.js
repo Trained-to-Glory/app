@@ -15,6 +15,7 @@
         'module.view.signup',
         'module.view.rather',
         'module.view.news',
+        'module.view.meetup',
         'module.view.planView',
         'module.view.post',
         'module.view.commits',

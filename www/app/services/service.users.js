@@ -70,18 +70,18 @@ angular.module('service.users', [])
          });
    };
 
-   this.getUserNews = function (userId) {
-       var myPostsPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
-       return myPostsPromise.once('value').then(function (snapshot) {
+   this.getPartnerPosts = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
              var obj = {};
-             var myNews = snapshot.val();
-             if (myNews) {
-                var postsPromise = firebase.database().ref(['accounts'].join('/'));
-                return postsPromise.once('value').then(function(snapshot){
-                  var posts = snapshot.val();
-                  if(posts){
-                    for(var key in myNews){
-                      obj[key] = posts[key];
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['accounts'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key].posts;
                     }
                     return obj;
                   }
@@ -136,8 +136,6 @@ angular.module('service.users', [])
       return d; // returns the distance in miles
     };
 
-
-
     this.getAllAccounts().then(function(results){
       var myLocation = results[userId].location;
         if(myLocation){
@@ -148,8 +146,6 @@ angular.module('service.users', [])
           }
       }
     });
-
-
    };
 
    this.getUserTotalPartners = function(userId){
@@ -178,8 +174,7 @@ angular.module('service.users', [])
    };
 
    this.logo = function(){
-     var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/TTG-Symbol-2015-02.png?alt=media&token=b10c70be-92a1-47af-84c4-ab82500922fb';
-     console.log(ttgLogo);
+     var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=8459468a-c1df-41dc-9645-a10582b0656d';
      $localStorage.account.userPhoto = ttgLogo;
      var ref = firebase.database().ref('accounts');
      ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
