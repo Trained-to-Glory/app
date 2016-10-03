@@ -16,6 +16,23 @@
     background-color: transparent;
 }
 
+.category-2-outer .category-2-item-wrapper.notifications {
+    padding-top: 33.33%;
+    height: 0px;
+    position: relative;
+}
+
+.multi-bg-outer .bg-overlay.notifications{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #111;
+  z-index: -1;
+  opacity: 0.6;
+}
+
 .multi-bg-outer {
     position: relative;
     background-color: rgba(199, 199, 199, 0.7);
@@ -75,8 +92,13 @@
 }
 
 .category-2-outer {
-    padding: 1px 0px;
-    margin: 0px;
+    padding: none;
+    margin: none;
+}
+
+.button-block.button-login.button-positive{
+  border-color: #F10707;
+  background-color: #F10707;
 }
 
 .category-2-outer .category-2-item-wrapper .category-heading .subtitle {
@@ -87,10 +109,10 @@
 /* Empty. Add your own CSS if you like */
 /*login*/
 .above_div{
-	height:75%;
+	height:100vh;
 	background:url(../img/TTG-CollageImage.png)no-repeat;
 	background-size:100% 100%;
-	position:relative
+	position:relative;
 	}
 
 	[collection-repeat] {
@@ -99,10 +121,13 @@
 	    position: absolute !important;
 	    z-index: 1;
 	}
-.logo img{
-	  width: 205px;
-    margin-top: 74px;
-	}
+
+  .logo img {
+      width: 82px;
+      margin-top: 7px;
+      position: absolute;
+  }
+
 .above_div form{
 	position:absolute;
 	bottom:0;

@@ -23,9 +23,7 @@ angular.module('module.view.event', [])
 					category: 'post',
 					postId: $stateParams.post
 				}
-				console.log(data);
 				$scope.post = results;
-				console.log($scope.post);
 			});
 		}
 

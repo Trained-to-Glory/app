@@ -1,4 +1,4 @@
-<ion-view title="Match" scroll="true">
+<ion-view title="Notifications" scroll="true">
 
     <ion-nav-buttons side = "left">
          <button class="button button-icon button-clear button-dark">
@@ -10,11 +10,11 @@
           <div class="row row-no-padding category-2-outer" ng-repeat = "ab in abs track by $index">
             <div class="col">
               <a ui-sref="tabs.contacts({activity:ab.id})">
-                <div class="category-2-item-wrapper">
+                <div class="category-2-item-wrapper notifications">
                   <div class="category-2-item-content">
                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
                       <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay"></span>
+                      <span class="bg-overlay notifications"></span>
                       <h1 class="category-heading">
                         <span><img ng-src="{{ab.icon}}"></span>
                         <span style="border-bottom: 1px solid;">{{ab.label}}</span>

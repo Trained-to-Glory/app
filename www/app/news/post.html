@@ -34,20 +34,16 @@
                 </p>
                 </div>
                 <div class="item comments no-b">
-                    <div class="item item-avatar" ng-if="post.comments"ng-repeat="comment in post.comments" >
-                        <img ng-src="{{comment.photo}}"/>
-                        <h2 class="text-small">{{comment.name}}</h2>
-                    <p class="text-smaller">{{comment.text}}</p>
-
+                    <div class="item item-avatar" ng-repeat="comment in comments" ng-if="comment">
+                        <img ng-src="{{comment.userPhoto}}"/>
+                        <h2 class="text-small">{{comment.userName}}</h2>
+                    <p class="text-smaller">{{comment.comment}}</p>
                     </div>
-                    <p ng-if="!post.comments && !commentMode">No comments. be the first to <a ng-click="activateCommentMode()">leave a comment</a></p>
-                    <ul>
-                      <li>
-                      </li>
-                    </ul>
-                    <textarea ng-model="commentText" ng-if="commentMode">
-                    </textarea>
-                    <button ng-click="createComment('post', postId, 'commentText')" ng-if="commentMode">submit</button>
+                    <p ng-if="!comment && !commentMode">No comments. be the first to <a ng-click="activateCommentMode()">leave a comment</a></p>
+                    <div class="input-field col" ng-if="commentMode">
+                    <input type="text" ng-model="word.comment">
+                  </div>
+                    <button ng-click="createComment('post',postId,profile.userId,word.comment)" ng-if="commentMode">submit</button>
                     <button ng-click="deactivateCommentMode()" ng-if="commentMode">cancel</button>
                 </div>
             </div>

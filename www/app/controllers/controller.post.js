@@ -75,15 +75,63 @@ angular.module('module.view.post', [])
         	$state.go('tabs.friend');
         }
 
-				$scope.createComment = function(category, categoryId,  commentText){
-					var data = {
-						category: 'event',
-						categoryId: categoryId,
-						userId: $localStorage.account.userId,
-						comment: commentText
-					}
-					return engagementService.createComment(data);
+				$scope.toggleCommit = function(postId, userId){
+          var posts = $scope.news.items;
+          $log.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
+          if(postId in posts){
+            var post = $scope.news.items[postId];
+            var actionable = post.state.actionable;
+            if(actionable){
+              post.committed = !post.committed;
+              var state = (post.committed)?'commit':'decommit';
+              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+            }
+          }
+            return false;
+        };
+
+				$scope.toggleLike = function(postId, userId){
+          var posts = $scope.news.items;
+          if(postId in posts){
+            var post = $scope.news.items[postId];
+            var actionable = post.state.actionable;
+            if(actionable){
+              post.liked = !post.liked;
+              var state = (post.liked)?'like':'unlike';
+              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+            }
+          }
+            return false;
+        };
+
+
+				$scope.profile = $localStorage.account;
+
+				//type, category, categoryId, itemId, userId, comment,
+				$scope.createComment = function(){
+					var obj = {
+							"comment": $scope.post.comment,
+							"created": firebase.database.ServerValue.TIMESTAMP,
+							"userPhoto": $localStorage.account.userPhoto || '',
+							"userName": $localStorage.account.userName,
+							"state": {
+									"actionable": true,
+									"visible": true,
+									"active": true
+							}
+					};
+					var db = firebase.database().ref('engagementComments');
+					var userId = firebase.auth().currentUser.uid;
+				 // Write the new post's data simultaneously in the posts list and the user's post list.
+					 var updates = {};
+					 updates['/engagementComments/' + $stateParams.post + '/' + userId] = obj;
+					 updates['/accounts/' + userId + '/engagementComments/' + $stateParams.post + '/' + userId] = obj;
+					 return firebase.database().ref().update(updates);
 				};
+
+				postService.getPostComments().then(function(results) {
+					$scope.comments = results[$stateParams.post];
+				});
 
 				$scope.activateCommentMode = function(){
 					$scope.commentMode = true;

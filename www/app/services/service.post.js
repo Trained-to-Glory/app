@@ -1,5 +1,5 @@
 angular.module('service.post', [])
-    .service('postService', function ($localStorage) {
+    .service('postService', function ($localStorage, $q) {
 
         this.get = function (postId) {
             var posts = (postId) ? firebase.database().ref('posts/' + postId) : firebase.database().ref('posts');
@@ -56,7 +56,69 @@ angular.module('service.post', [])
               });
         };
 
+        this.getPostComments = function (postId,userId) {
+            var comments = (userId) ? firebase.database().ref(['engagementComments', postId , userId].join('/')) : firebase.database().ref('engagementComments');
+            return comments.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
+        this.getPostCommits = function (postId) {
+            var myPostsPromise = firebase.database().ref(['engagementCommits', 'post', postId].join('/'));
+            return myPostsPromise.once('value').then(function (snapshot) {
+                  var obj = {};
+                  var myPosts = snapshot.val();
+                  if (myPosts) {
+                     var postsPromise = firebase.database().ref('accounts');
+                     return postsPromise.once('value').then(function(snapshot){
+                       var posts = snapshot.val();
+                       if(posts){
+                         for(var key in myPosts){
+                           obj[key] = posts[key];
+                         }
+                         return obj;
+                       }
+                       return obj;
+                     });
+                      return obj;
+                  }
+                  return obj;
+              });
+        };
+
+        this.getPostLikes = function (postId) {
+            var myPostsPromise = firebase.database().ref(['engagementLikes', 'post', postId].join('/'));
+            return myPostsPromise.once('value').then(function (snapshot) {
+                  var obj = {};
+                  var myPosts = snapshot.val();
+                  if (myPosts) {
+                     var postsPromise = firebase.database().ref('accounts');
+                     return postsPromise.once('value').then(function(snapshot){
+                       var posts = snapshot.val();
+                       if(posts){
+                         for(var key in myPosts){
+                           obj[key] = posts[key];
+                         }
+                         return obj;
+                       }
+                       return obj;
+                     });
+                      return obj;
+                  }
+                  return obj;
+              });
+        };
+
         this.create = function (data) {
+          if(!data || !data.postType ){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             //create a location in the table
             var obj = {
                 // "typeId": data.postTypeId || '',
@@ -64,13 +126,13 @@ angular.module('service.post', [])
                 // "imageFilePath": data.filePath || '',
                 "photo": data.photo || '',
                 "mustHaves": data.mustHaves || '',
-                "description": data.description,
+                "description": data.description || '',
                 "created": firebase.database.ServerValue.TIMESTAMP,
                 "createdBy": $localStorage.account.userId,
                 "owner": $localStorage.account.userName,
                 "avatar": $localStorage.account.userPhoto,
-                "location": data.location,
-                "time": data.time,
+                "location": data.location || '',
+                "time": data.time || '',
                 "date": data.date || '',
                 "postType": data.postType,
                 "state": {
@@ -93,12 +155,16 @@ angular.module('service.post', [])
         };
 
         this.createPlan = function (data) {
+          if(!data || !data.postType || !data.title ||!data.description){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             var obj = {
                 // "typeId": data.postTypeId || '',
                 // "activityId": data.activityId || '',
                 "title": data.title || '',
                 "photo": data.photo || '',
-                "notes": data.notes || '',
                 "description": data.description,
                 "created": firebase.database.ServerValue.TIMESTAMP,
                 "createdBy": $localStorage.account.userId,
@@ -123,6 +189,11 @@ angular.module('service.post', [])
         };
 
         this.updatePlan = function (data, planId) {
+          if(!data || !data.postType || !data.title || !data.description){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             var plans = firebase.database().ref('plans/' + planId);
             return plans.once('value').then(function (snapshot) {
                 var currentObj = snapshot.val();
@@ -131,7 +202,6 @@ angular.module('service.post', [])
                         "description": data.description ? data.description : currentObj.description,
                         "title": data.title ? data.title : currentObj.title,
                         "photo": data.photo ? data.photo : currentObj.photo,
-                        "notes": data.notes ? data.notes : currentObj.notes,
                         "time": data.time ? data.time : currentObj.time,
                         "postType": data.postType ? data.postType : currentObj.postType,
                         "created": data.created ? data.created : currentObj.created,
@@ -145,7 +215,57 @@ angular.module('service.post', [])
             });
         };
 
+        this.createComment = function (data) {
+            var obj = {
+                // "typeId": data.postTypeId || '',
+                // "activityId": data.activityId || '',
+                "comment": data.comment || '',
+                "created": firebase.database.ServerValue.TIMESTAMP,
+                "createdBy": $localStorage.account.userId,
+                "userPhoto": $localStorage.account.userPhoto || '',
+                "state": {
+                    "actionable": true,
+                    "visible": true,
+                    "active": true
+                }
+            };
+            var db = firebase.database().ref('comments');
+            var postsKey = db.push(obj).key;
+            var userId = firebase.auth().currentUser.uid;
+
+           // Write the new post's data simultaneously in the posts list and the user's post list.
+             var updates = {};
+             updates['/comments/' + postsKey] = obj;
+             updates['/accounts/' + userId + '/comments/' + postsKey] = obj;
+             return firebase.database().ref().update(updates);
+        };
+
+        this.updateComment = function (data, postId) {
+            var posts = firebase.database().ref('engagementComments/' + postId);
+            return posts.once('value').then(function (snapshot) {
+                var currentObj = snapshot.val();
+                if (currentObj) {
+                    var obj = {
+                        // "photo": data.photo ? data.photo : currentObj.photo,
+                        // "mustHaves": data.mustHaves ? data.mustHaves : currentObj.mustHaves,
+                        "comment": data.comment ? data.comment : currentObj.comment,
+                        "created": data.created ? data.created : currentObj.created,
+                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
+                        "createdBy": data.createdBy ? data.createdBy : currentObj.createdBy
+                    };
+                    return posts.update(obj);
+                }
+                return null;
+            });
+        };
+
         this.createAppointment = function (data) {
+          if(!data || !data.type || !data.title){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
+
             var obj = {
                 // "typeId": data.postTypeId || '',
                 // "activityId": data.activityId || '',
@@ -179,6 +299,11 @@ angular.module('service.post', [])
         };
 
         this.updateAppointment = function (data, postId) {
+          if(!data || !data.type || !data.title || !data.description){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             var posts = firebase.database().ref('posts/' + postId);
             return posts.once('value').then(function (snapshot) {
                 var currentObj = snapshot.val();
@@ -189,6 +314,7 @@ angular.module('service.post', [])
                         "description": data.description ? data.description : currentObj.description,
                         "location": data.location ? data.location : currentObj.location,
                         "title": data.title ? data.title : currentObj.title,
+                        "type": data.type ? data.type : currentObj.type,
                         "phone": data.phone ? data.phone : currentObj.phone,
                         "notes": data.notes ? data.notes : currentObj.notes,
                         "startAt": data.startAt ? data.startAt : currentObj.startAt,
@@ -205,6 +331,11 @@ angular.module('service.post', [])
         };
 
         this.update = function (data, postId) {
+          if(!data || !data.postType || !data.description){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             var posts = firebase.database().ref('posts/' + postId);
             return posts.once('value').then(function (snapshot) {
                 var currentObj = snapshot.val();

@@ -1,5 +1,5 @@
 angular.module('module.view.comments', [])
-	.controller('commentsCtrl', function($scope,$rootScope,$state,$localStorage, postService,conversationService,$stateParams,$timeout,$ionicHistory) {
+	.controller('commentsCtrl', function($scope,$rootScope,$state,$localStorage, postService,appService,$stateParams,$timeout,$ionicHistory) {
 				$scope.profile = $localStorage.account;
 				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -18,6 +18,10 @@ angular.module('module.view.comments', [])
                         $state.go(ui_sref);
                     }
         };
+
+				postService.getPostComments($stateParams.post).then(function(results) {
+					$scope.comments = results;
+				});
 
         $scope.news = {
                     type: 'image',
@@ -46,18 +50,18 @@ angular.module('module.view.comments', [])
         };
 
          $scope.sendChat = function (item) {
-                    conversationService.KeepKeyboardOpen('#textChat');
+                    appService.KeepKeyboardOpen('#textChat');
                     var message = {
                         sentAt: new Date(),
 												name: $localStorage.userName,
-                        photo: $localStorage.userThumbnail,
+                        photo: $localStorage.userPhoto,
 												text: item,
                         senderid: $localStorage.account.userId
                     };
 
                     $timeout(function () {
                         $scope.chat.messages.push(message);
-                        conversationService.KeepKeyboardOpen('#textChat');
+                        appService.KeepKeyboardOpen('#textChat');
                         viewScroll.scrollBottom(true);
                     }, 0);
 
@@ -72,7 +76,7 @@ angular.module('module.view.comments', [])
                             senderid: $scope.chat.recepientid
                         });
 
-                        conversationService.KeepKeyboardOpen('#textChat');
+                        appService.KeepKeyboardOpen('#textChat');
                         viewScroll.scrollBottom(true);
                     }, 2000);
             }

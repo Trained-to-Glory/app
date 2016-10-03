@@ -91,6 +91,7 @@ angular.module('full_starter.routes', [])
         }
       })
 
+
       .state('tabs.account', {
         url: '/account',
         params: { account: null },
@@ -113,6 +114,17 @@ angular.module('full_starter.routes', [])
         }
       })
 
+      .state('tabs.communicate', {
+        url: '/communicate',
+        params: { contact: null },
+        views: {
+          'menuContent': {
+            templateUrl: 'app/settings/communicate.html',
+            controller: 'communicateCtrl'
+          }
+        }
+      })
+
       .state('tabs.leader', {
         url: '/leader',
         views: {
@@ -125,7 +137,7 @@ angular.module('full_starter.routes', [])
 
       .state('tabs.post-detail', {
         url: '/post-detail',
-        params: { post: null, mode: null },
+        params: { post: null },
         views: {
           'menuContent': {
             templateUrl: 'app/news/post.html',
@@ -487,6 +499,12 @@ angular.module('full_starter.routes', [])
         controller: 'loginCtrl',
       })
 
+
+      .state('signin', {
+        url: '/signin',
+        templateUrl: 'app/intro/signin.html',
+        controller: 'signinCtrl',
+      })
     $urlRouterProvider.otherwise('/authentication')
 
 

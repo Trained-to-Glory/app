@@ -47,11 +47,22 @@ describe('Service: appointmentsService', function () {
     it('get should be defined', function () {
         expect(this.appointmentsService.get).toBeDefined();
     });
+
     it('this.create should return', function () {
       var data;
-      this.appointmentsService.create(data).then(function(result){
-        expect(result).toBeDefined();
-        console.log(result);
+      this.appointmentsService.create(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.update should return', function () {
+      var data;
+      this.appointmentsService.update(data).then(function(results){
+        expect(results).toBeDefined();
       }, function(){
         failure('did not expect the failure call back to be called');
       }).catch(function(){

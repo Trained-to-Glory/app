@@ -40,7 +40,10 @@ angular.module('module.view.match', [])
                         $state.go(ui_sref);
                     }
           }
-				console.log($stateParams);
+
+					$rootScope.likesPictures=[{img:"img/forest-likes.jpg"},{img:"img/water-likes.jpg"},{img:"img/jetty-likes.jpg"},{img:"img/city-likes.jpg"},{img:"img/mountain-likes.jpg"}];
+					$rootScope.commitsPictures=[{img:"img/sunset-commits.jpg"},{img:"img/city-commits.jpg"},{img:"img/mountain-commits.jpg"},{img:"img/western-tatras-commits.jpg"},{img:"img/woods-commits.jpg"}];
+					$rootScope.commentsPictures=[{img:"img/island-comments.jpg"},{img:"img/lake-comments.jpg"},{img:"img/foggy-comments.jpg"},{img:"img/sea-comments.jpg"},{img:"img/cloud-comments.jpg"}];
 
 					$scope.getInterest = function(id){
 						return interestService.get(id);
@@ -56,13 +59,9 @@ angular.module('module.view.match', [])
 								icon: results[key].icon
 							});
 						}
-						console.log({data: interests});
 						$scope.abs = interests;
 					}, function(error){
-						console.log(error);
 					}).catch(function(error){
-						console.log('catch');
-						console.log(error);
 					});
 
 

@@ -3,7 +3,6 @@ angular.module('module.view.reminders', [])
 
 	postService.getUserAppointments($localStorage.account.userId).then(function(results) {
 		$scope.reminders = results;
-		console.log($scope.reminders);
 	});
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
@@ -13,7 +12,6 @@ angular.module('module.view.reminders', [])
 	});
 
 	$scope.profile = $localStorage.account;
-	console.log($localStorage);
 
 	$scope.delete = function (id) {
 			return postService.deleteAppointment(id);

@@ -139,7 +139,6 @@ angular.module('service.interest', [])
 
 
 	  this.get = function(id){
-      console.log('in interest.get');
       var intresets = (id) ? firebase.database().ref('interest/' + id) : firebase.database().ref('interest');
       return intresets.once('value').then(function (snapshot) {
           var currentObj = snapshot.val();
@@ -173,7 +172,6 @@ angular.module('service.interest', [])
     };
 
     this.getTrainers = function(id){
-      console.log('in interest.getTrainer');
       var intresetTrainer = (id) ? firebase.database().ref('trainersInterest/' + id) : firebase.database().ref('trainersInterest/');
       return intresetTrainer.once('value').then(function (snapshot) {
           var currentObj = snapshot.val();

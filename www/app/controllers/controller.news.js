@@ -50,7 +50,6 @@ angular.module('module.view.news', [])
             $state.go('tabs.match');
             $scope.$on("$ionicView.leave", function(event, data){
                // handle event
-               console.log("State Params: ", data.stateParams);
             });
         };
 
@@ -121,11 +120,11 @@ angular.module('module.view.news', [])
         usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
           //create a local object so we can create the datastructure we want
           //so we can use it to show/hide, toggle ui items
-          var news = {
+          var classicPartner = {
               type: 'classic',
               items: results
           };
-          for(var id in news.items){
+          for(var id in classicPartner.items){
            //check to see if there is a like on this post
             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
               news.items[id].liked = liked;
@@ -141,17 +140,17 @@ angular.module('module.view.news', [])
             });
           }
           //make it available to the directive to officially show/hide, toggle
-          $scope.news = news;
+          $scope.classicPartner = classicPartner;
         });
 
         usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
           //create a local object so we can create the datastructure we want
           //so we can use it to show/hide, toggle ui items
-          var news = {
+          var uncutPartner = {
               type: 'uncut',
               items: results
           };
-          for(var id in news.items){
+          for(var id in uncutPartner.items){
            //check to see if there is a like on this post
             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
               news.items[id].liked = liked;
@@ -167,17 +166,17 @@ angular.module('module.view.news', [])
             });
           }
           //make it available to the directive to officially show/hide, toggle
-          $scope.news = news;
+          $scope.uncutPartner = uncutPartner;
         });
 
         usersService.getUserPost($localStorage.account.userId).then(function(results) {
           //create a local object so we can create the datastructure we want
           //so we can use it to show/hide, toggle ui items
-          var news = {
+          var classicUser = {
               type: 'classic',
               items: results
           };
-          for(var id in news.items){
+          for(var id in classicUser.items){
            //check to see if there is a like on this post
             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
               news.items[id].liked = liked;
@@ -193,17 +192,17 @@ angular.module('module.view.news', [])
             });
           }
           //make it available to the directive to officially show/hide, toggle
-          $scope.news = news;
+          $scope.classicUser = classicUser;
         });
 
         usersService.getUserPost($localStorage.account.userId).then(function(results) {
           //create a local object so we can create the datastructure we want
           //so we can use it to show/hide, toggle ui items
-          var news = {
+          var view = {
               type: 'item',
               items: results
           };
-          for(var id in news.items){
+          for(var id in view.items){
            //check to see if there is a like on this post
             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
               news.items[id].liked = liked;
@@ -219,17 +218,17 @@ angular.module('module.view.news', [])
             });
           }
           //make it available to the directive to officially show/hide, toggle
-          $scope.news = news;
+          $scope.view = view;
         });
 
          usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
            //create a local object so we can create the datastructure we want
            //so we can use it to show/hide, toggle ui items
-           var news = {
+           var partnerPost = {
                type: 'image',
                items: results
            };
-           for(var id in news.items){
+           for(var id in partnerPost.items){
             //check to see if there is a like on this post
              engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
                news.items[id].liked = liked;
@@ -245,7 +244,7 @@ angular.module('module.view.news', [])
              });
            }
            //make it available to the directive to officially show/hide, toggle
-           $scope.news = news;
+           $scope.partnerPost = news;
 
          });
 

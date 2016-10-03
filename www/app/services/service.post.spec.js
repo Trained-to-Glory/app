@@ -104,4 +104,70 @@ describe('Service: postService', function () {
         expect(this.postService.getRandomObject).toBeDefined();
     });
 
+    it('this.create should return', function () {
+      var data;
+      this.postService.create(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.createPlan should return', function () {
+      var data;
+      this.postService.createPlan(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.createAppointment should return', function () {
+      var data;
+      this.postService.createAppointment(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.updatePlan should return', function () {
+      var data;
+      this.postService.updatePlan(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.updateAppointment should return', function () {
+      var data;
+      this.postService.updateAppointment(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
+    it('this.update should return', function () {
+      var data;
+      this.postService.update(data).then(function(results){
+        expect(results).toBeDefined();
+      }, function(){
+        failure('did not expect the failure call back to be called');
+      }).catch(function(){
+        failure('did not expect the catch method to be called');
+      })
+    });
+
 });

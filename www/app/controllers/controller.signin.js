@@ -1,5 +1,5 @@
-angular.module('module.view.login', [])
-  .controller('loginCtrl', function ($scope, $ionicPopup, $rootScope, $state, $ionicModal, postService, $ionicLoading,$firebaseAuth, $timeout, $localStorage, Utils, $cordovaOauth, Popup, Social) {
+angular.module('module.view.signin', [])
+  .controller('signinCtrl', function ($scope, $ionicPopup, $rootScope, $state, $ionicModal, postService, $ionicLoading,$firebaseAuth, $timeout, $localStorage, Utils, $cordovaOauth, Popup, Social) {
     $scope.$on('$ionicView.enter', function () {
       //Clear the Login Form.
       $scope.user = {

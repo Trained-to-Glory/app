@@ -43,6 +43,11 @@ angular.module('service.appointments', [])
         };
 
         var update = function (data) {
+          if(!data || !data.type || !data.title){
+            var deferred = $q.defer();
+            deferred.reject(false);
+            return deferred.promise;
+          }
             //reference to data record
             var refId = [table, data.id].join('/');
             //firebase db promise to top level data object.

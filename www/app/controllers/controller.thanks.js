@@ -20,13 +20,15 @@ angular.module('module.view.thanks', [])
     };
 	// Stripe Response Handler
 		$scope.stripeCallback = function (code, result) {
+			$localStorage.account.currentPaymentId = 'professional';
+			console.log(arguments);
 		    if (result.error) {
 		      $log.log('it failed! error: ' + result.error.message);
 		    } else {
-						$http.post('https://cryptic-castle-62840.herokuapp.com/stripe/charge', {token: result.id}).then(function(result){
-							console.log(result);
+						$http.post('https://cryptic-castle-62840.herokuapp.com/stripe/charge', {token: result.id, paymentId:$localStorage.account.currentPaymentId }).then(function(result){
+							$log.log(result);
 						},function(error){
-							console.log(error);
+							$log.log(error);
 						});
 		        $log.log('success! token: ' + result.id);
 		    }

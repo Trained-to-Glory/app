@@ -7,40 +7,12 @@
 
     <ion-content class="list_page" scroll="false">
         <div class="row text-center">
-          <div class="col font-thin" ng-class="news.type === 'classic' ? 'text-large balanced' : ''" ng-click="news.type = 'classic'">Event</div>
-          <div class="col font-thin" ng-class="news.type === 'image' ? 'text-large balanced' : ''" ng-click="news.type = 'image'">Regular</div>
+          <div class="col font-thin" ng-class="news.type === 'classic' ? 'text-large balanced' : ''">Event</div>
+          <div class="col font-thin" ng-class="news.type === 'image' ? 'text-large balanced' : ''">Regular</div>
         </div>
 
-        <!-- <div style="height:95%; overflow:scroll" class="bg-lightgrey">
-            <div ng-if="news.type === 'image'" ng-repeat="(partnerId, posts) in news.items">
-                <div class="card image" ng-repeat="(postId, post) in posts" ng-if="post.state.visible">
-                    <div class="item item-image">
-                        <img ng-src="{{post.image}}">
-                        <span class="interact">
-                            <i class="icon ion-checkmark-round" ng-class="{'calm': post.committed, 'light': !post.committed }" ng-click="toggleCommit(key,userId)"> {{value.totalCommits}}</i>
-                            <i class="icon ion-heart" ng-class="{'calm': post.liked, 'light': !post.liked }" ng-click="toggleLike(key, userId)"> {{value.totalLikes}}</i>
-                            <i class="icon ion-ios-chatbubble light"> {{post.comments.length}}</i>
-                        </span>
-                        <img ng-src="{{post.photo}}">
-                        <div class="item item-avatar" ui-sref="tabs.post-detail({post:key})">
-                            <img ng-src="{{post.sourceLogo}}">
-                            <h2>{{post.owner}}</h2>
-                            <p>{{ post.postType | uppercase }}</p>
-                            <p>{{post.description}}</p>
-                            <p>{{ post.location }}</p>
-                            <p class="text-smaller" am-time-ago="{{}}">{{ post.date | date}} : {{ value.time }}</p>
-                        </div>
-                        <i class="icon ion-minus-circled" ng-click="delete(key)"></i>
-                        <i class="icon ion-edit" ng-if="!post.post" ui-sref="tabs.event({post:key, mode:'edit'})"></i>
-                        <i class="icon ion-edit" ng-if="post.post" ui-sref="tabs.regular({post:key, mode:'edit'})"></i>
-
-                    </div>
-                </div>
-            </div>
-
-        </div> -->
-        <div class="card feed-card" ng-repeat="(key,posts) in news.items" ng-if="news.type =='classic' && posts.postType == 'post'">
-            <div class="row row-no-padding image-row" ng-repeat="post in posts" ng-if="post.state.visible && post.postType == 'post'">
+        <div class="card feed-card" ng-repeat="(key,posts) in view.items">
+            <div class="row row-no-padding image-row" ng-if="posts.state.visible">
               <div class="col">
                 <pre-img ratio="_32_21" helper-class="main-image">
                   <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">

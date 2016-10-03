@@ -29,25 +29,40 @@ angular.module('module.view.commits', [])
                 });
 
         if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
-            $stateParams.post === null ? $scope.post = postService.getRandomObject($scope.news.items) : $scope.post = $stateParams.post;
-
+					$stateParams.post === null ? $scope.post = postService.get() : $scope.post = $stateParams.post;
         }
 
-		$scope.gotoLikes = function () {
-                    $state.go('tabs.likes');
-                    $ionicHistory.nextViewOptions({
-                        disableAnimate: true,
-                        disableBack: true
-                    });
+				$scope.gotoLikes = function () {
+              $state.go('tabs.likes');
+              $ionicHistory.nextViewOptions({
+                  disableAnimate: true,
+                  disableBack: true
+              });
         };
 
         $scope.gotoComments = function () {
-                    $state.go('tabs.comments');
-                    $ionicHistory.nextViewOptions({
-                        disableAnimate: true,
-                        disableBack: true
-                    });
+            $state.go('tabs.comments');
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true,
+                disableBack: true
+            });
         };
+
+				$scope.gotoCommits = function () {
+            $state.go('tabs.commits');
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true,
+                disableBack: true
+            });
+        };
+
+				postService.getPostCommits($stateParams.post).then(function(results) {
+					//create a local object so we can create the datastructure we want
+					//so we can use it to show/hide, toggle ui items
+					var commits = results;
+					//make it available to the directive to officially show/hide, toggle
+					$scope.commits = commits;
+				});
 
        $scope.like = function (post) {
                     post.likes === undefined ? post.likes = [] : null;

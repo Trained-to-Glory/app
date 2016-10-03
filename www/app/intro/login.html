@@ -1,26 +1,34 @@
-<ion-modal-view hide-nav-bar="true"  class="auth">
 
-
-    <ion-content scroll="false">
-        <div ng-form="login_form" class="padding text-center"  name="loginForm" ng-submit="loginForm.$valid && login(user)" novalidate>
-         <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
-            <ion-list>
-                <label class="item item-input">
-                    <i class="icon ion-android-person placeholder-icon"></i>
-                    <input type="email" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
-                </label>
-                <label class="item item-input">
-                    <i class="icon ion-android-lock placeholder-icon"></i>
-                    <input type="password" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
-                </label>
-                <input type="submit" class="button button-block button-positive" value="Login" ng-disabled="loginForm.$invalid">
-            </ion-list>
-            </form>
+    <ion-content cache-view="false" scroll="false" class="auth">
+      <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
+        <div class="col">
+            <div class="category-2-item-wrapper">
+              <div class="category-2-item-content">
+                <div class="row text-center" style="color: white;bottom: 0;position: absolute;">
+                  <div class="col font-thin" ng-click="login.type = 'signUp'">Sign Up</div>
+                  <div class="col font-thin" ng-click="login.type = 'signIn'" ng-click="signIn()">Sign In</div>
+                </div>
+                <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/juggler.jpg);">
+                  <div class="logo">
+                    <img src = "img/TTG-Symbol-2015-02.png">
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
+      </div>
 
-        <p class="padding-horizontal">
-            <span class="balanced pull-left" ng-click="closeLogin();openForgot();">Forgot password</span>
-            <span class="dark pull-right" ng-click="closeLogin()">Close</span>
-        </p>
+      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">
+      <div class="row" style="width: 70%;border-bottom: 1px solid silver;margin:auto;">
+        <label class="item item-input" style="border: none; margin-top:2px; text-align:center">
+          <input type="email" style="text-align:center;margin-left:5vh;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>
+        </label>
+      </div>
+      <div class="row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">
+        <label class="item item-input" style="border: none; margin-top:2px; text-align:center">
+          <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>
+        </label>
+      </div>
+      <input type="submit" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 95px;;margin-top: 4vh; display:block;">
+    </div>
     </ion-content>
-</ion-modal-view>

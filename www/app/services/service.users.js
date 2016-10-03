@@ -93,6 +93,29 @@ angular.module('service.users', [])
          });
    };
 
+   this.getUserPostsLikes = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['accounts']);
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
    this.getUserTotalCommits = function(userId){
     var count = 0;
      return this.getUserCommits(userId).then(function(results){
@@ -162,7 +185,6 @@ angular.module('service.users', [])
 
 
    this.getAllAccounts = function () {
-     console.log('user hit');
        var users = firebase.database().ref('accounts');
        return users.once('value').then(function (snapshot) {
              var accounts = snapshot.val();
