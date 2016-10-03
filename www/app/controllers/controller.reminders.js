@@ -1,9 +1,31 @@
 angular.module('module.view.reminders', [])
 	.controller('remindersCtrl', function($scope,postService,usersService,$localStorage, $rootScope,$state,$ionicPopover,$ionicModal,appService,engagementService,$localStorage) {
-
 	postService.getUserAppointments($localStorage.account.userId).then(function(results) {
-		$scope.reminders = results;
+		var reminders = {
+			items: results
+		};
+		for(var id in reminders.items){
+		 //check to see if there is a like on this post
+		 engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+			 view.items[id].committed = committed;
+		 });
+		};
+		$scope.reminders = reminders;
 	});
+
+	$scope.toggleCommit = function(postId, userId){
+		var posts = $scope.reminders.items;
+		if(postId in posts){
+			var post = $scope.reminders.items[postId];
+			var actionable = post.state.actionable;
+			if(actionable){
+				post.committed = !post.committed;
+				var state = (post.committed)?'commit':'decommit';
+				return engagementService[state]({category:'schedule', categoryId:postId, userId: $localStorage.account.userId});
+			}
+		}
+			return false;
+	};
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want

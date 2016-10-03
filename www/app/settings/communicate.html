@@ -7,17 +7,74 @@
     </ion-nav-buttons>
 
     <ion-content class="has-header bt-grey profile" scroll="true">
-          <div class="row row-no-padding category-2-outer" ng-repeat = "ab in abs track by $index">
+          <div class="row row-no-padding category-2-outer">
             <div class="col">
-              <a ui-sref="tabs.contacts({activity:ab.id})">
-                <div class="category-2-item-wrapper notifications">
+              <a>
+                <div class="category-1-item-wrapper" ng-repeat = "(key,plan) in userPostsLikes">
                   <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{plan.photo}});">
                       <img bg="" class="multi-bg category-with-image">
                       <span class="bg-overlay notifications"></span>
-                      <h1 class="category-heading">
-                        <span><img ng-src="{{ab.icon}}"></span>
-                        <span style="border-bottom: 1px solid;">{{ab.label}}</span>
+                      <h1 class="category-heading dark">
+                        <span class="main-title">{{plan.userName}}</span>
+                        <span class="subtitle">{{plan.userPhoto }}</span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="row row-no-padding category-2-outer">
+            <div class="col">
+              <a>
+                <div class="category-1-item-wrapper" ng-repeat = "(key,commits) in userPlanCommits">
+                  <div class="category-2-item-content">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{commits.photo}});">
+                      <img bg="" class="multi-bg category-with-image">
+                      <span class="bg-overlay notifications"></span>
+                      <h1 class="category-heading dark">
+                        <span class="main-title">{{commits.userName}}</span>
+                        <span class="subtitle">{{commits.userPhoto }}</span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="row row-no-padding category-2-outer">
+            <div class="col">
+              <a>
+                <div class="category-1-item-wrapper" ng-repeat = "(key,post) in userPostCommits">
+                  <div class="category-2-item-content">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{post.photo}});">
+                      <img bg="" class="multi-bg category-with-image">
+                      <span class="bg-overlay notifications"></span>
+                      <h1 class="category-heading dark">
+                        <span class="main-title">{{post.userName}}</span>
+                        <span class="subtitle">{{post.userPhoto }}</span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="row row-no-padding category-2-outer">
+            <div class="col">
+              <a>
+                <div class="category-1-item-wrapper" ng-repeat = "(key,appointment) in userAppointmentCommits">
+                  <div class="category-2-item-content">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{appointment.photo}});">
+                      <img bg="" class="multi-bg category-with-image">
+                      <span class="bg-overlay notifications"></span>
+                      <h1 class="category-heading dark">
+                        <span class="main-title">{{appointment.userName}}</span>
+                        <span class="subtitle">{{appointment.userPhoto }}</span>
                       </h1>
                     </div>
                   </div>

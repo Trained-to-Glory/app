@@ -1,5 +1,5 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,$log, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -35,11 +35,37 @@ angular.module('module.view.sentPlans', [])
 				            $state.go('tabs.create-plan');
 				        };
 
-								postService.getUserPlans().then(function(results) {
+								$scope.profile = $localStorage.account;
+
+								$scope.toggleCommit = function(postId, userId){
+				          var posts = $scope.view.items;
+				          $log.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
+				          if(postId in posts){
+				            var post = $scope.view.items[postId];
+				            var actionable = post.state.actionable;
+				            if(actionable){
+				              post.committed = !post.committed;
+				              var state = (post.committed)?'commit':'decommit';
+				              return engagementService[state]({category:'plan', categoryId:postId, userId: $localStorage.account.userId});
+				            }
+				          }
+				            return false;
+				        };
+
+								postService.getUserPlans($localStorage.account.userId).then(function(results) {
 				          //create a local object so we can create the datastructure we want
 				          //so we can use it to show/hide, toggle ui items
-				          $scope.plans = results[$localStorage.account.userId];
-									console.log($scope.plans);
+									var view = {
+				              items: results
+				          };
+
+									for(var id in view.items){
+				           //check to see if there is a like on this post
+									 engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+										 view.items[id].committed = committed;
+									 });
+									};
+				          $scope.view = view;
 				        });
 
 

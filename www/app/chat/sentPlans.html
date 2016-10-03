@@ -24,14 +24,14 @@
         </div> -->
         <div class="row row-no-padding category-1-outer">
           <div class="col">
-            <a ui-sref="main.categories.feed">
-              <div class="category-1-item-wrapper" ng-repeat = "(userId, plan) in plans">
+            <a>
+              <div class="category-1-item-wrapper" ng-repeat = "(key,plan) in view.items">
                 <div class="category-1-item-content" ng-init="bg_img_2 = 'img/match/category-1-2.png'" ui-sref="tabs.planView-detail({post:userId})">
-                  <div class = "multi-bg-outer" multi-bg="[bg_img_2]" interval="3000" helper-class="category-with-image" style="background-image: url(img/match/category-2-1.png);">
+                  <div class = "multi-bg-outer" multi-bg="[bg_img_2]" interval="3000" helper-class="category-with-image" style="background-image: url({plan.photo});">
                     <img bg="" class="multi-bg category-with-image">
                       <span class="bg-overlay"></span>
                     <h1 class="category-heading dark">
-                      <span class="callout">Click to join.</span>
+                      <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
                       <span class="main-title">{{plan.title}}</span>
                       <span class="subtitle">{{plan.time }}</span>
                     </h1>

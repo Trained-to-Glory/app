@@ -91,6 +91,7 @@
     font-weight: 200;
     font-size: 12px;
     padding: 7px;
+		z-index: 5;
 }
 
 .category-1-outer .category-1-item-wrapper .category-heading .main-title {
@@ -145,6 +146,7 @@
     left: 0;
     right: 0;
     overflow: hidden;
+		z-index: 1;
 }
 
 .button.button-calm.profile

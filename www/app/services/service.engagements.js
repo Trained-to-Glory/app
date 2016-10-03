@@ -92,6 +92,8 @@ angular.module('service.engagements', [])
                    var len = exists instanceof Array ? exists.length : 0;
                    var final = {};
                    var obj = {
+                      "userPhoto": $localStorage.account.userPhoto || '',
+                      "userName": $localStorage.account.userName,
                        "created": firebase.database.ServerValue.TIMESTAMP,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
@@ -181,6 +183,8 @@ angular.module('service.engagements', [])
                    }
                    var final = {};
                    final[itemId] = {
+                       "userPhoto": $localStorage.account.userPhoto || '',
+                       "userName": $localStorage.account.userName,
                        "created": prev.created,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
@@ -302,7 +306,6 @@ angular.module('service.engagements', [])
           });
         };
 
-
         this.liked = function (data) {
             var type = 'engagementLikes';
             var data = get(type, data.category, data.categoryId, data.itemId);
@@ -341,18 +344,6 @@ angular.module('service.engagements', [])
 
         this.unlike = function (data) {
             var type = 'engagementLikes';
-            //check if engagement item is already in hash
-            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
-        };
-
-        this.addPlan = function (data) {
-            var type = 'engagedPlan';
-            //check if engagement item is already in hash
-            return updateEngagement(type, data.category, data.categoryId, data.userId, true);
-        };
-
-        this.removePlan = function (data) {
-            var type = 'engagedPlan';
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };
@@ -458,6 +449,48 @@ angular.module('service.engagements', [])
 
         this.decommit = function (data) {
             var type = 'engagementCommits';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
+        };
+
+        this.plan = function (data) {
+            var type = 'engagementPlans';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, true);
+        };
+
+        this.planned = function (data) {
+            var type = 'engagementPlans';
+            var data = get(type, data.category, data.categoryId, data.userId);
+            //check if engagement item is already in hash
+            return data.then(function(result){
+                return (result && result.state)?result.state.active: false;
+            });
+        };
+
+        this.plans = function(data){
+          var type = 'engagementPlans';
+          var data = get(type, data.category, data.categoryId);
+          //check if engagement item is already in hash
+          return data.then(function(result){
+              return result;
+          });
+        };
+
+        this.totalPlans = function(data){
+          return this.plans(data.category, data.categoryId).then(function(result){
+            var count = 0;
+            if(result){
+              for(var key in result){
+                ++count;
+              }
+            }
+            return count;
+          });
+        };
+
+        this.unplan = function (data) {
+            var type = 'engagementPlans';
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };

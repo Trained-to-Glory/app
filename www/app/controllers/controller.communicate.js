@@ -42,6 +42,24 @@ angular.module('module.view.communicate', [])
               		//create a local object so we can create the datastructure we want
               		//so we can use it to show/hide, toggle ui items
               		 $scope.userPostsLikes = results;
-                   console.log(resuts);
               	});
+
+                usersService.getUserCommitsPlan($localStorage.account.userId).then(function(results) {
+              		//create a local object so we can create the datastructure we want
+              		//so we can use it to show/hide, toggle ui items
+              		 $scope.userPlanCommits = results;
+              	});
+
+                usersService.getUserCommitsPost($localStorage.account.userId).then(function(results) {
+              		//create a local object so we can create the datastructure we want
+              		//so we can use it to show/hide, toggle ui items
+              		 $scope.userPostCommits = results;
+              	});
+
+                usersService.getUserCommitsAppointment($localStorage.account.userId).then(function(results) {
+              		//create a local object so we can create the datastructure we want
+              		//so we can use it to show/hide, toggle ui items
+              		 $scope.userAppointmentCommits = results;
+              	});
+
 });

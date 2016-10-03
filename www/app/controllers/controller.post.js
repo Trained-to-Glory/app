@@ -106,7 +106,6 @@ angular.module('module.view.post', [])
 
 
 				$scope.profile = $localStorage.account;
-
 				//type, category, categoryId, itemId, userId, comment,
 				$scope.createComment = function(){
 					var obj = {
@@ -124,7 +123,7 @@ angular.module('module.view.post', [])
 					var userId = firebase.auth().currentUser.uid;
 				 // Write the new post's data simultaneously in the posts list and the user's post list.
 					 var updates = {};
-					 updates['/engagementComments/' + $stateParams.post + '/' + userId] = obj;
+					 updates['/engagementComments/' +  $stateParams.post + '/' + userId] = obj;
 					 updates['/accounts/' + userId + '/engagementComments/' + $stateParams.post + '/' + userId] = obj;
 					 return firebase.database().ref().update(updates);
 				};

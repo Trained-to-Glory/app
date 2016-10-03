@@ -23,8 +23,8 @@ angular.module('service.post', [])
               });
         };
 
-        this.getUserPlans = function (userId,plansId) {
-            var plans = (plansId) ? firebase.database().ref(['accounts', userId , plansId].join('/'))  : firebase.database().ref('accounts');
+        this.getUserPlans = function (userId) {
+            var plans = (userId) ? firebase.database().ref(['accounts', userId , 'plans'].join('/'))  : firebase.database().ref('accounts');
             return plans.once('value').then(function (snapshot) {
                   var currentObj = snapshot.val();
                   if (currentObj) {
@@ -130,7 +130,7 @@ angular.module('service.post', [])
                 "created": firebase.database.ServerValue.TIMESTAMP,
                 "createdBy": $localStorage.account.userId,
                 "owner": $localStorage.account.userName,
-                "avatar": $localStorage.account.userPhoto,
+                "avatar": $localStorage.account.userPhoto || '',
                 "location": data.location || '',
                 "time": data.time || '',
                 "date": data.date || '',
@@ -155,7 +155,7 @@ angular.module('service.post', [])
         };
 
         this.createPlan = function (data) {
-          if(!data || !data.postType || !data.title ||!data.description){
+          if(!data || !data.postType ){
             var deferred = $q.defer();
             deferred.reject(false);
             return deferred.promise;
@@ -278,7 +278,7 @@ angular.module('service.post', [])
                 "location": data.location || '',
                 "created": firebase.database.ServerValue.TIMESTAMP,
                 "createdBy": $localStorage.account.userId,
-                "userPhoto": $localStorage.account.userPhoto,
+                "userPhoto": $localStorage.account.userPhoto || '',
                 "type": data.type,
                 "state": {
                     "actionable": true,

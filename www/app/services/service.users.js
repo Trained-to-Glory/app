@@ -94,12 +94,81 @@ angular.module('service.users', [])
    };
 
    this.getUserPostsLikes = function (userId) {
-       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'posts'].join('/'));
        return myPartnersPromise.once('value').then(function (snapshot) {
              var obj = {};
              var myPartners = snapshot.val();
              if (myPartners) {
-                var accountsPromise = firebase.database().ref(['accounts']);
+                var accountsPromise = firebase.database().ref(['engagementLikes', 'post'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getUserCommitsPlan = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'plans'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['engagementCommits', 'plan'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getUserCommitsPost = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'posts'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['engagementCommits', 'post'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getUserCommitsAppointment = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'appointments'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['engagementCommits', 'schedule'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
                   var accounts = snapshot.val();
                   if(accounts){

@@ -63,9 +63,9 @@ angular.module('module.view.news', [])
         };
 
         $scope.toggleLike = function(postId, userId){
-          var posts = $scope.news.items;
+          var posts = $scope.view.items;
           if(postId in posts){
-            var post = $scope.news.items[postId];
+            var post = $scope.view.items[postId];
             var actionable = post.state.actionable;
             if(actionable){
               post.liked = !post.liked;
@@ -77,10 +77,10 @@ angular.module('module.view.news', [])
         };
 
         $scope.toggleCommit = function(postId, userId){
-          var posts = $scope.news.items;
+          var posts = $scope.view.items;
           $log.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
           if(postId in posts){
-            var post = $scope.news.items[postId];
+            var post = $scope.view.items[postId];
             var actionable = post.state.actionable;
             if(actionable){
               post.committed = !post.committed;
@@ -205,20 +205,21 @@ angular.module('module.view.news', [])
           for(var id in view.items){
            //check to see if there is a like on this post
             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
-              news.items[id].liked = liked;
+              view.items[id].liked = liked;
             });
             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
-              news.items[id].committed = committed;
+              view.items[id].committed = committed;
             });
             engagementService.totalLikes({category:'post', categoryId: $localStorage.account.userId}).then(function(totalLikes){
-              news.items[id].totalLikes = totalLikes;
+              view.items[id].totalLikes = totalLikes;
             });
             engagementService.totalCommits({category:'post', categoryId: $localStorage.account.userId}).then(function(totalCommits){
-              news.items[id].totalCommits = totalCommits;
+              view.items[id].totalCommits = totalCommits;
             });
           }
           //make it available to the directive to officially show/hide, toggle
           $scope.view = view;
+          console.log($scope.view);
         });
 
          usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
