@@ -17,21 +17,39 @@ angular.module('module.view.leader', [])
                         $state.go(ui_sref);
                     }
                 };
+								$scope.openPopover = function($event) {
+									 $scope.fullscreenPopover.show($event);
+								};
+
+								$scope.closePopover = function($event) {
+									 $scope.fullscreenPopover.hide();
+								};
+
+								// Execute action on hide popover
+								$scope.$on('popover.hidden', function() {
+									 // Execute action
+								});
+
+								// Execute action on remove popover
+								$scope.$on('popover.removed', function() {
+									 // Execute action
+								});
+								
         $scope.profile = { type: 1 };
 
 		$scope.gotoMatch = function () {
                     $state.go('tabs.match');
-                   
+
         };
 
        $scope.gotoBrowse = function () {
                     $state.go('tabs.news');
-                   
+
         };
 
         $scope.gotoAccount = function () {
                     $state.go('tabs.account');
-           
+
         };
 
 
@@ -48,17 +66,3 @@ var searchTemplate =
     '</div>' +
     '</ion-content>' +
     '</ion-popover-view>';
-
-var contactTemplate =
-    '<ion-popover-view class="right large">' +
-    '<ion-content>' +
-    '<div class="list">' +
-    '<div class="item item-avatar item-text-wrap" ng-click="contactPopover.hide($event);"ng-repeat="contact in contacts" ui-sref="tabs.chat({chat: contact})">' +
-    '<img ng-src="{{contact.photo}}">' +
-    '<h2 class="dark font-thin">{{contact.name}}</h2>' +
-    '<p class="dark font-thin">{{contact.subject}}</p>' +
-    '</div>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
-    

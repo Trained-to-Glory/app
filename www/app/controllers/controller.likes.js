@@ -19,8 +19,6 @@ angular.module('module.view.likes', [])
                     }
                 };
 
-								$log.log($stateParams.post);
-
 								if($stateParams.post){
 								engagementService.likes('post', $stateParams.post).then(function(results) {
 									  var likers = results;
@@ -46,7 +44,7 @@ angular.module('module.view.likes', [])
                     $ionicHistory.nextViewOptions({
                         disableAnimate: true,
                         disableBack: true
-                    });
+          });
         };
 
         $scope.gotoComments = function () {

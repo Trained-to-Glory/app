@@ -10,7 +10,7 @@ angular.module('module.view.event', [])
 				data[$(this).attr('name')] = $(this).val();
 			});
 			var userPhoto = $localStorage.account.photo;
-			data.postType = 'eventPost';
+			data.postType = 'event';
 			data.photo = $scope.photo;
 			data.userPhoto = userPhoto;
 			var key = postService.create(data);
@@ -35,7 +35,7 @@ angular.module('module.view.event', [])
 			});
 			var userPhoto = $localStorage.account.photo;
 			$scope.postId = $stateParams.post;
-			data.postType = 'eventPost';
+			data.postType = 'event';
 			data.photo = $scope.photo;
 			data.userPhoto = userPhoto;
 			var key = postService.update(data,$scope.postId);

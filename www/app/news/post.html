@@ -1,7 +1,7 @@
 <ion-view title="Post" class="bg-lightgrey">
 
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark">
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
             <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
@@ -15,15 +15,14 @@
     <ion-content class="has-header" style="top: 44px;"scroll-event-interval="5" padding="false">
 
         <div class="card post-detail">
-            <div class="item item-body">
-                <img class="full-image" ng-src="{{post.image}}">
+            <div class="item item-body" style="padding: 0">
+                <img class="full-image" ng-src="{{post.photo}}">
                 <div class="item item-avatar" ui-sref="tabs.post-detail({post:postId})">
-                    <img ng-src="{{post.avatar}}">
+                    <img ng-src="{{post.avatar}}" ui-sref="tabs.accounts({account:userId})" style="margin-top:13px">
                     <h2>{{post.owner}}</h2>
-                    <p>{{ post.postType | uppercase }}</p>
-                    <p>{{post.description}}</p>
-                    <p>{{ post.location }}</p>
-                    <p class="text-smaller" am-time-ago="{{}}">{{ post.date | date}} : {{ post.time }}</p>
+                    <p ng-if="post.description">{{post.description}}</p>
+                    <p ng-if="post.location" style="color:blue">{{ post.location }}</p>
+                    <p ng-if="post.date" class="text-smaller" am-time-ago="{{}}">{{ post.date}}</p>
                 </div>
                 <div class="item comments">
                     <p>
@@ -33,17 +32,17 @@
                         <span ui-sref="tabs.comments({post: post, type:'comments'})" class="pull-right">{{post.comments.length}} Comments</a>
                 </p>
                 </div>
-                <div class="item comments no-b">
+                <div class="item comments no-b" style="margin-bottom: 21vh;">
                     <div class="item item-avatar" ng-repeat="comment in comments" ng-if="comment">
                         <img ng-src="{{comment.userPhoto}}"/>
                         <h2 class="text-small">{{comment.userName}}</h2>
                     <p class="text-smaller">{{comment.comment}}</p>
                     </div>
-                    <p ng-if="!comment && !commentMode">No comments. be the first to <a ng-click="activateCommentMode()">leave a comment</a></p>
+                    <p ng-if="!comment && !commentMode" ui-sref="tabs.comments({post: postId })" >No comments. be the first to <a ng-click="activateCommentMode()">leave a comment</a></p>
                     <div class="input-field col" ng-if="commentMode">
-                    <input type="text" ng-model="word.comment">
+                    <input type="text" ng-model="comment">
                   </div>
-                    <button ng-click="createComment('post',postId,profile.userId,word.comment)" ng-if="commentMode">submit</button>
+                    <button ng-click="createComment('post',postId,profile.userId,comment)" ng-if="commentMode">submit</button>
                     <button ng-click="deactivateCommentMode()" ng-if="commentMode">cancel</button>
                 </div>
             </div>

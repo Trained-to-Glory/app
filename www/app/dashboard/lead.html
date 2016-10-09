@@ -1,0 +1,29 @@
+<ion-view title="Match" cache-view="false">
+
+    <ion-nav-buttons side = "left">
+         <button class="button button-icon button-clear button-dark">
+            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         </button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header" scroll="false">
+
+        <ion-scroll class="bg-lightgrey" direction="y" style="height:100%">
+            <div style="height:700px">
+                <pre> {{users | json }}</pre>
+                <div class="row" ng-repeat="(key,user) in users | orderByLocation: myLocation track by $index">
+                  <div class="col">
+                      <div class="card contact animated bounceIn item-remove-animate" on-hold="deleteContact(user[$index]);">
+                          <div class="item item-image item-text-wrap" ui-sref="tabs.leader({contact: user.userId})">
+                              <div><img src = "{{ user.userPhoto }}"></div>
+                              <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
+                              <p class="">{{user.userName}}</p>
+                          </div>
+                      </div>
+              </div>
+            </div>
+        </ion-scroll>
+
+    </ion-content>
+
+</ion-view>

@@ -14,12 +14,7 @@
 
          <div class="row row-login">
             <div class="col col-login"></div>
-            <div ng-if="data.editProfile">
-              <div class="col col-login" style="margin-left: 31vh;">SAVE</div>
-            </div>
-            <div ng-if="data.editProfile == false">
-              <div class="col col-login" style="margin-left: 31vh;" ui-sref="tabs.cost">NEXT</div>
-            </div>
+              <div class="col col-login" style="margin-left: 31vh;" ng-click="gotoProfile()">NEXT</div>
         </div>
 
     </ion-content>

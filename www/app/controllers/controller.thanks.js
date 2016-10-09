@@ -1,5 +1,5 @@
 angular.module('module.view.thanks', [])
-	.controller('thanksCtrl', function($scope,$rootScope,$log,$state,$http) {
+	.controller('thanksCtrl', function($scope,$rootScope,$log,$state,$http,$localStorage) {
 
 		$scope.goBack = function (ui_sref) {
         var currentView = $ionicHistory.currentView();
@@ -20,6 +20,7 @@ angular.module('module.view.thanks', [])
     };
 	// Stripe Response Handler
 		$scope.stripeCallback = function (code, result) {
+			if($localStorage.account.userId){
 			$localStorage.account.currentPaymentId = 'professional';
 			console.log(arguments);
 		    if (result.error) {
@@ -32,5 +33,6 @@ angular.module('module.view.thanks', [])
 						});
 		        $log.log('success! token: ' + result.id);
 		    }
-		};
+		}
+	};
 });

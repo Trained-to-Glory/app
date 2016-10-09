@@ -39,11 +39,9 @@ angular.module('module.view.regular', [])
                   switch (index) {
                       case 0: // Take Picture
                           document.addEventListener("deviceready", function () {
-                            console.log('camera hit');
                               $cordovaCamera.getPicture(appService.getCameraOptions()).then(function (imageData) {
                                   //alert(imageData);
                                   $scope.photo = "data:image/jpeg;base64," + imageData;
-                            			var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });
@@ -54,7 +52,6 @@ angular.module('module.view.regular', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getLibraryOptions()).then(function (imageData) {
                                 $scope.photo = "data:image/jpeg;base64," + imageData;
-                                var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });

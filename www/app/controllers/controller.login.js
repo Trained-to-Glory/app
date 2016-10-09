@@ -1,6 +1,8 @@
 angular.module('module.view.login', [])
   .controller('loginCtrl', function ($scope, $ionicPopup, $rootScope, $state, $ionicModal, postService, $ionicLoading,$firebaseAuth, $timeout, $localStorage, Utils, $cordovaOauth, Popup, Social) {
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.enter','cloud:push:notification', function (event, data) {
+         var msg = data.message;
+         alert(msg.title + ': ' + msg.text);
       //Clear the Login Form.
       $scope.user = {
         email: '',
@@ -204,7 +206,6 @@ angular.module('module.view.login', [])
     };
 
     $scope.signIn = function (){
-      console.log('clicked');
       $state.go('tabs.login');
     };
 

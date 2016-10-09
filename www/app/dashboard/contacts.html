@@ -11,9 +11,17 @@
         <ion-scroll class="bg-lightgrey" direction="y" style="height:100%">
             <div style="height:700px">
                 <div class="row" ng-repeat="(key,user) in users | orderByLocation: myLocation track by $index">
-
                       <div class="col">
-                          <div class="card contact animated bounceIn item-remove-animate" on-hold="deleteContact(user[$index]);">
+                          <div class="card contact animated bounceIn item-remove-animate">
+                              <div class="item item-image item-text-wrap" ui-sref="tabs.friend({contact: user.userId})">
+                                  <div><img src = "{{ user.userPhoto }}"></div>
+                                  <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
+                                  <p class="">{{user.userName}}</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card contact animated bounceIn item-remove-animate">
                               <div class="item item-image item-text-wrap" ui-sref="tabs.friend({contact: user.userId})">
                                   <div><img src = "{{ user.userPhoto }}"></div>
                                   <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
@@ -25,5 +33,3 @@
         </ion-scroll>
 
     </ion-content>
-
-</ion-view>

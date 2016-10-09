@@ -1,7 +1,6 @@
 angular.module('module.view.roleRather', [])
-	.controller('roleRatherCtrl', function($scope,$rootScope,$state,interestService,userInterestService,$localStorage, engagementService) {
+	.controller('roleRatherCtrl', function($scope,$rootScope,$ionicHistory,$state,interestService,$localStorage, engagementService) {
 		$scope.data = {};
-		console.log('prevScope', $state.prevScope);
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;
 
 		$scope.goBack = function (ui_sref) {
@@ -22,11 +21,10 @@ angular.module('module.view.roleRather', [])
 			}
 
 			$scope.getInterest = function(id){
-				return interestService.get(id);
+				return interestService.getLeaderInterest(id);
 			};
 
 			$scope.getInterest().then(function(results) {
-        console.log('Im here');
 				var interests = [];
 				for (key in results){
 					interests.push({
@@ -37,21 +35,24 @@ angular.module('module.view.roleRather', [])
 				$scope.interests = interests;
 			});
 
+			$scope.gotoProfile = function () {
+											$state.go('tabs.account');
+											$ionicHistory.nextViewOptions({
+													disableAnimate: true,
+													disableBack: true
+						});
+					};
+
 			$scope.isChecked = false;
 		    $scope.selected = [];
 		    $scope.checkedOrNot = function (interest, isChecked, index) {
 		        if (isChecked) {
 		            $scope.selected.push(interest);
-                var data = {
-                  category: 'trainers',
-                  interestId: interest.id,
-                  userId: $localStorage.account.userId
-                }
-								engagementService.trainerActivities(data);
+								engagementService.engagedActivities({category:'leaderInterest', categoryId:interest.id, itemId:$localStorage.account.userId});
 		        } else {
 		            var _index = $scope.selected.indexOf(interest);
 		            $scope.selected.splice(_index, 1);
-								engagementService.removeTrainerActivities(data);
+								engagementService.disEngagedActivities({category:'leaderInterest', categoryId:interest.id, itemId:$localStorage.account.userId});
 		        }
 		    };
 

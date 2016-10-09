@@ -1,7 +1,6 @@
 angular.module('module.view.createPlan', [])
 	.controller('createPlanCtrl', function($scope,$rootScope,$state,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
-		console.log($stateParams);
 		$scope.postId = $stateParams.post;
 
 		$scope.createPlan = function() {
@@ -22,9 +21,7 @@ angular.module('module.view.createPlan', [])
 					category: 'post',
 					postId: $stateParams.post
 				}
-				console.log(data);
 				$scope.post = results;
-				console.log($scope.post);
 			});
 		}
 
@@ -39,7 +36,6 @@ angular.module('module.view.createPlan', [])
 			data.photo = $scope.photo;
 			var key = postService.updatePlan(data,$scope.postId);
 			$state.go('tabs.sentPlan');
-			console.log('hit update');
 		};
 
 		$scope.uploadEventPhoto = function () {

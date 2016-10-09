@@ -1,5 +1,5 @@
 angular.module('module.view.editProfile', [])
-	.controller('editProfileCtrl', function($scope, $rootScope,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,conversationService,$localStorage, $ionicHistory, $ionicPopup) {
+	.controller('editProfileCtrl', function($scope, $rootScope,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,$localStorage, $ionicHistory, $ionicPopup) {
 
 		$scope.profile = $localStorage.account;
 
@@ -38,7 +38,7 @@ angular.module('module.view.editProfile', [])
 																		$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
 																		var ref = firebase.database().ref('accounts');
 																		ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
-																			firebase.database().ref('/accounts/' + snapshot.key ).update({
+																			firebase.database().ref('/accounts/' + snapshot.key ).set({
 																				photo: $localStorage.account.userPhoto
 																			}).then( function() {
 																				$localStorage.account.userPhoto = photo;
@@ -58,7 +58,7 @@ angular.module('module.view.editProfile', [])
 																	$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
 																	var ref = firebase.database().ref('accounts');
 																	ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
-																		firebase.database().ref('/accounts/' + snapshot.key ).push({
+																		firebase.database().ref('/accounts/' + snapshot.key ).set({
 																			photo: $localStorage.account.userPhoto
 																		}).then( function() {
 																			$localStorage.account.userPhoto = photo;

@@ -1,12 +1,12 @@
 <ion-view title="Match" scroll="true">
 
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark">
-            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-         </button>
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
+         <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+      </button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header bt-grey profile" scroll="true">
+    <ion-content scroll="true">
           <div class="row row-no-padding category-2-outer" ng-repeat = "ab in abs track by $index">
             <div class="col">
               <a ui-sref="tabs.contacts({activity:ab.id})">
@@ -16,8 +16,10 @@
                       <img bg="" class="multi-bg category-with-image">
                       <span class="bg-overlay"></span>
                       <h1 class="category-heading">
-                        <span><img ng-src="{{ab.icon}}"></span>
-                        <span style="border-bottom: 1px solid;">{{ab.label}}</span>
+                        <span>0{{ab.numbers}}
+                          <span class="bubble"></span>
+                        </span>
+                        <span style="border-bottom: 1px solid #F10707;">{{ab.label}}</span>
                       </h1>
                     </div>
                   </div>
@@ -25,5 +27,6 @@
               </a>
             </div>
           </div>
+          <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="!moredata"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

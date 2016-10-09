@@ -1,7 +1,7 @@
 <ion-view title="Profile">
 
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark">
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
             <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
@@ -32,7 +32,7 @@
             <div class="col font-thin" ng-class="{'text-medium balanced bb' : profile.type === 3}" ng-click="profile.type = 3">{{userPartners}}<br/>Partners</div>
         </div>
 
-        <div class="list" style="height:100%;">
+        <div class="list profile" style="height:100%;">
          <div ng-if="profile.type === 1">
             <div class="item item-divider">
                 PHOTOS

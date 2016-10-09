@@ -58,13 +58,23 @@
     opacity: 0.6;
 }
 
+.bubble{
+  background-color: #F10707;
+    height: 10px;
+    width: 10px;
+    border-radius: 6px;
+    display: -webkit-inline-box;
+    position: relative;
+    margin-left: 10px;
+}
+
 .category-2-outer .category-2-item-wrapper .category-heading {
     font-size: 24px;
     text-align: center;
     padding: 0px;
     margin: 0px;
     position: absolute;
-    width: 80%;
+    width: 26%;
     left: 10%;
     color: #FFFFFF;
     font-weight: 300;
@@ -89,6 +99,22 @@
     -webkit-justify-content: center;
     -moz-justify-content: center;
     justify-content: center;
+}
+
+.bar-light {
+    background: #fafafc !important;
+}
+
+.scroll-content{
+  background: #fafafc !important;
+}
+
+.card {
+  background: #fafafc !important;
+}
+
+.item{
+  background-color: #fafafc !important;
 }
 
 .category-2-outer {
@@ -277,9 +303,7 @@
 	right: 0;
 	bottom: 0;
 	}
-.has-header{
-	top:65px;
-	}
+
 .bar-stable .button.button-icon.bak_arr{
     position: absolute;
     right: 0;
@@ -632,8 +656,56 @@
   }
 
 .popover-backdrop.active {
-      background-color: #fff;
+      background-color: #fafafc !important;
   }
+
+  .menu.popover{
+    background-color: #fafafc !important;
+  }
+
+  .item-radio .item-content {
+    background-color: #fafafc !important;
+}
+
+  .platform-ios .popover .scroll-content {
+    top: -20px;
+  }
+
+  .small.popover {
+    height: 59px !important;
+}
+
+.center.calendar.popover::after {
+    content: '\f35f';
+    position: absolute;
+    bottom: -17px;
+    right: 46.5%;
+    color: #FF4653;
+    font-family: 'Ionicons';
+    font-size: 32px;
+    right: 15px;
+}
+
+.large.popover {
+  height: 177px !important;
+}
+
+.bb-grey {
+    border-bottom: 1px solid #e9eff0;
+}
+
+.list.profile{
+  padding-top: 0;
+}
+
+.feed-card {
+    margin: 0px;
+    margin-bottom: 25px;
+    padding: 0px;
+    box-shadow: none;
+    border-radius: 0px;
+    border: none;
+}
 
   .popover-backdrop {
       position: fixed;
@@ -667,13 +739,9 @@
 	border:none
 	}
 
-.platform-android .popover{
-  margin-top: 0;
-}
-
 .menu.popover {
     position: absolute;
-    top: 0 !important;
+    top: 28px !important;
     left: -20px !important;
     box-shadow: none !important;
     bottom: 0;

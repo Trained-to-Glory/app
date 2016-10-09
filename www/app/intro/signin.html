@@ -1,22 +1,21 @@
 
-    <ion-content cache-view="false" scroll="false" class="auth">
-      <div ng-form="login_form" class="padding text-center" style="padding:0;"  name="loginForm" ng-submit="loginForm.$valid && login(user)" novalidate>
-         <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
+    <ion-content cache-view="false" class="auth">
+      <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
       <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
         <div class="col">
-            <div class="category-2-item-wrapper" style="height:50vh;">
-              <div class="category-2-item-content" style="height:50vh;">
-                <div class="row text-center" style="color: white;bottom: 0;position: absolute;">
-                  <div class="col" ui-sref="authentication">Sign Up</div>
-                  <div class="col">Sign In</div>
-                </div>
+            <div class="category-2-item-wrapper" style="padding-top:84.66%">
+              <div class="category-2-item-content">
                 <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/jump-water.jpg);">
                   <div class="logo">
-                    <img src = "img/TTG-Symbol-2015-02.png" style="position: relative;margin-right: 44vh;">
+                    <img src = "img/TTG-Logo-NowhiteOutline.png">
                   </div>
                 </div>
               </div>
             </div>
+        </div>
+        <div class="row text-center" style="color: white;top: 304px;position: absolute;">
+          <div class="col" ui-sref="authentication">Sign Up</div>
+          <div class="col">Sign In</div>
         </div>
       </div>
 
@@ -31,10 +30,9 @@
           <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>
         </label>
       </div>
-      <input type="submit" class="button button-block button-login button-positive" value="Sign In" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 95px;;margin-top: 4vh; display:block;">
+      <input type="submit" class="button button-block button-login button-positive" value="Sign In" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">
     </form>
   </div>
       <h1 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ui-sref="authentication"> Create a new account </h1>
       <h2 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ng-click="openForgot()"> Forgot </h2>
-    </div>
     </ion-content>

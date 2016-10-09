@@ -1,12 +1,9 @@
 angular.module('module.view.post', [])
-	.controller('postCtrl', function($scope,$rootScope,$state,appointmentsService,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
-		console.log($stateParams);
-
+	.controller('postCtrl', function($scope,$rootScope,$state,appointmentsService,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
 		$scope.postId = $stateParams.post;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
-
                     if (backView) {
                         //there is a back view, go to it
                         if (currentView.stateName == backView.stateName) {
@@ -50,7 +47,7 @@ angular.module('module.view.post', [])
 
         $scope.share = function (post) {
             document.addEventListener("deviceready", function () {
-                $cordovaSocialSharing.share(post.description, post.owner, post.location)
+                $cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date, post.time,post.image)
                     .then(function (result) {
                         appService.showAlert('Post Shared', result, 'Ok', 'button-balanced', null);
                     }, function (err) {
@@ -111,7 +108,7 @@ angular.module('module.view.post', [])
 					var obj = {
 							"comment": $scope.post.comment,
 							"created": firebase.database.ServerValue.TIMESTAMP,
-							"userPhoto": $localStorage.account.userPhoto || '',
+							"userPhoto": $localStorage.account.userPhoto,
 							"userName": $localStorage.account.userName,
 							"state": {
 									"actionable": true,
@@ -123,8 +120,8 @@ angular.module('module.view.post', [])
 					var userId = firebase.auth().currentUser.uid;
 				 // Write the new post's data simultaneously in the posts list and the user's post list.
 					 var updates = {};
-					 updates['/engagementComments/' +  $stateParams.post + '/' + userId] = obj;
-					 updates['/accounts/' + userId + '/engagementComments/' + $stateParams.post + '/' + userId] = obj;
+					 updates['engagementComments/' +  'post' + '/' + firebase.database.ServerValue.TIMESTAMP + '/' + userId] = obj;
+					 updates['accounts/' + userId + 'engagementComments/' + 'post' + '/' + firebase.database.ServerValue.TIMESTAMP + '/' + userId] = obj;
 					 return firebase.database().ref().update(updates);
 				};
 
@@ -139,5 +136,11 @@ angular.module('module.view.post', [])
 				$scope.deactivateCommentMode = function(){
 					$scope.commentMode = false;
 				};
+
+				$ionicSideMenuDelegate.canDragContent(false);
+
+				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
+						scope: $scope
+				});
 
 });

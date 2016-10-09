@@ -5,8 +5,6 @@ angular.module('module.view.friend', [])
 
 		$scope.togglePartner = function(partnerId){
 				var partner = $scope.ones;
-				console.log(partner);
-				$log.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
 			   if(!partner){
 					 return false;
 				 }
@@ -52,6 +50,24 @@ angular.module('module.view.friend', [])
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
 			 $scope.userTotalPost = results;
+		});
+
+		$scope.openPopover = function($event) {
+			 $scope.fullscreenPopover.show($event);
+		};
+
+		$scope.closePopover = function($event) {
+			 $scope.fullscreenPopover.hide();
+		};
+
+		// Execute action on hide popover
+		$scope.$on('popover.hidden', function() {
+			 // Execute action
+		});
+
+		// Execute action on remove popover
+		$scope.$on('popover.removed', function() {
+			 // Execute action
 		});
 
 		usersService.getPartners($localStorage.account.userId).then(function(results){

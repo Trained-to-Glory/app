@@ -1,20 +1,20 @@
 <ion-view title="Browse" class="font-thin" cache-view="false">
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark" ng-click="menuPopover.show($event);">
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
             <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
 
-    <ion-content class="list_page" scroll="false">
-        <div class="row text-center">
-          <div class="col font-thin" ng-class="news.type === 'classic' ? 'text-large balanced' : ''">Event</div>
-          <div class="col font-thin" ng-class="news.type === 'image' ? 'text-large balanced' : ''">Regular</div>
-        </div>
-
+    <ion-content>
+      <ion-refresher on-refresh="doRefresh()">
+      </ion-refresher>
+      <!-- <div ng-if="!posts.state.visible">
+        <p> Less than zero.</p>
+      </div> -->
         <div class="card feed-card" ng-repeat="(key,posts) in view.items">
             <div class="row row-no-padding image-row" ng-if="posts.state.visible">
-              <div class="col">
-                <pre-img ratio="_32_21" helper-class="main-image">
+              <div class="col" style="margin-bottom: 3px;">
+                <pre-img ratio="_32_21" helper-class="main-image" ui-sref="tabs.post-detail({post:key})">
                   <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">
                 </pre-img>
               </div>
@@ -32,58 +32,57 @@
               </div>
             </div>
             <div class="row row-no-padding details-row" >
-              <h3 class="chef-name" style="margin-left: 12vh;">{{posts.owner}}</h3>
+              <h3 class="chef-name" style="margin-left: 88px;">{{posts.owner}}</h3>
             </div>
             <ul class="dish-tags">
-              <li class="dish-tag" ng-click="toggleCommit(key,userId)">
-                Commit
-              </li>
-              <li class="dish-tag" ng-click="toggleLike(key, userId)">
-                Like
-              </li>
-              <li class="dish-tag">
-                Comment
-              </li>
-            </ul>
-          </div>
-
-        <div class="card feed-card" ng-repeat="(partnerId, posts) in news.items" ng-if="news.type == 'image' && posts.postType == 'event'">
-            <div class="row row-no-padding image-row" ng-repeat="post in posts" ng-if="post.state.visible && posts.postType == 'event'">
-              <div class="col">
-                <pre-img ratio="_32_21" helper-class="main-image">
-                  <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">
-                </pre-img>
-              </div>
-            </div>
-            <div class="row row-no-padding details-row" ui-sref="tabs.post-detail({post:key})">
-              <div class="col col-20">
-                <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
-                  <div class="pre-img _32_21 main-image finish-loading" ng-class = "{'finish-loading': loaded}">
-                    <img ng-src="{{posts.avatar}}" spinner-on-load style="width:75%;border-radius:50%;">
-                  </div>
-                </pre-img>
-              </div>
-              <div class="col col-center">
-                <h2 class="dish-name">{{posts.description}}</h2>
-              </div>
-            </div>
-            <div class="row row-no-padding details-row" >
-            <h3 class="chef-name" style="margin-left: 12vh;">{{posts.owner}}</h3>
-            </div>
-            <ul class="dish-tags">
-              <li class="dish-tag" ng-click="toggleCommit(partnerId,userId)">
+              <li class="dish-tag" ng-if = "posts.postType === 'event'" ng-click="toggleCommit(key,userId)">
                 {{value.totalCommits}} Commit
               </li>
-              <li class="dish-tag" ng-click="toggleLike(partnerId, userId)">
+              <li class="dish-tag" ng-click="toggleLike(key, userId)">
                 {{value.totalLikes}} Like
               </li>
               <li class="dish-tag">
-                Comment
+                {{value.totalComment}} Comment
               </li>
             </ul>
           </div>
 
-
+          <div class="card feed-card" ng-repeat="(key,posts) in partnerPost.items">
+              <div class="row row-no-padding image-row" ng-if="posts.state.visible">
+                <div class="col">
+                  <pre-img ratio="_32_21" helper-class="main-image" ui-sref="tabs.post-detail({post:key})">
+                    <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">
+                  </pre-img>
+                </div>
+              </div>
+              <div class="row row-no-padding details-row" ui-sref="tabs.post-detail({post:key})">
+                <div class="col col-20">
+                  <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
+                    <div class="pre-img _32_21 main-image finish-loading" ng-class = "{'finish-loading': loaded}">
+                      <img ng-src="{{posts.avatar}}" spinner-on-load style="width:75%;border-radius:50%;">
+                    </div>
+                  </pre-img>
+                </div>
+                <div class="col col-center">
+                  <h2 class="dish-name">{{posts.description}}</h2>
+                </div>
+              </div>
+              <div class="row row-no-padding details-row" >
+                <h3 class="chef-name" style="margin-left: 88px;">{{posts.owner}}</h3>
+              </div>
+              <ul class="dish-tags">
+                <li class="dish-tag" ng-if = "posts.postType === 'event'" ng-click="toggleCommit(key,userId)">
+                  {{value.totalCommits}} Commit
+                </li>
+                <li class="dish-tag" ng-click="toggleLike(key, userId)">
+                  {{value.totalLikes}} Likes
+                </li>
+                <li class="dish-tag" ui-sref="tabs.comments({post: postId })">
+                  {{value.totalComments}} Comment
+                </li>
+              </ul>
+            </div>
+            <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="!moredata"></ion-infinite-scroll>
     </ion-content>
     <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707"></i></a>
 </ion-view>

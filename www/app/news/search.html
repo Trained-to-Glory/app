@@ -7,8 +7,8 @@
     </ion-nav-buttons>
 
     <ion-content class="has-header">
-     <input type="text" ng-model="search" placeholder="search book" />
-      <div class="row" ng-repeat="user in users | fuzzy: search">
+     <input type="text" ng-model="lookUp" placeholder="search book" />
+      <div class="row" ng-repeat="user in users | fuzzy: lookUp">
 
             <div class="col">
                 <div class="card contact animated bounceIn item-remove-animate" on-hold="deleteContact(user[$index]);">

@@ -1,9 +1,7 @@
 angular.module('module.view.rather', [])
-	.controller('ratherCtrl', function($scope,$rootScope,$state,interestService,$localStorage, engagementService) {
+	.controller('ratherCtrl', function($scope,$rootScope,$state,$ionicHistory,interestService,$localStorage, engagementService) {
 		$scope.data = {};
-		console.log('prevScope', $state.prevScope);
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;
-		console.log($localStorage);
 		$scope.goBack = function (ui_sref) {
 					var currentView = $ionicHistory.currentView();
 					var backView = $ionicHistory.backView();
@@ -20,6 +18,15 @@ angular.module('module.view.rather', [])
 							$state.go(ui_sref);
 					}
 			}
+
+
+			$scope.gotoProfile = function () {
+	                    $state.go('tabs.account');
+	                    $ionicHistory.nextViewOptions({
+	                        disableAnimate: true,
+	                        disableBack: true
+	          });
+	        };
 
 
 			$scope.getInterest = function(id){
@@ -40,19 +47,14 @@ angular.module('module.view.rather', [])
 			$scope.isChecked = false;
 		    $scope.selected = [];
 		    $scope.checkedOrNot = function (interest, isChecked, index) {
-						console.log('selected hit');
-						console.log('args',arguments);
 		        if (isChecked) {
 		            $scope.selected.push(interest);
 								engagementService.engagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
-								console.log($localStorage.account.userId);
 		        } else {
 		            var _index = $scope.selected.indexOf(interest);
 		            $scope.selected.splice(_index, 1);
 								engagementService.disEngagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
 		        }
 		    };
-
-
 
 });

@@ -1,13 +1,13 @@
 
-    <ion-content cache-view="false" scroll="false" class="auth">
+    <ion-content cache-view="false" class="auth">
       <form name="registerForm" novalidate ng-submit="registerForm.$valid && register(user)">
-      <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
+        <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
         <div class="col">
             <div class="category-2-item-wrapper">
               <div class="category-2-item-content">
                 <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/juggler.jpg);">
                   <div class="logo">
-                    <img src = "img/TTG-Symbol-2015-02.png">
+                    <img src = "img/TTG-Logo-NowhiteOutline.png">
                   </div>
                 </div>
               </div>
@@ -45,7 +45,14 @@
           <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>
         </label>
       </div>
-      <input type="submit" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 95px;;margin-top: 4vh; display:block;">
+
+      <ion-label style="margin-left:60px;margin-top:6px;">Would you like to be considered a leader?</ion-label>
+      <ion-radio ng-model="user.leader" ng-value="'yes'" style="width:30%;border-color:white;margin-left:166px;">Yes</ion-radio>
+      <ion-radio ng-model="user.person" ng-value="'no'" style="width:30%;border-color:white;margin-left:166px;">No</ion-radio>
+
+      <input type="submit" ng-if="user.person" ui-sref="tabs.rather" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">
+      <input type="submit" ng-if="user.leader" ui-sref="tabs.roleRather" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">
+
     </div>
   </form>
     </ion-content>

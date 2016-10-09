@@ -1,17 +1,12 @@
 <ion-view title="Profile">
 
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark">
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
             <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
-    
+
     <ion-content class="has-header bt-grey profile" scroll="false">
-        <div class="row text-center">
-            <div class="col font-thin" ng-click="gotoBrowse()">Browse</div>
-            <div class="col font-thin" ng-click="gotoMatch()">Match</div>
-            <div class="col font-thin" ng-click="gotoAccount()">Profile</div>
-        </div>
 
     <div style="height:100%; overflow:scroll" class="bg-lightgrey">
 
@@ -36,7 +31,7 @@
            <a class="button button-calm profile" style="border-color: #F10707; color:#F10707;font-size: 11px; background-color: transparent;margin-right: 1vh;" ui-sref="tabs.plans">Request Plan</a>
          </div>
 
-        <div class="list" style="height:100%;">
+        <div class="list profile" style="height:100%;">
          <div ng-if="profile.type === 1">
             <div class="item item-divider">
                 PHOTOS

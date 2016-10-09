@@ -92,7 +92,7 @@ angular.module('service.engagements', [])
                    var len = exists instanceof Array ? exists.length : 0;
                    var final = {};
                    var obj = {
-                      "userPhoto": $localStorage.account.userPhoto || '',
+                      "userPhoto": $localStorage.account.userPhoto,
                       "userName": $localStorage.account.userName,
                        "created": firebase.database.ServerValue.TIMESTAMP,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
@@ -135,7 +135,6 @@ angular.module('service.engagements', [])
                                'fakedata': 1
                            };
                        }
-
 
                        var db = (typeof (exists) === 'boolean' || len === 0) ? firebase.database().ref() : firebase.database().ref(refId);
                        return db.update(final).then(function () {
@@ -183,7 +182,7 @@ angular.module('service.engagements', [])
                    }
                    var final = {};
                    final[itemId] = {
-                       "userPhoto": $localStorage.account.userPhoto || '',
+                       "userPhoto": $localStorage.account.userPhoto,
                        "userName": $localStorage.account.userName,
                        "created": prev.created,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
@@ -217,7 +216,7 @@ angular.module('service.engagements', [])
          this.createComment = function (category, categoryId, itemId, comment) {
             var type = 'engagementComments';
             //check if engagement item is already in hash
-            return updateEngagement(type, category, categoryId, itemId, undefined,  comment);
+            return updateEngagement(type, category, categoryId, itemId, comment);
         };
 
         this.updateComment = function (category, categoryId, itemId, comment) {
@@ -258,6 +257,18 @@ angular.module('service.engagements', [])
 
         this.disEngagedActivities = function (data) {
             var type = 'engagedActivities';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
+        };
+
+        this.engagedLeader = function (data) {
+            var type = "engagedLeader";
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, true);
+        };
+
+        this.disEngagedLeader = function (data) {
+            var type = 'engagedLeader';
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };

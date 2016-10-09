@@ -28,19 +28,12 @@ angular.module('full_starter.routes', [])
     googleWebClientId: "778952668094-pu4uhti4hi5m0g51ih0uiapvdu4mjj5i.apps.googleusercontent.com"
   })
 
-  .config(function ($stateProvider, $urlRouterProvider,$ionicCloudProvider,$ionicConfigProvider, $logProvider) {
+  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider) {
     $ionicConfigProvider.backButton.previousTitleText(false);
-    window.Stripe.setPublishableKey('pk_test_86ybhlRNQgVLyNlBjTp33Rqp');
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("center");
     //turning off $log
     $logProvider.debugEnabled(true);
-
-      $ionicCloudProvider.init({
-      "core": {
-        "app_id": "e77285d3"
-      }
-    });
 
     $stateProvider
       .state('tabs', {
@@ -127,6 +120,7 @@ angular.module('full_starter.routes', [])
 
       .state('tabs.leader', {
         url: '/leader',
+        params: { contact: null },
         views: {
           'menuContent': {
             templateUrl: 'app/account/leader.html',
@@ -231,6 +225,17 @@ angular.module('full_starter.routes', [])
           'menuContent': {
             templateUrl: 'app/dashboard/contacts.html',
             controller: 'contactsCtrl'
+          }
+        }
+      })
+
+      .state('tabs.lead', {
+        url: '/lead',
+        params: {activity: null},
+        views: {
+          'menuContent': {
+            templateUrl: 'app/dashboard/lead.html',
+            controller: 'leadCtrl'
           }
         }
       })
@@ -474,6 +479,8 @@ angular.module('full_starter.routes', [])
         }
       })
 
+
+
       .state('tabs.settings', {
         url: '/settings',
         views: {
@@ -505,7 +512,7 @@ angular.module('full_starter.routes', [])
         templateUrl: 'app/intro/signin.html',
         controller: 'signinCtrl',
       })
-    $urlRouterProvider.otherwise('/authentication')
+    $urlRouterProvider.otherwise('/signin')
 
 
 

@@ -30,6 +30,8 @@ angular.module('module.view.signup', ['full_starter.factory'])
                 lastName: user.lastName,
                 userName: user.userName,
                 userId: firebase.auth().currentUser.uid,
+								leader: user.leader || '',
+								person: user.person || '',
                 dateCreated: Date(),
                 provider: 'Firebase'
               }).then(function(response) {
@@ -56,7 +58,6 @@ angular.module('module.view.signup', ['full_starter.factory'])
               var errorCode = error.code;
               var errorMessage = error.message;
               //Show error message.
-              console.log(errorCode);
               switch (errorCode) {
 								case 'username is already in use':
 									$ionicPopup.show({
@@ -130,23 +131,6 @@ angular.module('module.view.signup', ['full_starter.factory'])
 			var account = response.val();
 			$localStorage.account = account;
 		});
-		$state.go('tabs.rather');
 	};
-
-	$scope.isChecked = false;
-		$scope.selected = [];
-		$scope.checkedOrNot = function (isChecked, index) {
-				console.log('selected hit');
-				console.log('args',arguments);
-				if (isChecked) {
-						$scope.selected.push(interest);
-						//engagementService.engagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
-						console.log('hit');
-				} else {
-						var _index = $scope.selected.indexOf(interest);
-						$scope.selected.splice(_index, 1);
-						//engagementService.disEngagedActivities({category:'interest', categoryId:interest.id, itemId:$localStorage.account.userId});
-				}
-		};
 
 });

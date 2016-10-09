@@ -1,14 +1,32 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$log,$stateParams,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+	.controller('profileCtrl', function($scope,$rootScope,$log,$ionicPopover,$stateParams,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
+	$scope.view = { type: 1 };
+
+	$scope.openPopover = function($event) {
+		 $scope.fullscreenPopover.show($event);
+	};
+
+	$scope.closePopover = function($event) {
+		 $scope.fullscreenPopover.hide();
+	};
+
+	// Execute action on hide popover
+	$scope.$on('popover.hidden', function() {
+		 // Execute action
+	});
+
+	// Execute action on remove popover
+	$scope.$on('popover.removed', function() {
+		 // Execute action
+	});
+
 	$scope.togglePartner = function(partnerId){
 			var partner = $scope.contacts;
-			console.log(partner);
-			$log.log({partnerId: partnerId, partner: partner, userId: $localStorage.account.userId});
 			 if(!partner){
 				 return false;
 			 }
@@ -39,7 +57,6 @@ angular.module('module.view.profile', [])
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userNews = results;
-		 $log.log($scope.userNews);
 	});
 
 	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
@@ -89,6 +106,9 @@ angular.module('module.view.profile', [])
             items: postService.getNews()
         }
 
+				$scope.menuPopover = $ionicPopover.fromTemplate(menuTemplate, {
+						scope: $scope
+				});
 
 		$scope.profile = $localStorage.account;
 
@@ -106,6 +126,80 @@ angular.module('module.view.profile', [])
                     $state.go('tabs.coach');
 
         };
+
+				$scope.browse = function () {
+
+						$state.go('tabs.news');
+				};
+
+				$scope.explore = function () {
+
+						$state.go('tabs.explore');
+				};
+
+				$scope.match = function () {
+
+						$state.go('tabs.match');
+				};
+
+				$scope.coach = function () {
+
+						$state.go('tabs.coach');
+				};
+
+				$scope.plans = function () {
+
+						$state.go('tabs.sentPlans');
+				};
+
+				$scope.reminder = function () {
+
+						$state.go('tabs.reminders');
+				};
+
+				$scope.likeList = function () {
+
+						$state.go('tabs.likeList');
+				};
+
+				$scope.partners = function () {
+
+						$state.go('tabs.partners');
+				};
+
+				$scope.settings = function () {
+
+						$state.go('tabs.settings');
+				};
+
+				$scope.search = function () {
+
+						$state.go('tabs.search');
+				};
+
+				$scope.calendar = function () {
+
+						$state.go('tabs.reminders');
+				};
+
+				$scope.account = function (){
+					$state.go('tabs.account')
+				};
+
+				$scope.logout = function() {
+
+				 if (firebase.auth()) {
+					 firebase.auth().signOut().then(function() {
+						 //Clear the saved credentials.
+						 $localStorage.$reset();
+						 //Proceed to login screen.
+						 $state.go('authentication');
+					 }, function(error) {
+						 //Show error message.
+						 Utils.message(Popup.errorIcon, Popup.errorLogout);
+					 });
+				 }
+			 };
 
 
 });

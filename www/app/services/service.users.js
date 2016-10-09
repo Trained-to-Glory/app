@@ -39,13 +39,25 @@ angular.module('service.users', [])
        var posts = (userId) ? firebase.database().ref(['accounts', userId , 'posts'].join('/')) : firebase.database().ref('accounts');
        return posts.once('value').then(function (snapshot) {
              var currentObj = snapshot.val();
-             if (currentObj) {
+             var numberPost = snapshot.numChildren();
+             if (numberPost < 10 && currentObj) {
                  return currentObj;
              }
              return undefined;
          });
    };
 
+   this.getMoreUserPost = function (userId) {
+       var posts = (userId) ? firebase.database().ref(['accounts', userId , 'posts'].join('/')) : firebase.database().ref('accounts');
+       return posts.once('value').then(function (snapshot) {
+             var currentObj = snapshot.val();
+             var numberPost = snapshot.numChildren();
+             if (numberPost => 10 && currentObj) {
+                 return currentObj;
+             }
+             return undefined;
+         });
+   };
 
    this.getUserCommits = function (userId) {
        var myPostsPromise = firebase.database().ref(['accounts', userId , 'engagementCommits', 'post'].join('/'));
@@ -81,7 +93,36 @@ angular.module('service.users', [])
                   var accounts = snapshot.val();
                   if(accounts){
                     for(var key in myPartners){
-                      obj[key] = accounts[key].posts;
+                      var numberPost = Object.keys(accounts[key].posts).length;
+                      if(numberPost < 10){
+                        obj[key] = accounts[key].posts;
+                      }
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getMorePartnerPosts = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['accounts'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      var numberPost = Object.keys(accounts[key].posts).length;
+                      if(numberPost => 10){
+                        obj[key] = accounts[key].posts;
+                      }
                     }
                     return obj;
                   }
@@ -99,12 +140,12 @@ angular.module('service.users', [])
              var obj = {};
              var myPartners = snapshot.val();
              if (myPartners) {
-                var accountsPromise = firebase.database().ref(['engagementLikes', 'post'].join('/'));
+                var accountsPromise = firebase.database().ref(['engagementLikes'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
-                  var accounts = snapshot.val();
-                  if(accounts){
+                  var engagementLikes = snapshot.val();
+                  if(engagementLikes){
                     for(var key in myPartners){
-                      obj[key] = accounts[key];
+                      obj[key] = engagementLikes[key].post;
                     }
                     return obj;
                   }
@@ -146,6 +187,29 @@ angular.module('service.users', [])
              var myPartners = snapshot.val();
              if (myPartners) {
                 var accountsPromise = firebase.database().ref(['engagementCommits', 'post'].join('/'));
+                return accountsPromise.once('value').then(function(snapshot){
+                  var accounts = snapshot.val();
+                  if(accounts){
+                    for(var key in myPartners){
+                      obj[key] = accounts[key];
+                    }
+                    return obj;
+                  }
+                  return obj;
+                });
+                 return obj;
+             }
+             return obj;
+         });
+   };
+
+   this.getUserCommentsPost = function (userId) {
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'posts'].join('/'));
+       return myPartnersPromise.once('value').then(function (snapshot) {
+             var obj = {};
+             var myPartners = snapshot.val();
+             if (myPartners) {
+                var accountsPromise = firebase.database().ref(['engagementComments', 'post'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
                   var accounts = snapshot.val();
                   if(accounts){
@@ -238,7 +302,7 @@ angular.module('service.users', [])
           }
       }
     });
-   };
+ };
 
    this.getUserTotalPartners = function(userId){
     var count = 0;
@@ -253,7 +317,7 @@ angular.module('service.users', [])
    };
 
 
-   this.getAllAccounts = function () {
+   this.getAllUsers = function () {
        var users = firebase.database().ref('accounts');
        return users.once('value').then(function (snapshot) {
              var accounts = snapshot.val();
