@@ -9,23 +9,6 @@ angular.module('module.view.explore', [])
 
         };
 
-				$scope.openPopover = function($event) {
-					 $scope.fullscreenPopover.show($event);
-				};
-
-				$scope.closePopover = function($event) {
-					 $scope.fullscreenPopover.hide();
-				};
-
-				// Execute action on hide popover
-				$scope.$on('popover.hidden', function() {
-					 // Execute action
-				});
-
-				// Execute action on remove popover
-				$scope.$on('popover.removed', function() {
-					 // Execute action
-				});
 
         $scope.gotoMatch = function () {
                     $state.go('tabs.match');
@@ -95,34 +78,67 @@ angular.module('module.view.explore', [])
 						$state.go('tabs.event');
 				};
 
+				$scope.limit = 8;
+
+        $scope.loadMore = function(){
+          if($scope.news && $scope.news.itemsArr){
+            var max = $scope.news.itemsArr.length;
+            if($scope.limit <  max){
+              $scope.moreToScroll = true;
+              if($scope.limit - max < 10 && $scope.limit - max > 0){
+                $scope.limit += Math.abs($scope.limit - max);
+                $scope.moreToScroll = false;
+                return;
+              }
+              $scope.limit += 10;
+            }else{
+              $scope.moreToScroll = false;
+            }
+          }
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        };
+
+
 				postService.getNews().then(function(results) {
 					//create a local object so we can create the datastructure we want
 					//so we can use it to show/hide, toggle ui items
+					var arr = [];
+					var photos = [];
+          for(var key in results){
+            results[key].key = key;
+            arr.push(results[key]);
+						if (results[key].photo != ""){
+							photos.push(results[key]);
+						}
+          }
 					var news = {
-							type: 'image',
-							items: results
+							itemsArr: photos
 					};
-					for(var id in news.items){
-						//check to see if there is a like on this post
-						engagementService.liked({category:'post', categoryId:id, itemId: $localStorage.account.userId}).then(function(liked){
-							news.items[id].liked = liked;
-						});
-						engagementService.committed({category:'post', categoryId:id, itemId: $localStorage.account.userId}).then(function(committed){
-							news.items[id].committed = committed;
-						});
-						engagementService.totalLikes({category:'post', categoryId: $localStorage.account.userId}).then(function(totalLikes){
-							news.items[id].totalLikes = totalLikes;
-						});
-						engagementService.totalCommits({category:'post', categoryId: $localStorage.account.userId}).then(function(totalCommits){
-							news.items[id].totalCommits = totalCommits;
-						});
-					}
 					//make it available to the directive to officially show/hide, toggle
 					$scope.news = news;
 				});
+
 				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
             scope: $scope
         });
+
+				$scope.openPopover = function($event) {
+					 $scope.fullscreenPopover.show($event);
+				};
+
+				$scope.closePopover = function($event) {
+					 $scope.fullscreenPopover.hide();
+				};
+
+				// Execute action on hide popover
+				$scope.$on('popover.hidden', function() {
+					 // Execute action
+				});
+
+				// Execute action on remove popover
+				$scope.$on('popover.removed', function() {
+					 // Execute action
+				});
 
 				$scope.browse = function () {
 
@@ -155,7 +171,7 @@ angular.module('module.view.explore', [])
 				};
 
 				$scope.notifications = function(){
-						$state.go('tab.communicate');
+						$state.go('tabs.communicate');
 				};
 
 				$scope.likeList = function () {
@@ -192,6 +208,7 @@ angular.module('module.view.explore', [])
 					 firebase.auth().signOut().then(function() {
 						 //Clear the saved credentials.
 						 $localStorage.$reset();
+						 $scope.closePopover();
 						 //Proceed to login screen.
 						 $state.go('authentication');
 					 }, function(error) {
@@ -231,13 +248,13 @@ var popoverTemplate =
  '</ion-item>' +
  '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
  '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Explore' +
+ '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
  '</ion-item>' +
  '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
  '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Plans' +
+ '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
  '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Calendar' +
+ '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
  '</ion-item>' +
  '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
  '</ion-item>' +
@@ -245,8 +262,8 @@ var popoverTemplate =
  '</ion-item>' +
  '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
  '</ion-item>' +
- '<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;" ng-click="account()">'+
- '<img ng-src="{{ profile.userPhoto }}">'+
+ '<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;margin-left:2px;" ng-click="account()">'+
+ '<img ng-src="{{ profile.userPhoto }}" style="margin-left: 2px;">'+
  '<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
  '</a>'+
  '<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +

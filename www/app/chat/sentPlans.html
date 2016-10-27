@@ -1,31 +1,37 @@
-<ion-view title="Plans" cache-view="false">
+<ion-view title="Goals" cache-view="false">
     <ion-nav-buttons side = "left">
       <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
       </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header" scroll="true">
-        <div class="row row-no-padding category-1-outer">
-          <div class="col">
-            <a>
-              <div class="category-1-item-wrapper" ng-repeat = "(key,plan) in view.items">
-                <div class="category-1-item-content" ng-init="bg_img_2 = 'img/match/category-1-2.png'" ui-sref="tabs.planView-detail({post:userId})">
-                  <div class = "multi-bg-outer" multi-bg="[bg_img_2]" interval="3000" helper-class="category-with-image" style="background-image: url({plan.photo});">
-                    <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay"></span>
-                    <h1 class="category-heading dark">
-                      <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
-                      <span class="main-title">{{plan.title}}</span>
-                      <span class="subtitle">{{plan.time }}</span>
-                    </h1>
-                  </div>
+      <div class="card image" ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true">
+            <div class="item item-image">
+                <img ng-src="{{plan.photo}}">
+                <div class="item item-avatar">
+                  <img ng-src="{{plan.avatar}}">
+                  <ul class="dish-tags">
+                    <li class="dish-tag" ng-if="!plan.totalCommits" ng-click="toggleCommit(plan.key,userId)" style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                      Click to Join
+                    </li>
+                    <li class="dish-tag" ng-if="plan.totalCommits" ng-click="toggleCommit(plan.key,userId)" style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                      {{plan.totalCommits}}
+                    </li>
+                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                      {{plan.description}}
+                    </li>
+                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                      {{plan.notes}}
+                    </li>
+                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                      {{plan.created | date}}
+                    </li>
+                  </ul>
                 </div>
-              </div>
-            </a>
-          </div>
+            </div>
         </div>
+        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
-
     <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="plansPopover.show($event);"><i class="icons ion-ios-albums" style="color: red"></i></a>
 </ion-view>

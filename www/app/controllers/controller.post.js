@@ -21,22 +21,39 @@ angular.module('module.view.post', [])
 			$scope.event = function () {
 				$state.go('tabs.event');
 			}
+			//
+			// if($stateParams.post){
+			// 	postService.get($stateParams.post).then(function(results) {
+			// 		var data = {
+			// 			category: 'post',
+			// 			categoryId: $stateParams.post
+			// 		}
+			// 		engagementService.totalLikes(data).then(function(totalLikes){
+			// 			results.totalLikes = totalLikes;
+			// 		});
+			//
+			// 		engagementService.totalComments(data).then(function(totalComments){
+			// 			results.totalComments = totalComments;
+			// 			$scope.commentMode = !!totalComments;
+			// 		});
+			//
+			// 		$scope.post = results;
+			// 	});
+			// }
 
 			if($stateParams.post){
 				postService.get($stateParams.post).then(function(results) {
+					var arr = [];
+					for(var key in results){
+						results[key].key = key;
+						arr.push(results[key]);
+					}
 					var data = {
 						category: 'post',
-						categoryId: $stateParams.post
+						categoryId: $stateParams.post,
+						items: results,
+						itemsArr: arr
 					}
-					engagementService.totalLikes(data).then(function(totalLikes){
-						results.totalLikes = totalLikes;
-					});
-
-					engagementService.totalComments(data).then(function(totalComments){
-						results.totalComments = totalComments;
-						$scope.commentMode = !!totalComments;
-					});
-
 					$scope.post = results;
 				});
 			}
@@ -87,46 +104,83 @@ angular.module('module.view.post', [])
             return false;
         };
 
+				$scope.profile = $localStorage.account;
+				$scope.formData = {};
+				//type, category, categoryId, itemId, userId, comment,
+				$scope.createComment = function () {
+            //create a location in the table
+            var obj = {
+								"comment": $scope.formData.searchText,
+								"created": firebase.database.ServerValue.TIMESTAMP,
+								"userPhoto": $localStorage.account.userPhoto,
+								"userName": $localStorage.account.userName,
+								"state": {
+										"actionable": true,
+										"visible": true,
+										"active": true
+								}
+            };
+            var db = firebase.database().ref();
+            var posts = db.child('posts');
+            var postsKey = posts.push(obj).key;
+            var userId = firebase.auth().currentUser.uid;
+
+       // Write the new post's data simultaneously in the posts list and the user's post list.
+         var updates = {};
+         updates[['engagementComments',$stateParams.post].join('/')] = obj;
+         updates[['accounts', userId , 'posts' , $stateParams.post , userId].join('/')] = obj;
+
+         return firebase.database().ref().push(updates);
+        };
+
 				$scope.toggleLike = function(postId, userId){
-          var posts = $scope.news.items;
-          if(postId in posts){
-            var post = $scope.news.items[postId];
+            var post = $scope.post.createdBy[postId];
             var actionable = post.state.actionable;
             if(actionable){
               post.liked = !post.liked;
               var state = (post.liked)?'like':'unlike';
+              if(!post.liked){
+                ++post.totalLikes;
+              }else if(post.totalLikes > 0){
+                --post.totalLikes;
+              }
               return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
             }
-          }
             return false;
         };
 
+				$scope.limit = 5;
 
-				$scope.profile = $localStorage.account;
-				//type, category, categoryId, itemId, userId, comment,
-				$scope.createComment = function(){
-					var obj = {
-							"comment": $scope.post.comment,
-							"created": firebase.database.ServerValue.TIMESTAMP,
-							"userPhoto": $localStorage.account.userPhoto,
-							"userName": $localStorage.account.userName,
-							"state": {
-									"actionable": true,
-									"visible": true,
-									"active": true
-							}
+        $scope.loadMore = function(){
+          if($scope.comments){
+            var max = $scope.comments.length;
+            if($scope.limit <  max){
+              $scope.moreToScroll = true;
+              if($scope.limit - max < 10 && $scope.limit - max > 0){
+                $scope.limit += Math.abs($scope.limit - max);
+                $scope.moreToScroll = false;
+                return;
+              }
+              $scope.limit += 10;
+            }else{
+              $scope.moreToScroll = false;
+            }
+          }
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        };
+
+
+				postService.getComments($stateParams.post).then(function(results) {
+					$scope.comments = [];
+					for(var key in results){
+						results[key].key = key;
+						$scope.comments.push(results[key]);
+					}
+					var comments = {
+							items: results
 					};
-					var db = firebase.database().ref('engagementComments');
-					var userId = firebase.auth().currentUser.uid;
-				 // Write the new post's data simultaneously in the posts list and the user's post list.
-					 var updates = {};
-					 updates['engagementComments/' +  'post' + '/' + firebase.database.ServerValue.TIMESTAMP + '/' + userId] = obj;
-					 updates['accounts/' + userId + 'engagementComments/' + 'post' + '/' + firebase.database.ServerValue.TIMESTAMP + '/' + userId] = obj;
-					 return firebase.database().ref().update(updates);
-				};
 
-				postService.getPostComments().then(function(results) {
-					$scope.comments = results[$stateParams.post];
+					$scope.commmentsNumber = $scope.comments.length;
 				});
 
 				$scope.activateCommentMode = function(){

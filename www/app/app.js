@@ -42,6 +42,22 @@ angular.module('full_starter', ['ionic','angular.filter','ngStorage','ngCordovaO
         StatusBar.styleDefault();
       }
 
+      if(window.cordova && window.cordova.InAppBrowser){
+        window.open =  window.cordova.InAppBrowser.open;
+      }
+
+      $ionicPlatform.registerBackButtonAction(function(e) {
+        if ($state.current.name == 'tabs.news') {
+          ionic.Platform.exitApp();
+        } else if($state.current.name == 'signin') {
+          ionic.Platform.exitApp();
+        } else if ($ionicHistory.backView()) {
+          $ionicHistory.goBack();
+        }
+        e.preventDefault();
+        return false;
+      }, 101);
+
       // $scope.$on('cloud:push:notification', function(event, data) {
       //   var msg = data.message;
       //   alert(msg.title + ': ' + msg.text);

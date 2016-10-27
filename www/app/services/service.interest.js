@@ -132,9 +132,79 @@ angular.module('service.interest', [])
  	    return;
  	  };
 
+    this.createPictures = function(userId){
+ 	    var data = {
+ 	           "displayName": "Photo"
+ 	    };
+
+ 	    var ref = firebase.database().ref('signupPicture');
+      var signin = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/jump-water.jpg?alt=media&token=22759f44-8cd3-49d4-9c43-76e597320345';
+      var key;
+       var backgroundImg = [signin];
+       var label = ['signin'];
+
+
+       for(var i = 0; i < backgroundImg.length; i++){
+   	      data = {
+                  "displayName": backgroundImg[i],
+                    "label": label[i]
+   	      };
+   	      key = ref.push().key;
+   	      ref.child(key).set(data);
+       }
+ 	    return;
+ 	  };
+
+    this.createLogin = function(userId){
+ 	    var data = {
+ 	           "displayName": "Photo"
+ 	    };
+
+ 	    var ref = firebase.database().ref('loginPicture');
+      var login = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/juggler.jpg?alt=media&token=0ddff85c-0df3-4dfd-bed6-11b7ec47711d';
+      var key;
+       var backgroundImg = [login];
+       var label = ['login'];
+
+
+       for(var i = 0; i < backgroundImg.length; i++){
+   	      data = {
+                  "displayName": backgroundImg[i],
+                    "label": label[i]
+   	      };
+   	      key = ref.push().key;
+   	      ref.child(key).set(data);
+       }
+ 	    return;
+ 	  };
+
 
 	  this.get = function(id){
       var intresets = (id) ? firebase.database().ref('interest/' + id) : firebase.database().ref('interest');
+      return intresets.once('value').then(function (snapshot) {
+          var currentObj = snapshot.val();
+          var numberPost = snapshot.numChildren();
+          if (currentObj) {
+              return currentObj;
+          }
+          return undefined;
+      });
+    };
+
+    this.getPictures = function(id){
+      var intresets = (id) ? firebase.database().ref('signupPicture/' + id) : firebase.database().ref('signupPicture');
+      return intresets.once('value').then(function (snapshot) {
+          var currentObj = snapshot.val();
+          var numberPost = snapshot.numChildren();
+          if (currentObj) {
+              return currentObj;
+          }
+          return undefined;
+      });
+    };
+
+    this.getLogin = function(id){
+      var intresets = (id) ? firebase.database().ref('loginPicture/' + id) : firebase.database().ref('loginPicture');
       return intresets.once('value').then(function (snapshot) {
           var currentObj = snapshot.val();
           var numberPost = snapshot.numChildren();
@@ -190,10 +260,11 @@ angular.module('service.interest', [])
       });
     };
 
+
+
     this.getInterestUsers = function(id){
       var refId = ['engagedActivities','interest', id].join('/');
       var db = firebase.database().ref(refId);
-      var interestedUsers = {};
       return db.once('value').then(function (snapshot) {
           var selectedUsers = snapshot.val();
           if (selectedUsers) {
@@ -202,6 +273,7 @@ angular.module('service.interest', [])
               var allUsers = snapshot.val();
               if(allUsers){
                 for(var user in selectedUsers){
+                  var interestedUsers = {};
                   interestedUsers[user] = allUsers[user];
                 }
                 return interestedUsers;

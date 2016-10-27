@@ -1,7 +1,5 @@
 angular.module('module.view.planView', [])
 	.controller('planViewCtrl', function($scope,$rootScope,$state,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
-		console.log($stateParams);
-
 		$scope.postId = $stateParams.post;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -21,18 +19,27 @@ angular.module('module.view.planView', [])
                     }
         };
 
+
+				$scope.profile = $localStorage.account;
+
 			$scope.event = function () {
 				$state.go('tabs.event');
 			}
 
 			if($stateParams.post){
 				postService.getPlans($stateParams.post).then(function(results) {
+					var arr = [];
+					for(var key in results){
+						results[key].key = key;
+						arr.push(results[key]);
+					}
 					var data = {
 						category: 'post',
-						postId: $stateParams.post
+						categoryId: $stateParams.post,
+						items: results,
+						itemsArr: arr
 					}
-
-					$scope.post = results;
+					$scope.post = data;
 				});
 			}
 

@@ -1,5 +1,5 @@
 angular.module('module.view.interest', [])
-	.controller('interestCtrl', function($scope,$rootScope,$state, interestService, engagementService) {
+	.controller('interestCtrl', function($scope,$rootScope,$state,$ionicPopover,interestService,$localStorage, engagementService) {
 		$scope.getInterest = function(id){
 			return interestService.get(id);
 		};
@@ -15,18 +15,136 @@ angular.module('module.view.interest', [])
 			$scope.interests = interests;
 		});
 
+		$scope.limit = 10;
+
+		$scope.loadMore = function(){
+			if($scope.interests){
+				var max = $scope.interests.length;
+				if($scope.limit <  max){
+					$scope.moreToScroll = true;
+					if($scope.limit - max < 10 && $scope.limit - max > 0){
+						$scope.limit += Math.abs($scope.limit - max);
+						$scope.moreToScroll = true;
+						return;
+					}
+					$scope.limit += 10;
+				}else{
+					$scope.moreToScroll = false;
+				}
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		};
+
 		$scope.isChecked = false;
 			$scope.selected = [];
 			$scope.checkedOrNot = function (interest, isChecked, index) {
 					if (isChecked) {
 							$scope.selected.push(interest);
-							engagementService.engagedActivities('interest', interest.id, $localStorage.account.userId);
+							engagementService.engagedActivities({category:'interest', categoryId:interest.id, userId:$localStorage.account.userId});
 					} else {
 							var _index = $scope.selected.indexOf(interest);
 							$scope.selected.splice(_index, 1);
-							engagementService.disEngagedActivities('interest', interest.id, $localStorage.account.userId);
+							engagementService.disEngagedActivities({category:'interest', categoryId:interest.id, userId:$localStorage.account.userId});
 					}
 			};
+
+			$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
+					scope: $scope
+			});
+
+			$scope.openPopover = function($event) {
+				 $scope.fullscreenPopover.show($event);
+			};
+
+			$scope.closePopover = function($event) {
+				 $scope.fullscreenPopover.hide();
+			};
+
+			// Execute action on hide popover
+			$scope.$on('popover.hidden', function() {
+				 // Execute action
+			});
+
+			// Execute action on remove popover
+			$scope.$on('popover.removed', function() {
+				 // Execute action
+			});
+
+			$scope.browse = function () {
+				$scope.closePopover();
+					$state.go('tabs.news');
+			};
+
+			$scope.explore = function () {
+				$scope.closePopover();
+				$state.go('tabs.explore');
+			};
+
+			$scope.match = function () {
+				$scope.closePopover();
+					$state.go('tabs.match');
+
+			};
+
+			$scope.coach = function () {
+				 $scope.closePopover();
+					$state.go('tabs.coach');
+			};
+
+			$scope.plans = function () {
+				 $scope.closePopover();
+					$state.go('tabs.sentPlans');
+			};
+
+			$scope.reminder = function () {
+				$scope.closePopover();
+					$state.go('tabs.reminders');
+			};
+
+			$scope.partners = function () {
+				$scope.closePopover();
+					$state.go('tabs.partners');
+			};
+
+			$scope.settings = function () {
+				$scope.closePopover();
+					$state.go('tabs.settings');
+			};
+
+			$scope.search = function () {
+				$scope.closePopover();
+					$state.go('tabs.search');
+			};
+
+			$scope.calendar = function () {
+				$scope.closePopover();
+					$state.go('tabs.reminders');
+			};
+
+			$scope.account = function (){
+				$scope.closePopover();
+				$state.go('tabs.account');
+			};
+
+			$scope.notifications = function (){
+				$scope.closePopover();
+				$state.go('tabs.communicate');
+			};
+
+			$scope.logout = function() {
+			if (firebase.auth()) {
+				firebase.auth().signOut().then(function() {
+					//Clear the saved credentials.
+					$localStorage.$reset();
+					$scope.closePopover();
+					//Proceed to login screen.
+					$state.go('authentication');
+				}, function(error) {
+					//Show error message.
+					Utils.message(Popup.errorIcon, Popup.errorLogout);
+				});
+			}
+		};
 
      $scope.goBack = function (ui_sref) {
         var currentView = $ionicHistory.currentView();

@@ -1,6 +1,5 @@
 angular.module('module.view.friend', [])
-	.controller('friendCtrl', function($scope,$log,engagementService,$localStorage, $rootScope,$state,partnersService,postService, usersService,$stateParams) {
-		 console.log($stateParams.contact);
+	.controller('friendCtrl', function($scope,$log,engagementService,$localStorage, $rootScope,$state,postService, usersService,$stateParams) {
 		 $scope.profile = $localStorage.account;
 
 		$scope.togglePartner = function(partnerId){
@@ -12,21 +11,114 @@ angular.module('module.view.friend', [])
 				var state = (partner.partnered)?'partner':'unpartner';
 				return engagementService[state]({category:'partners', categoryId:partnerId, userId: $localStorage.account.userId});
 		};
+		$scope.loadMore = function(){
+			if($scope.userPosts && $scope.userPosts.itemsArr){
+				var max = $scope.userPosts.itemsArr.length;
+				if($scope.limit <  max){
+					$scope.moreToScroll = true;
+					if($scope.limit - max < 10 && $scope.limit - max > 0){
+						$scope.limit += Math.abs($scope.limit - max);
+						$scope.moreToScroll = false;
+						return;
+					}
+					$scope.limit += 10;
+				}else{
+					$scope.moreToScroll = false;
+				}
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		};
+
+		$scope.loadMoreUserCommits = function(){
+			if($scope.userCommits && $scope.userCommits.itemsArr){
+				var max = $scope.userCommits.itemsArr.length;
+				if($scope.limit <  max){
+					$scope.moreToScroll = true;
+					if($scope.limit - max < 10 && $scope.limit - max > 0){
+						$scope.limit += Math.abs($scope.limit - max);
+						$scope.moreToScroll = false;
+						return;
+					}
+					$scope.limit += 10;
+				}else{
+					$scope.moreToScroll = false;
+				}
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		};
+
+		$scope.loadMorePartnerPost = function(){
+			if($scope.userNews && $scope.userNews.itemsArr){
+				var max = $scope.userNews.itemsArr.length;
+				if($scope.limit <  max){
+					$scope.moreToScroll = true;
+					if($scope.limit - max < 10 && $scope.limit - max > 0){
+						$scope.limit += Math.abs($scope.limit - max);
+						$scope.moreToScroll = false;
+						return;
+					}
+					$scope.limit += 10;
+				}else{
+					$scope.moreToScroll = false;
+				}
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		};
+
+		$scope.loadMoreContacts = function(){
+			if($scope.contacts && $scope.contacts.itemsArr){
+				var max = $scope.contacts.itemsArr.length;
+				if($scope.limit <  max){
+					$scope.moreToScroll = true;
+					if($scope.limit - max < 10 && $scope.limit - max > 0){
+						$scope.limit += Math.abs($scope.limit - max);
+						$scope.moreToScroll = false;
+						return;
+					}
+					$scope.limit += 10;
+				}else{
+					$scope.moreToScroll = false;
+				}
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		};
 
 		usersService.get($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
-			$scope.ones = results;
+			var ones = {
+					items: results
+			};
+			delete results[$localStorage.account.userId];
+
+			for(var id in ones.items){
+			 //check to see if there is a like on this post
+			 (function(id, items){
+				 engagementService.partnered({category:'partners',categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+					 items.committed = partnered;
+				 });
+			 })(id, ones.items[id]);
+			}
+			$scope.ones = ones;
 				//check to see if there is a like on this post
-				engagementService.partnered({category:'partners', categoryId:$scope.ones.userId, userId: $localStorage.account.userId}).then(function(partnered){
-					$scope.ones.partnered = partnered;
-				});
 		});
 
 		usersService.getUserPost($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
-			 $scope.userPosts = results;
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
+			var userPost = {
+					items: results,
+					itemsArr: arr
+			};
+			 $scope.userPosts = userPost;
 		});
+
+		$scope.view = { type: 1 };
+
 
 		usersService.getUserTotalPartners($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
@@ -37,7 +129,16 @@ angular.module('module.view.friend', [])
 		usersService.getUserCommits($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
-			 $scope.userCommits = results;
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
+			var userCommits = {
+					items: results,
+					itemsArr: arr
+			};
+			 $scope.userCommits = userCommits;
 		});
 
 		usersService.getUserTotalCommits($stateParams.contact).then(function(results) {
@@ -70,17 +171,29 @@ angular.module('module.view.friend', [])
 			 // Execute action
 		});
 
-		usersService.getPartners($localStorage.account.userId).then(function(results){
+		usersService.getPartners($stateParams.contact).then(function(results){
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
 			var contacts = {
-					items: results
+					items: results,
+					itemsArr: arr
 			};
+			console.log(results);
 			for(var id in contacts.items){
-				engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+			 //check to see if there is a like on this post
+			 (function(id){
+				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
 					contacts.items[id].partnered = partnered;
 				});
-			};
+			})(id,contacts.items);
+			}
 			$scope.contacts = contacts;
+			console.log(contacts);
 		});
+
 
 
 		$scope.goBack = function (ui_sref) {
@@ -106,8 +219,9 @@ angular.module('module.view.friend', [])
         items: postService.getNews()
     }
 
-
-		$scope.profile = { type: 1 };
+		$scope.profile = $stateParams.contact;
+		console.log($scope.profile);
+		$scope.view = { type: 1 };
 
 		$scope.gotoAccounts = function () {
             $state.go('tabs.account');
@@ -121,7 +235,116 @@ angular.module('module.view.friend', [])
             $state.go('tabs.coach');
       };
 
+			$scope.browse = function () {
+				$scope.closePopover();
+					$state.go('tabs.news');
+			};
+
+			$scope.explore = function () {
+				$scope.closePopover();
+				$state.go('tabs.explore');
+			};
+
+			$scope.match = function () {
+				$scope.closePopover();
+					$state.go('tabs.match');
+
+			};
+
+			$scope.coach = function () {
+				 $scope.closePopover();
+					$state.go('tabs.coach');
+			};
+
+			$scope.plans = function () {
+				 $scope.closePopover();
+					$state.go('tabs.sentPlans');
+			};
+
+			$scope.reminder = function () {
+				$scope.closePopover();
+					$state.go('tabs.reminders');
+			};
+
+			$scope.partners = function () {
+				$scope.closePopover();
+					$state.go('tabs.partners');
+			};
+
+			$scope.settings = function () {
+				$scope.closePopover();
+					$state.go('tabs.settings');
+			};
+
+			$scope.search = function () {
+				$scope.closePopover();
+					$state.go('tabs.search');
+			};
+
+			$scope.calendar = function () {
+				$scope.closePopover();
+					$state.go('tabs.reminders');
+			};
+
+			$scope.account = function (){
+				$scope.closePopover();
+				$state.go('tabs.account');
+			};
+
+			$scope.notifications = function (){
+				$scope.closePopover();
+				$state.go('tabs.communicate');
+			};
+
+			$scope.logout = function() {
+			if (firebase.auth()) {
+				firebase.auth().signOut().then(function() {
+					//Clear the saved credentials.
+					$localStorage.$reset();
+					$scope.closePopover();
+					//Proceed to login screen.
+					$state.go('authentication');
+				}, function(error) {
+					//Show error message.
+					Utils.message(Popup.errorIcon, Popup.errorLogout);
+				});
+			}
+		};
+
 });
+var popoverTemplate =
+		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +
+		'<ion-content scroll="true">' +
+		'<ion-list style="position:absolute;top:-10vh;">' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="browse()"> Home' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="search()"> Search' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="partners()"> Partners' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
+		'</ion-item>' +
+		'<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;" ng-click="account()">'+
+		'<img ng-src="{{ profile.userPhoto }}" style="margin-left:2px;">'+
+		'<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
+		'</a>'+
+		'<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +
+		'</ion-item>' +
+		'</ion-list>'+
+		'</ion-content>' +
+		'</ion-popover-view>';
 
 var searchTemplate =
     '<ion-popover-view class="search">' +

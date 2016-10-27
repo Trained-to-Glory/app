@@ -31,9 +31,10 @@ angular.module('full_starter.routes', [])
   .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider) {
     $ionicConfigProvider.backButton.previousTitleText(false);
     $ionicConfigProvider.backButton.text("");
-    $ionicConfigProvider.navBar.alignTitle("center");
+    $ionicConfigProvider.navBar.alignTitle("left");
+    $ionicConfigProvider.tabs.position("top");
     //turning off $log
-    $logProvider.debugEnabled(true);
+    $logProvider.debugEnabled(false);
 
     $stateProvider
       .state('tabs', {
@@ -196,6 +197,7 @@ angular.module('full_starter.routes', [])
 
       .state('tabs.reminders', {
         url: '/reminders',
+        params: { user: null },
         views: {
           'menuContent': {
             templateUrl: 'app/dashboard/reminders.html',
@@ -394,6 +396,17 @@ angular.module('full_starter.routes', [])
         }
       })
 
+      .state('tabs.friendPartners', {
+        url: '/friendPartners',
+        params: { friendPartner: null, mode: null },
+        views: {
+          'menuContent': {
+            templateUrl: 'app/account/friendPartners.html',
+            controller: 'friendPartnersCtrl'
+          }
+        }
+      })
+
       .state('tabs.interest', {
         url: '/interest',
         views: {
@@ -506,6 +519,41 @@ angular.module('full_starter.routes', [])
         controller: 'loginCtrl',
       })
 
+      .state('passwords', {
+        url: '/passwords',
+        templateUrl: 'app/intro/passwords.html',
+        controller: 'loginCtrl',
+      })
+
+      .state('tabs.policy', {
+        url: '/policy',
+        views: {
+          'menuContent': {
+            templateUrl: 'app/intro/policy.html',
+            controller: 'settingsCtrl'
+          }
+        }
+      })
+
+      .state('tabs.service', {
+        url: '/service',
+        views: {
+          'menuContent': {
+            templateUrl: 'app/intro/service.html',
+            controller: 'settingsCtrl'
+          }
+        }
+      })
+
+      .state('tabs.support', {
+        url: '/support',
+        views: {
+          'menuContent': {
+            templateUrl: 'app/intro/support.html',
+            controller: 'settingsCtrl'
+          }
+        }
+      })
 
       .state('signin', {
         url: '/signin',

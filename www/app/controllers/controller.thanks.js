@@ -22,7 +22,6 @@ angular.module('module.view.thanks', [])
 		$scope.stripeCallback = function (code, result) {
 			if($localStorage.account.userId){
 			$localStorage.account.currentPaymentId = 'professional';
-			console.log(arguments);
 		    if (result.error) {
 		      $log.log('it failed! error: ' + result.error.message);
 		    } else {

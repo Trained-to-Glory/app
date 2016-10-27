@@ -20,6 +20,26 @@ angular.module('module.view.roleRather', [])
 					}
 			}
 
+			$scope.limit = 10;
+
+			$scope.loadMore = function(){
+				if($scope.interests){
+					var max = $scope.interests.length;
+					if($scope.limit <  max){
+						$scope.moreToScroll = true;
+						if($scope.limit - max < 10 && $scope.limit - max > 0){
+							$scope.limit += Math.abs($scope.limit - max);
+							$scope.moreToScroll = true;
+							return;
+						}
+						$scope.limit += 10;
+					}else{
+						$scope.moreToScroll = false;
+					}
+				}
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+			};
+
 			$scope.getInterest = function(id){
 				return interestService.getLeaderInterest(id);
 			};
@@ -48,11 +68,11 @@ angular.module('module.view.roleRather', [])
 		    $scope.checkedOrNot = function (interest, isChecked, index) {
 		        if (isChecked) {
 		            $scope.selected.push(interest);
-								engagementService.engagedActivities({category:'leaderInterest', categoryId:interest.id, itemId:$localStorage.account.userId});
+								engagementService.engagedActivities({category:'leaderInterest', categoryId:interest.id, userId:$localStorage.account.userId});
 		        } else {
 		            var _index = $scope.selected.indexOf(interest);
 		            $scope.selected.splice(_index, 1);
-								engagementService.disEngagedActivities({category:'leaderInterest', categoryId:interest.id, itemId:$localStorage.account.userId});
+								engagementService.disEngagedActivities({category:'leaderInterest', categoryId:interest.id, userId:$localStorage.account.userId});
 		        }
 		    };
 

@@ -35,7 +35,7 @@ angular.module('module.view.createPlan', [])
 			data.postType = 'plan';
 			data.photo = $scope.photo;
 			var key = postService.updatePlan(data,$scope.postId);
-			$state.go('tabs.sentPlan');
+			$state.go('tabs.sentPlans');
 		};
 
 		$scope.uploadEventPhoto = function () {

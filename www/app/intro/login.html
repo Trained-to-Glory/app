@@ -1,6 +1,40 @@
 
-    <ion-content cache-view="false" scroll="false" class="auth">
-      <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
+    <ion-content cache-view="false" scroll="true" class="auth">
+      <div class="bg-image" style="background-image:url('img/bg.jpg');">
+        <!-- * bg-color / background-color -->
+        <div class="bg-color">
+            <ion-content>
+                <!-- * logo / logo company -->
+                <div class="logo" >
+                    <img src="img/logo.png" alt="logo" style="height: 160px;">
+                </div>
+                <form ng-submit="doLogin()">
+                    <div class="list list-inset">
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;margin-bottom: 16px;">
+                        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
+                          <input type="text" style="text-align:center;margin-left: 20px;" placeholder="Username" validate>
+                        </label>
+                      </div>
+
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;">
+                        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
+                          <input type="text" style="text-align:center;margin-left: 20px;" placeholder="Password" validate>
+                        </label>
+                      </div>
+                      <p style="position: relative;margin-top: 11px;margin-left: 220px;">
+                          Forgot Password
+                      </p>
+                        <button class="button button-block button-calm" type="submit" style="border-radius: 0px;margin-top: 115px;background-color: rgba(12, 96, 238, 0.45);"  ui-sref="app.feeds">SIGN IN</button>
+                        <!-- * line / line separation -->
+                        <p style="position: relative;margin-top: 4px;" ui-sref="register">
+                            SIGN UP
+                        </p>
+                    </div>
+                </form>
+            </ion-content>
+        </div>
+    </div>
+      <!-- <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
         <div class="col">
             <div class="category-2-item-wrapper">
               <div class="category-2-item-content">
@@ -10,15 +44,15 @@
                 </div>
                 <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/juggler.jpg);">
                   <div class="logo">
-                    <img src = "img/TTG-Symbol-2015-02.png">
+                    <img ng-src = "img/TTG-Symbol-2015-02.png">
                   </div>
                 </div>
               </div>
             </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">
+      <!-- <div class="item no-padding" style="background-color: transparent;border-color: transparent;">
       <div class="row" style="width: 70%;border-bottom: 1px solid silver;margin:auto;">
         <label class="item item-input" style="border: none; margin-top:2px; text-align:center">
           <input type="email" style="text-align:center;margin-left:5vh;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>
@@ -30,5 +64,4 @@
         </label>
       </div>
       <input type="submit" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 95px;;margin-top: 4vh; display:block;">
-    </div>
-    </ion-content>
+    </div> -->

@@ -13,7 +13,11 @@
         <div class="list edit padding-horizontal padding-vertical">
 
           <label class="item item-input event__input" ng-click="uploadEventPhoto()">
-            <img class="plan_picture"ng-src = "{{photo}}" name = "photo" ng-model="photo">
+            <div class="card image" style="background:transparent !important; box-shadow:none;">
+                  <div class="item item-image">
+                    <img class="plan_picture" ng-src = "{{photo}}" name = "photo" ng-model="photo">
+                  </div>
+              </div>
             <span class="input-label" name="photo" ng-model="photo">Add Photo</span>
           </label>
 
@@ -38,8 +42,8 @@
           </label> -->
 
           <label class="item item-input event__input">
-              <input type="text" name="time">{{post.time}}
-              <span class="input-label">Time</span>
+            <input type="datetime-local" displayFormat="MM/YYYY" name="date">{{post.time}}
+              <span class="input-label">Date/Time</span>
           </label>
 
         </div>

@@ -1,5 +1,5 @@
 angular.module('module.view.calendar', [])
-	.controller('calendarCtrl', function($scope,$rootScope,$state,engagementsService,$ionicPopover,$ionicModal) {
+	.controller('calendarCtrl', function($scope,$rootScope,$state,$ionicPopover,$ionicModal,appService) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -20,7 +20,7 @@ angular.module('module.view.calendar', [])
 
 		$scope.viewDate = new Date();
                 $scope.notifyTimes = ['at set time', '15 mins before', '30 mins before', '45 mins before', 'an hour before'];
-                $scope.notifications = engagementsService.getNotifications();
+                $scope.notifications = appService.getNotifications();
                 getDateEvents(moment($scope.viewDate._d).startOf('day')._d);
 
                 $scope.decrementDate = function (item) {

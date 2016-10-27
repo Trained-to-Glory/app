@@ -1,6 +1,14 @@
 angular.module('module.view.coach', [])
-	.controller('coachCtrl', function($scope,$rootScope,$ionicPopover,$state,$localStorage,$cordovaGeolocation,interestService) {
+	.controller('coachCtrl', function($scope,$rootScope,$ionicPopover,$ionicPopup,$state,$localStorage,$cordovaGeolocation,interestService) {
 		$scope.$on('$ionicView.loaded', function(event) {
+			// $ionicPopup.show({
+			// 	title: 'Location',
+			// 	subTitle: 'We Would Like To Access Your Location',
+			// 	buttons: [
+			// 		{ text: 'Cancel'},
+			// 		{ text: 'OK' }
+			// 	]
+			// });
 			var posOptions = {timeout: 10000, enableHighAccuracy: true};
 				$cordovaGeolocation.getCurrentPosition(posOptions)
 					.then(function(position){
@@ -60,14 +68,25 @@ angular.module('module.view.coach', [])
 					return interestService.getTrainers(id);
 				};
 
-				$scope.loadMore = function(id) {
-					interestService.getMoreTrainers(id).then(function(results) {
-						var match = results;
-						//so we can use it to show/hide, toggle ui items
-						$scope.match = Object.assign(match);
-						$scope.$broadcast('scroll.infiniteScrollComplete');
-				});
-			};
+
+				$scope.limit = 4;
+				$scope.loadMore = function(){
+					if($scope.abs){
+						var max = $scope.abs.length;
+						if($scope.limit <  max){
+							$scope.moreToScroll = true;
+							if($scope.limit - max < 10 && $scope.limit - max > 0){
+								$scope.limit += Math.abs($scope.limit - max);
+								$scope.moreToScroll = true;
+								return;
+							}
+							$scope.limit += 10;
+						}else{
+							$scope.moreToScroll = false;
+						}
+					}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				};
 
 				$scope.getInterest().then(function(results) {
 					var interests = [];
@@ -80,85 +99,119 @@ angular.module('module.view.coach', [])
 						});
 					}
 					$scope.abs = interests;
-				}, function(error){
-				}).catch(function(error){
 				});
 
 				$scope.browse = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.news');
 				};
 
 				$scope.explore = function () {
-
-						$state.go('tabs.explore');
+					$scope.closePopover();
+					$state.go('tabs.explore');
 				};
 
 				$scope.match = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.match');
+
 				};
 
 				$scope.coach = function () {
-
+					 $scope.closePopover();
 						$state.go('tabs.coach');
 				};
 
 				$scope.plans = function () {
-
+					 $scope.closePopover();
 						$state.go('tabs.sentPlans');
 				};
 
 				$scope.reminder = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.reminders');
 				};
 
-				$scope.likeList = function () {
-
-						$state.go('tabs.likeList');
-				};
-
 				$scope.partners = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.partners');
 				};
 
 				$scope.settings = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.settings');
 				};
 
 				$scope.search = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.search');
 				};
 
 				$scope.calendar = function () {
-
+					$scope.closePopover();
 						$state.go('tabs.reminders');
 				};
 
 				$scope.account = function (){
-					$state.go('tabs.account')
+					$scope.closePopover();
+					$state.go('tabs.account');
+				};
+
+				$scope.notifications = function (){
+					$scope.closePopover();
+					$state.go('tabs.communicate');
 				};
 
 				$scope.logout = function() {
-
-				 if (firebase.auth()) {
-					 firebase.auth().signOut().then(function() {
-						 //Clear the saved credentials.
-						 $localStorage.$reset();
-						 //Proceed to login screen.
-						 $state.go('authentication');
-					 }, function(error) {
-						 //Show error message.
-						 Utils.message(Popup.errorIcon, Popup.errorLogout);
-					 });
-				 }
-			 };
+				if (firebase.auth()) {
+					firebase.auth().signOut().then(function() {
+						//Clear the saved credentials.
+						$localStorage.$reset();
+						$scope.closePopover();
+						//Proceed to login screen.
+						$state.go('authentication');
+					}, function(error) {
+						//Show error message.
+						Utils.message(Popup.errorIcon, Popup.errorLogout);
+					});
+				}
+			};
 
 			 $scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
 					 scope: $scope
 			 });
 });
+
+var popoverTemplate =
+		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +
+		'<ion-content scroll="true">' +
+		'<ion-list style="position:absolute;top:-10vh;">' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="browse()"> Home' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="search()"> Search' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="partners()"> Partners' +
+		'</ion-item>' +
+		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
+		'</ion-item>' +
+		'<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;margin-left:2px;" ng-click="account()">'+
+		'<img ng-src="{{ profile.userPhoto }}" style="margin-left: 2px;">'+
+		'<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
+		'</a>'+
+		'<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +
+		'</ion-item>' +
+		'</ion-list>'+
+		'</ion-content>' +
+		'</ion-popover-view>';

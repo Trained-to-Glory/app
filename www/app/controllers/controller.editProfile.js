@@ -38,10 +38,10 @@ angular.module('module.view.editProfile', [])
 																		$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
 																		var ref = firebase.database().ref('accounts');
 																		ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
-																			firebase.database().ref('/accounts/' + snapshot.key ).set({
-																				photo: $localStorage.account.userPhoto
+																			firebase.database().ref('/accounts/' + snapshot.key ).update({
+																				userPhoto: $localStorage.account.userPhoto
 																			}).then( function() {
-																				$localStorage.account.userPhoto = photo;
+																				$localStorage.account.userPhoto = userPhoto;
 																				return;
 																			});
 																		});
@@ -58,10 +58,10 @@ angular.module('module.view.editProfile', [])
 																	$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
 																	var ref = firebase.database().ref('accounts');
 																	ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
-																		firebase.database().ref('/accounts/' + snapshot.key ).set({
-																			photo: $localStorage.account.userPhoto
+																		firebase.database().ref('/accounts/' + snapshot.key ).update({
+																			userPhoto: $localStorage.account.userPhoto
 																		}).then( function() {
-																			$localStorage.account.userPhoto = photo;
+																			$localStorage.account.userPhoto = userPhoto;
 																			return;
 																		});
 																	});

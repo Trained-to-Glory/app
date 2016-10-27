@@ -1,24 +1,19 @@
-<ion-view title="Are you a trainer?">
+<ion-view title="Change Status" class="font-thin">
 
     <ion-nav-buttons side = "left">
          <button class="button button-icon button-clear button-dark">
-            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+            <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header">
-	     <div class="row">
-            <ion-checkbox ng-model="isChecked" style="border-color: transparent;color: gray;background-color: transparent">Yes</ion-checkbox>
-            </div>
-
-            <div class= "row">
-            <ion-checkbox style="border-color: transparent;color: gray;background-color: transparent">No</ion-checkbox>
-            </div>
+      <ion-label style="margin-left:60px;margin-top:6px;">Would you like to be considered a leader?</ion-label>
+      <ion-radio ng-model="user.leader" ng-value="'yes'" style="width:30%;border-color: #fafafc;margin-left:166px;">Yes</ion-radio>
+      <ion-radio ng-model="user.person" ng-value="'no'" style="width:30%;border-color: #fafafc;margin-left:166px;">No</ion-radio>
 
 	     <div class="row row-login">
             <div class="col col-login"></div>
             <div class="col col-login" style="margin-left: 31vh;" ui-sref="tabs.settings">NEXT</div>
       </div>
-
     </ion-content>
 </ion-view>

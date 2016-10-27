@@ -1,8 +1,8 @@
-<ion-view cache-view="false" title="Profile">
+<ion-view cache-view="false" class="font-thin" title="Profile">
 
     <ion-nav-buttons side="left">
       <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
       </button>
     </ion-nav-buttons>
 
@@ -15,9 +15,9 @@
 
         <div class="header profile">
           <div>
-            <img class="header__thumb" src = "{{ profile.userPhoto }}">
+            <img class="header__thumb" ng-src = "{{ profile.userPhoto }}">
           </div>
-            <h2 class="lead text-medium">{{ profile.firstName + ' ' + profile.lastName }}</h2>
+            <h2 class="lead text-medium">{{ profile.userName }}</h2>
             <p style="text-align: center;margin-left: 5px;margin-right: 5px;">{{profile.userDescription}}</p>
         </div>
 
@@ -35,53 +35,63 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos" ng-if = "userPost.photo" ng-repeat = "(userId, userPost) in userPosts | limitTo:4">
-                <div class="row" >
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userPost.photo }}"></div>
-                                <div class="bg-color profile"></div>
-                            </div>
+              <div class="row row-no-padding category-2-outer" ng-repeat="posts in userPosts.itemsArr" ng-if="$index % 2 == 0">
+                <div class="col" style="padding: 5px !important">
+                  <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index].key})">
+                    <div class="category-2-item-wrapper">
+                      <div class="category-2-item-content">
+                        <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index].photo}}); background-color: transparent;z-index:5;">
                         </div>
+                      </div>
                     </div>
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userPost.photo }}"></div>
-                                   <div class="bg-color profile"></div>
-                            </div>
-                        </div>
-                    </div>
+                  </a>
                 </div>
-                <div class="row">
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userPost.userPhoto }}"></div>
-                                <div class="bg-color profile"></div>
-                            </div>
+                <div class="col" style="padding: 5px !important ">
+                  <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+1].key})">
+                    <div class="category-2-item-wrapper">
+                      <div class="category-2-item-content">
+                        <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5;">
                         </div>
+                      </div>
                     </div>
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userPost.photo }}"></div>
-                                   <div class="bg-color profile"></div>
-                            </div>
-                        </div>
-                    </div>
+                  </a>
                 </div>
-            </div>
-        </div>
+              </div>
+          </div>
 
         <div ng-if="view.type === 4" style="height:100%;">
-          <pre>{{ userPost | json}}</pre>
-                <div style="height: 700px" ng-repeat = "(userId, userPost) in userPosts">
-                    <div class="row post">
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userPost.photo}}" /></div>
+                <div style="height: 700px">
+                    <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr" ng-if="$index % 3 == 0">
+                      <div class="col" style="padding: 5px !important">
+                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index].key})">
+                          <div class="category-2-item-wrapper">
+                            <div class="category-2-item-content">
+                              <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col" style="padding: 5px !important ">
+                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+1].key})">
+                          <div class="category-2-item-wrapper">
+                            <div class="category-2-item-content">
+                              <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col" style="padding: 5px !important ">
+                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+2].key})">
+                          <div class="category-2-item-wrapper">
+                            <div class="category-2-item-content">
+                              <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+2].photo}}); background-color: transparent;z-index:5">
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -94,64 +104,73 @@
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="photos" ng-repeat = "(key,userCommit) in userCommits | limitTo:4">
-                <div class="row">
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userCommit.photo }}"></div>
-                                <div class="bg-color profile"></div>
+                  <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 2 == 0">
+                    <div class="col" style="padding: 5px !important">
+                      <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index].key})">
+                        <div class="category-2-item-wrapper">
+                          <div class="category-2-item-content">
+                            <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
                             </div>
+                          </div>
                         </div>
+                      </a>
                     </div>
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userCommit.photo }}"></div>
-                                   <div class="bg-color profile"></div>
+                    <div class="col" style="padding: 5px !important ">
+                      <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+1].key})">
+                        <div class="category-2-item-wrapper">
+                          <div class="category-2-item-content">
+                            <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
                             </div>
+                          </div>
                         </div>
+                      </a>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userCommit.photo }}"></div>
-                                <div class="bg-color profile"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col" ui-sref="tabs.post-detail">
-                        <div class="item item-image profile">
-                            <div class="cont-photo">
-                              <div><img src = "{{ userCommit.photo }}"></div>
-                               <div class="bg-color profile"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                  </div>
     </div>
 
-    <div ng-if="view.type === 5" style="height:100%;">
-                <div style="height: 700px"  ng-repeat = "(userId, userCommit) in userCommits">
-                    <div class="row post">
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{userCommit.key}}" /></div>
-                        <div class="col" ui-sref="tabs.post-detail"><img ng-src="{{news.items[$index + 1].image}}" /></div>
-                    </div>
+          <div ng-if="view.type === 5" style="height:100%;">
+                      <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">
+                        <div class="col" style="padding: 5px !important">
+                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index].key})">
+                            <div class="category-2-item-wrapper">
+                              <div class="category-2-item-content">
+                                <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="col" style="padding: 5px !important ">
+                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+1].key})">
+                            <div class="category-2-item-wrapper">
+                              <div class="category-2-item-content">
+                                <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="col" style="padding: 5px !important ">
+                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+2].key})">
+                            <div class="category-2-item-wrapper">
+                              <div class="category-2-item-content">
+                                <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+2].photo}}); background-color: transparent;z-index:5">
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
                 </div>
-            </div>
 
         <div ng-if="view.type === 3" style="height:100%;">
-
             <div class="item item-divider">
                 PARTNERS
                 <span class="item-note" ui-sref = "tabs.partners({partner:profile.userId})">
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
                 </span>
             </div>
-            <div class="item item-avatar item-button-right followers" ui-sref="tabs.friend({contact:value.userId})" ng-repeat="(key,value) in contacts.items">
+            <div class="item item-avatar item-button-right followers" ui-sref="tabs.friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
                 <img ng-src="{{value.userPhoto}}">
                 <h2 class="font-thin">{{value.userName}}</h2>
                 <button class="button button-small button-balanced icon ion-ios-checkmark-empty" ng-if="contacts.partnered = true"> Partnered</button>
@@ -160,7 +179,7 @@
 
             </div>
         </div>
-
-        </div>
+      </div>
+      <ion-infinite-scroll on-infinite="loadMore() && loadMoreUserCommits() && loadMorePartnerPost() && loadMoreContacts()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

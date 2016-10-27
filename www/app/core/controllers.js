@@ -15,6 +15,7 @@
         'module.view.login',
         'module.view.communicate',
         'module.view.lead',
+        'module.view.friendPartners',
         'module.view.signup',
         'module.view.rather',
         'module.view.news',

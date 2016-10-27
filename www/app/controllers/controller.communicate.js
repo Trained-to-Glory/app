@@ -23,6 +23,45 @@ angular.module('module.view.communicate', [])
 			             $scope.fullscreenPopover.show($event);
 			          };
 
+								$scope.profile = $localStorage.account;
+
+								$scope.limit = 10;
+
+				        $scope.loadMore = function(){
+				          if($scope.userPostsLikes && $scope.userPostsLikes.itemsArr){
+				            var max = $scope.userPostsLikes.itemsArr.length;
+				            if($scope.limit <  max){
+				              $scope.moreToScroll = true;
+				              if($scope.limit - max < 10 && $scope.limit - max > 0){
+				                $scope.limit += Math.abs($scope.limit - max);
+				                $scope.moreToScroll = false;
+				                return;
+				              }
+				              $scope.limit += 10;
+				            }else{
+				              $scope.moreToScroll = false;
+				            }
+				          }
+				          $scope.$broadcast('scroll.infiniteScrollComplete');
+				        };
+
+								$scope.getPicture = function(id){
+									return interestService.getPictures(id);
+								};
+
+								$scope.getPicture().then(function(results) {
+									var pictures = [];
+									for (key in results){
+										pictures.push({
+											id: key,
+											label: results[key].label,
+											photo: results[key].displayName
+										});
+									}
+									$scope.picture = pictures;
+								}, function(error){
+								})
+
 			          $scope.closePopover = function($event) {
 			             $scope.fullscreenPopover.hide();
 			          };
@@ -37,28 +76,123 @@ angular.module('module.view.communicate', [])
 			             // Execute action
 			          });
 
+								$scope.loadMoreCommits = function(){
+				          if($scope.userPlanCommits && $scope.userPlanCommits.itemsArr.length){
+				            var max = $scope.userPlanCommits.itemsArr.length;
+				            if($scope.limit <  max){
+				              $scope.moreToScroll = true;
+				              if($scope.limit - max < 10 && $scope.limit - max > 0){
+				                $scope.limit += Math.abs($scope.limit - max);
+				                $scope.moreToScroll = false;
+				                return;
+				              }
+				              $scope.limit += 10;
+				            }else{
+				              $scope.moreToScroll = false;
+				            }
+				          }
+				          $scope.$broadcast('scroll.infiniteScrollComplete');
+				        };
+
+								$scope.loadMorePostCommits = function(){
+				          if($scope.userPostCommits && $scope.userPostCommits.itemsArr.length){
+				            var max = $scope.userPostCommits.itemsArr.length;
+				            if($scope.limit <  max){
+				              $scope.moreToScroll = true;
+				              if($scope.limit - max < 10 && $scope.limit - max > 0){
+				                $scope.limit += Math.abs($scope.limit - max);
+				                $scope.moreToScroll = false;
+				                return;
+				              }
+				              $scope.limit += 10;
+				            }else{
+				              $scope.moreToScroll = false;
+				            }
+				          }
+				          $scope.$broadcast('scroll.infiniteScrollComplete');
+				        };
+
+								$scope.loadMoreAppointmentCommits = function(){
+				          if($scope.userAppointmentCommits && $scope.userAppointmentCommits.itemsArr.length){
+				            var max = $scope.userAppointmentCommits.itemsArr.length;
+				            if($scope.limit <  max){
+				              $scope.moreToScroll = true;
+				              if($scope.limit - max < 10 && $scope.limit - max > 0){
+				                $scope.limit += Math.abs($scope.limit - max);
+				                $scope.moreToScroll = false;
+				                return;
+				              }
+				              $scope.limit += 10;
+				            }else{
+				              $scope.moreToScroll = false;
+				            }
+				          }
+				          $scope.$broadcast('scroll.infiniteScrollComplete');
+				        };
+
             usersService.getUserPostsLikes($localStorage.account.userId).then(function(results) {
           		//create a local object so we can create the datastructure we want
           		//so we can use it to show/hide, toggle ui items
-          		 $scope.userPostsLikes = results;
+							var arr = [];
+		          for(var key in results){
+		            results[key].key = key;
+		            arr.push(results[key]);
+		          }
+		          var userPostsLikes = {
+		              items: results,
+		              itemsArr: arr
+		          };
+							delete userPostsLikes[$localStorage.account.userId];
+          		 $scope.userPostsLikes = userPostsLikes;
           	});
 
             usersService.getUserCommitsPlan($localStorage.account.userId).then(function(results) {
           		//create a local object so we can create the datastructure we want
           		//so we can use it to show/hide, toggle ui items
-          		 $scope.userPlanCommits = results;
+							var arr = [];
+		          for(var key in results){
+		            results[key].key = key;
+		            arr.push(results[key]);
+		          }
+		          var userPlanCommits = {
+		              items: results,
+		              itemsArr: arr
+		          };
+							delete userPlanCommits[$localStorage.account.userId];
+          		 $scope.userPlanCommits = userPlanCommits;
           	});
 
             usersService.getUserCommitsPost($localStorage.account.userId).then(function(results) {
           		//create a local object so we can create the datastructure we want
           		//so we can use it to show/hide, toggle ui items
-          		 $scope.userPostCommits = results;
+							var arr = [];
+		          for(var key in results){
+		            results[key].key = key;
+		            arr.push(results[key]);
+		          }
+		          var userPostsCommits = {
+		              items: results,
+		              itemsArr: arr
+		          };
+							delete userPostsCommits[$localStorage.account.userId];
+          		 $scope.userPostCommits = userPostsCommits;
           	});
 
             usersService.getUserCommitsAppointment($localStorage.account.userId).then(function(results) {
           		//create a local object so we can create the datastructure we want
           		//so we can use it to show/hide, toggle ui items
-          		 $scope.userAppointmentCommits = results;
+							var arr = [];
+		          for(var key in results){
+		            results[key].key = key;
+		            arr.push(results[key]);
+		          }
+
+		          var userAppointmentCommits = {
+		              items: results,
+		              itemsArr: arr
+		          };
+							delete userAppointmentCommits[$localStorage.account.userId];
+          		 $scope.userAppointmentCommits = userAppointmentCommits;
           	});
 
 						$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
@@ -151,13 +285,13 @@ var menuTemplate =
     '</ion-item>' +
     '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
     '</ion-item>' +
-    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Explore' +
+    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
     '</ion-item>' +
     '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Coaches' +
     '</ion-item>' +
-    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Plans' +
+    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
     '</ion-item>' +
-    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Calendar' +
+    '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
     '</ion-item>' +
     '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
     '</ion-item>' +
@@ -166,7 +300,7 @@ var menuTemplate =
     '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
     '</ion-item>' +
     '<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;">'+
-    '<img ng-src="{{ profile.userPhoto }}" ng-click="account()">'+
+    '<img ng-src="{{ profile.userPhoto }}" ng-click="account()" style="margin-left: 2px;">'+
     '<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
     '</a>'+
     '<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +

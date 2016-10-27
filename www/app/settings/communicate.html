@@ -2,85 +2,47 @@
 
     <ion-nav-buttons side = "left">
       <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
       </button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header bt-grey profile" scroll="true">
-          <div class="row row-no-padding category-2-outer">
-            <div class="col">
-              <a>
-                <div class="category-1-item-wrapper" ng-repeat = "(key,plan) in userPostsLikes">
-                  <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{plan.photo}});">
-                      <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay notifications"></span>
-                      <h1 class="category-heading dark">
-                        <span class="main-title">{{plan.userName}}</span>
-                        <span class="subtitle">{{plan.userPhoto }}</span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
+    <ion-content class="has-header bt-grey profile">
+
+      <div class="list">
+          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat = "plan in userPostsLikes.itemsArr | limitTo: limit">
+              <img ng-src="{{plan.userPhoto}}">
+              <h2 class="lead">{{plan.userName}}</h2>
+              <p>Liked your plan</p>
+              <p class="text-smaller" am-time-ago="{{plan.date}}"></p>
+          </div>
+      </div>
+
+          <div class="list">
+              <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat = "commits in userPlanCommits.itemsArr | limitTo: limit">
+                  <img ng-src="{{commits.userPhoto}}">
+                  <h2 class="lead">{{commits.userName}}</h2>
+                  <p>Commited to your plan</p>
+                  <p class="text-smaller" am-time-ago="{{commits.date}}"></p>
+              </div>
           </div>
 
-          <div class="row row-no-padding category-2-outer">
-            <div class="col">
-              <a>
-                <div class="category-1-item-wrapper" ng-repeat = "(key,commits) in userPlanCommits">
-                  <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{commits.photo}});">
-                      <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay notifications"></span>
-                      <h1 class="category-heading dark">
-                        <span class="main-title">{{commits.userName}}</span>
-                        <span class="subtitle">{{commits.userPhoto }}</span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
+          <div class="list">
+              <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat = "commits in userPostCommits.itemsArr | limitTo: limit">
+                  <img ng-src="{{commits.userPhoto}}">
+                  <h2 class="lead">{{commits.userName}}</h2>
+                  <p>Commited to your post</p>
+                  <p class="text-smaller" am-time-ago="{{commits.date}}"></p>
+              </div>
           </div>
 
-          <div class="row row-no-padding category-2-outer">
-            <div class="col">
-              <a>
-                <div class="category-1-item-wrapper" ng-repeat = "(key,post) in userPostCommits">
-                  <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{post.photo}});">
-                      <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay notifications"></span>
-                      <h1 class="category-heading dark">
-                        <span class="main-title">{{post.userName}}</span>
-                        <span class="subtitle">{{post.userPhoto }}</span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
+          <div class="list">
+              <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat = "appointment in userAppointmentCommits.itemsArr | limitTo: limit">
+                  <img ng-src="{{appointment.userPhoto}}">
+                  <h2 class="lead">{{appointment.userName}}</h2>
+                  <p>Commited to your appointment</p>
+                  <p class="text-smaller" am-time-ago="{{appointment.date}}"></p>
+              </div>
           </div>
-
-          <div class="row row-no-padding category-2-outer">
-            <div class="col">
-              <a>
-                <div class="category-1-item-wrapper" ng-repeat = "(key,appointment) in userAppointmentCommits">
-                  <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{appointment.photo}});">
-                      <img bg="" class="multi-bg category-with-image">
-                      <span class="bg-overlay notifications"></span>
-                      <h1 class="category-heading dark">
-                        <span class="main-title">{{appointment.userName}}</span>
-                        <span class="subtitle">{{appointment.userPhoto }}</span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
+          <ion-infinite-scroll on-infinite="loadMore() && loadMorePostCommits() && loadMoreCommits()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

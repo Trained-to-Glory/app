@@ -92,8 +92,8 @@ angular.module('service.engagements', [])
                    var len = exists instanceof Array ? exists.length : 0;
                    var final = {};
                    var obj = {
-                      "userPhoto": $localStorage.account.userPhoto,
-                      "userName": $localStorage.account.userName,
+                      // "userPhoto": $localStorage.account.userPhoto,
+                      // "userName": $localStorage.account.userName,
                        "created": firebase.database.ServerValue.TIMESTAMP,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
@@ -182,8 +182,8 @@ angular.module('service.engagements', [])
                    }
                    var final = {};
                    final[itemId] = {
-                       "userPhoto": $localStorage.account.userPhoto,
-                       "userName": $localStorage.account.userName,
+                      //  "userPhoto": $localStorage.account.userPhoto,
+                      //  "userName": $localStorage.account.userName,
                        "created": prev.created,
                        "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
@@ -306,7 +306,7 @@ angular.module('service.engagements', [])
         };
 
         this.totalComments = function(data){
-          return this.getComments(data.category, data.categoryId).then(function(result){
+          return this.getComments(data).then(function(result){
             var count = 0;
             if(result){
               for(var key in result){
@@ -336,7 +336,7 @@ angular.module('service.engagements', [])
         };
 
         this.totalLikes = function(data){
-          return this.likes(data.category, data.categoryId).then(function(result){
+          return this.likes(data).then(function(result){
             var count = 0;
             if(result){
               for(var key in result){
@@ -344,6 +344,8 @@ angular.module('service.engagements', [])
               }
             }
             return count;
+          },function(){
+            return 0;
           });
         };
 
@@ -399,7 +401,7 @@ angular.module('service.engagements', [])
         };
 
         this.totalPartners = function(data){
-          return this.partners(data.category, data.categoryId).then(function(result){
+          return this.partners(data).then(function(result){
             var count = 0;
             if(result){
               for(var key in result){
@@ -447,7 +449,7 @@ angular.module('service.engagements', [])
         };
 
         this.totalCommits = function(data){
-          return this.commits(data.category, data.categoryId).then(function(result){
+          return this.commits(data).then(function(result){
             var count = 0;
             if(result){
               for(var key in result){
@@ -489,7 +491,7 @@ angular.module('service.engagements', [])
         };
 
         this.totalPlans = function(data){
-          return this.plans(data.category, data.categoryId).then(function(result){
+          return this.plans(data).then(function(result){
             var count = 0;
             if(result){
               for(var key in result){

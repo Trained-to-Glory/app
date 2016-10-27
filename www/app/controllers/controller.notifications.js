@@ -17,4 +17,5 @@ angular.module('module.view.notifications', [])
                         $state.go(ui_sref);
                     }
                 }
+				
 });

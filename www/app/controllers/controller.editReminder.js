@@ -30,7 +30,6 @@ angular.module('module.view.editReminder', [])
 					"userPhoto": $localStorage.account.userPhoto
 
 			};
-			console.log(obj);
 			var key = postService.updateAppointment(obj);
 			$state.go('tabs.reminders');
 		};

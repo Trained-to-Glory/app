@@ -7,6 +7,12 @@
     border: none;
 }
 
+.logo {
+    text-align: center;
+    padding-top: 80px;
+    margin-bottom: 30px;
+}
+
 .feed-view .feed-card .image-row .main-image img {
     width: 100%;
 }

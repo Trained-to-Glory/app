@@ -1,35 +1,27 @@
-<ion-view title="Search">
+<ion-view title="Search" class="font-thin">
 
     <ion-nav-buttons side = "left">
-         <button class="button button-icon button-clear button-dark">
-            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
+            <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
          </button>
     </ion-nav-buttons>
 
     <ion-content class="has-header">
-     <input type="text" ng-model="lookUp" placeholder="search book" />
+      <div style="position:relative; display: block">
+        <input class ="search" type="text" ng-model="lookUp" placeholder="Search" />
+        <span class = "search-icon"><i class = "icon ion-ios-search"></i></span>
+   </div>
       <div class="row" ng-repeat="user in users | fuzzy: lookUp">
-
             <div class="col">
-                <div class="card contact animated bounceIn item-remove-animate" on-hold="deleteContact(user[$index]);">
+                <div class="card contact animated bounceIn item-remove-animate">
                     <div class="item item-image item-text-wrap" ui-sref="tabs.friend({contact: user.userId})">
-                        <div><img src = "{{ user.userPhoto }}"></div>
+                        <div><img ng-src = "{{ user.userPhoto }}"></div>
                         <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
                         <p class="">{{user.userName}}</p>
-                    </div>
-                    <div class="item item-footer">
-                        <div class="row no-padding">
-                            <div class="col no-padding">
-                              <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !account.partnered, 'button-balanced ion-ios-undo-outline':account.partnered }" ng-click="togglePartner(user.userId)">
-                                <span ng-if="!account.partnered"> Partner</span>
-                                <span ng-if="account.partnered"> Partnered</span>
-                            </button>
-                          </div>
-                        </div>
                     </div>
                 </div>
             </div>
   </div>
-
+  <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

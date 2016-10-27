@@ -1,8 +1,8 @@
-<ion-view title="Calendar" cache-view="false">
+<ion-view title="Sessions" cache-view="false">
   <ion-nav-back-button></ion-nav-back-button>
   <ion-nav-buttons side = "left">
     <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-       <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+       <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
     </button>
   </ion-nav-buttons>
 
@@ -10,21 +10,21 @@
       <ion-scroll class="bg-lightgrey" direction="y" style="height:100%">
         <div style="height:700px">
           <div class="card no-margin bb-grey no-br no-box">
-            <div class="item item-reminders"  ng-repeat="(key, value) in reminders.items" ng-if="value.type == 'task'">
+            <div class="item item-reminders"  ng-repeat="value in reminders.itemsArr | orderBy: 'created': true | limitTo: limit" ng-if="value.type === 'Add Task'">
               <div class="row row-no-padding category-1-outer">
                 <div class="col">
                     <div class="category-1-item-wrapper">
                       <div class="category-1-item-content">
-                        <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image" style="background-image: url(img/rappel.jpg);">
-                          <img bg="" class="multi-bg category-with-image" src = "img/rappel.jpg">
-                            <span class="bg-overlay"></span>
+                        <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image">
                           <h1 class="category-heading">
-                            <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
+                            <span class="callout" ng-if="!value.totalCommits" ng-click="toggleCommit(value.key,userId)">Click to Join</span>
+                            <span class="callout" ng-if="value.totalCommits" ng-click="toggleCommit(value.key,userId)">{{value.totalCommits}}</span>
                             <span class="main-title">{{value.title}}</span>
+                            <span class="subtitle" ng-if="value.description">{{value.description}}</span>
+                            <span class="subtitle" ng-if="value.notes">{{value.notes}}</span>
                             <span class="subtitle" ng-if="!value.allDay">{{value.startAt | date}}</span>
                             <span class="subtitle" ng-if="!value.allDay">{{value.endAt | date}}</span>
                             <span class="subtitle" ng-if="value.allDay">All Day</span>
-                            <i class="icon ion-minus-circled" style="top:0;right: 0;position: absolute;margin-right: 3px;margin-top: 3px;" ng-if="profile.userId" ng-click="delete(key)"></i>
                           </h1>
                         </div>
                       </div>
@@ -32,64 +32,61 @@
                 </div>
               </div>
                 </div>
-                <div class="item item-reminders" ng-repeat="(key, value) in reminders.items" ng-if="value.type == 'event'">
+                <div class="item item-reminders" ng-repeat="value in reminders.itemsArr | orderBy: 'created': true | limitTo: limit " ng-if="value.type === 'Add Event'">
                   <div class="row row-no-padding category-1-outer">
                     <div class="col">
                         <div class="category-1-item-wrapper">
-                          <div class="category-1-item-content">
-                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image" style="background-image: url(img/audience.jpg);">
-                              <img bg="" class="multi-bg category-with-image" src = "img/audience.jpg">
-                                <span class="bg-overlay"></span>
+                          <div class="category-1-item-content" ui-sref="tabs.planView-detail({post:value.key})">
+                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image">
                               <h1 class="category-heading">
-                                <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
+                                <span class="callout" ng-if="!value.totalCommits" ng-click="toggleCommit(value.key,userId)">Click to Join</span>
+                                <span class="callout" ng-if="value.totalCommits" ng-click="toggleCommit(value.key,userId)">{{value.totalCommits}}</span>
                                 <span class="main-title">{{value.title}}</span>
+                                <span class="subtitle" ng-if="value.description">{{value.description}}</span>
+                                <span class="subtitle" ng-if="value.notes">{{value.notes}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">{{value.startAt | date}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">{{value.endAt | date}}</span>
                                 <span class="subtitle" ng-if="value.allDay">All Day</span>
-                                <i class="icon ion-minus-circled" style="top:0;right: 0;position: absolute;margin-right: 3px;margin-top: 3px;" ng-if="profile.userId" ng-click="delete(key)"></i>
-                              </h1>
+                             </h1>
                             </div>
                           </div>
                         </div>
                     </div>
                   </div>
                 </div>
-                <div class="item item-reminders" ng-if="userCommit.postType == 'eventPost'" ng-repeat="(key,userCommit) in userCommits">
+                <div class="item item-reminders" ng-if="userCommit.postType ==='event'" ng-repeat="userCommit in userCommits.itemsArr | orderBy: 'created': true | limitTo: limit">
                   <div class="row row-no-padding category-1-outer">
                     <div class="col">
                         <div class="category-1-item-wrapper">
-                          <div class="category-1-item-content" ui-sref="tabs.planView-detail({post:userId})">
+                          <div class="category-1-item-content" ui-sref="tabs.planView-detail({post:userCommit.key})">
                             <div class = "multi-bg-outer"interval="3000" helper-class="category-with-image" style="background-image: url({userCommit.photo});">
                               <img bg="" class="multi-bg category-with-image" ng-src="{{userCommit.photo}}">
-                                <span class="bg-overlay"></span>
                               <h1 class="category-heading">
                                 <span class="main-title">{{userCommit.description}}</span>
                                 <span class="subtitle">{{userCommit.date | date}}</span>
-                                <i class="icon ion-minus-circled" style="top:0;right: 0;position: absolute;margin-right: 3px;margin-top: 3px;" ng-if="profile.userId" ng-click="delete(key)"></i>
-                              </h1>
+                          </h1>
                             </div>
                           </div>
                         </div>
                     </div>
                   </div>
                 </div>
-
-                <a href="tel:{{value.phone}}" class="item" style="padding:0" ng-repeat="(key, value) in reminders.items" ng-if="value.type == 'call'">
+                <a href="tel:{{value.phone}}" class="item" style="padding:0" ng-repeat="value in reminders.itemsArr | orderBy: 'created': true | limitTo: limit" ng-if="value.type === 'Add Call'">
                   <div class="row row-no-padding category-1-outer">
                     <div class="col">
                         <div class="category-1-item-wrapper">
-                          <div class="category-1-item-content">
-                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image" style="background-image: url(img/telephone.jpg);">
-                              <img bg="" class="multi-bg category-with-image" src="img/telephone.jpg">
-                                <span class="bg-overlay"></span>
+                          <div class="category-1-item-content" ui-sref="tabs.planView-detail({post:value.key})">
+                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image">
                               <h1 class="category-heading">
-                                <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
+                                <span class="callout" ng-if="!value.totalCommits" ng-click="toggleCommit(value.key,userId)">Click to Join</span>
+                                <span class="callout" ng-if="value.totalCommits" ng-click="toggleCommit(value.key,userId)">{{value.totalCommits}}</span>
                                 <span class="main-title">{{value.title}}</span>
+                                <span class="subtitle" ng-if="value.description">{{value.description}}</span>
+                                <span class="subtitle" ng-if="value.notes">{{value.notes}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">Start's at {{value.startAt | date}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">End's at {{value.endAt | date}}</span>
                                 <span class="subtitle" ng-if="value.allDay">All Day</span>
-                                <i class="icon ion-minus-circled" style="top:0;right: 0;position: absolute;margin-right: 3px;margin-top: 3px;" ng-if="profile.userId" ng-click="delete(key)"></i>
-                              </h1>
+                            </h1>
                             </div>
                           </div>
                         </div>
@@ -97,21 +94,19 @@
                   </div>
                 </a>
 
-                <a href="email:{{value.email}}" class="item" ng-repeat="(key, value) in reminders.items" ng-if="value.type == 'email'">
+                <a href="email:{{value.email}}" class="item" ng-repeat="value in reminders.itemsArr | orderBy: 'created': true | limitTo: limit" ng-if="value.type === 'Add Email'">
                   <div class="row row-no-padding category-1-outer">
                     <div class="col">
                         <div class="category-1-item-wrapper">
                           <div class="category-1-item-content">
-                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image" style="background-image: url(img/macbook.jpg);">
-                              <img bg="" class="multi-bg category-with-image" src="img/macbook.jpg">
-                                <span class="bg-overlay"></span>
+                            <div class = "multi-bg-outer" interval="3000" helper-class="category-with-image">
                               <h1 class="category-heading">
-                                <span class="callout" ng-click="toggleCommit(key,userId)">Click to join.</span>
+                                <span class="callout" ng-if="!value.totalCommits" ng-click="toggleCommit(value.key,userId)">Click to Join</span>
+                                <span class="callout" ng-if="value.totalCommits" ng-click="toggleCommit(value.key,userId)">{{plan.totalCommits}}</span>
                                 <span class="main-title">{{value.title}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">Start's at {{value.startAt | date}}</span>
                                 <span class="subtitle" ng-if="!value.allDay">End's at {{value.endAt | date}}</span>
                                 <span class="subtitle" ng-if="value.allDay">All Day</span>
-                                <i class="icon ion-minus-circled" style="top:0;right: 0;position: absolute;margin-right: 3px;margin-top: 3px;" ng-if="profile.userId" ng-click="delete(key)"></i>
                               </h1>
                             </div>
                           </div>
@@ -122,6 +117,7 @@
                 </div>
             </div>
       </ion-scroll>
+      <ion-infinite-scroll on-infinite="loadMore() && loadMoreCommits()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
   </ion-content>
-    <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="calendarPopover.show($event);"><i class="icons ion-ios-calendar" style="color: #F10707"></i></a>
+  <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="calendarPopover.show($event);"><i class="icons ion-ios-calendar" style="color: #F10707"></i></a>
 </ion-view>

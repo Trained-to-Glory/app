@@ -1,5 +1,5 @@
 angular.module('module.view.comments', [])
-	.controller('commentsCtrl', function($scope,$rootScope,$state,$localStorage, postService,appService,$stateParams,$timeout,$ionicHistory) {
+	.controller('commentsCtrl', function($scope,$rootScope,$state,$localStorage,$ionicPopover, postService,appService,$stateParams,$timeout,$ionicHistory) {
 				$scope.profile = $localStorage.account;
 				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -19,9 +19,39 @@ angular.module('module.view.comments', [])
                     }
         };
 
-				postService.getPostComments($stateParams.post).then(function(results) {
-					$scope.comments = results;
+				postService.getComments($stateParams.post).then(function(results) {
+					$scope.comments = [];
+					for(var key in results){
+						results[key].key = key;
+						$scope.comments.push(results[key]);
+					}
+					var comments = {
+							items: results
+					};
 				});
+				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
+            scope: $scope
+        })
+
+				$scope.limit = 10;
+
+        $scope.loadMore = function(){
+          if($scope.comments){
+            var max = $scope.comments.length;
+            if($scope.limit <  max){
+              $scope.moreToScroll = true;
+              if($scope.limit - max < 10 && $scope.limit - max > 0){
+                $scope.limit += Math.abs($scope.limit - max);
+                $scope.moreToScroll = false;
+                return;
+              }
+              $scope.limit += 10;
+            }else{
+              $scope.moreToScroll = false;
+            }
+          }
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        };
 
         $scope.news = {
                     type: 'image',
@@ -48,26 +78,26 @@ angular.module('module.view.comments', [])
                         disableBack: true
                     });
         };
-				$scope.createComment = function(){
-					var obj = {
-							"comment": $scope.post.comment,
-							"created": firebase.database.ServerValue.TIMESTAMP,
-							"userPhoto": $localStorage.account.userPhoto,
-							"userName": $localStorage.account.userName,
-							"state": {
-									"actionable": true,
-									"visible": true,
-									"active": true
-							}
-					};
-					var db = firebase.database().ref('engagementComments');
-					var userId = firebase.auth().currentUser.uid;
-				 // Write the new post's data simultaneously in the posts list and the user's post list.
-					 var updates = {};
-					 updates['/engagementComments/' +  $stateParams.post + '/' + userId] = obj;
-					 updates['/accounts/' + userId + '/engagementComments/' + $stateParams.post + '/' + userId] = obj;
-					 return firebase.database().ref().update(updates);
+
+				$scope.activateCommentMode = function(){
+					$scope.commentMode = true;
 				};
+
+				$scope.deactivateCommentMode = function(){
+					$scope.commentMode = false;
+				};
+
+				$scope.formData = {};
+				//type, category, categoryId, itemId, userId, comment,
+				$scope.createComment = function (comment) {
+            //create a location in the table
+						postService.createComment({comment: comment, postId: $stateParams.post})
+						.then(function(results){
+							$scope.comments.push(results);
+							$scope.formData.comment = '';
+							$scope.$apply();
+						});
+        };
 
 
 var searchTemplate =

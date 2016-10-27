@@ -1,23 +1,30 @@
-<ion-view title="Settings">
+<ion-view title="Settings" class="font-thin">
 
     <ion-nav-buttons side = "left">
       <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
+         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
       </button>
     </ion-nav-buttons>
 
-    <ion-content class="has-header">
+    <ion-content scroll="true" overflow-scroll="true" class="iframe-wrapper">
     <div class="list">
         <div class="item item-divider" style="background-color: white; color: #F10707;">Profile</div>
           <div class="item" ui-sref="tabs.interest">Interest</div>
-          <div class="item" ui-sref="tabs.status">Become a Leader</div>
+          <div class="item" ui-sref="tabs.status">Change status</div>
         </div>
 
       <div class="list">
            <div class="item item-divider" style="background-color: white; color: #F10707;font-family: limbus;">Help</div>
-            <div class="item">Privacy Policy</div>
-            <div class="item">Support</div>
-            <div class="item">Terms of Service</div>
+            <div class="item" ng-click="policy()">
+              Privacy Policy
+            </div>
+            <div class="item" ng-click="support()">
+              Support
+
+            </div>
+            <div class="item" ng-click="service()">
+              Terms of Service
+            </div>
             <div class = "item" ng-click="logout()">Sign Out</div>
       </div>
 
