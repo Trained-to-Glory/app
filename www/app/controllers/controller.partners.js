@@ -1,6 +1,5 @@
 angular.module('module.view.partners', [])
 	.controller('partnersCtrl', function($scope,$rootScope, postService,$ionicPopover,$state,$ionicHistory,$localStorage,$stateParams,usersService,engagementService) {
-		console.log($stateParams);
 		usersService.getPartners($localStorage.account.userId).then(function(results){
 			var arr = [];
 			for(var key in results){
@@ -23,8 +22,32 @@ angular.module('module.view.partners', [])
 			})(id, contacts.items[id]);
 			}
 
-			$scope.contacts = contacts;
-			console.log(contacts);
+			$scope.contacts = contacts.items;
+		});
+
+		usersService.getAllUsers($localStorage.account.userId).then(function(results){
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
+			var contacts = {
+					items: results,
+					itemsArr: arr
+			};
+
+			delete results[$localStorage.account.userId];
+
+			for(var id in contacts.items){
+			 //check to see if there is a like on this post
+			 (function(id){
+				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+					contacts.items[id].partnered = partnered;
+				});
+			})(id,contacts.items);
+			}
+			$scope.people = contacts.items;
+			console.log($scope.people);
 		});
 
 		$scope.openPopover = function($event) {
@@ -67,6 +90,19 @@ angular.module('module.view.partners', [])
 	            type: 'image',
 	            items: postService.getNews()
 	        }
+
+
+
+			$scope.togglePartner = function(partnerId){
+					var partner = $scope.people;
+					console.log('hit');
+				   if(!partner){
+						 return false;
+					 }
+					partner.partnered = !partner.partnered;
+					var state = (partner.partnered)?'partner':'unpartner';
+					return engagementService[state]({category:'partners', categoryId:$localStorage.account.userId,userId: partnerId});
+			};
 
 
 			$scope.profile = $localStorage.account;

@@ -1,16 +1,14 @@
 <ion-view title="Settings" class="font-thin">
-
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-      </button>
-    </ion-nav-buttons>
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
 
     <ion-content scroll="true" overflow-scroll="true" class="iframe-wrapper">
     <div class="list">
         <div class="item item-divider" style="background-color: white; color: #F10707;">Profile</div>
-          <div class="item" ui-sref="tabs.interest">Interest</div>
-          <div class="item" ui-sref="tabs.status">Change status</div>
+          <div class="item" ui-sref="interest">Interest</div>
+          <div class="item" ui-sref="status">Update status</div>
         </div>
 
       <div class="list">

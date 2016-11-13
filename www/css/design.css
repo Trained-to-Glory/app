@@ -1,6 +1,22 @@
 .bar.bar-light .title
 {
-	color: #F10707;
+	color: black;
+	font-weight: 300;
+}
+
+.ion-ios-arrow-back {
+	color: grey;
+}
+
+.ion-android-arrow-back {
+	color: grey;
+}
+
+.ion-record {
+	font-size: 7px;
+}
+.text-center{
+	background-color: #fafafc;
 }
 
 .ion-checkmark-round
@@ -364,55 +380,15 @@
 	color: green;
 }
 
-#menu .list .c1
-{
-	background: white;
-}
-
-#menu .list .c2
-{
-	background: white;
-	margin-top: 80px;
-}
-
-#menu .list .c3
-{
-	background: white;
-}
-
-#menu .list .c4
-{
-	background: white;
-}
-
-#menu .list .item-avatar
-{
-	padding-left: 100px;
-}
-
-
-.menu .list > .item:first-child
-{
-	margin-top: 80px;
-}
-
-#menu .list .item
-{
-	background-color: inherit;
-	border: 0;
-	color: white;
-	margin: 9px 0;
-	padding: 5px 30px;
-	font-size: 14px;
-	text-decoration: none;
-	margin-left: 3px;
-}
 
 .category-1-outer .category-1-item-wrapper .category-heading.notifications {
     background-color: rgba(0, 0, 0, 0.8);
     color: #FFFFFF;
 		text-align: right;
 }
+
+.ion-TTC-SVG_File_grey:before {
+    content: "\e900";}
 
 .category-1-outer .category-1-item-wrapper .category-heading.notifications {
     background-color: transparent;
@@ -436,6 +412,17 @@
 
 
 .feed-card .postType {
+	margin-left: -63px !important;
+    margin-top: 24px !important;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-top: 0px;
+    color: rgba(26, 26, 26, 0.8);
+}
+
+.feed-card .field {
 	margin-left: -63px !important;
     margin-top: 24px !important;
     text-align: center;
@@ -657,7 +644,15 @@
 
 .medium.popover
 {
-	height: 125px !important;
+	height: 158px !important;
+}
+
+.item.item-checkbox {
+	background-color: transparent !important;
+}
+
+.small .right.popover::after {
+	display: none !important;
 }
 
 .balanced, a.balanced.likes

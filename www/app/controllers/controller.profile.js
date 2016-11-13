@@ -1,29 +1,15 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$log,$ionicPopover,$stateParams,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+	.controller('profileCtrl', function($scope,$rootScope,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
+	$scope.onSwipeRight = function () {
+		$state.go('tabs.sentPlans');
+	}
+
 	$scope.view = { type: 1 };
-
-	$scope.openPopover = function($event) {
-		 $scope.fullscreenPopover.show($event);
-	};
-
-	$scope.closePopover = function($event) {
-		 $scope.fullscreenPopover.hide();
-	};
-
-	// Execute action on hide popover
-	$scope.$on('popover.hidden', function() {
-		 // Execute action
-	});
-
-	// Execute action on remove popover
-	$scope.$on('popover.removed', function() {
-		 // Execute action
-	});
 
 	$scope.togglePartner = function(partnerId){
 			var partner = $scope.contacts;
@@ -72,6 +58,30 @@ angular.module('module.view.profile', [])
 			}
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		};
+
+		usersService.getAllUsers($localStorage.account.userId).then(function(results){
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
+			var contacts = {
+					items: results,
+					itemsArr: arr
+			};
+
+			delete results[$localStorage.account.userId];
+
+			for(var id in contacts.items){
+			 //check to see if there is a like on this post
+			 (function(id){
+				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+					contacts.items[id].partnered = partnered;
+				});
+			})(id,contacts.items);
+			}
+			$scope.people = contacts.items;
+		});
 
 		$scope.loadMoreUserCommits = function(){
 			if($scope.userCommits && $scope.userCommits.itemsArr){
@@ -191,6 +201,16 @@ angular.module('module.view.profile', [])
 		$scope.news = news;
 	});
 
+	$scope.scrollEvent = function() {
+			var scrollamount = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().top;
+			//$ionicScrollDelegate.scrollBy(0,20, true);
+			if (scrollamount > 0) { // Would hide nav-bar immediately when scrolled and show it only when all the way at top. You can fiddle with it to find the best solution for you
+				$ionicNavBarDelegate.showBar(false);
+			} else {
+				$ionicNavBarDelegate.showBar(true);
+			}
+		}
+
 	usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
@@ -232,7 +252,6 @@ angular.module('module.view.profile', [])
 				itemsArr: arr
 		};
 		delete results[$localStorage.account.userId];
-
 
 		for(var id in contacts.items){
 		 //check to see if there is a like on this post

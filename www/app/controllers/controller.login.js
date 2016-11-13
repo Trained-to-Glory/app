@@ -27,12 +27,10 @@ angular.module('module.view.login', [])
               $scope.userId = firebase.auth().currentUser.uid;
               //Add Firebase account reference to Database. Firebase v3 Implementation.
               firebase.database().ref('accounts').child($scope.userId).set({
-                 email: user.email,
-                 firstName: user.firstName,
+                 fullName: user.fullName,
                  userPhoto: ttgLogo,
                  person: user.person || '',
                  leader: user.leader || '',
-                 lastName: user.lastName,
                  userName: user.userName,
                  userId: firebase.auth().currentUser.uid,
                  dateCreated: Date(),
@@ -49,8 +47,7 @@ angular.module('module.view.login', [])
                   });
                   $localStorage.loginProvider = "Firebase";
                    $localStorage.email = user.email;
-                   $localStorage.firstName = user.firstName;
-                   $localStorage.lastName = user.lastName;
+                   $localStorage.fullName = user.fullName;
                    $localStorage.userName = user.userName;
                    $localStorage.photo= ttgLogo;
                    $localStorage.userId = firebase.auth().currentUser.uid;
@@ -125,10 +122,10 @@ angular.module('module.view.login', [])
         var currentObj = snapshot.val();
         $localStorage.account = currentObj;
         if (currentObj.person) {
-          $state.go('tabs.rather');
+          $state.go('interest');
             return currentObj;
         }else if (currentObj.leader) {
-          $state.go('tabs.roleRather');
+          $state.go('interest');
           return currentObj;
         }
         return undefined;

@@ -1,0 +1,33 @@
+<ion-view title="Friends" class="font-thin">
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+    <ion-content class="has-header">
+
+      <div class="padding">
+          <button class="button" ng-click="getContacts()">Get My Contacts</button>
+          <div class="list" ng-show="phoneContacts">
+            <div class="card" ng-repeat="contact in phoneContacts">
+              <div class="item item-divider">
+                {{ contact.name.formatted }}
+              </div>
+              <div class="item item-text-wrap">
+                <p><strong>Phone(s)</strong></p>
+                <div ng-repeat="number in contact.phoneNumbers">
+                  <p>{{ number.value }}</p>
+                </div>
+                <p><strong>Email(s)</strong></p>
+                <div ng-repeat="email in contact.emails">
+                  <p>{{ email.value }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

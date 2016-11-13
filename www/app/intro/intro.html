@@ -1,0 +1,112 @@
+<ion-view hide-nav-bar = "true">
+        <ion-slide-box on-slide-changed="slideChanged(index)" style="background-color: #fafafc; height: 100%">
+          <ion-slide style="background-color: #fafafc">
+            <div class="list card feed-card">
+                <div class="row row-no-padding image-row">
+                  <div class="col" style="margin-bottom: 3px;">
+                    <pre-img ratio="_32_21" helper-class="main-image">
+                      <img ng-src="img/audience.jpg" spinner-on-load style="width:100%;height: 58vh;">
+                    </pre-img>
+                  </div>
+                </div>
+                <div class="row row-no-padding details-row">
+                  <div class="col col-20">
+                    <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
+                      <div class="pre-img _32_21 item-avatar main-image finish-loading" ng-class = "{'finish-loading': loaded}">
+                        <img ng-src="img/audience.jpg" spinner-on-load style="width:75%;border-radius:50%;max-width: 62px;max-height: 62px;margin-left: -10px;">
+                      </div>
+                    </pre-img>
+                  </div>
+                  <div class = "item item-avatar" style="padding-left: 0">
+                    <p style="color:black !important" class="font-thin">The Lifestyle</p>
+                    <p style="color:black !important;" class="font-thin" >Come out</p>
+                    <p style="color:black !important;" class="font-thin">Event</p>
+                  </div>
+                </div>
+                <ul class="dish-tags" style="margin-top: 8px">
+                  <li class="dish-tag ">
+                    100 Commits
+                  </li>
+                  <li class="dish-tag font-thin">
+                    20 Likes
+                  </li>
+                  <li class="dish-tag font-thin">
+                    5 Comments
+                  </li>
+                </ul>
+              </div>
+              <h3 class="font-thin" style="margin-left: 20px;font-size:18px">Commit</h3>
+            <p class = "font-thin" style="margin-left: 20px">
+              Commit to event post and explore your community.
+            </p>
+            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index: 999" ng-click="goToLogin()">Skip</div>
+          </ion-slide>
+          <ion-slide>
+            <div class="list card image">
+                  <div class="item item-image">
+                      <img ng-src="img/mountain-commits.jpg">
+                      <div class="item item-avatar">
+                        <img ng-src="img/mountain-commits.jpg">
+                        <ion-list>
+                          <ion-item>
+                            Change the(my) world.
+                          </ion-item>
+                          <ion-item>
+                            Make a small difference everyday.
+                          </ion-item>
+                        </ion-list>
+                      </div>
+                  </div>
+              </div>
+
+              <h3 class="font-thin" style="margin-left: 20px;font-size:18px">Create Goals</h3>
+              <p class = "font-thin" style="margin-left: 20px">
+                Create and stay on track with your goals.
+              </p>
+            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index: 999" ng-click="goToLogin()">Skip</div>
+          </ion-slide>
+          <ion-slide on-swipe-left="goToLogin()">
+            <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;" onSwipeRight="goToLogin()">
+              <div class="col">
+                  <div class="category-2-item-wrapper">
+                    <div class="category-2-item-content">
+                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/animal.jpg);">
+                        <img bg="" class="multi-bg category-with-image" ng-src="img/animal.jpg">
+                        <span class="bg-overlay"></span>
+                        <h1 class="category-heading" style="width: 80%">
+                          <span>1
+                            <span class="bubble"></span>
+                          </span>
+                          <span style="border-bottom: 1px solid #F10707;">Animals</span>
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;" onSwipeRight="goToLogin()">
+              <div class="col">
+                  <div class="category-2-item-wrapper">
+                    <div class="category-2-item-content">
+                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/architecture.jpg);">
+                        <img bg="" class="multi-bg category-with-image" ng-src="img/architecture.jpg">
+                        <span class="bg-overlay"></span>
+                        <h1 class="category-heading" style="width: 80%">
+                          <span>2
+                            <span class="bubble"></span>
+                          </span>
+                          <span style="border-bottom: 1px solid #F10707;">Architecture</span>
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <h3 class="font-thin" style="margin-left: 20px;font-size:18px" on-swipe-left="goToLogin()">Connect</h3>
+            <p class="font-thin" style="margin-left: 20px;" on-swipe-left="goToLogin()">
+              Connect with people to help expand on your interest.
+            </p>
+            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index:999" ng-click="goToLogin()">Skip</div>
+          </ion-slide>
+        </ion-slide-box>
+      </ion-view>

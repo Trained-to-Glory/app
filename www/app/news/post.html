@@ -1,33 +1,30 @@
-<ion-view title="Post" class="bg-lightgrey">
+<ion-view class="font-thin" view-title="Post">
 
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-            <img src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-         </button>
-    </ion-nav-buttons>
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
 
-    <ion-nav-buttons side="right">
-         <button class="button button-clear" ng-click="showConfirm()" >
-          <i class="icon ion-android-more-vertical" style="padding-right: 21px;"></i>
-        </button>
-   </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+      <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px" ng-click="menuPopover.show($event);"></button>
+  </ion-nav-buttons>
 
     <ion-content class="has-header" style="top: 44px;"scroll-event-interval="5" padding="false">
 
-        <div class="card post-detail">
+        <div class="list card post-detail">
             <div class="item item-body" style="padding: 0">
                 <img class="full-image" ng-src="{{post.photo}}">
-                <div class="item item-avatar" ui-sref="tabs.post-detail({post:postId})">
-                    <img ng-src="{{post.avatar}}" ui-sref="tabs.accounts({account:userId})">
-                    <h2 style="font-size: 11px;font-weight: 400;">{{post.owner}}</h2>
+                <div class="item item-avatar" ui-sref="friend({contact:post.createdBy})">
+                    <img ng-src="{{post.avatar}}" ui-sref="friend({contact:post.createdBy})">
+                    <h2 style="font-size: 11px;font-weight: 400;" ui-sref="friend({contact:post.createdBy})">{{post.owner}}</h2>
                     <p ng-if="post.description" style="font-size: 11px;font-weight: 400;">{{post.description}}</p>
                     <p ng-if="post.location" style="color:blue;font-size: 11px;font-weight: 400;">{{ post.location }}</p>
-                    <p ng-if="post.date" class="text-smaller" am-time-ago="{{post.date}}"></p>
+                    <p ng-if="post.created" class="text-smaller" am-time-ago="{{post.created}}"></p>
                 </div>
                 <div class="item comments">
                     <p>
                         <span ng-click="share(post);" style="margin-left:5px">Share
-                        <span ui-sref="tabs.comments({post: post.postId, type:'comments'})" class="pull-right">{{commmentsNumber}} Comments</a>
+                        <span ui-sref="comments({post: post.postId, type:'comments'})" class="pull-right">{{commmentsNumber}} Comments</a>
                 </p>
                 </div>
                 <div class="item comments no-b" style="margin-bottom: 21vh;">

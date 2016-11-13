@@ -1,5 +1,5 @@
 angular.module('module.view.match', [])
-	.controller('matchCtrl', function($scope,$localStorage,$ionicPopup,$ionicPopover,$ionicPlatform, $cordovaGeolocation,$rootScope,usersService,$state,interestService,$stateParams) {
+	.controller('matchCtrl', function($scope,$localStorage,$ionicPopup,$ionicScrollDelegate,$ionicNavBarDelegate,$ionicPopover,$ionicPlatform, $cordovaGeolocation,$rootScope,usersService,$state,interestService,$stateParams) {
 		$scope.$on('$ionicView.loaded', function(event) {
 			// $ionicPopup.show({
 			// 	title: 'Location',
@@ -49,93 +49,8 @@ angular.module('module.view.match', [])
                     }
           }
 
-					$rootScope.likesPictures=[{img:"img/forest-likes.jpg"},{img:"img/water-likes.jpg"},{img:"img/jetty-likes.jpg"},{img:"img/city-likes.jpg"},{img:"img/mountain-likes.jpg"}];
-					$rootScope.commitsPictures=[{img:"img/sunset-commits.jpg"},{img:"img/city-commits.jpg"},{img:"img/mountain-commits.jpg"},{img:"img/western-tatras-commits.jpg"},{img:"img/woods-commits.jpg"}];
-					$rootScope.commentsPictures=[{img:"img/island-comments.jpg"},{img:"img/lake-comments.jpg"},{img:"img/foggy-comments.jpg"},{img:"img/sea-comments.jpg"},{img:"img/cloud-comments.jpg"}];
 
-
-				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-						scope: $scope
-				});
-
-				$scope.openPopover = function($event) {
-					 $scope.fullscreenPopover.show($event);
-				};
-
-				$scope.closePopover = function($event) {
-					 $scope.fullscreenPopover.hide();
-				};
-
-				// Execute action on hide popover
-				$scope.$on('popover.hidden', function() {
-					 // Execute action
-				});
-
-				// Execute action on remove popover
-				$scope.$on('popover.removed', function() {
-					 // Execute action
-				});
-
-				$scope.browse = function () {
-					$scope.closePopover();
-						$state.go('tabs.news');
-				};
-
-				$scope.explore = function () {
-					$scope.closePopover();
-					$state.go('tabs.explore');
-				};
-
-				$scope.match = function () {
-					$scope.closePopover();
-						$state.go('tabs.match');
-
-				};
-
-				$scope.coach = function () {
-					 $scope.closePopover();
-						$state.go('tabs.coach');
-				};
-
-				$scope.plans = function () {
-					 $scope.closePopover();
-						$state.go('tabs.sentPlans');
-				};
-
-				$scope.reminder = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.partners = function () {
-					$scope.closePopover();
-						$state.go('tabs.partners');
-				};
-
-				$scope.settings = function () {
-					$scope.closePopover();
-						$state.go('tabs.settings');
-				};
-
-				$scope.search = function () {
-					$scope.closePopover();
-						$state.go('tabs.search');
-				};
-
-				$scope.calendar = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.account = function (){
-					$scope.closePopover();
-					$state.go('tabs.account');
-				};
-
-				$scope.notifications = function (){
-					$scope.closePopover();
-					$state.go('tabs.communicate');
-				};
+				$scope.view = { type: 1 };
 
 				$scope.logout = function() {
 				if (firebase.auth()) {
@@ -150,6 +65,26 @@ angular.module('module.view.match', [])
 						Utils.message(Popup.errorIcon, Popup.errorLogout);
 					});
 				}
+			};
+
+			$scope.onSwipeLeft1 = function () {
+				$scope.view = { type: 2 };
+			}
+
+			$scope.onSwipeRight1 = function () {
+				$scope.view = { type: 1 };
+			}
+
+			$scope.onSwipeLeft2 = function () {
+				$state.go('tabs.sentPlans');
+			}
+
+			$scope.onSwipeRight2 = function () {
+				$state.go('tabs.explore');
+			}
+
+			$scope.getTrainersInterest = function(id){
+				return interestService.getTrainers(id);
 			};
 
 					$scope.getInterest = function(id){
@@ -175,7 +110,26 @@ angular.module('module.view.match', [])
 	          $scope.$broadcast('scroll.infiniteScrollComplete');
 	        };
 
-					$scope.getInterest().then(function(results) {
+
+					$scope.loadMoreTrainers = function(){
+	          if($scope.trainers){
+	            var max = $scope.trainers.length;
+	            if($scope.limit <  max){
+	              $scope.moreToScroll = true;
+	              if($scope.limit - max < 10 && $scope.limit - max > 0){
+	                $scope.limit += Math.abs($scope.limit - max);
+	                $scope.moreToScroll = true;
+	                return;
+	              }
+	              $scope.limit += 10;
+	            }else{
+	              $scope.moreToScroll = false;
+	            }
+	          }
+	          $scope.$broadcast('scroll.infiniteScrollComplete');
+	        };
+
+					usersService.getInterestName($localStorage.account.userId).then(function(results) {
 						var interests = [];
 						for (key in results){
 							interests.push({
@@ -186,6 +140,19 @@ angular.module('module.view.match', [])
 							});
 						}
 						$scope.abs = interests;
+					});
+
+					$scope.getTrainersInterest().then(function(results) {
+						var coach = [];
+						for (key in results){
+							coach.push({
+								id: key,
+								label: results[key].displayName,
+								photo: results[key].backgroundImg,
+								numbers: results[key].numbers
+							});
+						}
+						$scope.trainers = coach;
 					});
 
 

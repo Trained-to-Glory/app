@@ -1,7 +1,7 @@
 angular.module('module.view.interest', [])
-	.controller('interestCtrl', function($scope,$rootScope,$state,$ionicPopover,interestService,$localStorage, engagementService) {
+	.controller('interestCtrl', function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, engagementService) {
 		$scope.getInterest = function(id){
-			return interestService.get(id);
+			return interestService.getCategoryList(id);
 		};
 
 		$scope.getInterest().then(function(results) {
@@ -9,11 +9,36 @@ angular.module('module.view.interest', [])
 			for (key in results){
 				interests.push({
 					id: key,
-					label: results[key].displayName
+					label: results[key].displayName,
+					photo: results[key].backgroundImg,
+					numbers: results[key].numbers,
+					subCategory: results[key].sub_categories
 				});
 			}
 			$scope.interests = interests;
 		});
+
+		usersService.getInterestDisplay($localStorage.account.userId).then(function(results) {
+			//create a local object so we can create the datastructure we want
+			var ones = {
+					items: results
+			};
+			$scope.ones = ones.items;
+				//check to see if there is a like on this post
+		});
+
+		$scope.toggleInterest = function(partnerId){
+				var partner = $scope.ones;
+			   if(!partner){
+					 return false;
+				 }
+				partner.partnered = !partner.partnered;
+				var state = (partner.partnered)?'partner':'unpartner';
+				return engagementService[state]({category: 'interest',categoryId:partnerId, userId: $localStorage.account.userId});
+		};
+
+
+		$scope.class = "white";
 
 		$scope.limit = 10;
 

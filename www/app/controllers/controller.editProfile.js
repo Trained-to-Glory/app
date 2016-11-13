@@ -1,7 +1,22 @@
 angular.module('module.view.editProfile', [])
-	.controller('editProfileCtrl', function($scope, $rootScope,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,$localStorage, $ionicHistory, $ionicPopup) {
+	.controller('editProfileCtrl', function($scope, $rootScope, interestService,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,$localStorage, $ionicHistory, $ionicPopup) {
 
 		$scope.profile = $localStorage.account;
+
+		usersService.getInterestName($localStorage.account.userId).then(function(results){
+			var arr = [];
+			for(var key in results){
+				results[key].key = key;
+				arr.push(results[key]);
+			}
+
+			var contacts = {
+					items: results,
+					itemsArr: arr
+			};
+
+			$scope.contacts = contacts.itemsArr;
+		});
 
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();

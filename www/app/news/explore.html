@@ -1,15 +1,29 @@
-<ion-view title="Discover" class="view-browse" cache-view="false">
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-      </button>
-    </ion-nav-buttons>
+<ion-view title="Discover" class="view-browse" cache-view="false" hide-nav-bar="true">
+  <div class="row view-tab text-center">
+        <div class="col font-thin" style="text-align:left; margin-left:20px; font-size:16px">
+          <input ng-click="view.type = 2" class ="search" type="text" ng-model="lookUp" placeholder="Search" style="background: transparent;text-align: left;font-weight: 300;margin-left: 0px;color: black;font-size: 16px;margin-top:-8px" />
+          <span class = "search-icon" ng-if = "view.type === 2">
+            <a class="clear" ng-click="lookUp = null" ng-if = "view.type === 2">
+            <span><i class = "ion-ios-close-empty" style="font-size: 24px;margin-left: 175px;" ng-click="clearSearch()"></i></span>
+          </a>
+        </div>
+    </div>
 
-    <ion-content class="has-header">
+    <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" style="top: 75px">
+        <div ng-if="view.type === 2">
+        <div class="list card" style="background: transparent; box-shadow: none;">
+            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzy: lookUp" ui-sref="friend({contact: user.userId})">
+                <img ng-src="{{user.userPhoto}}">
+                <h2 class="lead">{{user.userName}}</h2>
+              </div>
+        </div>
+      </div>
+
+      <div ng-if="view.type === 1">
         <div style="height:100%;" >
             <div class="row row-no-padding category-2-outer" ng-repeat="value in news.itemsArr | limitTo: limit" ng-if="$index % 2 == 0 && news.itemsArr[$index].photo">
               <div class="col" style="padding: 5px !important">
-                <a ui-sref="tabs.post-detail({post:news.itemsArr[$index].key})">
+                <a ui-sref="post-detail({post:news.itemsArr[$index].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
                       <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
@@ -17,12 +31,9 @@
                     </div>
                   </div>
                 </a>
-                <div class="font-thin" style="text-align:center">
-                  {{news.itemsArr[$index].owner}}
-                </div>
               </div>
               <div class="col" style="padding: 5px !important ">
-                <a ui-sref="tabs.post-detail({post:news.itemsArr[$index+1].key})">
+                <a ui-sref="post-detail({post:news.itemsArr[$index+1].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
                       <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
@@ -30,12 +41,10 @@
                     </div>
                   </div>
                 </a>
-                <div class="font-thin" style="text-align:center">
-                  {{news.itemsArr[$index+1].owner}}
-                </div>
               </div>
             </div>
         </div>
+      </div>
         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

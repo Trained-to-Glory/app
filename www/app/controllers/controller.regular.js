@@ -9,7 +9,7 @@ angular.module('module.view.regular', [])
 			$inputs.map( function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
-			data.postType = 'post';
+			data.postType = 'Post';
 			data.photo = $scope.photo;
 			var key = postService.create(data);
 			$state.go('tabs.news');

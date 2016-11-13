@@ -1,22 +1,20 @@
-<ion-view title="Match" scroll="true">
-
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-      </button>
-    </ion-nav-buttons>
-
-    <ion-content scroll="true">
-          <div class="row row-no-padding category-2-outer" style="padding:0"ng-repeat = "ab in abs | limitTo: limit track by $index">
+<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" hide-nav-bar="true">
+  <div class="row view-tab text-center" style="font-size:16px;">
+    <div class="col font-thin" ng-class="{'balanced' : view.type === 1}" ng-click="view.type = 1" style="border: none">Connect</div>
+    <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Leaders</div>
+  </div>
+    <ion-content class="has-header">
+        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()"style="margin-top: 20px">
+          <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;"ng-repeat = "ab in abs | limitTo: limit track by $index">
             <div class="col">
-              <a ui-sref="tabs.contacts({activity:ab.id})">
+              <a ui-sref="contacts({activity:ab.id})">
                 <div class="category-2-item-wrapper">
                   <div class="category-2-item-content">
                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
                       <img bg="" class="multi-bg category-with-image">
                       <span class="bg-overlay"></span>
-                      <h1 class="category-heading">
-                        <span>0{{ab.numbers}}
+                      <h1 class="category-heading" style="width: 80%">
+                        <span>{{$index +1}}
                           <span class="bubble"></span>
                         </span>
                         <span style="border-bottom: 1px solid #F10707;">{{ab.label}}</span>
@@ -27,6 +25,29 @@
               </a>
             </div>
           </div>
+        </div>
+
+      <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()">
+        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in trainers | limitTo: limit track by $index">
+          <div class="col">
+            <a ui-sref="lead({activity:trainer.id})">
+              <div class="category-2-item-wrapper">
+                <div class="category-2-item-content">
+                  <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.photo}});">
+                    <img bg="" class="multi-bg category-with-image">
+                    <span class="bg-overlay"></span>
+                    <h1 class="category-heading">
+                      <span> 0{{trainer.numbers}}
+                        <span class="bubble"></span>
+                      </span>
+                      <span style="border-bottom: 1px solid #F10707;">{{trainer.label}}</span>
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
           <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

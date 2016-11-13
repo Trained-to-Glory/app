@@ -1,13 +1,33 @@
-angular.module('module.view.explore', [])
-	.controller('exploreCtrl', function($scope,$rootScope,$localStorage,$state,postService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
+angular.module('module.view.explore', ['angular.filter'])
+	.controller('exploreCtrl', function($scope,$rootScope,$localStorage,$state,postService,usersService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
         $scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
                     scope: $scope
         });
+
+				usersService.getAllUsers().then(function(results){
+					delete results[$localStorage.account.userId];
+		      $scope.users = results;
+		    });
+
+				$scope.view = { type: 1 };
+
+		$scope.clearSearch = function() {
+		    $scope.lookUp = null;
+				$scope.view = { type: 1}
+		}
 
 		$scope.gotoBrowse = function () {
                     $state.go('tabs.news');
 
         };
+
+				$scope.onSwipeLeft = function () {
+          $state.go('tabs.match');
+        }
+
+				$scope.onSwipeRight = function () {
+					$state.go('tabs.news');
+				}
 
 
         $scope.gotoMatch = function () {

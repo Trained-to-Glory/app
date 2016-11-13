@@ -1,25 +1,22 @@
-<ion-view title="Match" cache-view="false">
-
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-            <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-         </button>
-    </ion-nav-buttons>
-
+<ion-view title="Connect" class="font-thin">
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
     <ion-content class="has-header" scroll="true">
 
         <ion-scroll class="bg-lightgrey" direction="y" style="height:100%">
             <div style="height:700px">
-                <div class="row" ng-repeat="user in orderByLocation1(users,myLocation)">
-                      <div class="col">
-                          <div class="card contact animated bounceIn item-remove-animate">
-                              <div class="item item-image item-text-wrap" ui-sref="tabs.friend({contact: user.userId})">
-                                  <div><img ng-src = "{{ user.userPhoto }}"></div>
-                                  <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
-                                  <p class="">{{user.userName}}</p>
-                              </div>
+            <div class="row" ng-repeat="user in orderByLocation1(users,myLocation)">
+                  <div class="col">
+                      <div class="card contact animated bounceIn item-remove-animate">
+                          <div class="item item-image item-text-wrap" ui-sref="tabs.friend({contact: user.userId})">
+                              <div><img ng-src = "{{ user.userPhoto }}"></div>
+                              <h2 class="lead text-small mt">{{user.firstName + " " + user.lastName}}</h2>
+                              <p class="">{{user.userName}}</p>
                           </div>
                       </div>
+                  </div>
             </div>
         </ion-scroll>
     </ion-content>

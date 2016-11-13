@@ -1,5 +1,5 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,$stateParams,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,ngProgressFactory,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -17,6 +17,15 @@ angular.module('module.view.sentPlans', [])
                         $state.go(ui_sref);
                     }
                 }
+								angular.element(document).ready(function () {
+									$scope.progressbar = ngProgressFactory.createInstance();
+									$scope.progressbar.setHeight('20px');
+									$scope.progressbar.setColor('red');
+									$scope.progressbar.set(0);
+									var element = $scope.progressbar.getDomElement();
+									$scope.progressbar.setParent(document.querySelector('.progress-bar'));
+							    });
+
 
         $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
                     scope: $scope
@@ -34,8 +43,16 @@ angular.module('module.view.sentPlans', [])
 								$scope.createPlan = function () {
 										$scope.closePlan();
 										$scope.closeRequestPopover();
-				            $state.go('tabs.create-plan');
+				            $state.go('create-plan');
 				        };
+
+								$scope.onSwipeLeft = function () {
+									$state.go('tabs.account');
+								}
+
+								$scope.onSwipeRight = function () {
+									$state.go('tabs.match');
+								}
 
 								$scope.profile = $localStorage.account;
 
@@ -57,6 +74,19 @@ angular.module('module.view.sentPlans', [])
 				          }
 				            return false;
 				        };
+
+								$scope.isChecked = false;
+									$scope.selected = [];
+									$scope.checkedOrNot = function (item, isChecked, index, totalChecklist) {
+											if (isChecked) {
+													$scope.selected.push(item);
+													engagementService.engagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
+											} else {
+													var _index = $scope.selected.indexOf(interest);
+													$scope.selected.splice(_index, 1);
+													engagementService.disEngagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
+											}
+									};
 
 								usersService.getUserPlans($localStorage.account.userId).then(function(results) {
 				          //create a local object so we can create the datastructure we want
@@ -89,7 +119,7 @@ angular.module('module.view.sentPlans', [])
 				          }
 				          //make it available to the directive to officially show/hide, toggle
 				          $scope.view = view;
-				          $scope.viewNumberPost = Object.keys(view).length;
+									console.log(view);
 				        });
 
 								$scope.limit = 10;
@@ -112,7 +142,17 @@ angular.module('module.view.sentPlans', [])
 									$scope.$broadcast('scroll.infiniteScrollComplete');
 								};
 
-								$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
+								$scope.scrollEvent = function() {
+				            var scrollamount = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().top;
+				            //$ionicScrollDelegate.scrollBy(0,20, true);
+				            if (scrollamount > 0) { // Would hide nav-bar immediately when scrolled and show it only when all the way at top. You can fiddle with it to find the best solution for you
+				              $ionicNavBarDelegate.showBar(false);
+				            } else {
+				              $ionicNavBarDelegate.showBar(true);
+				            }
+				          }
+
+								$scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
 										scope: $scope
 								});
 
@@ -222,6 +262,25 @@ angular.module('module.view.sentPlans', [])
 			  				 }
 			  			 };
 
+							 $scope.closePopover = function($event) {
+		              $scope.newsPopover.hide();
+		           };
+
+							 $scope.createEvent = function () {
+			           $scope.closePopover();
+			           $state.go('event');
+			         }
+
+			         $scope.createPost = function () {
+			           $scope.closePopover();
+			           $state.go('regular');
+			         }
+
+			         $scope.createGoal = function () {
+			           $scope.closePopover();
+			           $state.go('create-plan');
+			         }
+
 });
 var searchTemplate =
     '<ion-popover-view class="search" style= "top:510.703 !important">' +
@@ -231,6 +290,22 @@ var searchTemplate =
     '<i class="icon ion-ios-search placeholder-icon"></i>' +
     '<input type="search" placeholder="Search" ng-model="schoolSearch" ng-model-options="{ debounce: 550 }" ng-change="getSearch(schoolSearch)"></label>' +
     ' <i class="icon ion-close" ng-show="schoolSearch" ng-click="getSearch(\'\');popover.hide($event);schoolSearch=\'\'"></i>' +
+    '</div>' +
+    '</ion-content>' +
+    '</ion-popover-view>';
+var newsTemplate =
+    '<ion-popover-view class="medium right">' +
+    '<ion-content>' +
+    '<div class="list">' +
+    '<div class="item item-icon-left item-text-wrap" ng-click="createEvent()">' +
+    '<i class="icon ion-ios-bell-outline"></i>Create Event' +
+    '</div>' +
+    '<div class="item item-icon-left item-text-wrap" ng-click="createPost()">' +
+    '<i class="icon ion-ios-camera-outline"></i>Create Post' +
+    '</div>' +
+    '<div class="item item-icon-left item-text-wrap" ng-click="createGoal()">' +
+    '<i class="icon ion-ios-star-outline" style="margin-left:3px"></i>Create Goal' +
+    '</div>' +
     '</div>' +
     '</ion-content>' +
     '</ion-popover-view>';

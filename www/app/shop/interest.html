@@ -1,21 +1,50 @@
-<ion-view title="Select your interest" cache-view="false">
+<ion-view class="view-login" style="color: white;" cache-view="false">
+  <ion-nav-bar class="signup-bar-clear bar-edit-profile" style="background:none">
+    <ion-header-bar align-title="left" style="background: transparent !important;">
+        <h1 class="title font-thin" style="color: black; font-weight: 400; left: 0px !important">Select your interest</h1>
+    </ion-header-bar>
+    <ion-header-bar align-title="right" style="background: transparent !important;z-index: 999;" ui-sref="tabs.account">
+        <h1 class="title font-thin" style="color: black; font-weight: 400; z-index: 999;" ui-sref="tabs.account">Next</h1>
+    </ion-header-bar>
+  </ion-nav-bar>
 
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-            <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-         </button>
-    </ion-nav-buttons>
-
-    <ion-content class="has-header padding bg-lightgrey">
-          <ion-list>
+  <ion-content class="has-header" scroll="true">
+          <!-- <ion-list>
               <ion-checkbox ng-repeat="interest in interests | limitTo: limit  track by $index" style="color: #F10707;background: transparent;border-color: transparent"
                 data-interest-id="{{ interest.id }}" ng-model="isChecked"  ng-change="checkedOrNot(interest, isChecked, $index, $localStorage)" ng-init='isChecked=false'>{{ interest.label }}</ion-checkbox>
-           </ion-list>
+           </ion-list> -->
+           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll"ng-repeat = "interest in interests | limitTo: limit  track by $index">
+             <div class="col">
+                 <div class="category-2-item-wrapper" style="z-index: 1">
+                   <div class="category-2-item-content" style="z-index: 1">
+                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{interest.photo}});">
+                       <img bg="" class="multi-bg category-with-image">
+                       <span class="bg-overlay"></span>
+                       <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent;" data-interest-id="{{ interest.id }}" ng-model="isChecked"  ng-change="checkedOrNot(interest, isChecked, $index, $localStorage)" ng-init='isChecked=false'>
+                       </ion-checkbox>
+                       <h1 class="category-heading" style="width: 80%" >
+                         <span>{{interest.numbers}}
+                           <span class="bubble"></span>
+                         </span>
+                         <span style="border-bottom: 1px solid #F10707;">{{interest.label}}</span>
+                         <div ng-if="interest.subCategory" style="margin-top: 8px">
+                           <div class="button" style = "background-color: transparent; color: white; z-index: 999; margin-left: 6px; margin-bottom: 5px; margin-top: 10px;border-color: #F10707;min-height: 0; min-width: 0;border-width: 0;line-height:0"
+                              ng-repeat = "(key,value) in interest.subCategory" ng-if="isChecked" ng-class="class" ng-click="toggleInterest(key)">
+                              <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>
+                              <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>
+                          </div>
+                          <!-- <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !value.state.active, 'button-balanced ion-ios-undo-outline':value.state.active }" ng-click="toggleInterest(key)">
+                              <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>
+                              <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>
+                          </button> -->
+                         </div>
+                       </h1>
+                     </div>
+                   </div>
+                 </div>
+             </div>
+           </div>
 
-          <div class="row row-login">
-                <div class="col col-login"></div>
-                <div class="col col-login" style="margin-left: 31vh;" ui-sref="tabs.account">NEXT</div>
-         </div>
          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

@@ -48,19 +48,42 @@ angular.module('full_starter.routes', [])
       .state('tabs.news', {
         url: '/news',
         views: {
-          'menuContent': {
+          'Home': {
             templateUrl: 'app/news/news.html',
             controller: 'newsCtrl'
           }
         }
       })
 
-      .state('tabs.meetup', {
-        url: '/meetup',
+      .state('tabs.match', {
+        url: '/match',
         views: {
-          'menuContent': {
-            templateUrl: 'app/news/meetup.html',
-            controller: 'meetupCtrl'
+          'Connect': {
+            templateUrl: 'app/shop/match.html',
+            controller: 'matchCtrl'
+          }
+        }
+      })
+
+
+      .state('tabs.sentPlans', {
+        url: '/sentPlans',
+        params: { user: null },
+        views: {
+          'Goals': {
+            templateUrl: 'app/chat/sentPlans.html',
+            controller: 'sentPlansCtrl'
+          }
+        }
+      })
+
+      .state('tabs.account', {
+        url: '/account',
+        params: { account: null },
+        views: {
+          'Profile': {
+            templateUrl: 'app/account/account.html',
+            controller: 'profileCtrl'
           }
         }
       })
@@ -68,451 +91,140 @@ angular.module('full_starter.routes', [])
       .state('tabs.explore', {
         url: '/explore',
         views: {
-          'menuContent': {
+          'Explore': {
             templateUrl: 'app/news/explore.html',
             controller: 'exploreCtrl'
           }
         }
       })
 
-      .state('tabs.search', {
-        url: '/search',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/search.html',
-            controller: 'searchCtrl'
-          }
-        }
-      })
-
-
-      .state('tabs.account', {
-        url: '/account',
-        params: { account: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/account.html',
-            controller: 'profileCtrl'
-          }
-        }
-      })
-
-      .state('tabs.friend', {
+      .state('friend', {
         url: '/friend',
         params: { contact: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/friend.html',
-            controller: 'friendCtrl'
-          }
-        }
+        templateUrl: 'app/account/friend.html',
+        controller: 'friendCtrl'
       })
 
-      .state('tabs.communicate', {
+      .state('intro', {
+        url: '/intro',
+        params: { contact: null },
+        templateUrl: 'app/intro/intro.html',
+        controller: 'introCtrl'
+      })
+
+      .state('communicate', {
         url: '/communicate',
         params: { contact: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/communicate.html',
-            controller: 'communicateCtrl'
-          }
-        }
+        templateUrl: 'app/settings/communicate.html',
+        controller: 'communicateCtrl'
       })
 
-      .state('tabs.leader', {
-        url: '/leader',
-        params: { contact: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/leader.html',
-            controller: 'leaderCtrl'
-          }
-        }
-      })
-
-      .state('tabs.post-detail', {
+      .state('post-detail', {
         url: '/post-detail',
         params: { post: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/post.html',
-            controller: 'postCtrl'
-          }
-        }
+        templateUrl: 'app/news/post.html',
+        controller: 'postCtrl'
       })
 
-      .state('tabs.planView-detail', {
-        url: '/planView-detail',
-        params: { post: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/planView.html',
-            controller: 'planViewCtrl'
-          }
-        }
-      })
-
-      .state('tabs.comments', {
+      .state('comments', {
         url: '/comments',
         params: { post: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/comments.html',
-            controller: 'commentsCtrl'
-          }
-        }
+        templateUrl: 'app/news/comments.html',
+        controller: 'commentsCtrl'
       })
-      .state('tabs.likes', {
+      .state('likes', {
         url: '/likes',
         params: { post: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/likes.html',
-            controller: 'likesCtrl'
-          }
-        }
+        templateUrl: 'app/news/likes.html',
+        controller: 'likesCtrl'
       })
 
-      .state('tabs.commits', {
+      .state('commits', {
         url: '/commits',
         params: { post: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/commits.html',
-            controller: 'commitsCtrl'
-          }
-        }
+        templateUrl: 'app/news/commits.html',
+        controller: 'commitsCtrl'
       })
 
-      //Dashboard
-      .state('tabs.plans', {
-        url: '/plans',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/plans.html',
-            controller: 'plansCtrl'
-          }
-        }
-      })
-
-      .state('tabs.reminders', {
-        url: '/reminders',
-        params: { user: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/reminders.html',
-            controller: 'remindersCtrl'
-          }
-        }
-      })
-
-      .state('create-edit-reminder', {
-        url: '/create-edit-reminder',
-        params: { reminder: null, type: null },
-        templateUrl: 'app/dashboard/create-edit-reminder.html',
-        controller: 'editReminderCtrl'
-      })
-
-      .state('create-edit-event', {
-        url: '/create-edit-event',
-        params: { reminder: null, type: null },
-        templateUrl: 'app/dashboard/create-edit-event.html',
-        controller: 'editEventCtrl'
-      })
-
-      .state('tabs.contacts', {
+      .state('contacts', {
         url: '/contacts',
         params: {activity: null},
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/contacts.html',
-            controller: 'contactsCtrl'
-          }
-        }
+        templateUrl: 'app/dashboard/contacts.html',
+        controller: 'contactsCtrl'
       })
 
-      .state('tabs.lead', {
+      .state('lead', {
         url: '/lead',
         params: {activity: null},
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/lead.html',
-            controller: 'leadCtrl'
-          }
-        }
+        templateUrl: 'app/dashboard/lead.html',
+        controller: 'leadCtrl'
       })
 
-      .state('tabs.cost', {
-        url: '/cost',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/cost.html',
-            controller: 'costCtrl'
-          }
-        }
+      .state('contactList', {
+        url: '/contactList',
+        templateUrl: 'app/news/contactList.html',
+        controller: 'commentCtrl'
       })
 
-      .state('tabs.commentList', {
-        url: '/commentList',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/commentList.html',
-            controller: 'commentListCtrl'
-          }
-        }
-      })
-
-      .state('tabs.commitList', {
-        url: '/commitList',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/commitList.html',
-            controller: 'commitListCtrl'
-          }
-        }
-      })
-
-      .state('tabs.likeList', {
-        url: '/likeList',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/likeList.html',
-            controller: 'likeListCtrl'
-          }
-        }
-      })
-
-
-      .state('tabs.match', {
-        url: '/match',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/match.html',
-            controller: 'matchCtrl'
-          }
-        }
-      })
-
-      .state('tabs.coach', {
-        url: '/coach',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/coach.html',
-            controller: 'coachCtrl'
-          }
-        }
-      })
-
-      .state('tabs.trainers', {
-        url: '/trainers',
-        params: { activity: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/trainers.html',
-            controller: 'trainersCtrl'
-          }
-        }
-      })
-
-      .state('tabs.thanks', {
-        url: '/thanks',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/thanks.html',
-            controller: 'thanksCtrl'
-          }
-        }
-      })
-
-
-      .state('tabs.calendar', {
-        url: '/calendar',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/calendar.html',
-            controller: 'calendarCtrl'
-          }
-        }
-      })
-
-      .state('tabs.schedule', {
-        url: '/schedule',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/schedule.html',
-            controller: 'scheduleCtrl'
-          }
-        }
-      })
-
-      .state('tabs.rather', {
-        url: '/rather',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/rather.html',
-            controller: 'ratherCtrl'
-          }
-        }
-      })
-
-      .state('tabs.roleRather', {
+      .state('roleRather', {
         url: '/roleRather',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/roleRather.html',
-            controller: 'roleRatherCtrl'
-          }
-        }
+        templateUrl: 'app/shop/roleRather.html',
+        controller: 'roleRatherCtrl'
       })
 
-      .state('tabs.notifications', {
-        url: '/notifications',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/notifications.html',
-            controller: 'notificationsCtrl'
-          }
-        }
-      })
-
-      .state('tabs.status', {
+      .state('status', {
         url: '/status',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/status.html',
-            controller: 'statusCtrl'
-          }
-        }
+        templateUrl: 'app/settings/status.html',
+        controller: 'statusCtrl'
       })
 
-      .state('tabs.partners', {
+      .state('partners', {
         url: '/partners',
         params: { partner: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/partners.html',
-            controller: 'partnersCtrl'
-          }
-        }
+        templateUrl: 'app/account/partners.html',
+        controller: 'partnersCtrl'
       })
 
-      .state('tabs.friendPartners', {
-        url: '/friendPartners',
-        params: { friendPartner: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/friendPartners.html',
-            controller: 'friendPartnersCtrl'
-          }
-        }
-      })
-
-      .state('tabs.interest', {
+      .state('interest', {
         url: '/interest',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/shop/interest.html',
-            controller: 'interestCtrl'
-          }
-        }
+        templateUrl: 'app/shop/interest.html',
+        controller: 'interestCtrl'
       })
 
-      .state('tabs.edit-profile', {
+      .state('edit-profile', {
         url: '/edit-profile',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/account/edit-profile.html',
-            controller: 'editProfileCtrl'
-          }
-        }
+        templateUrl: 'app/account/edit-profile.html',
+        controller: 'editProfileCtrl'
       })
 
-      .state('tabs.event', {
+      .state('event', {
         url: '/event',
         params: { post: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/event.html',
-            controller: 'eventCtrl'
-          }
-        }
+        templateUrl: 'app/news/event.html',
+        controller: 'eventCtrl'
       })
 
-      .state('tabs.regular', {
+      .state('regular', {
         url: '/regular',
         params: { post: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/news/regular.html',
-            controller: 'regularCtrl'
-          }
-        }
+        templateUrl: 'app/news/regular.html',
+        controller: 'regularCtrl'
       })
 
-      .state('tabs.create-plan', {
+      .state('create-plan', {
         url: '/create-plan',
         params: { post: null, mode: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/dashboard/create-plan.html',
-            controller: 'createPlanCtrl'
-          }
-        }
+        templateUrl: 'app/dashboard/create-plan.html',
+        controller: 'createPlanCtrl'
       })
 
-      .state('tabs.chat', {
-        url: '/chat',
-        params: { chat: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/chat/chat.html',
-            controller: 'chatCtrl'
-          }
-        }
-      })
-
-      .state('tabs.conversations', {
-        url: '/conversations',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/chat/conversations.html',
-            controller: 'conversationsCtrl'
-          }
-        }
-      })
-
-      .state('tabs.sentPlans', {
-        url: '/sentPlans',
-        params: { user: null },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/chat/sentPlans.html',
-            controller: 'sentPlansCtrl'
-          }
-        }
-      })
-
-
-
-      .state('tabs.settings', {
+      .state('settings', {
         url: '/settings',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/settings.html',
-            controller: 'settingsCtrl'
-          }
-        }
+        templateUrl: 'app/settings/settings.html',
+        controller: 'settingsCtrl'
       })
 
-      .state('tabs.signup', {
-        url: '/signup',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/settings/signup.html',
-            controller: 'signupCtrl'
-          }
-        }
-      })
+
       .state('authentication', {
         url: '/authentication',
         templateUrl: 'app/intro/authentication.html',
@@ -525,34 +237,22 @@ angular.module('full_starter.routes', [])
         controller: 'loginCtrl',
       })
 
-      .state('tabs.policy', {
+      .state('policy', {
         url: '/policy',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/intro/policy.html',
-            controller: 'settingsCtrl'
-          }
-        }
+        templateUrl: 'app/intro/policy.html',
+        controller: 'settingsCtrl'
       })
 
-      .state('tabs.service', {
+      .state('service', {
         url: '/service',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/intro/service.html',
-            controller: 'settingsCtrl'
-          }
-        }
+        templateUrl: 'app/intro/service.html',
+        controller: 'settingsCtrl'
       })
 
-      .state('tabs.support', {
+      .state('support', {
         url: '/support',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/intro/support.html',
-            controller: 'settingsCtrl'
-          }
-        }
+        templateUrl: 'app/intro/support.html',
+        controller: 'settingsCtrl'
       })
 
       .state('signin', {
@@ -560,7 +260,7 @@ angular.module('full_starter.routes', [])
         templateUrl: 'app/intro/signin.html',
         controller: 'signinCtrl',
       })
-    $urlRouterProvider.otherwise('/signin')
+    $urlRouterProvider.otherwise('/intro')
 
 
 

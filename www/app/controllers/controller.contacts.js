@@ -1,5 +1,5 @@
 angular.module('module.view.contacts', [])
-	.controller('contactsCtrl', function($scope,$rootScope,$state,$ionicPopover,$localStorage,engagementService,$stateParams,interestService) {
+	.controller('contactsCtrl', function($scope,$rootScope,$state,usersService,$ionicPopover,$localStorage,engagementService,$stateParams,interestService) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -17,6 +17,30 @@ angular.module('module.view.contacts', [])
                         $state.go(ui_sref);
                     }
                 }
+
+			usersService.getAllUsers($localStorage.account.userId).then(function(results){
+				var arr = [];
+				for(var key in results){
+					results[key].key = key;
+					arr.push(results[key]);
+				}
+				var contacts = {
+						items: results,
+						itemsArr: arr
+				};
+
+				delete results[$localStorage.account.userId];
+
+				for(var id in contacts.items){
+				 //check to see if there is a like on this post
+				 (function(id){
+					 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+						contacts.items[id].partnered = partnered;
+					});
+				})(id,contacts.items);
+				}
+				$scope.people = contacts.items;
+			});
 
 				$scope.togglePartner = function(partnerId){
 						var partner = $scope.ones;

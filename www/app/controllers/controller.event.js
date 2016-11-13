@@ -1,5 +1,5 @@
 angular.module('module.view.event', [])
-	.controller('eventCtrl', function($scope,$rootScope,$state,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
+	.controller('eventCtrl', function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 		$scope.postId = $stateParams.post;
 
@@ -10,12 +10,28 @@ angular.module('module.view.event', [])
 				data[$(this).attr('name')] = $(this).val();
 			});
 			var userPhoto = $localStorage.account.photo;
-			data.postType = 'event';
+			data.postType = 'Event';
 			data.photo = $scope.photo;
 			data.userPhoto = userPhoto;
 			var key = postService.create(data);
 			$state.go('tabs.news');
 		};
+
+
+		$scope.getStablePost = function(){
+			return interestService.getStablePost();
+		};
+
+		$scope.getStablePost().then(function(results) {
+			var interests = [];
+			for (key in results){
+				interests.push({
+					id: key,
+					photo: results[key].photo
+				});
+			}
+			$scope.stablePhoto = interests;
+		});
 
 		if($stateParams.post){
 			postService.get($stateParams.post).then(function(results) {

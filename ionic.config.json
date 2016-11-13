@@ -1,5 +1,5 @@
 {
-  "name": "Trained To Glory App",
+  "name": "Trained To Glory",
   "app_id": "e77285d3",
   "gulpStartupTasks": [
     "sass",

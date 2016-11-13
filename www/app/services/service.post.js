@@ -202,6 +202,12 @@ angular.module('service.post', [])
                   // "activityId": data.activityId || '',
                   // "imageFilePath": data.filePath || '',
                   "photo": data.photo || '',
+                  "goal": data.goal || '',
+                  "checklist": data.checklist || '',
+                  "title": data.title || '',
+                  "point": data.point || '',
+                  "forward": data.forward || '',
+                  "notes": data.notes || '',
                   "mustHaves": data.mustHaves || '',
                   "description": data.description || '',
                   "created": firebase.database.ServerValue.TIMESTAMP,
@@ -241,6 +247,12 @@ angular.module('service.post', [])
                 var currentObj = snapshot.val();
                 if (currentObj) {
                     var obj = {
+                        "photo": data.photo ? data.photo : currentObj.photo,
+                        "goal": data.goal ? data.goal : currentObj.goal,
+                        "checklist": data.checklist ? data.checklist : currentObj.checklist,
+                        "point": data.point ? data.point : currentObj.point,
+                        "forward": data.forward ? data.forward : currentObj.forward,
+                        "notes": data.notes ? data.notes : currentObj.notes,
                         "description": data.description ? data.description : currentObj.description,
                         "title": data.title ? data.title : currentObj.title,
                         "photo": data.photo ? data.photo : currentObj.photo,

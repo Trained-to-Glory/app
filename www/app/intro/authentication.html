@@ -2,49 +2,57 @@
 (*) assigned classes -->
 
 <!-- * view-login / container general -->
-<ion-view class="view-login" view-title="Sign Up" style="text-align: center !important">
-  <ion-nav-bar class="bar-clear bar-edit-profile" style="background-color:transparent">
-    <ion-header-bar align-title="right" style="background-color: transparent !important;" ui-sref="passwords">
-        <h1 class="title" style="color: white" ui-sref="passwords">Next</h1>
+<ion-view class="view-login" style="color: white;">
+  <ion-nav-bar class="signup-bar-clear bar-edit-profile" style="background:none">
+    <ion-header-bar align-title="left" style="background: transparent !important;">
+        <h1 class="title" style="color: white; font-weight: 400" ui-sref="interest">Create Account</h1>
     </ion-header-bar>
-    <ion-nav-back-button>
-    </ion-nav-back-button>
   </ion-nav-bar>
     <!-- * bg-image / background image -->
     <!-- class bg-image is in the file general.scss -->
-    <div class="bg-image" style="background-image:url('img/bg.jpg');">
+    <div class="bg-image" style="background-image:url('img/bg-photo.jpg')">
         <!-- * bg-color / background-color -->
-        <div class="bg-color">
-            <ion-content style="background: transparent !important">
+        <div class="bg-color login-flow">
+            <ion-content style="background: transparent !important;margin-top: 40px" class="auth profile has-header bt-grey">
+              <!-- <div class="list card header edit" style="background: none !important; box-shadow: none">
+                  <div class="item-avatar" style="padding-left:0;">
+                    <img class="header__thumb" style="max-width: 120px; top: 0; left: 0; max-height: 120px;" ng-src = "img/profile-picture.png" ng-click="uploadUserPhoto()">
+                  </div>
+              </div> -->
                 <!-- * logo / logo company -->
-                <form ng-submit="doLogin()" style="margin-top: 15vh; position: relative;">
+                <form name="registerForm" novalidate ng-submit="registerForm.$valid && register(user)" style="position: relative;">
                     <div class="list list-inset" style="background-color:transparent !important;">
-                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;margin-bottom: 25px;">
-                        <label class="item item-input" style="border: none; background-color:transparent !important;margin-top:2px; text-align:center;width:100%;">
-                          <input type="text" placeholder="First Name" validate>
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 25px;">
+                        <label class="item item-input" style="border: none;background-color:transparent !important;margin-top:2px; text-align:center;width:100%;">
+                          <input class = "signin" style="color: white" type="text" placeholder="Name" ng-model="user.fullName" validate>
                         </label>
                       </div>
 
-                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;margin-bottom: 25px;">
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 25px;">
                         <label class="item item-input" style="border: none;background-color:transparent !important; margin-top:2px; text-align:center;width:100%;">
-                          <input type="text" placeholder="Last Name" validate>
+                          <input class = "validate signin" style="color: white" type="email" ng-model="user.email"  placeholder="Email" ng-minlength="5" ng-maxlength="30" required>
                         </label>
                       </div>
 
-                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;margin-bottom: 25px;">
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 25px;">
                         <label class="item item-input" style="border: none;background-color:transparent !important; margin-top:2px; text-align:center;width:100%;">
-                          <input type="text" placeholder="Username" validate>
+                          <input class = "signin" style="color: white" type="text" placeholder="Username" ng-model="user.userName" validate>
                         </label>
                       </div>
 
-                      <div class = "row" style="width: 100%;border-bottom: 1px solid silver;margin:auto;margin-bottom: 25px;">
+                      <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;">
                         <label class="item item-input" style="border: none;background-color:transparent !important; margin-top:2px; text-align:center;width:100%;">
-                          <input type="text" placeholder="Password" validate>
+                          <input class = "validate signin" style="color: white" ng-model="user.password" type="password" placeholder="Password" ng-minlength="5" ng-maxlength="30" required>
                         </label>
                       </div>
-                        <!-- <button class="button button-block button-calm" type="submit" style="border-radius: 0px;margin-top: 115px;background-color: white;color: black"  ui-sref="app.feeds">SIGN UP</button>
-                        <button class="button button-block button-calm" type="submit" style="border-radius: 0px;background-color: transparent;"  ui-sref="authentication">SIGN UP</button> -->
-                        <!-- * line / line separation -->
+
+                      <h1 class="font-thin" style="color: white; font-size: 14px; font-weight: 400 !important;margin-left: 20px;margin-top: 24px">Would you like to be considered a leader?</h1>
+                       <ion-radio ng-model="user.leader" ng-value="'yes'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
+                       <ion-radio ng-model="user.person" ng-value="'no'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
+
+                        <input class="button button-block button-calm" ng-if="user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
+                        <input class="button button-block button-calm" ng-if="!user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
+                        <div ng-if="!user.person || user.person" style="font-weight:400;font-size:12px;color: white">By clicking sign up you are indicating have read the Privacy Policy and agree to the Terms of Use found at www.trainedtoglory.com.</div>
                     </div>
                 </form>
             </ion-content>

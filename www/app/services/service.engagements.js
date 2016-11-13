@@ -382,6 +382,15 @@ angular.module('service.engagements', [])
             });
         };
 
+        this.interested = function (data) {
+            var type = 'engagedActivities';
+            var data = get(type, data.category, data.categoryId, data.userId);
+            //check if engagement item is already in hash
+            return data.then(function(result){
+                return (result && result.state)?result.state.active: false;
+            });
+        };
+
         this.posted = function (data) {
             var type = 'userPartners';
             var data = get(type, data.category, data.categoryId, data.userId);
@@ -420,6 +429,18 @@ angular.module('service.engagements', [])
 
         this.unpartner = function (data) {
             var type = 'userPartners';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
+        };
+
+        this.selectInterest = function (data) {
+            var type = 'engagedActivities';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, true);
+        };
+
+        this.unselectInterest = function (data) {
+            var type = 'engagedActivities';
             //check if engagement item is already in hash
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };
@@ -491,7 +512,8 @@ angular.module('service.engagements', [])
         };
 
         this.totalPlans = function(data){
-          return this.plans(data).then(function(result){
+          return this.plans(data).then(
+            function(result){
             var count = 0;
             if(result){
               for(var key in result){

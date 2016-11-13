@@ -1,7 +1,18 @@
 angular.module('module.view.createPlan', [])
-	.controller('createPlanCtrl', function($scope,$rootScope,$state,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
+	.controller('createPlanCtrl', function($scope,$rootScope,$state,$ionicHistory,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 		$scope.postId = $stateParams.post;
+
+		$scope.goBack = function() {
+				$backView = $ionicHistory.backView();
+			 $backView.go();
+    };
+
+		$scope.view = { };
+		$scope.data = {};
+		$scope.data.checklistArr = [{
+			displayName: ''
+		}];
 
 		$scope.createPlan = function() {
 			var $inputs = $('.event-form .event__input input');
@@ -11,6 +22,7 @@ angular.module('module.view.createPlan', [])
 			});
 			data.postType = 'plan';
 			data.photo = $scope.photo;
+			data.checklist = $scope.data.checklistArr ;
 			var key = postService.createPlan(data);
 			$state.go('tabs.sentPlans');
 		};
@@ -32,6 +44,7 @@ angular.module('module.view.createPlan', [])
 				data[$(this).attr('name')] = $(this).val();
 			});
 			$scope.postId = $stateParams.post;
+			data.checklist = $scope.checkList;
 			data.postType = 'plan';
 			data.photo = $scope.photo;
 			var key = postService.updatePlan(data,$scope.postId);

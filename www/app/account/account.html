@@ -1,21 +1,14 @@
-<ion-view cache-view="false" class="font-thin" title="Profile">
-
-    <ion-nav-buttons side="left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-      </button>
-    </ion-nav-buttons>
-
-    <ion-nav-buttons side="right">
-        <button class="button button-dark button-clear icon ion-ios-compose-outline" ui-sref="tabs.edit-profile"></button>
-    </ion-nav-buttons>
-
-    <ion-content class="has-header bt-grey profile">
+<ion-view cache-view="false" class="font-thin" view-title="Profile" hide-nav-bar="true">
+    <div class="row view-tab text-center" style="font-size:16px">
+        <div class="col font-thin" ui-sref="edit-profile">Edit</div>
+        <div class="col font-thin" ui-sref="communicate">Notifications</div>
+        <div class="col font-thin" ui-sref="settings">Settings</div>
+    </div>
+    <ion-content class="has-header bt-grey profile" on-swipe-right="onSwipeRight()" style="top: 75px">
     <div style="height:100%; overflow:scroll" class="bg-lightgrey">
-
-        <div class="header profile">
-          <div>
-            <img class="header__thumb" ng-src = "{{ profile.userPhoto }}">
+        <div class="list card header profile" style="background: transparent; box-shadow: none">
+          <div class="item-avatar" style="padding-left:0;">
+            <img class="header__thumb" style="max-width: 120px; top: 0; left: 0; max-height: 120px;" ng-src = "{{profile.userPhoto}}">
           </div>
             <h2 class="lead text-medium">{{ profile.userName }}</h2>
             <p style="text-align: center;margin-left: 5px;margin-right: 5px;">{{profile.userDescription}}</p>
@@ -24,10 +17,10 @@
         <div class="row no-padding bb-grey text-center" style="text-transform: capitalize;" >
             <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 1 || view.type === 4}" ng-click="view.type = 1">{{userTotalPost}}<br/>Posts</div>
             <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 2 || view.type === 5}" ng-click="view.type = 2">{{userTotalCommits}}<br/>Commits</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 3}"  ng-click="view.type = 3">{{userPartners}}<br/>Partners</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 3}"  ng-click="view.type = 3">{{userPartners}}<br/>Friends</div>
         </div>
 
-        <div class="list profile" style="height:100%;">
+        <div class="list card profile" style="background: transparent; height:100%; box-shadow: none;height:100%;">
          <div ng-if="view.type === 1">
             <div class="item item-divider">
                 PHOTOS
@@ -37,7 +30,7 @@
             </div>
               <div class="row row-no-padding category-2-outer" ng-repeat="posts in userPosts.itemsArr" ng-if="$index % 2 == 0">
                 <div class="col" style="padding: 5px !important">
-                  <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index].key})">
+                  <a ui-sref="post-detail({post:userPosts.itemsArr[$index].key})">
                     <div class="category-2-item-wrapper">
                       <div class="category-2-item-content">
                         <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index].photo}}); background-color: transparent;z-index:5;">
@@ -47,7 +40,7 @@
                   </a>
                 </div>
                 <div class="col" style="padding: 5px !important ">
-                  <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+1].key})">
+                  <a ui-sref="post-detail({post:userPosts.itemsArr[$index+1].key})">
                     <div class="category-2-item-wrapper">
                       <div class="category-2-item-content">
                         <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5;">
@@ -63,7 +56,7 @@
                 <div style="height: 700px">
                     <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr" ng-if="$index % 3 == 0">
                       <div class="col" style="padding: 5px !important">
-                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index].key})">
+                        <a ui-sref="post-detail({post:userPosts.itemsArr[$index].key})">
                           <div class="category-2-item-wrapper">
                             <div class="category-2-item-content">
                               <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
@@ -73,7 +66,7 @@
                         </a>
                       </div>
                       <div class="col" style="padding: 5px !important ">
-                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+1].key})">
+                        <a ui-sref="post-detail({post:userPosts.itemsArr[$index+1].key})">
                           <div class="category-2-item-wrapper">
                             <div class="category-2-item-content">
                               <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
@@ -83,7 +76,7 @@
                         </a>
                       </div>
                       <div class="col" style="padding: 5px !important ">
-                        <a ui-sref="tabs.post-detail({post:userPosts.itemsArr[$index+2].key})">
+                        <a ui-sref="post-detail({post:userPosts.itemsArr[$index+2].key})">
                           <div class="category-2-item-wrapper">
                             <div class="category-2-item-content">
                               <div class = "multi-bg-outer" style="background-image: url({{userPosts.itemsArr[$index+2].photo}}); background-color: transparent;z-index:5">
@@ -106,7 +99,7 @@
             </div>
                   <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 2 == 0">
                     <div class="col" style="padding: 5px !important">
-                      <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index].key})">
+                      <a ui-sref="post-detail({post:userCommits.itemsArr[$index].key})">
                         <div class="category-2-item-wrapper">
                           <div class="category-2-item-content">
                             <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
@@ -116,7 +109,7 @@
                       </a>
                     </div>
                     <div class="col" style="padding: 5px !important ">
-                      <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+1].key})">
+                      <a ui-sref="post-detail({post:userCommits.itemsArr[$index+1].key})">
                         <div class="category-2-item-wrapper">
                           <div class="category-2-item-content">
                             <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
@@ -131,7 +124,7 @@
           <div ng-if="view.type === 5" style="height:100%;">
                       <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">
                         <div class="col" style="padding: 5px !important">
-                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index].key})">
+                          <a ui-sref="post-detail({post:userCommits.itemsArr[$index].key})">
                             <div class="category-2-item-wrapper">
                               <div class="category-2-item-content">
                                 <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
@@ -141,7 +134,7 @@
                           </a>
                         </div>
                         <div class="col" style="padding: 5px !important ">
-                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+1].key})">
+                          <a ui-sref="post-detail({post:userCommits.itemsArr[$index+1].key})">
                             <div class="category-2-item-wrapper">
                               <div class="category-2-item-content">
                                 <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
@@ -151,7 +144,7 @@
                           </a>
                         </div>
                         <div class="col" style="padding: 5px !important ">
-                          <a ui-sref="tabs.post-detail({post:userCommits.itemsArr[$index+2].key})">
+                          <a ui-sref="post-detail({post:userCommits.itemsArr[$index+2].key})">
                             <div class="category-2-item-wrapper">
                               <div class="category-2-item-content">
                                 <div class = "multi-bg-outer" style="background-image: url({{userCommits.itemsArr[$index+2].photo}}); background-color: transparent;z-index:5">
@@ -163,18 +156,16 @@
                       </div>
                 </div>
 
-        <div ng-if="view.type === 3" style="height:100%;">
+        <div ng-if="view.type === 3" style="background: transparent; box-shadow: none">
             <div class="item item-divider">
-                PARTNERS
-                <span class="item-note" ui-sref = "tabs.partners({partner:profile.userId})">
-                    <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
+                FRIENDS
+                <span class="item-note" ui-sref = "partners({partner:profile.userId})">
+                    <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">Find More</a>
                 </span>
             </div>
-            <div class="item item-avatar item-button-right followers" ui-sref="tabs.friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
+              <div class="item item-avatar item-button-right followers" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
                 <img ng-src="{{value.userPhoto}}">
                 <h2 class="font-thin">{{value.userName}}</h2>
-                <button class="button button-small button-balanced icon ion-ios-checkmark-empty" ng-if="contacts.partnered = true"> Partnered</button>
-                <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline" ng-if="contacts.partnered = false"> Partner</button>
             </div>
 
             </div>

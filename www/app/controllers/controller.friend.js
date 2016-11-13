@@ -9,7 +9,7 @@ angular.module('module.view.friend', [])
 				 }
 				partner.partnered = !partner.partnered;
 				var state = (partner.partnered)?'partner':'unpartner';
-				return engagementService[state]({category:'partners', categoryId:partnerId, userId: $localStorage.account.userId});
+				return engagementService[state]({categoryId:partnerId, userId: $localStorage.account.userId});
 		};
 		$scope.loadMore = function(){
 			if($scope.userPosts && $scope.userPosts.itemsArr){
@@ -89,16 +89,16 @@ angular.module('module.view.friend', [])
 					items: results
 			};
 			delete results[$localStorage.account.userId];
-
-			for(var id in ones.items){
-			 //check to see if there is a like on this post
-			 (function(id, items){
-				 engagementService.partnered({category:'partners',categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+			 for(var id in ones.items){
+			  //check to see if there is a like on this post
+		  	(function(id, items){
+			 	 engagementService.partnered({category:'partners',categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
 					 items.committed = partnered;
-				 });
-			 })(id, ones.items[id]);
-			}
-			$scope.ones = ones;
+			 	 });
+			  })(id, ones.items[id]);
+			 }
+			$scope.ones = ones.items;
+			console.log($scope.ones);
 				//check to see if there is a like on this post
 		});
 
@@ -181,7 +181,6 @@ angular.module('module.view.friend', [])
 					items: results,
 					itemsArr: arr
 			};
-			console.log(results);
 			for(var id in contacts.items){
 			 //check to see if there is a like on this post
 			 (function(id){
@@ -191,7 +190,6 @@ angular.module('module.view.friend', [])
 			})(id,contacts.items);
 			}
 			$scope.contacts = contacts;
-			console.log(contacts);
 		});
 
 
@@ -220,7 +218,6 @@ angular.module('module.view.friend', [])
     }
 
 		$scope.profile = $stateParams.contact;
-		console.log($scope.profile);
 		$scope.view = { type: 1 };
 
 		$scope.gotoAccounts = function () {

@@ -2,7 +2,7 @@ angular.module('module.view.settings', [])
 	.controller('settingsCtrl', function($scope,$rootScope,$cordovaInAppBrowser,$state,$ionicPopover,$stateParams,$ionicLoading,$timeout,Popup,$localStorage) {
 				$scope.service = function(){
 					$cordovaInAppBrowser.open('https://www.trainedtoglory.com/terms-of-service','_blank', 'location=yes');return false;
-					$state.go('tabs.service');
+					$state.go('service');
 				}
 
 				var options = {
@@ -51,96 +51,31 @@ angular.module('module.view.settings', [])
 				$scope.profile = $localStorage.account;
 
 				$scope.policy = function () {
-						$state.go('tabs.policy');
+						$state.go('policy');
 				};
 
 				$scope.service = function () {
-						$state.go('tabs.service');
+						$state.go('service');
 				};
 
 				$scope.support = function () {
-						$state.go('tabs.support');
+						$state.go('support');
 				};
 
-				$scope.browse = function () {
-					$scope.closePopover();
-						$state.go('tabs.news');
-				};
-
-				$scope.explore = function () {
-					$scope.closePopover();
-					$state.go('tabs.explore');
-				};
-
-				$scope.match = function () {
-					$scope.closePopover();
-						$state.go('tabs.match');
-
-				};
-
-				$scope.coach = function () {
-					 $scope.closePopover();
-						$state.go('tabs.coach');
-				};
-
-				$scope.plans = function () {
-					 $scope.closePopover();
-						$state.go('tabs.sentPlans');
-				};
-
-				$scope.reminder = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.partners = function () {
-					$scope.closePopover();
-						$state.go('tabs.partners');
-				};
-
-				$scope.settings = function () {
-					$scope.closePopover();
-						$state.go('tabs.settings');
-				};
-
-				$scope.search = function () {
-					$scope.closePopover();
-						$state.go('tabs.search');
-				};
-
-				$scope.calendar = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.account = function (){
-					$scope.closePopover();
-					$state.go('tabs.account');
-				};
-
-				$scope.notifications = function (){
-					$scope.closePopover();
-					$state.go('tabs.communicate');
-				};
 
 				$scope.logout = function() {
 				 if (firebase.auth()) {
 					 firebase.auth().signOut().then(function() {
 						 //Clear the saved credentials.
 						 $localStorage.$reset();
-						$scope.closePopover();
 						 //Proceed to login screen.
-						 $state.go('authentication');
+						 $state.go('signin');
 					 }, function(error) {
 						 //Show error message.
 						 Utils.message(Popup.errorIcon, Popup.errorLogout);
 					 });
 				 }
 			 };
-
-			 $scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-					 scope: $scope
-			 });
 
 });
 

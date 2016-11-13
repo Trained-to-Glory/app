@@ -7,10 +7,160 @@
     border: none;
 }
 
+.view-tab.text-center {
+    font-size: 16px;
+    top: 45px;
+    position: absolute;
+    z-index: 999;
+    background-color: #fafafc;
+}
+
+.interests-display .checkbox input, .interests-display .checkbox-icon {
+    width: 15px;
+    height: 15px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border-radius: 50px;
+}
+
+.interests-display .item-checkbox .checkbox {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    left: 8px;
+    z-index: 3;
+    margin-top: -21px;
+}
+.white{
+  color:white;
+}
+
+.red{
+  color:red;
+}
 .logo {
     text-align: center;
     padding-top: 80px;
     margin-bottom: 30px;
+}
+.bar-goals {
+    border-color: transparent;
+    background-color: #F10707;
+    color: #444;
+    position: relative;
+    display: inline-block;
+    /* margin: 0; */
+    /* padding: 0 12px; */
+    min-width: 20%;
+    min-height: 10px;
+    border-width: 1px;
+    /* border-style: solid; */
+    border-radius: 0;
+    vertical-align: top;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 42px;
+    cursor: pointer;
+}
+::-webkit-input-placeholder {
+color: black !important;
+}
+*:-moz-placeholder {
+color: black !important;
+}
+*:-ms-input-placeholder { / IE10+ */
+color: black !important;
+}
+
+input::-webkit-input-placeholder {
+color: black;
+}
+input:focus::-webkit-input-placeholder {
+color: black;
+}
+
+/* Firefox < 19 */
+input:-moz-placeholder {
+color: black;
+}
+input:focus:-moz-placeholder {
+color: black;
+}
+
+/* Firefox > 19 */
+input::-moz-placeholder {
+color: black;
+}
+input:focus::-moz-placeholder {
+color: black;
+}
+
+/* Internet Explorer 10 */
+input:-ms-input-placeholder {
+color: black;
+}
+input:focus:-ms-input-placeholder {
+color: black;
+}
+
+.signin::-webkit-input-placeholder {
+color: white !important;
+}
+.signin *:-moz-placeholder {
+color: white !important;
+}
+.signin *:-ms-input-placeholder { / IE10+ */
+color: white !important;
+}
+
+.signin input::-webkit-input-placeholder {
+color: white;
+}
+.signin input:focus::-webkit-input-placeholder {
+color: white;
+}
+
+/* Firefox < 19 */
+.signin input:-moz-placeholder {
+color: white;
+}
+.signin input:focus:-moz-placeholder {
+color: white;
+}
+
+/* Firefox > 19 */
+.signin input::-moz-placeholder {
+color: white;
+}
+.signin input:focus::-moz-placeholder {
+color: white;
+}
+
+/* Internet Explorer 10 */
+.signin input:-ms-input-placeholder {
+color: white;
+}
+.signin input:focus:-ms-input-placeholder {
+color: white;
+}
+
+.bar.signup-bar-clear {
+  background: none !important;
+  color: white !important;
+}
+
+.get_right .ion-ios-arrow-back {
+    color: white;
+}
+
+.bg-color.login-flow {
+    background: linear-gradient(rgba(135, 103, 211, 0.8), rgba(21, 21, 21, 0.8));
+    background: -webkit-linear-gradient(rgba(150, 147, 147, 0.65), rgba(0, 0, 0, 0.39));
+    height: 100%;
+    width: 100%;
 }
 
 .feed-view .feed-card .image-row .main-image img {
@@ -42,11 +192,15 @@
 }
 
 .feed-card .chef-name {
+    float: left;
+    white-space: normal;
     text-align: center;
-    font-size: 11px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     letter-spacing: 1px;
-    margin-top: 0px;
     color: rgba(26, 26, 26, 0.8);
 }
 
@@ -66,7 +220,6 @@
     font-size: 15px;
     font-weight: normal;
     margin: 0px;
-    margin-left: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     letter-spacing: 1px;

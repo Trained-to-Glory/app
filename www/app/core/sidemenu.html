@@ -1,69 +1,27 @@
-<drawer side = "right">
-<ion-side-menus>
+<ion-tabs class="tabs-icon-top tabs-striped tabs-color-active-assertive">
+    <ion-tab style="background: #fafafc !important;" icon ="ion-ios-home" ui-sref = "tabs.news">
+      <!-- Tab 1 content -->
+      <ion-nav-view name="Home"></ion-nav-view>
+    </ion-tab>
 
-    <ion-side-menu-content>
-        <ion-nav-bar class="bar-light no-b">
-            <ion-nav-back-button></ion-nav-back-button>
-            <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear button-dark ion-navicon" menu-toggle="left"></button>
-            </ion-nav-buttons>
-        </ion-nav-bar>
-        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-    </ion-side-menu-content>
+    <ion-tab style="background: #fafafc !important;" icon="ion-ios-search" ui-sref = "tabs.explore">
+      <!-- Tab 2 content -->
+      <ion-nav-view name="Explore"></ion-nav-view>
+    </ion-tab>
 
-    <ion-side-menu side="left" type="overlay">
-             <div class = "bg-color">
-                <ion-content>
-                    <ul class="list">
-                        <a class="item" menu-toggle ui-sref="tabs.reminders">
-                            <i class="icon ion-ios-calendar-outline"></i>
-                            Calendar
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.coach">
-                           <i class="icon ion-ios-gear-outline"></i>
-                           Coaches
-                       </a>
-                        <a class="item" menu-toggle ui-sref="tabs.explore">
-                            <i class="icon ion-ios-calendar-outline"></i>
-                            Explore
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.match">
-                            <i class="icon ion-ios-calendar-outline"></i>
-                            Match
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.commentList">
-                            <i class="icon ion-ios-folder-outline"></i>
-                            Notifications
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.partners">
-                            <i class="icon ion-ios-person-outline"></i>
-                            Partners
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.account">
-                            <i class="icon ion-ios-person-outline"></i>
-                            Profile
-                        </a>
-                        <a class="item" menu-toggle ui-sref="tabs.sentPlans({user:key})">
-                            <i class="icon ion-ios-list-outline"></i>
-                            Plans
-                        </a>
-                         <a class="item" menu-toggle ui-sref="tabs.settings">
-                            <i class="icon ion-ios-gear-outline"></i>
-                            Settings
-                        </a>
+    <ion-tab style="background: #fafafc !important;" icon="ion-ttg-icon" ui-sref = "tabs.match">
+      <!-- Tab 2 content -->
 
-                        <a class="item" menu-close ng-click="logout();">
-                            <i class="icon ion-log-out"></i>
-                            Sign Out
-                        </a>
-                        <a class="item item-avatar" nav-clear style="padding-left: 79px;padding-top:13px;">
-                            <img ng-src="{{ profile.userPhoto }}" ui-sref="tabs.account">
+      <ion-nav-view name="Connect"></ion-nav-view>
+    </ion-tab>
 
-                            <p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>
-                        </a>
-                    </ul>
-                </ion-content>
-            </div>
-    </ion-side-menu>
-</ion-side-menus>
-</drawer>
+    <ion-tab style="background: #fafafc !important;" icon ="ion-ios-star" ui-sref = "tabs.sentPlans">
+      <!-- Tab 2 content -->
+      <ion-nav-view name="Goals"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab style="background: #fafafc !important;" icon = "ion-android-person" ui-sref = "tabs.account">
+      <!-- Tab 3 content -->
+      <ion-nav-view name="Profile"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>

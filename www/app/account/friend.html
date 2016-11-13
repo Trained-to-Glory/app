@@ -1,21 +1,20 @@
 <ion-view title="Profile" class="font-thin">
-
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-            <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-         </button>
-    </ion-nav-buttons>
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
 
     <ion-content class="has-header bt-grey profile" scroll="true">
     <div style="height:100%; overflow:scroll" class="bg-lightgrey">
-
-        <div class="header" ng-repeat="one in ones">
-            <img ng-src="{{one.userPhoto}}">
-            <h2 class="lead text-medium">{{one.userName}}</h2>
-            <p style="text-align: center;margin-left: 5px;margin-right: 5px;">{{one.userDescription}}</p>
-            <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !one.partnered, 'button-balanced ion-ios-undo-outline':one.partnered }" ng-click="togglePartner(one.userId)">
-                <span ng-if="!one.partnered"> Partner</span>
-                <span ng-if="one.partnered"> Partnered</span>
+        <div class="list card header profile" style="background: transparent; box-shadow: none">
+            <div class="item-avatar" style="padding-left:0;">
+              <img class="header__thumb" style="max-width: 120px; top: 0; left: 0; max-height: 120px;" ng-src = "{{ones.userPhoto}}">
+            </div>
+            <h2 class="lead text-medium">{{ones.userName}}</h2>
+            <p style="text-align: center;margin-left: 5px;margin-right: 5px;">{{ones.userDescription}}</p>
+            <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': ones.partnered, 'button-balanced ion-ios-undo-outline':!ones.partnered }" ng-click="togglePartner(ones.userId)">
+                <span ng-if="!ones.partnered"> Friend</span>
+                <span ng-if="ones.partnered"> Friend</span>
             </button>
 
         </div>
@@ -23,10 +22,10 @@
         <div class="row no-padding bb-grey text-center" style="text-transform: capitalize;">
             <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 1 || view.type === 4}" ng-click="view.type = 1">{{userTotalPost}}<br/>Posts</div>
             <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 2 || view.type === 5}" ng-click="view.type = 2">{{userTotalCommits}}<br/>Commits</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 3}" ng-click="view.type = 3">{{userPartners}}<br/>Partners</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced bb' : view.type === 3}" ng-click="view.type = 3">{{userPartners}}<br/>Friends</div>
         </div>
 
-        <div class="list profile" style="height:100%;">
+        <div class="list card profile" style="background: transparent; height:100%; box-shadow: none;height:100%;">
          <div ng-if="view.type === 1">
             <div class="item item-divider">
                 PHOTOS
@@ -162,19 +161,16 @@
                 </div>
           </div>
 
-        <div ng-if="view.type === 3" style="height:100%;">
-
-            <div class="item item-divider">
-                PARTNERS
-                <!-- <span class="item-note" ui-sref = "tabs.friendPartners({friendPartner:profile})">
+          <div ng-if="view.type === 3" style="background: transparent; box-shadow: none">
+              <div class="item item-divider">
+                FRIENDS
+                <span class="item-note" ui-sref = "tabs.friendPartners({friendPartner:profile})">
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>
-                </span> -->
+                </span>
             </div>
             <div class="item item-avatar item-button-right followers" ui-sref="tabs.friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
                 <img ng-src="{{value.userPhoto}}">
                 <h2 class="font-thin">{{value.userName}}</h2>
-                <button class="button button-small button-balanced icon ion-ios-checkmark-empty" ng-if="contacts.partnered = true"> Partnered</button>
-                <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline" ng-if="contacts.partnered = false"> Partner</button>
             </div>
 
             </div>

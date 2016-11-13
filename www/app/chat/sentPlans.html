@@ -1,37 +1,39 @@
-<ion-view title="Goals" cache-view="false">
-    <ion-nav-buttons side = "left">
-      <button class="button button-icon button-clear button-dark" ng-click="fullscreenPopover.show($event);">
-         <img ng-src="img/TTG-Symbol-2015-02.png" style="position: relative;top: 2px;height: 29px;left: 5px;">
-      </button>
-    </ion-nav-buttons>
-
-    <ion-content class="has-header" scroll="true">
-      <div class="card image" ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true">
+<ion-view view-title="Goals" cache-view="false" hide-nav-bar="true">
+  <div class="row view-tab text-center" style="font-size:16px;">
+        <div class="col font-thin" style="text-align:left;margin-left:20px;font-size:16px">Goals</div>
+    </div>
+    <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true">
+      <div class="list card image">
             <div class="item item-image">
                 <img ng-src="{{plan.photo}}">
                 <div class="item item-avatar">
                   <img ng-src="{{plan.avatar}}">
-                  <ul class="dish-tags">
-                    <li class="dish-tag" ng-if="!plan.totalCommits" ng-click="toggleCommit(plan.key,userId)" style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
-                      Click to Join
-                    </li>
-                    <li class="dish-tag" ng-if="plan.totalCommits" ng-click="toggleCommit(plan.key,userId)" style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
-                      {{plan.totalCommits}}
-                    </li>
-                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
+                  <ion-list>
+                    <ion-item>
+                      {{plan.title}}
+                    </ion-item>
+                    <ion-item>
                       {{plan.description}}
-                    </li>
-                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
-                      {{plan.notes}}
-                    </li>
-                    <li style="position: relative;display: block;margin-right: 221px;font-size:12px;text-overflow: initial;white-space: initial;">
-                      {{plan.created | date}}
-                    </li>
-                  </ul>
+                    </ion-item>
+                  </ion-list>
                 </div>
             </div>
         </div>
+
+        <ion-list>
+          <ion-item style="border: none" ng-repeat = "item in plan.checklist">
+            <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="isChecked"
+              ng-change="checkedOrNot(item, isChecked, $index, $localStorage, plan.checklist.length)" ng-init='isChecked=false'>
+              {{item.displayName}}
+          </ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <div class="progress-bar">
+          <a href = "#progress-bar"></a>
+        </div>
+      </div>
         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
-    <a class="btn-floating btn-large waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="plansPopover.show($event);"><i class="icons ion-ios-albums" style="color: red"></i></a>
+    <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707"></i></a>
 </ion-view>

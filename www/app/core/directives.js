@@ -1,4 +1,4 @@
-angular.module('full_starter.directives', [])
+angular.module('full_starter.directives', ['directive.checklist'])
 
     .directive('sideMenu', [function () {
         return {
@@ -271,4 +271,3 @@ angular.module('full_starter.directives', [])
             }
         }
     })
-

@@ -21,25 +21,6 @@ angular.module('module.view.post', [])
 			$scope.event = function () {
 				$state.go('tabs.event');
 			}
-			//
-			// if($stateParams.post){
-			// 	postService.get($stateParams.post).then(function(results) {
-			// 		var data = {
-			// 			category: 'post',
-			// 			categoryId: $stateParams.post
-			// 		}
-			// 		engagementService.totalLikes(data).then(function(totalLikes){
-			// 			results.totalLikes = totalLikes;
-			// 		});
-			//
-			// 		engagementService.totalComments(data).then(function(totalComments){
-			// 			results.totalComments = totalComments;
-			// 			$scope.commentMode = !!totalComments;
-			// 		});
-			//
-			// 		$scope.post = results;
-			// 	});
-			// }
 
 			if($stateParams.post){
 				postService.get($stateParams.post).then(function(results) {
@@ -63,6 +44,7 @@ angular.module('module.view.post', [])
       }
 
         $scope.share = function (post) {
+					$scope.closePopover();
             document.addEventListener("deviceready", function () {
                 $cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date, post.time,post.image)
                     .then(function (result) {
@@ -74,9 +56,10 @@ angular.module('module.view.post', [])
         }
 
 		$scope.showConfirm = function() {
+			$scope.closePopover();
             var confirmPopup = $ionicPopup.confirm({
                title: 'Report Post',
-               template: ' Are you sure you want to report this post?'
+               template: ' Do you want to report this post?'
              });
              confirmPopup.then(function(res) {
                if(res) {
@@ -149,6 +132,10 @@ angular.module('module.view.post', [])
             return false;
         };
 
+				$scope.closePopover = function($event) {
+					 $scope.menuPopover.hide();
+				};
+
 				$scope.limit = 5;
 
         $scope.loadMore = function(){
@@ -197,4 +184,21 @@ angular.module('module.view.post', [])
 						scope: $scope
 				});
 
+				$scope.menuPopover = $ionicPopover.fromTemplate(menuTemplate, {
+            scope: $scope
+        });
+
+
 });
+
+var menuTemplate =
+    '<ion-popover-view class="small" style="height: 101px !important;box-shadow: none !important;background-color: transparent;">' +
+    '<ion-content>' +
+    '<div class="list" style = "">' +
+    '<div class="item item-icon-left item-text-wrap" ng-click="showConfirm()" style="border-color: transparent"> Report' +
+    '</div>' +
+    '<div class="item item-icon-left item-text-wrap" ng-click="share()" style="border-color: transparent"> Share' +
+    '</div>' +
+    '</div>' +
+    '</ion-content>' +
+    '</ion-popover-view>';

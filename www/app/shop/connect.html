@@ -1,0 +1,25 @@
+<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" hide-nav-bar="true">
+    <ion-content scroll="true">
+          <div class="row row-no-padding category-2-outer" style="padding:0"ng-repeat = "ab in abs | limitTo: limit track by $index">
+            <div class="col">
+              <a ui-sref="tabs.contacts({activity:ab.id})">
+                <div class="category-2-item-wrapper">
+                  <div class="category-2-item-content">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
+                      <img bg="" class="multi-bg category-with-image">
+                      <span class="bg-overlay"></span>
+                      <h1 class="category-heading">
+                        <span>0{{ab.numbers}}
+                          <span class="bubble"></span>
+                        </span>
+                        <span style="border-bottom: 1px solid #F10707;">{{ab.label}}</span>
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

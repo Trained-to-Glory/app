@@ -1,0 +1,7 @@
+<div class="item item-input event__input" ng-repeat="checkList in arr track by $index" style="margin-top:15px;margin-bottom:15px">
+  <input type="text" name=" notes-{{$index +1}}" style="margin-left:5px;font-weight:300" ng-model="checkList.displayName">{{post.notes}}
+  <span class="input-label notes-label-{{$index +1}}" style="margin-left:5px;display: inline-flex">Checklist Item {{$index +1}}</span>
+  <div style="font-weight: 300;margin-left: 5px;display: inline-flex;position: absolute;right: 5px;" ng-click="remove($index)">Remove</div>
+</div>
+
+<div style="font-weight: 300;margin-left: 5px;" ng-click="add()">Create More</div>
