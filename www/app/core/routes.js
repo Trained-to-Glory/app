@@ -107,7 +107,6 @@ angular.module('full_starter.routes', [])
 
       .state('intro', {
         url: '/intro',
-        params: { contact: null },
         templateUrl: 'app/intro/intro.html',
         controller: 'introCtrl'
       })
@@ -137,6 +136,12 @@ angular.module('full_starter.routes', [])
         params: { post: null },
         templateUrl: 'app/news/likes.html',
         controller: 'likesCtrl'
+      })
+
+      .state('forgot', {
+        url: '/forgot',
+        templateUrl: 'app/intro/forgot.html',
+        controller: 'forgotCtrl'
       })
 
       .state('commits', {
@@ -260,9 +265,7 @@ angular.module('full_starter.routes', [])
         templateUrl: 'app/intro/signin.html',
         controller: 'signinCtrl',
       })
-    $urlRouterProvider.otherwise('/intro')
-
-
+    $urlRouterProvider.otherwise('intro')
 
   })
 

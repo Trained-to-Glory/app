@@ -36,30 +36,6 @@ angular.module('service.users', [])
 
    this.get = get;
 
-  //  this.getPartners = function (userId) {
-  //      var myPostsPromise = firebase.database().ref(['accounts', userId].join('/'));
-  //      return myPostsPromise.once('value').then(function (snapshot) {
-  //            var obj = {};
-  //            var myPosts = snapshot.val();
-  //            console.log(myPosts);
-  //            if (myPosts) {
-  //               var postsPromise = firebase.database().ref(['userPartners', 'partners', userId].join('/'));
-  //               return postsPromise.once('value').then(function(snapshot){
-  //                 var posts = snapshot.val();
-  //                 console.log(posts);
-  //                 if(posts){
-  //                   for(var key in myPosts){
-  //                     obj[key] = posts[key];
-  //                   }
-  //                   return obj;
-  //                 }
-  //                 return obj;
-  //               });
-  //                return obj;
-  //            }
-  //            return obj;
-  //        });
-  //  };
 
    this.getUserPost = function (userId) {
        var posts = (userId) ? firebase.database().ref(['accounts', userId , 'posts'].join('/')) : firebase.database().ref('accounts');

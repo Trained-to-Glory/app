@@ -25,6 +25,7 @@
     "Chart.js": "^2.1.4",
     "angularfire": "^2.0.1",
     "angular-filter": "^0.5.11",
-    "angular-payments": "2472bc9befa25678"
+    "angular-payments": "2472bc9befa25678",
+    "ionic-ion-header-shrink": "*"
   }
 }

@@ -1,6 +1,6 @@
 <ion-view hide-nav-bar="true" class="bg-lightgrey">
 
-    <ion-header-bar>
+    <ion-header-bar style="background-color: transparent">
         <div class="row text-center">
             <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>
             <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPlan()">Send</div>
@@ -14,10 +14,10 @@
         <label class="item item-input event__input" ng-if="!post.photo">
           <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0" ng-click="uploadEventPhoto()">
                 <div class="item item-image">
-                  <img class="plan_picture" ng-src = "img/woman-photographer.jpg" name = "photo" ng-model="photo">
+                  <img class="plan_picture" ng-src = "img/goal-photo.jpg" style = "filter: brightness(96%) grayscale(10%);; -webkit-filter: brightness(96%) grayscale(10%);" name = "photo" ng-model="photo">
                 </div>
             </div>
-            <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="top: -113px;z-index: 5;left: 5px;background-color: black;width:42px;height:42px;" ng-click="uploadEventPhoto()"><i class="icons ion-ios-camera" style="color: white;font-size: 24px;margin-top:1px"></i></a>
+            <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="top: -113px;z-index: 5;left: 5px;background-color: white;width:42px;height:42px;" ng-click="uploadEventPhoto()"><i class="icons ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i></a>
         </label>
 
         <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if="post.photo">

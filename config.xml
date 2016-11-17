@@ -1,4 +1,4 @@
-<?xml version="2.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.glory707603" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Trained to Glory</name>
   <description>
@@ -25,7 +25,7 @@
   <preference name="disable-cursor" value="false"/>
   <preference name="android-installLocation" value="auto"/>
   <preference name="SplashScreen" value="screen"/>
-  <preference name="SplashScreenDelay" value="300"/>
+  <preference name="SplashScreen" value="screen"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
@@ -99,6 +99,7 @@
   <plugin name="cordova-plugin-device-orientation"/>
   <plugin name="cordova-plugin-dialogs"/>
   <plugin name="cordova-plugin-file"/>
+  <plugin name="cordova-plugin-whitelist" spec="~1.2.2"/>
   <plugin name="cordova-plugin-file-transfer"/>
   <plugin name="cordova-plugin-geolocation"/>
   <plugin name="cordova-plugin-globalization"/>

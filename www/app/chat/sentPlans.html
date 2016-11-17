@@ -1,10 +1,14 @@
-<ion-view view-title="Goals" cache-view="false" hide-nav-bar="true">
+<ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+  <ion-nav-buttons side="right">
+        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
+        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+    </ion-nav-buttons>
   <div class="row view-tab text-center" style="font-size:16px;">
         <div class="col font-thin" style="text-align:left;margin-left:20px;font-size:16px">Goals</div>
     </div>
     <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true">
-      <div class="list card image">
+      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">
+      <div class="list card image" style="box-shadow: none;">
             <div class="item item-image">
                 <img ng-src="{{plan.photo}}">
                 <div class="item item-avatar">
@@ -35,5 +39,5 @@
       </div>
         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
-    <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707"></i></a>
+    <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707;font-size: 4rem"></i></a>
 </ion-view>

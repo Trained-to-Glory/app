@@ -1,7 +1,7 @@
 angular.module('module.view.interest', [])
 	.controller('interestCtrl', function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, engagementService) {
 		$scope.getInterest = function(id){
-			return interestService.getCategoryList(id);
+			return interestService.get(id);
 		};
 
 		$scope.getInterest().then(function(results) {

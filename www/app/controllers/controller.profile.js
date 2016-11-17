@@ -1,9 +1,20 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+	.controller('profileCtrl', function($scope,$rootScope,$timeout,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+		$rootScope.slideHeader = false;
+   	$rootScope.slideHeaderPrevious = 0;
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
+
+	$scope.getScrollPosition = function() {
+      $timeout(function () {
+       $scope.data = $ionicScrollDelegate.getScrollPosition().top;
+
+    });
+   console.log($scope.data);
+  };
+
 
 	$scope.onSwipeRight = function () {
 		$state.go('tabs.sentPlans');
@@ -386,6 +397,24 @@ angular.module('module.view.profile', [])
 			};
 
 
+}).directive('scrollWatch', function($rootScope) {
+  return function(scope, elem, attr) {
+    var start = 0;
+    var threshold = 150;
+
+    elem.bind('scroll', function(e) {
+      if(e.detail.scrollTop - start > threshold) {
+        $rootScope.slideHeader = true;
+      } else {
+        $rootScope.slideHeader = false;
+      }
+      if ($rootScope.slideHeaderPrevious >= e.detail.scrollTop - start) {
+        $rootScope.slideHeader = false;
+      }
+      $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
+      $rootScope.$apply();
+    });
+  };
 });
 
 var popoverTemplate =

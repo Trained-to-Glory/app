@@ -1,78 +1,33 @@
-<ion-view view-title="Home" class="font-thin" style="background:#fafafc;" hide-nav-bar="true">
+<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important">
+  <ion-nav-buttons side="right">
+        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
+        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+    </ion-nav-buttons>
 
-    <ion-content>
-        <!-- <div class="list card feed-card" ng-repeat="posts in view.itemsArr | orderBy: 'created': true | limitTo: limit">
-            <div class="row row-no-padding image-row" ng-if="posts.state.visible">
-              <div class="col" style="margin-bottom: 3px;">
-                <pre-img ratio="_32_21" helper-class="main-image" ui-sref="post-detail({post:posts.key})">
-                  <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">
-                </pre-img>
-              </div>
-            </div>
-            <div class="row row-no-padding details-row" ui-sref="post-detail({post:posts.key})">
-              <div class="col col-20">
-                <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
-                  <div class="pre-img _32_21 item-avatar main-image finish-loading" ng-class = "{'finish-loading': loaded}">
-                    <img ng-src="{{posts.avatar}}" spinner-on-load style="width:75%;border-radius:50%;max-width: 62px;max-height: 62px;margin-left: -10px;">
-                  </div>
-                </pre-img>
-              </div>
-              <div class = "item item-avatar" style="padding-left: 0">
-                <p ng-if="posts.description" style="color:black !important" class="font-thin">{{posts.description}}</p>
-                <p style="color:black !important;">{{posts.owner}}</p>
-                <p style="color:black !important;" class="font-thin" ng-if = "posts.postType === 'event'">{{posts.postType}}</p>
-                <p style="color:black !important" am-time-ago="{{posts.created}}" class="font-thin"></p>
-              </div>
-            </div>
-            <ul class="dish-tags" style="margin-top: 8px">
-              <li class="dish-tag" ng-if = "posts.postType === 'event'" ng-click="toggleCommit(posts.key,userId)">
-                {{posts.totalCommits}} Commit
-              </li>
-              <li class="dish-tag" ng-click="toggleLike(posts.key, userId)">
-                {{posts.totalLikes}} Likes
-              </li>
-              <li class="dish-tag">
-                {{commmentsNumber}} Comment
-              </li>
-            </ul>
-          </div> -->
-          <div ng-if = "view.type === 1">There are no post.</div>
-          <div class="list card feed-card" ng-if="view.type === 2" ng-repeat="posts in totalPost | orderBy: 'created': true | limitTo: limit">
-              <div class="row row-no-padding image-row" ng-if="posts.state.visible">
-                <div class="col" style="margin-bottom: 3px;">
-                  <pre-img ratio="_32_21" helper-class="main-image" ui-sref="post-detail({post:posts.key})">
-                    <img ng-src="{{posts.photo}}" spinner-on-load style="width:100%;">
-                  </pre-img>
-                </div>
-              </div>
-              <div class="row row-no-padding details-row" ui-sref="post-detail({post:posts.key})">
-                <div class="col col-20">
-                  <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
-                    <div class="pre-img _32_21 item-avatar main-image finish-loading" ng-class = "{'finish-loading': loaded}">
-                      <img ng-src="{{posts.avatar}}" spinner-on-load style="width:75%;border-radius:50%;max-width: 62px;max-height: 62px;margin-left: -10px;">
-                    </div>
-                  </pre-img>
-                </div>
-                <div class = "item item-avatar" style="padding-left: 0">
-                  <p ng-if="posts.description" style="color:black !important" class="font-thin">{{posts.description}}</p>
-                  <p style="color:black !important;" class="font-thin" >{{posts.owner}}</p>
-                  <p style="color:black !important;" class="font-thin" ng-if = "posts.postType === 'event'">{{posts.postType}}</p>
-                  <p style="color:black !important" am-time-ago="{{posts.created}}" class="font-thin"></p>
-                </div>
-              </div>
-              <ul class="dish-tags" style="margin-top: 8px">
-                <li class="dish-tag font-thin" ng-if = "posts.postType === 'event'" ng-click="toggleCommit(posts.key,userId)">
-                  {{posts.totalCommits}} Commit
-                </li>
-                <li class="dish-tag font-thin" ng-click="toggleLike(posts.key, userId)">
-                  {{posts.totalLikes}} Likes
-                </li>
-                <li class="dish-tag font-thin">
-                  {{commmentsNumber}} Comment
-                </li>
-              </ul>
-            </div>
+    <ion-content on-swipe-left="onSwipeLeft()">
+      <div class="list card" ng-repeat="posts in totalPost | orderBy: 'created': true | limitTo: limit" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">
+        <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">
+            <img ng-src="{{posts.photo}}">
+          </div>
+        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
+          <img ng-src="{{posts.avatar}}" style="background-color: transparent">
+          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="menuPopover.show($event);"></div>
+          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.owner}}</h2>
+          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>
+          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>
+          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>
+        </div>
+        <a class="item" ng-if = "posts.postType === 'event'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;" ng-click="toggleCommit(posts.key,userId)">
+          {{posts.totalCommits}} Commit
+        </a>
+        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
+          {{posts.totalLikes}} Likes
+        </a>
+        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
+          {{commmentsNumber}} Comment
+        </a>
+      </div>
             <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>
     </ion-content>
-    <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707"></i></a>
+    <button class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" ng-click="newsPopover.show($event);" style="color: #F10707;font-size: 4rem;"></i></button>
 </ion-view>

@@ -1,5 +1,5 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,ngProgressFactory,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -17,14 +17,14 @@ angular.module('module.view.sentPlans', [])
                         $state.go(ui_sref);
                     }
                 }
-								angular.element(document).ready(function () {
-									$scope.progressbar = ngProgressFactory.createInstance();
-									$scope.progressbar.setHeight('20px');
-									$scope.progressbar.setColor('red');
-									$scope.progressbar.set(0);
-									var element = $scope.progressbar.getDomElement();
-									$scope.progressbar.setParent(document.querySelector('.progress-bar'));
-							    });
+								// angular.element(document).ready(function () {
+								// 	$scope.progressbar = ngProgressFactory.createInstance();
+								// 	$scope.progressbar.setHeight('20px');
+								// 	$scope.progressbar.setColor('red');
+								// 	$scope.progressbar.set(0);
+								// 	var element = $scope.progressbar.getDomElement();
+								// 	$scope.progressbar.setParent(document.querySelector('.progress-bar'));
+							  //   });
 
 
         $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
@@ -119,7 +119,6 @@ angular.module('module.view.sentPlans', [])
 				          }
 				          //make it available to the directive to officially show/hide, toggle
 				          $scope.view = view;
-									console.log(view);
 				        });
 
 								$scope.limit = 10;

@@ -1,6 +1,11 @@
-<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" hide-nav-bar="true">
+<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;">
+  <ion-nav-buttons side="right">
+        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
+        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+    </ion-nav-buttons>
   <div class="row view-tab text-center" style="font-size:16px;">
     <div class="col font-thin" ng-class="{'balanced' : view.type === 1}" ng-click="view.type = 1" style="border: none">Connect</div>
+    <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Explore</div>
     <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Leaders</div>
   </div>
     <ion-content class="has-header">

@@ -1,58 +1,45 @@
 <ion-view hide-nav-bar = "true">
         <ion-slide-box on-slide-changed="slideChanged(index)" style="background-color: #fafafc; height: 100%">
           <ion-slide style="background-color: #fafafc">
-            <div class="list card feed-card">
-                <div class="row row-no-padding image-row">
-                  <div class="col" style="margin-bottom: 3px;">
-                    <pre-img ratio="_32_21" helper-class="main-image">
-                      <img ng-src="img/audience.jpg" spinner-on-load style="width:100%;height: 58vh;">
-                    </pre-img>
-                  </div>
+            <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0; margin: 0;">
+              <div class="item item-image" style="max-height: 500px;">
+                  <img ng-src="img/audience.jpg">
                 </div>
-                <div class="row row-no-padding details-row">
-                  <div class="col col-20">
-                    <pre-img ratio="_1_1" helper-class="avatar-image rounded-image">
-                      <div class="pre-img _32_21 item-avatar main-image finish-loading" ng-class = "{'finish-loading': loaded}">
-                        <img ng-src="img/audience.jpg" spinner-on-load style="width:75%;border-radius:50%;max-width: 62px;max-height: 62px;margin-left: -10px;">
-                      </div>
-                    </pre-img>
-                  </div>
-                  <div class = "item item-avatar" style="padding-left: 0">
-                    <p style="color:black !important" class="font-thin">The Lifestyle</p>
-                    <p style="color:black !important;" class="font-thin" >Come out</p>
-                    <p style="color:black !important;" class="font-thin">Event</p>
-                  </div>
-                </div>
-                <ul class="dish-tags" style="margin-top: 8px">
-                  <li class="dish-tag ">
-                    100 Commits
-                  </li>
-                  <li class="dish-tag font-thin">
-                    20 Likes
-                  </li>
-                  <li class="dish-tag font-thin">
-                    5 Comments
-                  </li>
-                </ul>
+              <div class="item item-avatar" style="border: none">
+                <img ng-src="img/walkthrough-person.jpg" style="background-color: transparent">
+                <h2 style="color:black !important" class="font-thin">The Lifestyle</h2>
+                <p style="color:black !important" class="font-thin">Come out</p>
+                <p style="color:black !important" class="font-thin">Event</p>
+                <p style="color:black !important" class="font-thin">Just Now</p>
               </div>
-              <h3 class="font-thin" style="margin-left: 20px;font-size:18px">Commit</h3>
-            <p class = "font-thin" style="margin-left: 20px">
-              Commit to event post and explore your community.
-            </p>
+              <a class="item" style = "display: inline-flex;border: none">
+                100 Commit
+              </a>
+              <a class="item" style = "display: inline-flex;border: none">
+                20 Likes
+              </a>
+              <a class="item" style = "display: inline-flex; border: none;">
+                5 Comment
+              </a>
+            </div>
+            <h3 class="font-thin" style="margin-left: 20px;font-size:18px">Commit</h3>
+          <p class = "font-thin" style="margin-left: 20px">
+            Commit to event post and explore your community.
+          </p>
             <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index: 999" ng-click="goToLogin()">Skip</div>
           </ion-slide>
           <ion-slide>
-            <div class="list card image">
+            <div class="list card image" style="box-shadow: none;margin-left: 0; margin-right: 0;margin-top: 0;">
                   <div class="item item-image">
                       <img ng-src="img/mountain-commits.jpg">
                       <div class="item item-avatar">
                         <img ng-src="img/mountain-commits.jpg">
                         <ion-list>
                           <ion-item>
-                            Change the(my) world.
+                            Get a little bit better today.
                           </ion-item>
                           <ion-item>
-                            Make a small difference everyday.
+                            Make a small difference.
                           </ion-item>
                         </ion-list>
                       </div>

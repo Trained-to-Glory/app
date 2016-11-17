@@ -40,6 +40,20 @@ angular.module('module.view.signin', [])
       }
     })
 
+    $ionicModal.fromTemplateUrl('app/intro/forgot.html', {
+          scope: $scope,
+          animation: 'fade-in-scale',
+          backdropClickToClose: false
+      }).then(function (modal) {
+          $scope.modalForgot = modal;
+      });
+      $scope.openForgot = function () {
+          $scope.modalForgot.show();
+      };
+      $scope.closeForgot = function () {
+          $scope.modalForgot.hide();
+      };
+
 
     $scope.login = function(user) {
       if (angular.isDefined(user)) {

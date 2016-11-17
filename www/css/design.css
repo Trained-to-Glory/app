@@ -516,9 +516,50 @@
 {
 	border-top: none;
 }
+
+.bar-positive {
+    z-index: 2;
+}
+
+.bar-subheader {
+    z-index: 1;
+    transition: top 0.25s ease;
+}
+
+.has-subheader {
+    top: 44px;
+    .scroll {
+        padding-top: 44px;
+    }
+}
+
+.tabs-super-top>.tabs{
+	background-color: grey;
+  top: 0 !important;
+  bottom: initial !important;
+  transition: .5s all linear !important
+}
+
+.has-super-tabs{
+  top:48px !important;
+
+}
+
+
+.bar.bar-header,
+.tabs.tabs-assertive{
+   transition: .5s all linear !important;
+
+}
+
+.bar.bar-header.ng-hide,
+.tabs.tabs-assertive.ng-hide{
+  height: 0px !important;
+}
+
 .bb
 {
-	border-bottom: 2px solid #F10707;
+	border-bottom: 1px solid #F10707;
 }
 
 .menu .list .item-avatar

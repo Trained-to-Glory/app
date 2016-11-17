@@ -7,15 +7,15 @@
             <ion-list>
                 <label class="item item-input">
                     <i class="icon ion-android-person placeholder-icon"></i>
-                    <input type="email" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
+                    <input type="email" placeholder="Email" style = "font-weight: 300" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
                 </label>
             </ion-list>
-            <input type="submit" class="button button-block button-positive" value="Forgot Password" ng-disabled="forgotPasswordForm.$invalid">
+            <input type="submit" style="border-radius: 0px;background-color: white;color: black;opacity: 1;" class="button button-block button-calm" value="RESET PASSWORD" ng-disabled="forgotPasswordForm.$invalid">
              <p class="">An email will be sent to you with steps to reset your password</p>
         </div>
-        <p class="padding-horizontal">
-            <span class="balanced pull-left" ng-click="closeForgot();openLogin();">Log in</span>
-            <span class="dark pull-right" ng-click="closeForgot()">Close</span>
+        <p class="padding-horizontal" style="text-align: center;margin-top: 3px;">
+            <span class="dark pull-left" style="display: inline-flex;font-size: 16px;" ng-click="closeForgot();openLogin();">Log in</span>
+            <span class="dark pull-right" style = "display: inline-flex;font-size: 16px" ng-click="closeForgot()">Close</span>
         </p>
         </form>
 

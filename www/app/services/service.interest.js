@@ -25,7 +25,7 @@ angular.module('service.interest', [])
      var lifting = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/crossfit-534615_1280.jpg?alt=media&token=134df922-7b6b-4d8e-bef2-a6859e0de452';
      var yoga = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/Acro_Yoga.jpg?alt=media&token=367bd61f-190d-41bd-a2a7-f6111408b43b';
 
-     var ref = firebase.database().ref('category');
+     var ref = firebase.database().ref('interest');
 
      var animals = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/animal-1072696_1280.jpg?alt=media&token=a213957d-02c7-4c00-886c-46c21cddce0e';
      var architecture = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/architecture-530058_1280.jpg?alt=media&token=3dd1ba33-d511-4977-b2cb-de76ff438e56';
@@ -44,7 +44,6 @@ angular.module('service.interest', [])
      var health = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/roller-skates-381216_1280.jpg?alt=media&token=e08d5f1d-2aaa-4a6a-a891-85d6321efa4e';
      var music = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/music-616012_1280.jpg?alt=media&token=f7ff82fc-19bd-4a5f-b1be-06f8d8318ee8';
      var outdoors = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/outdoor-1789120_1280.jpg?alt=media&token=3eea4177-0f03-490b-9a87-8c3e090ba0b1';
-     var photography = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/photography-1781692_1280.jpg?alt=media&token=31085c57-79e1-4ce3-a349-94f86b4e7c90';
      var recipe = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/recipe-1082230_1280.jpg?alt=media&token=e629f8ce-7e4f-46a5-83a3-6dbc21180b19';
      var technology = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/technology-1658028_1280.jpg?alt=media&token=edb4f2b1-14d7-4ac2-846a-609ad9b8fad9';
      var wine = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/wine-738603_1280.jpg?alt=media&token=3e084110-4486-4c08-b575-e5ce4d5e921c';
@@ -70,49 +69,29 @@ angular.module('service.interest', [])
      var eightteen = 18;
 
      var interests = ['Animals', 'Architecture', 'Art', 'Cars & Bikes', 'Design', 'DIY', 'Education', 'Events', 'Fashion', 'Food & Drink','Games', 'Gardening', 'Hair & Beauty',
-                     'Health & Sports', 'Music', 'Outdoors', 'Photography', 'Technology'];
+                     'Health & Sports', 'Music', 'Outdoors', 'Technology'];
 
-     var subCategoryName = ['Baseball', 'Basketball','Climbing','Cycling','Dance','Football','Golf','Jumping', 'Lacrosee',
-              'Paintball','Running','Skate','Soccer', 'Swimming','Tennis', 'Ultimate Frisbee','Weight Lifting', 'Yoga','Beer','Wine','Recipes'];
-
-     var subCategoryImg = [baseball,basketball,climbing,cycling,dance,football,golf,jumping,lacrosse,paintball,running,skate,
-           soccer,swimming,tennis,ultimate_frisbee,lifting,yoga,beer,wine,recipe];
+    //  var subCategoryName = ['Baseball', 'Basketball','Climbing','Cycling','Dance','Football','Golf','Jumping', 'Lacrosee',
+    //           'Paintball','Running','Skate','Soccer', 'Swimming','Tennis', 'Ultimate Frisbee','Weight Lifting', 'Yoga','Beer','Wine','Recipes'];
+     //
+    //  var subCategoryImg = [baseball,basketball,climbing,cycling,dance,football,golf,jumping,lacrosse,paintball,running,skate,
+    //        soccer,swimming,tennis,ultimate_frisbee,lifting,yoga,beer,wine,recipe];
 
      var backgroundImg = [animals,architecture,art,cars,design,diy,education,events,fashion,food,games,gardening,hair,health,music,
-                        outdoors,photography,technology];
-
-     var numbers =  [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen,fifteen,sixteen,seventeen,eightteen];
+                        outdoors,technology];
 
      for(var i = 0; i < interests.length; i++){
          data = {
-              "type": "Category",
               "displayName": interests[i],
               "backgroundImg": backgroundImg[i],
-              "numbers": numbers[i],
               "state": {
                 "actionable": true,
                 "visible": true
               }
          };
 
-
          key = ref.push().key;
-         var subCat = function(key, subCategoryName, subCategoryImg){
-           return function(){
-             var subcategories = firebase.database().ref('category/' + key + '/sub_categories');
-             for(var i = 0, subCatKey, data; i < subCategoryName.length; i++){
-                subCatKey = subcategories.push().key;
-                 data = {
-                      "type": "sub_category",
-                      "displayName": subCategoryName[i],
-                      "backgroundImg": subCategoryImg[i],
-                      "numbers": i + 1
-                 };
-                 subcategories.child(subCatKey).update(data);
-              };
-           };
-         };
-         ref.child(key).set(data).then(subCat(key, subCategoryName, subCategoryImg));
+         ref.child(key).set(data);
      }
      return;
    }
