@@ -1,5 +1,5 @@
 angular.module('module.view.regular', [])
-	.controller('regularCtrl', function($scope,$rootScope,$state,$localStorage, postService, $ionicActionSheet, $cordovaCamera, appService) {
+	.controller('regularCtrl', function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 
 
@@ -22,14 +22,20 @@ angular.module('module.view.regular', [])
 				data[$(this).attr('name')] = $(this).val();
 			});
 			$scope.postId = $stateParams.post;
-			data.postType = 'post';
+			data.postType = 'Post';
 			data.photo = $scope.photo;
 			var key = postService.update(data,$scope.postId);
 			$state.go('tabs.news');
 		};
 
+		$scope.view = { type: 1 };
+
 		$scope.uploadEventPhoto = function () {
           $ionicActionSheet.show({
+						titleText: 'Post Photo',
+						cancelText: 'Cancel',
+							cancel: function() {
+							},
               buttons: [{
                   text: 'Take Picture'
               }, {
@@ -40,8 +46,9 @@ angular.module('module.view.regular', [])
                       case 0: // Take Picture
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getCameraOptions()).then(function (imageData) {
-                                  //alert(imageData);
                                   $scope.photo = "data:image/jpeg;base64," + imageData;
+																	$scope.view = { type: 2 };
+                            			var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });
@@ -52,6 +59,8 @@ angular.module('module.view.regular', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getLibraryOptions()).then(function (imageData) {
                                 $scope.photo = "data:image/jpeg;base64," + imageData;
+																$scope.view = { type: 2 };
+                                var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });

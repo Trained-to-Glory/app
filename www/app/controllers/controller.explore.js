@@ -122,17 +122,15 @@ angular.module('module.view.explore', ['angular.filter'])
 				postService.getNews().then(function(results) {
 					//create a local object so we can create the datastructure we want
 					//so we can use it to show/hide, toggle ui items
+
 					var arr = [];
-					var photos = [];
           for(var key in results){
             results[key].key = key;
             arr.push(results[key]);
-						if (results[key].photo != ""){
-							photos.push(results[key]);
-						}
           }
+
 					var news = {
-							itemsArr: photos
+							itemsArr: arr
 					};
 					//make it available to the directive to officially show/hide, toggle
 					$scope.news = news;

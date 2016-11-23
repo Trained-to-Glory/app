@@ -179,6 +179,10 @@ angular.module('module.view.news', [])
             scope: $scope
         });
 
+        $scope.bottomPopover = $ionicPopover.fromTemplate(bottomTemplate, {
+            scope: $scope
+        });
+
         $scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
             scope: $scope
         })
@@ -326,7 +330,6 @@ angular.module('module.view.news', [])
           //make it available to the directive to officially show/hide, toggle
           $scope.viewArr = view.itemsArr;
           $scope.view = view;
-
         });
 
         usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
@@ -410,3 +413,20 @@ var newsTemplate =
     '</div>' +
     '</ion-content>' +
     '</ion-popover-view>';
+
+    var bottomTemplate =
+        '<ion-popover-view class="medium right">' +
+        '<ion-content>' +
+        '<div class="list">' +
+        '<div class="item item-icon-left item-text-wrap" ng-click="createEvent()">' +
+        '<i class="icon ion-ios-bell-outline"></i>Create Event' +
+        '</div>' +
+        '<div class="item item-icon-left item-text-wrap" ng-click="createPost()">' +
+        '<i class="icon ion-ios-camera-outline"></i>Create Post' +
+        '</div>' +
+        '<div class="item item-icon-left item-text-wrap" ng-click="createGoal()">' +
+        '<i class="icon ion-ios-star-outline" style="margin-left:3px"></i>Create Goal' +
+        '</div>' +
+        '</div>' +
+        '</ion-content>' +
+        '</ion-popover-view>';

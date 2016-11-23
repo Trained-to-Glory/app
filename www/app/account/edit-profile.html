@@ -2,19 +2,12 @@
 
     <ion-header-bar style="background-color: transparent">
         <div class="row text-center">
-            <div class="col font-thin text-large dark" ui-sref="tabs.account" style="color:gray;">Cancel</div>
+            <div class="col font-thin text-large dark" ui-sref="settings" style="color:gray;">Cancel</div>
             <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-click="save()">Save</div>
         </div>
     </ion-header-bar>
 
     <ion-content class="profile has-header bt-grey">
-
-        <div class="list card header edit" style="background: transparent; box-shadow: none">
-            <div class="item-avatar" style="padding-left:0;">
-              <img class="header__thumb" style="max-width: 120px; top: 0; left: 0; max-height: 120px;" ng-src = "{{profile.userPhoto}}" ng-click="uploadUserPhoto()">
-            </div>
-        </div>
-
         <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">info</p>
         <div class="edit padding-horizontal">
             <label class="item item-input profile__input">

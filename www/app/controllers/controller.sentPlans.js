@@ -35,6 +35,22 @@ angular.module('module.view.sentPlans', [])
 				            return postService.deletePlans(id);
 				        };
 
+								postService.getNews().then(function(results) {
+									//create a local object so we can create the datastructure we want
+									//so we can use it to show/hide, toggle ui items
+									var arr = [];
+				          for(var key in results){
+				            results[key].key = key;
+				            arr.push(results[key]);
+				          }
+
+									var news = {
+											itemsArr: arr
+									};
+									//make it available to the directive to officially show/hide, toggle
+									$scope.news = news;
+								});
+
 
 								$scope.plansPopover = $ionicPopover.fromTemplate(plansTemplate, {
 										scope: $scope
@@ -87,6 +103,30 @@ angular.module('module.view.sentPlans', [])
 													engagementService.disEngagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
 											}
 									};
+
+									usersService.getAllUsers($localStorage.account.userId).then(function(results){
+										var arr = [];
+										for(var key in results){
+											results[key].key = key;
+											arr.push(results[key]);
+										}
+										var contacts = {
+												items: results,
+												itemsArr: arr
+										};
+
+										delete results[$localStorage.account.userId];
+
+										for(var id in contacts.items){
+										 //check to see if there is a like on this post
+										 (function(id){
+											 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+												contacts.items[id].partnered = partnered;
+											});
+										})(id,contacts.items);
+										}
+										$scope.scrollPeople = contacts.itemsArr;
+									});
 
 								usersService.getUserPlans($localStorage.account.userId).then(function(results) {
 				          //create a local object so we can create the datastructure we want

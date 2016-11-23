@@ -1,5 +1,5 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$timeout,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+	.controller('profileCtrl', function($scope,$rootScope,$timeout,$cordovaCamera,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,appService,$ionicActionSheet,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 		$rootScope.slideHeader = false;
    	$rootScope.slideHeaderPrevious = 0;
 
@@ -12,7 +12,6 @@ angular.module('module.view.profile', [])
        $scope.data = $ionicScrollDelegate.getScrollPosition().top;
 
     });
-   console.log($scope.data);
   };
 
 
@@ -304,6 +303,67 @@ angular.module('module.view.profile', [])
 				});
 
 		$scope.profile = $localStorage.account;
+
+		$scope.uploadUserPhoto = function () {
+					$ionicActionSheet.show({
+						titleText: 'Profile Picture',
+						cancelText: 'Cancel',
+							cancel: function() {
+							},
+							buttons: [{
+									text: 'Take Picture'
+							}, {
+											text: 'Select From Gallery'
+									}],
+							buttonClicked: function (index) {
+									switch (index) {
+											case 0: // Take Picture
+													document.addEventListener("deviceready", function () {
+															$cordovaCamera.getPicture(appService.getProfileCameraOptions()).then(function (imageData) {
+																	//alert(imageData);
+																	$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
+																	var ref = firebase.database().ref('accounts');
+																	ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
+																		firebase.database().ref('/accounts/' + snapshot.key ).update({
+																			userPhoto: $localStorage.account.userPhoto
+																		}).then( function() {
+																			$localStorage.account.userPhoto = userPhoto;
+																			$scope.profile.userPhoto = $localStorage.account.userPhoto;
+																			return;
+																		});
+																	});
+																	$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
+																	$scope.profile.userPhoto = $localStorage.account.userPhoto;
+															}, function (err) {
+																	appService.showAlert('Error', err, 'Close', 'button-assertive', null);
+															});
+													}, false);
+
+													break;
+											case 1: // Select From Gallery
+													document.addEventListener("deviceready", function () {
+															$cordovaCamera.getPicture(appService.getProfileLibraryOptions()).then(function (imageData) {
+																$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
+																var ref = firebase.database().ref('accounts');
+																ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
+																	firebase.database().ref('/accounts/' + snapshot.key ).update({
+																		userPhoto: $localStorage.account.userPhoto
+																	}).then( function() {
+																		$localStorage.account.userPhoto = userPhoto;
+																		$scope.profile.userPhoto = $localStorage.account.userPhoto;
+																		return;
+																	});
+																});
+															}, function (err) {
+																	appService.showAlert('Error', err, 'Close', 'button-assertive', null);
+															});
+													}, false);
+													break;
+									}
+									return true;
+							}
+					});
+			};
 
 		$scope.gotoMatch = function () {
                     $state.go('tabs.match');

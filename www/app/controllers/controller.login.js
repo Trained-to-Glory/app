@@ -3,7 +3,7 @@
 // When the user is done registering, the user is automatically logged in.
 'Use Strict';
 angular.module('module.view.login', [])
-.controller('loginCtrl', function($scope, $state, $localStorage, Utils, Popup, $ionicPopup) {
+.controller('loginCtrl', function($scope, $state, $localStorage, Utils, Social, Popup, $ionicPopup) {
   $scope.$on('$ionicView.enter', function() {
     //Clear the Registration Form.
     $scope.user = {
@@ -11,7 +11,7 @@ angular.module('module.view.login', [])
       password: ''
     };
   })
-  var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=8459468a-c1df-41dc-9645-a10582b0656d';
+  var ttgLogo = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/profile-picture.png?alt=media&token=65aba398-c6e7-4780-b78c-75bf973d7ead';
 
   $scope.register = function(user) {
     //Check if form is filled up.
@@ -29,8 +29,7 @@ angular.module('module.view.login', [])
               firebase.database().ref('accounts').child($scope.userId).set({
                  fullName: user.fullName,
                  userPhoto: ttgLogo,
-                 person: user.person || '',
-                 leader: user.leader || '',
+                 status: user.person || user.leader,
                  userName: user.userName,
                  userId: firebase.auth().currentUser.uid,
                  dateCreated: Date(),
@@ -49,6 +48,7 @@ angular.module('module.view.login', [])
                    $localStorage.email = user.email;
                    $localStorage.fullName = user.fullName;
                    $localStorage.userName = user.userName;
+                   $localStorage.status = user.person || user.leader;
                    $localStorage.photo= ttgLogo;
                    $localStorage.userId = firebase.auth().currentUser.uid;
                    $localStorage.password = user.password;
@@ -60,53 +60,18 @@ angular.module('module.view.login', [])
               //Show error message.
               switch (errorCode) {
                 case 'auth/email-already-in-use':
-                $ionicPopup.show({
-                     title: 'Error',
-                     subTitle: error.message,
-                     buttons: [
-                       { text: 'OK' }
-                     ]
-                   });
                   Utils.message(Popup.errorIcon, Popup.emailAlreadyExists);
                   break;
                 case 'auth/invalid-email':
-                $ionicPopup.show({
-                     title: 'Error',
-                     subTitle: error.message,
-                     buttons: [
-                       { text: 'OK' }
-                     ]
-                   });
                   Utils.message(Popup.errorIcon, Popup.invalidEmail);
                   break;
                 case 'auth/operation-not-allowed':
-                $ionicPopup.show({
-                     title: 'Error',
-                     subTitle: error.message,
-                     buttons: [
-                       { text: 'OK' }
-                     ]
-                   });
                   Utils.message(Popup.errorIcon, Popup.notAllowed);
                   break;
                 case 'auth/weak-password':
-                $ionicPopup.show({
-                     title: 'Error',
-                     subTitle: error.message,
-                     buttons: [
-                       { text: 'OK' }
-                     ]
-                   });
                   Utils.message(Popup.errorIcon, Popup.weakPassword);
                   break;
                 default:
-                $ionicPopup.show({
-                     title: 'Error',
-                     subTitle: error.message,
-                     buttons: [
-                       { text: 'OK' }
-                     ]
-                   });
                   Utils.message(Popup.errorIcon, Popup.errorRegister);
                   break;
               }
@@ -121,24 +86,15 @@ angular.module('module.view.login', [])
     return accounts.once('value').then(function (snapshot) {
         var currentObj = snapshot.val();
         $localStorage.account = currentObj;
-        if (currentObj.person) {
+        if (currentObj.status == 'person') {
           $state.go('interest');
             return currentObj;
-        }else if (currentObj.leader) {
-          $state.go('interest');
+        }else if (currentObj.status == 'leader') {
+          $state.go('roleRather');
           return currentObj;
         }
         return undefined;
     });
   };
-
-  //Function to retrieve the account object from the Firebase database and store it on $localStorage.account.
-  // getAccountAndLogin = function(key) {
-  //   firebase.database().ref('accounts/' + key).on('value', function(response) {
-  //     var account = response.val();
-  //     $localStorage.account = account;
-  //   });
-  //   $state.go('tabs.rather');
-  // };
 
 });

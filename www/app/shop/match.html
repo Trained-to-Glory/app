@@ -1,15 +1,13 @@
 <ion-view view-title="Connect" class="font-thin" style="background:#fafafc;">
   <ion-nav-buttons side="right">
-        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
-        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
-  <div class="row view-tab text-center" style="font-size:16px;">
+  <div class="row view-tab text-center" style="font-size:16px;height: 40px;">
     <div class="col font-thin" ng-class="{'balanced' : view.type === 1}" ng-click="view.type = 1" style="border: none">Connect</div>
-    <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Explore</div>
     <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Leaders</div>
   </div>
-    <ion-content class="has-header">
-        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()"style="margin-top: 20px">
+    <ion-content class="has-header" style="top: 128px;">
+        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()">
           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;"ng-repeat = "ab in abs | limitTo: limit track by $index">
             <div class="col">
               <a ui-sref="contacts({activity:ab.id})">
@@ -35,14 +33,14 @@
       <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()">
         <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in trainers | limitTo: limit track by $index">
           <div class="col">
-            <a ui-sref="lead({activity:trainer.id})">
+            <a ui-sref="contacts({activity:trainer.id})">
               <div class="category-2-item-wrapper">
                 <div class="category-2-item-content">
                   <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.photo}});">
                     <img bg="" class="multi-bg category-with-image">
                     <span class="bg-overlay"></span>
-                    <h1 class="category-heading">
-                      <span> 0{{trainer.numbers}}
+                    <h1 class="category-heading" style="width: 80%">
+                      <span>{{$index +1}}
                         <span class="bubble"></span>
                       </span>
                       <span style="border-bottom: 1px solid #F10707;">{{trainer.label}}</span>

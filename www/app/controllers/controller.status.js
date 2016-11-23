@@ -1,5 +1,5 @@
 angular.module('module.view.status', [])
-	.controller('statusCtrl', function($scope,$rootScope,$state) {
+	.controller('statusCtrl', function($scope,$rootScope,$state,$localStorage) {
      $scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -17,4 +17,16 @@ angular.module('module.view.status', [])
                         $state.go(ui_sref);
                     }
                 }
+
+			$scope.user = {
+	      email: '',
+	      password: ''
+	    };
+
+			var ref = firebase.database().ref('accounts');
+			ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
+				firebase.database().ref('/accounts/' + snapshot.key ).set({
+					status: $scope.user.person || $scope.user.leader
+				});
+			});
 });

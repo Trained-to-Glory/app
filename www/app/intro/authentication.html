@@ -7,6 +7,10 @@
     <ion-header-bar align-title="left" style="background: transparent !important;">
         <h1 class="title" style="color: white; font-weight: 400" ui-sref="interest">Create Account</h1>
     </ion-header-bar>
+
+    <ion-nav-back-button style="display: block; color: white">
+    </ion-nav-back-button>
+
   </ion-nav-bar>
     <!-- * bg-image / background image -->
     <!-- class bg-image is in the file general.scss -->
@@ -42,8 +46,8 @@
                       </div>
 
                       <h1 class="font-thin" style="color: white; font-size: 14px; font-weight: 400 !important;margin-left: 20px;margin-top: 24px">Would you like to be considered a leader?</h1>
-                       <ion-radio ng-model="user.leader" ng-value="'yes'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
-                       <ion-radio ng-model="user.person" ng-value="'no'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
+                       <ion-radio ng-model="user.leader" ng-value="'leader'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
+                       <ion-radio ng-model="user.person" ng-value="'person'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
 
                         <input class="button button-block button-calm" ng-if="user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
                         <input class="button button-block button-calm" ng-if="!user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
@@ -54,65 +58,3 @@
         </div>
     </div>
 </ion-view>
-
-<!--
-    <ion-content cache-view="false" class="auth">
-      <form name="registerForm" novalidate ng-submit="registerForm.$valid && register(user)">
-        <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
-        <div class="col">
-            <div class="category-2-item-wrapper">
-              <div class="category-2-item-content">
-                <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/juggler.jpg);">
-                  <div class="logo">
-                    <img ng-src = "img/TTG-Logo-NowhiteOutline.png">
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="row text-center" style="color: white;top: 230px;position: absolute;">
-        <div class="col" style="z-index: 999;position: relative;display: block;">Sign Up</div>
-        <div class="col" style="z-index: 999;position: relative;display: block;" ui-sref="signin">Sign In</div>
-      </div>
-
-      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">
-
-      <div class="row" style="width: 50%;border-bottom: 1px solid silver; margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
-          <input type="text" style="text-align:center" placeholder="First Name" ng-model="user.firstName" validate>
-        </label>
-      </div>
-
-      <div class = "row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
-          <input type="text" style="text-align:center" placeholder="Last Name" ng-model="user.lastName" validate>
-        </label>
-      </div>
-
-       <div class="row" style="width: 80%;border-bottom: 1px solid silver;margin:auto;">
-         <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
-           <input type="text" style="text-align:center;" placeholder="User Name" ng-model="user.userName" validate>
-         </label>
-      </div>
-      <div class="row" style="width: 90%;border-bottom: 1px solid silver;margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
-          <input type="email" style="text-align:center;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>
-        </label>
-      </div>
-      <div class="row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">
-          <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>
-        </label>
-      </div>
-
-      <ion-label style="margin-left:60px;margin-top:6px;">Would you like to be considered a leader?</ion-label>
-      <ion-radio ng-model="user.leader" ng-value="'leader'" style="width:30%;border-color: #fafafc;margin-left:166px;">Yes</ion-radio>
-      <ion-radio ng-model="user.person" ng-value="'person'" style="width:30%;border-color: #fafafc;margin-left:166px;">No</ion-radio>
-
-      <input type="submit" ng-if="user.leader"class="button button-block button-login button-positive" value="Sign Up" ng-disabled="registerForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;margin-top: 4vh; display:block;">
-      <input type="submit"  ng-if="!user.leader" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="registerForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">
-      <p ng-if="user.leader || !user.leader" style="text-overflow: initial;white-space: initial;margin-bottom:20px;color: black !important;text-align: center;">By clicking sign up you are indicating that you have read the privacy policy and agree to the Terms of Use found on trainedtoglory.com.</p>
-    </div>
-  </form>
-    </ion-content> -->

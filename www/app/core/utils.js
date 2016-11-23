@@ -1,6 +1,3 @@
-(function () {
-
-    'use strict'
 
 angular.module('full_starter.factory',[])
 .factory('Utils', function($ionicLoading, $timeout, Popup) {
@@ -21,18 +18,15 @@ angular.module('full_starter.factory',[])
       });
       promise = $timeout(function() {
         $ionicLoading.hide();
-      });
+      }, Popup.delay);
       return promise;
     }
   };
 
-  var hideMessage = function() {
+  hideMessage = function() {
     $timeout.cancel(promise);
     $ionicLoading.hide();
   };
 
   return Utils;
 });
-
-})();
-

@@ -12,19 +12,26 @@
           </div>
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
           <img ng-src="{{post.avatar}}" style="background-color: transparent">
-          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="menuPopover.show($event);"></div>
-          <h2 style="color:black !important; letter-spacing: 1.5px;" class="font-thin">{{post.owner}}</h2>
+          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
+          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 300;" class="font-thin">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>
         </div>
-        <div class="item comments" style="border-top: none;font-size:14px;">
-            <span ui-sref="comments({post: post.postId, type:'comments'})" class="pull-right">{{commmentsNumber}} Comments</a>
-        </div>
+        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">
+          {{post.totalCommits}} Commit
+        </a>
+        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
+          {{post.totalLikes}} Likes
+        </a>
+        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
+          {{commmentsNumber}} Comments
+        </a>
       </div>
+
       <div class="item comments" style="margin-bottom: 21vh;border-top: 1px solid rgba(128, 128, 128, 0.43);margin-top: -18px;border-bottom: none;">
-          <div class="item item-avatar" ng-repeat="comment in comments | limitTo:5" ng-if="comment.comment">
+          <div class="item item-avatar" ng-repeat="comment in comments | limitTo:5" ng-if="comment.comment" style="border: none;font-weight: 300;">
               <img ng-src="{{comment.userPhoto}}"/>
               <h2 class="text-small">{{comment.userName}}</h2>
               <p class="text-smaller">{{comment.comment}}</p>
@@ -32,36 +39,6 @@
           <p ng-if="commmentsNumber > 5" class="text-smaller" style="margin-left: 20px;"><a ui-sref="comments({post: postId })" style="color:black">View more</a></p>
           <p ng-if="commmentsNumber == 0" ui-sref="comments({post: postId })" >No comments. be the first to <a ui-sref="comments({post: postId })">leave a comment</a></p>
       </div>
-
-        <!-- <div class="list card post-detail">
-            <div class="item item-body" style="padding: 0" style="max-height: 500px;">
-                <img class="full-image" ng-src="{{post.photo}}">
-                <div class="item item-avatar" ui-sref="friend({contact:post.createdBy})">
-                    <img ng-src="{{post.avatar}}" ui-sref="friend({contact:post.createdBy})" style="padding-top: 0; padding-bottom: 0">
-                    <h2 style="color:black !important; letter-spacing: 1px;font-weight: 300" ui-sref="friend({contact:post.createdBy})">{{post.owner}}</h2>
-                    <p ng-if="post.description" style="color:black !important; letter-spacing: 1px;">{{post.description}}</p>
-                    <p ng-if="post.location" style="color:blue !important; letter-spacing: 1px;">{{ post.location }}</p>
-                    <p ng-if="post.created" style="color:black !important; letter-spacing: 1px;" class="text-smaller" am-time-ago="{{post.created}}"></p>
-                </div> -->
-                <!-- <span class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px" ng-click="menuPopover.show($event);"></span>
-                <div class="item comments">
-                    <p>
-                      <span ng-click="share(post);" style="margin-left:5px">Repost
-                        <span ng-click="share(post);" style="margin-left:5px">Share
-                        <span ui-sref="comments({post: post.postId, type:'comments'})" class="pull-right">{{commmentsNumber}} Comments</a>
-                </p>
-                </div>
-                <div class="item comments no-b" style="margin-bottom: 21vh;">
-                    <div class="item item-avatar" ng-repeat="comment in comments | limitTo:5" ng-if="comment.comment">
-                        <img ng-src="{{comment.userPhoto}}"/>
-                        <h2 class="text-small">{{comment.userName}}</h2>
-                        <p class="text-smaller">{{comment.comment}}</p>
-                    </div>
-                    <p ng-if="commmentsNumber > 5" class="text-smaller" style="margin-left: 20px;"><a ui-sref="tabs.comments({post: postId })" style="color:black">View more</a></p>
-                    <p ng-if="commmentsNumber == 0" ui-sref="tabs.comments({post: postId })" >No comments. be the first to <a ui-sref="tabs.comments({post: postId })">leave a comment</a></p>
-                </div> -->
-            <!-- </div>
-        </div> -->
         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

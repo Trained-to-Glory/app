@@ -2450,7 +2450,8 @@ $dark:                            #444 !default;
   content: ""; }
 
 .ion-minus:before {
-  content: ""; }
+  content: "";
+  font-size: 18px;}
 
 .ion-minus-circled:before {
   content: ""; }
@@ -8879,7 +8880,7 @@ progress {
         color: #fff; }
 
 .button-small {
-  padding: 2px 4px 1px;
+  /*padding: 2px 4px 1px;*/
   min-width: 28px;
   min-height: 30px;
   font-size: 12px;

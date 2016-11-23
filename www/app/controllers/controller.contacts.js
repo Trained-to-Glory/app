@@ -39,7 +39,7 @@ angular.module('module.view.contacts', [])
 					});
 				})(id,contacts.items);
 				}
-				$scope.people = contacts.items;
+				$scope.scrollPeople = contacts.itemsArr;
 			});
 
 				$scope.togglePartner = function(partnerId){
@@ -78,8 +78,15 @@ angular.module('module.view.contacts', [])
 							  $scope.myLocation = $localStorage.account.near;
 								delete results[$localStorage.account.userId];
 								$scope.users = results;
+								console.log($scope.users);
 						});
 
+				interestService.getLeaderInterestUsers($stateParams.activity).then(function(results){
+							  $scope.myLocation = $localStorage.account.near;
+								delete results[$localStorage.account.userId];
+								$scope.people = results;
+								console.log($scope.people);
+						});
 
 				$scope.orderByLocation2 = function(input, location, order) {
 	 	 		if(!(input && input.location)){

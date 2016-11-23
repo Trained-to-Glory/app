@@ -18,6 +18,24 @@ angular.module('module.view.interest', [])
 			$scope.interests = interests;
 		});
 
+		$scope.profile = $localStorage.account;
+
+		$scope.getLeadInterest = function(id){
+			return interestService.getLeaderInterest(id);
+		};
+
+		$scope.getLeadInterest().then(function(results) {
+			var interests = [];
+			for (key in results){
+				interests.push({
+					id: key,
+					label: results[key].displayName,
+					photo: results[key].backgroundImg
+				});
+			}
+			$scope.leadInterest = interests;
+		});
+
 		usersService.getInterestDisplay($localStorage.account.userId).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			var ones = {
@@ -45,7 +63,7 @@ angular.module('module.view.interest', [])
 		$scope.loadMore = function(){
 			if($scope.interests){
 				var max = $scope.interests.length;
-				if($scope.limit <  max){
+				if($scope.limit <=  max){
 					$scope.moreToScroll = true;
 					if($scope.limit - max < 10 && $scope.limit - max > 0){
 						$scope.limit += Math.abs($scope.limit - max);

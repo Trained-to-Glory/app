@@ -1,14 +1,14 @@
 angular.module('module.view.match', [])
 	.controller('matchCtrl', function($scope,$localStorage,$ionicPopup,$ionicScrollDelegate,$ionicNavBarDelegate,$ionicPopover,$ionicPlatform, $cordovaGeolocation,$rootScope,usersService,$state,interestService,$stateParams) {
-		$scope.$on('$ionicView.loaded', function(event) {
-			// $ionicPopup.show({
-			// 	title: 'Location',
-			// 	subTitle: 'We Would Like To Access Your Location',
-			// 	buttons: [
-			// 		{ text: 'Cancel'},
-			// 		{ text: 'OK' }
-			// 	]
-			// });
+		$scope.$on('$ionicView.enter', function(event) {
+			//  $ionicPopup.show({
+			//  	title: 'Location',
+			//  	subTitle: 'We Would Like To Access Your Location',
+			//  	buttons: [
+			//  		{ text: 'Cancel'},
+			//  		{ text: 'OK' }
+			//  	]
+			//  });
 			var posOptions = {timeout: 10000, enableHighAccuracy: true};
 				$cordovaGeolocation.getCurrentPosition(posOptions)
 					.then(function(position){
@@ -21,15 +21,12 @@ angular.module('module.view.match', [])
 					});
 	  });
 
-
 		var ref = firebase.database().ref('accounts');
 		ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
 			firebase.database().ref('/accounts/' + snapshot.key ).update({
 				location: $localStorage.account.near
 			});
 		});
-
-
 
 		 $scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -91,24 +88,38 @@ angular.module('module.view.match', [])
 						return interestService.get(id);
 					};
 
-					$scope.limit = 8;
-	        $scope.loadMore = function(){
-	          if($scope.abs){
-	            var max = $scope.abs.length;
-	            if($scope.limit <  max){
-	              $scope.moreToScroll = true;
-	              if($scope.limit - max < 10 && $scope.limit - max > 0){
-	                $scope.limit += Math.abs($scope.limit - max);
-	                $scope.moreToScroll = true;
-	                return;
-	              }
-	              $scope.limit += 10;
-	            }else{
-	              $scope.moreToScroll = false;
-	            }
-	          }
-	          $scope.$broadcast('scroll.infiniteScrollComplete');
-	        };
+					$scope.getInterest().then(function(results) {
+						var interests = [];
+						for (key in results){
+							interests.push({
+								id: key,
+								label: results[key].displayName,
+								photo: results[key].matchImg,
+								numbers: results[key].numbers,
+								subCategory: results[key].sub_categories
+							});
+						}
+						$scope.abs = interests;
+					});
+
+					$scope.limit = 10;
+					$scope.loadMore = function(){
+						if($scope.abs){
+							var max = $scope.abs.length;
+							if($scope.limit <=  max){
+								$scope.moreToScroll = true;
+								if($scope.limit - max < 10 && $scope.limit - max > 0){
+									$scope.limit += Math.abs($scope.limit - max);
+									$scope.moreToScroll = true;
+									return;
+								}
+								$scope.limit += 10;
+							}else{
+								$scope.moreToScroll = false;
+							}
+						}
+						$scope.$broadcast('scroll.infiniteScrollComplete');
+					};
 
 
 					$scope.loadMoreTrainers = function(){
@@ -129,18 +140,19 @@ angular.module('module.view.match', [])
 	          $scope.$broadcast('scroll.infiniteScrollComplete');
 	        };
 
-					usersService.getInterestName($localStorage.account.userId).then(function(results) {
-						var interests = [];
-						for (key in results){
-							interests.push({
-								id: key,
-								label: results[key].displayName,
-								photo: results[key].backgroundImg,
-								numbers: results[key].numbers
-							});
-						}
-						$scope.abs = interests;
-					});
+					// usersService.getInterestName($localStorage.account.userId).then(function(results) {
+					// 	var interests = [];
+					// 	for (key in results){
+					// 		interests.push({
+					// 			id: key,
+					// 			label: results[key].displayName,
+					// 			photo: results[key].matchImg,
+					// 			explorePhoto: results[key].matchImg,
+					// 			numbers: results[key].numbers
+					// 		});
+					// 	}
+					// 	$scope.abs = interests;
+					// });
 
 					$scope.getTrainersInterest().then(function(results) {
 						var coach = [];
@@ -148,7 +160,7 @@ angular.module('module.view.match', [])
 							coach.push({
 								id: key,
 								label: results[key].displayName,
-								photo: results[key].backgroundImg,
+								photo: results[key].leadImg,
 								numbers: results[key].numbers
 							});
 						}

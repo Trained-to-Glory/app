@@ -62,53 +62,6 @@ angular.module('module.view.signin', [])
       }
     };
 
-    $scope.loginWithFacebook = function() {
-      Utils.show();
-      //Login with Facebook token using the appId from app.js
-      $cordovaOauth.facebook(Social.facebookAppId, ["public_profile", "email"]).then(function(response) {
-        var credential = firebase.auth.FacebookAuthProvider.credential(response.access_token);
-        $localStorage.access_token = response.access_token;
-        loginWithCredential(credential, 'Facebook');
-      }, function(error) {
-        //User cancelled login. Hide the loading modal.
-        Utils.hide();
-      });
-    };
-
-    $scope.loginWithGoogle = function() {
-      Utils.show();
-      //Login with Google token using the googleWebClientId from app.js
-      $cordovaOauth.google(Social.googleWebClientId, ["https://www.googleapis.com/auth/userinfo.email"]).then(function(response) {
-        var credential = firebase.auth.GoogleAuthProvider.credential(response.id_token,
-          response.access_token);
-        $localStorage.id_token = response.id_token;
-        $localStorage.access_token = response.access_token;
-        loginWithCredential(credential, 'Google');
-      }, function(error) {
-        //User cancelled login. Hide the loading modal.
-        Utils.hide();
-      });
-    };
-
-    $scope.loginWithTwitter = function() {
-      Utils.show();
-      //Login with Twitter token using the twitterKey and twitterSecret from app.js
-      $cordovaOauth.twitter(Social.twitterKey, Social.twitterSecret).then(function(response) {
-        var credential = firebase.auth.TwitterAuthProvider.credential(response.oauth_token,
-          response.oauth_token_secret);
-        $localStorage.oauth_token = response.oauth_token;
-        $localStorage.oauth_token_secret = response.oauth_token_secret;
-        loginWithCredential(credential, 'Twitter');
-      }, function(error) {
-        //User cancelled login. Hide the loading modal.
-        Utils.hide();
-      });
-    };
-
-    $scope.loginAsGuest = function() {
-      Utils.show();
-      loginFirebaseGuest();
-    };
 
     //Function to login to Firebase using email and password.
     loginWithFirebase = function(email, password) {
@@ -197,53 +150,18 @@ angular.module('module.view.signin', [])
     showFirebaseLoginError = function(errorCode) {
       switch (errorCode) {
         case 'auth/user-not-found':
-        $ionicPopup.show({
-             title: 'Error',
-             subTitle: Popup.emailNotFound,
-             buttons: [
-               { text: 'OK' }
-             ]
-           });
           Utils.message(Popup.errorIcon, Popup.emailNotFound);
           break;
         case 'auth/wrong-password':
-        $ionicPopup.show({
-             title: 'Error',
-             subTitle: Popup.wrongPassword,
-             buttons: [
-               { text: 'OK' }
-             ]
-           });
           Utils.message(Popup.errorIcon, Popup.wrongPassword);
           break;
         case 'auth/user-disabled':
-        $ionicPopup.show({
-             title: 'Error',
-             subTitle: Popup.accountDisabled,
-             buttons: [
-               { text: 'OK' }
-             ]
-           });
           Utils.message(Popup.errorIcon, Popup.accountDisabled);
           break;
         case 'auth/too-many-requests':
-        $ionicPopup.show({
-             title: 'Error',
-             subTitle: Popup.manyRequests,
-             buttons: [
-               { text: 'OK' }
-             ]
-           });
           Utils.message(Popup.errorIcon, Popup.manyRequests);
           break;
         default:
-        $ionicPopup.show({
-             title: 'Error',
-             subTitle: Popup.errorLogin,
-             buttons: [
-               { text: 'OK' }
-             ]
-           });
           Utils.message(Popup.errorIcon, Popup.errorLogin);
           break;
       }

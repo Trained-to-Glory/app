@@ -5,25 +5,26 @@
   </ion-nav-bar>
 
     <ion-content scroll="true" overflow-scroll="true" class="iframe-wrapper">
-    <div class="list">
-        <div class="item item-divider" style="background-color: white; color: #F10707;">Profile</div>
-          <div class="item" ui-sref="interest">Interest</div>
-          <div class="item" ui-sref="status">Update status</div>
+    <div class="list" style="margin-bottom: 0">
+        <div class="item item-divider" style="background-color: white; color: #F10707;" style="border: none">Profile</div>
+        <div class="item" ui-sref="edit-profile" style="border: none">Edit Profile</div>
+          <div class="item" ng-click="interests()" style="border: none">Interest</div>
+          <div class="item" ui-sref="communicate" style="border: none">Notifications</div>
         </div>
 
       <div class="list">
-           <div class="item item-divider" style="background-color: white; color: #F10707;font-family: limbus;">Help</div>
-            <div class="item" ng-click="policy()">
+           <div class="item item-divider" style="background-color: white; color: #F10707;font-family: limbus;border:none;">Help</div>
+            <div class="item" ng-click="policy()" style="border: none">
               Privacy Policy
             </div>
-            <div class="item" ng-click="support()">
+            <div class="item" ng-click="support()" style="border: none">
               Support
 
             </div>
-            <div class="item" ng-click="service()">
+            <div class="item" ng-click="service()" style="border: none">
               Terms of Service
             </div>
-            <div class = "item" ng-click="logout()">Sign Out</div>
+            <div class = "item" ng-click="logout()" style="border: none">Sign Out</div>
       </div>
 
     </ion-content>

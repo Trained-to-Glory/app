@@ -49,7 +49,8 @@ angular.module('module.view.roleRather', [])
 				for (key in results){
 					interests.push({
 						id: key,
-						label: results[key].displayName
+						label: results[key].displayName,
+						photo: results[key].backgroundImg
 					});
 				}
 				$scope.interests = interests;

@@ -1,5 +1,5 @@
 angular.module('module.view.post', [])
-	.controller('postCtrl', function($scope,$rootScope,$state,appointmentsService,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
+	.controller('postCtrl', function($scope,$rootScope,$ionicActionSheet,$state,appointmentsService,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
 		$scope.postId = $stateParams.post;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -187,6 +187,44 @@ angular.module('module.view.post', [])
 				$scope.menuPopover = $ionicPopover.fromTemplate(menuTemplate, {
             scope: $scope
         });
+
+				$scope.showPopup = function() {
+					$ionicActionSheet.show({
+							titleText: 'Post',
+							cancelText: 'Cancel',
+								cancel: function() {
+								},
+							buttons: [{
+									 text: '<i class="icon ion-ios-flag"></i> Report'
+							}, {
+											text: '<i class="icon ion-ios-undo"></i> Share'
+								}],buttonClicked: function (index) {
+	                  switch (index) {
+	                      case 0: // Take Picture
+														$ionicPopup.show({
+														title: 'Report Post',
+														subTitle: 'Are you sure you would like to report this post?',
+														buttons: [
+															{ text: 'Cancel'},
+															{ text: 'OK' }
+														]
+													 });
+	                          break;
+	                      case 1: // Select From Gallery
+														document.addEventListener("deviceready", function () {
+																$cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date, post.time,post.image)
+																		.then(function (result) {
+																				appService.showAlert('Post Shared', result, 'Ok', 'button-balanced', null);
+																		}, function (err) {
+																				appService.showAlert('Error Occured', err, 'Ok', 'button-assertive', null);
+																		});
+														}, false);
+	                          break;
+	                  }
+	                  return true;
+	              }
+					});
+				};
 
 
 });

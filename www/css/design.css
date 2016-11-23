@@ -686,6 +686,12 @@
 .medium.popover
 {
 	height: 158px !important;
+	border: none;
+}
+
+.item-icon-left {
+    padding-left: 54px;
+    border: none;
 }
 
 .item.item-checkbox {
@@ -764,9 +770,26 @@
 
 }
 
+#floating-menu .icon.menu-icon {
+		background-color: #F10707 !important;
+}
+
+#floating-menu.active li {
+	background-color: #F10707 !important;
+}
+
+#floating-menu.active .menu-open-color {
+	background-color: #F10707 !important;
+}
+
+.signup-bar-clear .button .ion-ios-arrow-back {
+	color: white;
+}
+
 .bt-grey.profile
 {
 	border-top: none;
+	top: 62px;
 }
 
 h2.lead

@@ -89,6 +89,28 @@
                             correctOrientation: true
                         };
                     },
+                    getProfileCameraOptions: function () {
+                        return {
+                            quality: 80,
+                            destinationType: Camera.DestinationType.DATA_URL,
+                            sourceType: Camera.PictureSourceType.CAMERA,
+                            encodingType: Camera.EncodingType.JPEG,
+                            allowEdit: true,
+                            saveToPhotoAlbum: true,
+                            correctOrientation: true
+                        };
+                    },
+                    getProfileLibraryOptions: function () {
+                        return {
+                            quality: 80,
+                            destinationType: Camera.DestinationType.DATA_URL,
+                            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                            encodingType: Camera.EncodingType.JPEG,
+                            allowEdit: true,
+                            saveToPhotoAlbum: false,
+                            correctOrientation: true
+                        };
+                    },
                     getLibraryOptions: function () {
                         return {
                             quality: 80,

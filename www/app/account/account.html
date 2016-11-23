@@ -1,26 +1,23 @@
 <ion-view cache-view="false" class="font-thin" view-title="Profile">
 
     <ion-nav-buttons side="right">
-          <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
-          <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+          <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>
       </ion-nav-buttons>
 
-    <div class="row view-tab text-center" style="font-size:16px">
-        <div class="col font-thin" ui-sref="edit-profile">Edit</div>
-        <div class="col font-thin" ui-sref="communicate">Notifications</div>
-        <div class="col font-thin" ui-sref="settings">Settings</div>
-    </div>
-    <ion-content class="has-header bt-grey profile" on-swipe-right="onSwipeRight()" style="top: 75px">
-    <div style="height:100%; overflow:scroll" class="bg-lightgrey">
+    <ion-content class="has-header bt-grey profile" on-swipe-right="onSwipeRight()">
+    <div style="height:100%; overflow:scroll;margin-top: 10px;" class="bg-lightgrey">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">
         <div class="item profile item-image bg-image" style="max-height: 400px;filter: brightness(90%) grayscale(20%);margin-top: 17px;background-image: url({{profile.userPhoto}})">
             <!-- <img ng-src="{{profile.userPhoto}}"> -->
-            <h1 class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">
-            {{profile.firstName + " " + profile.lastName }}
+            <h1 ng-if= "!profile.fullName" class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">
+              {{profile.firstName + " " + profile.lastName }}
+          </h1>
+            <h1 ng-if= "profile.fullName" class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">
+            {{profile.fullName }}
           </h1>
           <h2 class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 164px;font-size: 12px;letter-spacing: 1px;">{{profile.userName }}</h2>
           </div>
-          <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="bottom: -357px;z-index: 5;left: 356px;background-color: white;display: inline-flex;width:42px;height:42px;" ng-click="uploadEventPhoto()">
+          <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="bottom: -357px;z-index: 5;left: 356px;background-color: white;display: inline-flex;width:42px;height:42px;" ng-click="uploadUserPhoto()">
             <i class="icons ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i>
           </a>
       </div>
@@ -34,6 +31,9 @@
 
         <div class="list card profile" style="background: transparent; height:100%; box-shadow: none;height:100%;margin: 0">
         <div ng-if="view.type === 1" style="height:100%;">
+          <div ng-if="userTotalPost == 0" class = "noCommits">
+          You have not post any pictures yet
+          </div>
                 <div style="height: 700px">
                     <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr" ng-if="$index % 3 == 0">
                       <div class="col" style="padding: 5px !important">
@@ -71,6 +71,9 @@
             </div>
 
           <div ng-if="view.type === 2" style="height:100%;">
+            <div ng-if="userTotalCommits == 0" class = "noCommits">
+              Commit to an event post.
+            </div>
                       <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">
                         <div class="col" style="padding: 5px !important">
                           <a ui-sref="post-detail({post:userCommits.itemsArr[$index].key})">
@@ -106,13 +109,16 @@
                 </div>
 
         <div ng-if="view.type === 3" style="background: transparent; box-shadow: none; margin-top: 20px;">
-            <div class="item item-divider">
+          <div ng-if="userPartners == 0" class = "noCommits">
+          You have no friends yet
+          </div>
+            <div class="item item-divider" ng-if="userPartners > 0">
                 FRIENDS
                 <span class="item-note" ui-sref = "partners({partner:profile.userId})">
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">Find More</a>
                 </span>
             </div>
-              <div class="item item-avatar item-button-right followers" style = "border: none" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
+              <div class="item item-avatar item-button-right followers" ng-if="userPartners > 0" style = "border: none" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
                 <img ng-src="{{value.userPhoto}}">
                 <h2 class="font-thin">{{value.userName}}</h2>
             </div>
@@ -120,6 +126,6 @@
             </div>
         </div>
       </div>
-      <ion-infinite-scroll on-infinite="loadMore() && loadMoreUserCommits() && loadMorePartnerPost() && loadMoreContacts()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
+      <!-- <ion-infinite-scroll on-infinite="loadMore() && loadMoreUserCommits() && loadMorePartnerPost() && loadMoreContacts()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll> -->
     </ion-content>
 </ion-view>

@@ -30,6 +30,19 @@ angular.module('module.view.settings', [])
                     }
                 };
 
+								$scope.profile = $localStorage.account;
+								console.log($scope.profile);
+
+								$scope.interests = function (){
+									var profile = $scope.profile;
+									if(profile.status == 'person' ){
+										$state.go('interests');
+									}
+									else if ( profile.status == 'leader' ){
+										$state.go('roleRather');
+									}
+								}
+
 								$scope.openPopover = function($event) {
 			             $scope.fullscreenPopover.show($event);
 			          };

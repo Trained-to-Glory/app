@@ -51,15 +51,21 @@ angular.module('module.view.event', [])
 			});
 			var userPhoto = $localStorage.account.photo;
 			$scope.postId = $stateParams.post;
-			data.postType = 'event';
+			data.postType = 'Event';
 			data.photo = $scope.photo;
 			data.userPhoto = userPhoto;
 			var key = postService.update(data,$scope.postId);
 			$state.go('tabs.news');
 		};
 
+		$scope.view = { type: 1 };
+
 		$scope.uploadEventPhoto = function () {
           $ionicActionSheet.show({
+						titleText: 'Event Photo',
+						cancelText: 'Cancel',
+							cancel: function() {
+							},
               buttons: [{
                   text: 'Take Picture'
               }, {
@@ -71,6 +77,7 @@ angular.module('module.view.event', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getCameraOptions()).then(function (imageData) {
                                   $scope.photo = "data:image/jpeg;base64," + imageData;
+																	$scope.view = { type: 2 };
                             			var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
@@ -82,6 +89,7 @@ angular.module('module.view.event', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getLibraryOptions()).then(function (imageData) {
                                 $scope.photo = "data:image/jpeg;base64," + imageData;
+																$scope.view = { type: 2 };
                                 var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);

@@ -49,7 +49,7 @@ angular.module('service.users', [])
    };
 
    this.getPartnerPosts = function (userId) {
-       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
+       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners', userId].join('/'));
        return myPartnersPromise.once('value').then(function (snapshot) {
              var obj = {};
              var myPartners = snapshot.val();
@@ -124,7 +124,7 @@ angular.module('service.users', [])
              var obj = {};
              var myPosts = snapshot.val();
              if (myPosts) {
-                var postsPromise = firebase.database().ref('category');
+                var postsPromise = firebase.database().ref('interest');
                 return postsPromise.once('value').then(function(snapshot){
                   var posts = snapshot.val();
                   if(posts){

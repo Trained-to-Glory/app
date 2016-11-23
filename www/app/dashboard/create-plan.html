@@ -11,24 +11,24 @@
   <ion-content>
     <div class="event-form">
       <div class="list edit padding-horizontal padding-vertical" style="padding:0">
-        <label class="item item-input event__input" ng-if="!post.photo">
-          <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0" ng-click="uploadEventPhoto()">
-                <div class="item item-image">
+        <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "pictureLook.type === 1">
+          <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0">
+                <div class="item item-image" ng-if = "pictureLook.type === 1">
                   <img class="plan_picture" ng-src = "img/goal-photo.jpg" style = "filter: brightness(96%) grayscale(10%);; -webkit-filter: brightness(96%) grayscale(10%);" name = "photo" ng-model="photo">
                 </div>
             </div>
-            <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="top: -113px;z-index: 5;left: 5px;background-color: white;width:42px;height:42px;" ng-click="uploadEventPhoto()"><i class="icons ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i></a>
+            <a class="btn-floating btn-small waves-effect waves-light lighten-1" ng-if = "pictureLook.type === 1" style="top: -113px;z-index: 5;left: 5px;background-color: white;width:42px;height:42px;" ng-click="uploadEventPhoto()">
+              <i class="icon ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i>
+            </a>
         </label>
 
-        <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if="post.photo">
-          <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0">
-                <div class="item item-image">
-                  <img class="plan_picture" ng-src = "{{post.photo}}" name = "photo" ng-model="photo">
-                </div>
+        <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin-top: 0;margin: 0;padding: 0;" ng-click="uploadEventPhoto()" ng-if="pictureLook.type === 2">
+          <div class="item item-image" style="max-height: 500px;">
+              <img ng-src="{{photo}}" name = "photo" ng-model="photo">
             </div>
-        </label>
+        </div>
 
-          <label class="item item-input event__input" style="margin-top: -66px;margin-bottom:15px">
+          <label class="item item-input event__input" style="margin-top: -66px;margin-bottom:15px;padding-top: 20px;">
             <input type="text" name="title" style="margin-left:5px;font-weight:300" placeholder="">{{post.title}}
             <span class="input-label" style="margin-left:5px">Title</span>
           </label>
@@ -39,12 +39,11 @@
           </label>
 
           <div style="display:inline-flex">
-            <div style="font-weight: 300;margin-left:5px" ng-click="view.type = 1">Create Checklist</div>
+            <div class = "create-checklist" style="font-weight: 300;margin-left:5px;margin-top: 20px;" ng-click="view.type = 1">Create Checklist</div>
             <div style="font-weight: 300;position: absolute;right: 5px;" ng-click="view.type = 2" ng-if = "view.type === 1">Clear Checklist</div>
           </div>
 
           <check-list arr="data.checklistArr" ng-if = "view.type === 1"></check-list>
-
         </div>
     </div>
   </ion-content>

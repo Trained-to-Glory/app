@@ -20,7 +20,7 @@ angular.module('module.view.createPlan', [])
 			$inputs.map( function(elm) {
 				data[$(this).attr('name')] = $(this).val();
 			});
-			data.postType = 'plan';
+			data.postType = 'Goal';
 			data.photo = $scope.photo;
 			data.checklist = $scope.data.checklistArr ;
 			var key = postService.createPlan(data);
@@ -45,14 +45,20 @@ angular.module('module.view.createPlan', [])
 			});
 			$scope.postId = $stateParams.post;
 			data.checklist = $scope.checkList;
-			data.postType = 'plan';
+			data.postType = 'Goal';
 			data.photo = $scope.photo;
 			var key = postService.updatePlan(data,$scope.postId);
 			$state.go('tabs.sentPlans');
 		};
 
+		$scope.pictureLook = { type: 1 };
+
 		$scope.uploadEventPhoto = function () {
           $ionicActionSheet.show({
+						titleText: 'Goal Photo',
+						cancelText: 'Cancel',
+							cancel: function() {
+							},
               buttons: [{
                   text: 'Take Picture'
               }, {
@@ -64,6 +70,7 @@ angular.module('module.view.createPlan', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getCameraOptions()).then(function (imageData) {
                                   $scope.photo = "data:image/jpeg;base64," + imageData;
+																	$scope.pictureLook = { type: 2 };
                             			var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);
@@ -75,6 +82,7 @@ angular.module('module.view.createPlan', [])
                           document.addEventListener("deviceready", function () {
                               $cordovaCamera.getPicture(appService.getLibraryOptions()).then(function (imageData) {
                                 $scope.photo = "data:image/jpeg;base64," + imageData;
+																$scope.pictureLook = { type: 2 };
                                 var key = postService.create($scope.photo);
                               }, function (err) {
                                   appService.showAlert('Error', err, 'Close', 'button-assertive', null);

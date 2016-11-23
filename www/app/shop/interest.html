@@ -9,11 +9,7 @@
   </ion-nav-bar>
 
   <ion-content class="has-header" scroll="true">
-          <!-- <ion-list>
-              <ion-checkbox ng-repeat="interest in interests | limitTo: limit  track by $index" style="color: #F10707;background: transparent;border-color: transparent"
-                data-interest-id="{{ interest.id }}" ng-model="isChecked"  ng-change="checkedOrNot(interest, isChecked, $index, $localStorage)" ng-init='isChecked=false'>{{ interest.label }}</ion-checkbox>
-           </ion-list> -->
-           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll"ng-repeat = "interest in interests | limitTo: limit  track by $index">
+           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interests | limitTo: limit  track by $index">
              <div class="col">
                  <div class="category-2-item-wrapper" style="z-index: 1">
                    <div class="category-2-item-content" style="z-index: 1">
@@ -33,10 +29,6 @@
                               <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>
                               <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>
                           </div>
-                          <!-- <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !value.state.active, 'button-balanced ion-ios-undo-outline':value.state.active }" ng-click="toggleInterest(key)">
-                              <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>
-                              <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>
-                          </button> -->
                          </div>
                        </h1>
                      </div>

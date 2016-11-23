@@ -1,7 +1,6 @@
 <ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
   <ion-nav-buttons side="right">
-        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>
-        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;"></button>
+        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
   <div class="row view-tab text-center" style="font-size:16px;">
         <div class="col font-thin" style="text-align:left;margin-left:20px;font-size:16px">Goals</div>
@@ -37,6 +36,33 @@
           <a href = "#progress-bar"></a>
         </div>
       </div>
+
+        <div style="margin-left: 20px;margin-top: 30px;" class = "font-thin">People that may help</div>
+          <ion-scroll direction="x">
+          <div class="row">
+            <div class="col item-avatar" ng-repeat="user in scrollPeople | limitTo: 8" style="margin-right: 30px;">
+                <img ng-src="{{user.userPhoto}}">
+              <h2 class="lead" style="font-size: 12px;margin-top: 53px;">{{user.userName}}</h2>
+            </div>
+          </div>
+        </ion-scroll>
+
+          <div style="margin-left: 20px;margin-top: 30px" class = "font-thin">Events that may help</div>
+          <div class="list card image" style="box-shadow: none;" ng-repeat = "picture in news.itemsArr" ng-if = "picture.postType === 'Event' && !profile">
+            <div class="item item-image">
+                <div class="item item-avatar">
+                  <img ng-src="{{picture.avatar}}">
+                  <ion-list>
+                    <ion-item>
+                      {{picture.title}}
+                    </ion-item>
+                    <ion-item>
+                      {{picture.description}}
+                    </ion-item>
+                  </ion-list>
+                </div>
+            </div>
+            </div>
         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
     <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707;font-size: 4rem"></i></a>

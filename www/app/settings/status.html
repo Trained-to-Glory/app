@@ -2,16 +2,19 @@
   <ion-nav-bar>
     <ion-nav-back-button style="display: block">
     </ion-nav-back-button>
+
+    <ion-header-bar align-title="right" style="background: transparent !important;z-index: 999;" ui-sref="tabs.account">
+        <h1 class="title font-thin" style="color: black; font-weight: 400; z-index: 999;" ui-sref="tabs.account">SUBMIT</h1>
+    </ion-header-bar>
   </ion-nav-bar>
 
-    <ion-content class="has-header">
-      <ion-label style="margin-left:60px;margin-top:6px;">Would you like to be considered a leader?</ion-label>
-      <ion-radio ng-model="user.leader" ng-value="'yes'" style="width:30%;border-color: #fafafc;margin-left:166px;">Yes</ion-radio>
-      <ion-radio ng-model="user.person" ng-value="'no'" style="width:30%;border-color: #fafafc;margin-left:166px;">No</ion-radio>
-
-	     <div class="row row-login">
-            <div class="col col-login"></div>
-            <div class="col col-login" style="margin-left: 31vh;" ui-sref="tabs.settings">NEXT</div>
-      </div>
+  <div class="bg-image" style="background-image:url('img/bg-photo.jpg')">
+    <div class="bg-color login-flow">
+    <ion-content class="has-header" style="background: transparent !important;">
+      <h1 class="font-thin" style="color: white; font-size: 20px; font-weight: 400 !important;margin-left: 20px;margin-top: 24px">Would you like to be considered a leader?</h1>
+       <ion-radio ng-model="user.leader" ng-value="'leader'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
+       <ion-radio ng-model="user.person" ng-value="'person'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
     </ion-content>
+  </div>
+  </div>
 </ion-view>
