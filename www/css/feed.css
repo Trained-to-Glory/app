@@ -15,6 +15,22 @@
     background-color: #fafafc;
 }
 
+.has-scroll-tabs {
+  margin-bottom: 40px;
+  top:44px !important;
+}
+
+.view-tab.match {
+  font-size: 16px;
+    /* top: 91px; */
+    position: fixed;
+    z-index: 999;
+    background-color: #fafafc;
+    bottom: 0;
+    height: 48px;
+    text-align: center;
+}
+
 .interests-display .checkbox input, .interests-display .checkbox-icon {
     width: 15px;
     height: 15px;

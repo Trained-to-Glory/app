@@ -1,5 +1,5 @@
 
-angular.module('full_starter', ['ionic','angular.filter','views.glory', 'ion-floating-menu', 'ionic.ion.headerShrink','ngStorage','ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
+angular.module('full_starter', ['ionic','angular.filter', 'ion-floating-menu','views.glory', 'jett.ionic.scroll.sista','ngStorage','ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
 
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.
@@ -10,7 +10,6 @@ angular.module('full_starter', ['ionic','angular.filter','views.glory', 'ion-flo
     errorIcon: "ion-sad-outline",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
     emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email and try again.",
-    usernameAlreadyExists: "Sorry, but an account with that username already exists. Please register with a different username and try again.",
     accountAlreadyExists: "Sorry, but an account with the same credential already exists. Please check your account and try again.",
     emailNotFound: "Sorry, but we couldn\'t find an account with that email address. Please check your email and try again.",
     userNotFound: "Sorry, but we couldn\'t find a user with that account. Please check your account and try again.",
@@ -31,7 +30,7 @@ angular.module('full_starter', ['ionic','angular.filter','views.glory', 'ion-flo
   })
 
 
-  .run(function ($ionicPlatform,appService) {
+  .run(function ($ionicPlatform) {
 
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -58,9 +57,5 @@ angular.module('full_starter', ['ionic','angular.filter','views.glory', 'ion-flo
         return false;
       }, 101);
 
-      // $scope.$on('cloud:push:notification', function(event, data) {
-      //   var msg = data.message;
-      //   alert(msg.title + ': ' + msg.text);
-      // });
     });
   })

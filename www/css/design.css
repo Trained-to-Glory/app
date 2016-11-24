@@ -527,7 +527,7 @@
 }
 
 .has-subheader {
-    top: 44px;
+    top: 44px !important;
     .scroll {
         padding-top: 44px;
     }
@@ -548,8 +548,17 @@
 
 .bar.bar-header,
 .tabs.tabs-assertive{
-   transition: .5s all linear !important;
+   transition: .0001s all linear !important;
+	 -webkit-transition: background-color .0001s all linear !important;
+		-moz-transition: background-color .0001s all linear !important;
+		-o-transition: background-color .0001s all linear !important;
+}
 
+.tabs-top > .tabs, .tabs.tabs-top {
+	transition: .0001s all linear !important;
+	-webkit-transition: background-color .0001s all linear !important;
+  -moz-transition: background-color .0001s all linear !important;
+  -o-transition: background-color .0001s all linear !important;
 }
 
 .bar.bar-header.ng-hide,

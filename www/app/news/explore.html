@@ -5,28 +5,9 @@
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>
     </ion-nav-buttons>
 
-  <!-- <div class="row view-tab text-center">
-        <div class="col font-thin" style="text-align:left; margin-left:20px; font-size:16px">
-          <input ng-click="view.type = 2" class ="search" type="text" ng-model="lookUp" placeholder="Search" style="background: transparent;text-align: left;font-weight: 300;margin-left: 0px;color: black;font-size: 16px;margin-top:-8px" />
-          <span class = "search-icon" ng-if = "view.type === 2">
-            <a class="clear" ng-click="lookUp = null" ng-if = "view.type === 2">
-            <span><i class = "ion-ios-close-empty" style="font-size: 24px;margin-left: 175px;" ng-click="clearSearch()"></i></span>
-          </a>
-        </div>
-    </div> -->
-
-    <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" style="top: 73px">
-        <!-- <div ng-if="view.type === 2">
-        <div class="list card" style="background: transparent; box-shadow: none;">
-            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzy: lookUp" ui-sref="friend({contact: user.userId})">
-                <img ng-src="{{user.userPhoto}}">
-                <h2 class="lead">{{user.userName}}</h2>
-              </div>
-        </div>
-      </div> -->
-
-      <div ng-if="view.type === 1" style="margin-top: 8px;">
-        <div style="height:100%;" >
+    <ion-content scroll-sista="header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+      <div ng-if="view.type === 1" style="margin-top: 28px;top: 100px;">
+        <div style="height:100%;margin-top: 50px;" >
             <div class="row row-no-padding category-2-outer" ng-repeat="value in news.itemsArr | limitTo: limit" ng-if="$index % 2 == 0 && news.itemsArr[$index].photo">
               <div class="col" style="padding: 5px !important">
                 <a ui-sref="post-detail({post:news.itemsArr[$index].key})">

@@ -8,8 +8,8 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>\n' +
     '      </ion-nav-buttons>\n' +
     '\n' +
-    '    <ion-content class="has-header bt-grey profile" on-swipe-right="onSwipeRight()">\n' +
-    '    <div style="height:100%; overflow:scroll;margin-top: 10px;" class="bg-lightgrey">\n' +
+    '    <ion-content on-swipe-right="onSwipeRight()" scroll-sista="header">\n' +
+    '    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey">\n' +
     '      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">\n' +
     '        <div class="item profile item-image bg-image" style="max-height: 400px;filter: brightness(90%) grayscale(20%);margin-top: 17px;background-image: url({{profile.userPhoto}})">\n' +
     '            <!-- <img ng-src="{{profile.userPhoto}}"> -->\n' +
@@ -363,10 +363,14 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
-    '  <div class="row view-tab text-center" style="font-size:16px;">\n' +
-    '        <div class="col font-thin" style="text-align:left;margin-left:20px;font-size:16px">Goals</div>\n' +
-    '    </div>\n' +
-    '    <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
+    '\n' +
+    '    <ion-floating-menu>\n' +
+    '        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
+    '        <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
+    '        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
+    '    </ion-floating-menu>\n' +
+    '\n' +
+    '    <ion-content on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" scroll-sista="header">\n' +
     '      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: \'created\': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">\n' +
     '      <div class="list card image" style="box-shadow: none;">\n' +
     '            <div class="item item-image">\n' +
@@ -426,7 +430,6 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            </div>\n' +
     '        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
-    '    <a class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" style="color: #F10707;font-size: 4rem"></i></a>\n' +
     '</ion-view>\n'
   );
 
@@ -434,28 +437,22 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/core/sidemenu.html',
     '<ion-tabs class="tabs-icon-top tabs-striped tabs-color-active-assertive">\n' +
     '    <ion-tab style="background: #fafafc !important;" class = "bar-subheader" icon ="ion-ios-home" ui-sref = "tabs.news">\n' +
-    '      <!-- Tab 1 content -->\n' +
     '      <ion-nav-view name="Home"></ion-nav-view>\n' +
     '    </ion-tab>\n' +
     '\n' +
     '    <ion-tab style="background: #fafafc !important;" class = "bar-subheader" icon="ion-ios-search" ui-sref = "tabs.explore">\n' +
-    '      <!-- Tab 2 content -->\n' +
     '      <ion-nav-view name="Explore"></ion-nav-view>\n' +
     '    </ion-tab>\n' +
     '\n' +
     '    <ion-tab style="background: #fafafc !important;" class = "bar-subheader" icon="ion-ttg-icon" ui-sref = "tabs.match">\n' +
-    '      <!-- Tab 2 content -->\n' +
-    '\n' +
     '      <ion-nav-view name="Connect"></ion-nav-view>\n' +
     '    </ion-tab>\n' +
     '\n' +
     '    <ion-tab style="background: #fafafc !important;" class = "bar-subheader" icon ="ion-ios-star" ui-sref = "tabs.sentPlans">\n' +
-    '      <!-- Tab 2 content -->\n' +
     '      <ion-nav-view name="Goals"></ion-nav-view>\n' +
     '    </ion-tab>\n' +
     '\n' +
     '    <ion-tab style="background: #fafafc !important;" class = "bar-subheader" icon = "ion-android-person" ui-sref = "tabs.account">\n' +
-    '      <!-- Tab 3 content -->\n' +
     '      <ion-nav-view name="Profile"></ion-nav-view>\n' +
     '    </ion-tab>\n' +
     '  </ion-tabs>\n'
@@ -503,7 +500,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/dashboard/create-plan.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent">\n' +
+    '    <ion-header-bar style="background-color: transparent;height: 48px;">\n' +
     '        <div class="row text-center">\n' +
     '            <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPlan()">Send</div>\n' +
@@ -511,7 +508,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content>\n' +
+    '  <ion-content style="top: 54px;">\n' +
     '    <div class="event-form">\n' +
     '      <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
     '        <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "pictureLook.type === 1">\n' +
@@ -1262,15 +1259,15 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/news/event.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent">\n' +
+    '    <ion-header-bar style="background-color: transparent;background-color: transparent;height: 48px;">\n' +
     '        <div class="row text-center">\n' +
-    '            <div class="col font-thin text-large dark" ui-sref="tabs.news" style="color:gray;">Cancel</div>\n' +
+    '          <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createEvent()">Send</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="post.created" ng-click="updateEvent()">Send</div>\n' +
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content class="has-header">\n' +
+    '  <ion-content class="has-header" style="top: 54px;">\n' +
     '\n' +
     '    <div class="event-form">\n' +
     '        <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
@@ -1323,28 +1320,9 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
     '\n' +
-    '  <!-- <div class="row view-tab text-center">\n' +
-    '        <div class="col font-thin" style="text-align:left; margin-left:20px; font-size:16px">\n' +
-    '          <input ng-click="view.type = 2" class ="search" type="text" ng-model="lookUp" placeholder="Search" style="background: transparent;text-align: left;font-weight: 300;margin-left: 0px;color: black;font-size: 16px;margin-top:-8px" />\n' +
-    '          <span class = "search-icon" ng-if = "view.type === 2">\n' +
-    '            <a class="clear" ng-click="lookUp = null" ng-if = "view.type === 2">\n' +
-    '            <span><i class = "ion-ios-close-empty" style="font-size: 24px;margin-left: 175px;" ng-click="clearSearch()"></i></span>\n' +
-    '          </a>\n' +
-    '        </div>\n' +
-    '    </div> -->\n' +
-    '\n' +
-    '    <ion-content class="has-header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" style="top: 73px">\n' +
-    '        <!-- <div ng-if="view.type === 2">\n' +
-    '        <div class="list card" style="background: transparent; box-shadow: none;">\n' +
-    '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzy: lookUp" ui-sref="friend({contact: user.userId})">\n' +
-    '                <img ng-src="{{user.userPhoto}}">\n' +
-    '                <h2 class="lead">{{user.userName}}</h2>\n' +
-    '              </div>\n' +
-    '        </div>\n' +
-    '      </div> -->\n' +
-    '\n' +
-    '      <div ng-if="view.type === 1" style="margin-top: 8px;">\n' +
-    '        <div style="height:100%;" >\n' +
+    '    <ion-content scroll-sista="header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
+    '      <div ng-if="view.type === 1" style="margin-top: 28px;top: 100px;">\n' +
+    '        <div style="height:100%;margin-top: 50px;" >\n' +
     '            <div class="row row-no-padding category-2-outer" ng-repeat="value in news.itemsArr | limitTo: limit" ng-if="$index % 2 == 0 && news.itemsArr[$index].photo">\n' +
     '              <div class="col" style="padding: 5px !important">\n' +
     '                <a ui-sref="post-detail({post:news.itemsArr[$index].key})">\n' +
@@ -1404,7 +1382,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/news.html',
-    '<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important">\n' +
+    '<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false">\n' +
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
@@ -1415,8 +1393,8 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
     '    </ion-floating-menu>\n' +
     '\n' +
-    '    <ion-content on-swipe-left="onSwipeLeft()">\n' +
-    '      <div class="list card" ng-repeat="posts in totalPost | orderBy: \'created\': true | limitTo: limit" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
+    '    <ion-content scroll-sista="header" class="has-subheader">\n' +
+    '      <div class="list card" ng-repeat="posts in totalPost | orderBy: \'created\': true | limitTo: limit" on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
     '        <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">\n' +
     '            <img ng-src="{{posts.photo}}">\n' +
     '          </div>\n' +
@@ -1437,9 +1415,8 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          {{commmentsNumber}} Comments\n' +
     '        </a>\n' +
     '      </div>\n' +
-    '            <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
+    '        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
-    '    <button class="btn-floating btn-small waves-effect waves-light red lighten-1" style="position:fixed; bottom:3%;right:5%;z-index:999;background-color: transparent !important;" ng-click="newsPopover.show($event);"><i class="icons ion-ios-plus" ng-click="newsPopover.show($event);" style="color: #F10707;font-size: 4rem;"></i></button>\n' +
     '</ion-view>\n'
   );
 
@@ -1511,7 +1488,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/news/regular.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent">\n' +
+    '    <ion-header-bar style="background-color: transparent;height: 48px;">\n' +
     '        <div class="row text-center">\n' +
     '            <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPost()">Send</div>\n' +
@@ -1519,7 +1496,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content class="has-header">\n' +
+    '  <ion-content class="has-header" style="top: 54px;">\n' +
     '\n' +
     '    <div class="event-form">\n' +
     '        <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
@@ -1743,17 +1720,18 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/shop/match.html',
-    '<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;">\n' +
+    '<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" cache-view="false">\n' +
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
-    '  <div class="row view-tab text-center" style="font-size:16px;height: 40px;">\n' +
-    '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 1}" ng-click="view.type = 1" style="border: none">Connect</div>\n' +
-    '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 2}" ng-click="view.type = 2" style="border: none">Leaders</div>\n' +
+    '  <div class="row view-tab match">\n' +
+    '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 1}" ng-click="view.type = 1" style="border: none;margin-top: 3px;">Connect</div>\n' +
+    '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 2}" ng-click="view.type = 2" style="border: none;margin-top: 3px;">Leaders</div>\n' +
     '  </div>\n' +
-    '    <ion-content class="has-header" style="top: 128px;">\n' +
+    '\n' +
+    '    <ion-content  scroll-sista = "header" class="has-subheader">\n' +
     '        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()">\n' +
-    '          <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;"ng-repeat = "ab in abs | limitTo: limit track by $index">\n' +
+    '          <div class="row row-no-padding category-2-outer" style="padding:0;"ng-repeat = "ab in abs | limitTo: limit track by $index">\n' +
     '            <div class="col">\n' +
     '              <a ui-sref="contacts({activity:ab.id})">\n' +
     '                <div class="category-2-item-wrapper">\n' +

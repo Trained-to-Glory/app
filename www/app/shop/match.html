@@ -1,14 +1,15 @@
-<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;">
+<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" cache-view="false">
   <ion-nav-buttons side="right">
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
-  <div class="row view-tab text-center" style="font-size:16px;height: 40px;">
-    <div class="col font-thin" ng-class="{'balanced' : view.type === 1}" ng-click="view.type = 1" style="border: none">Connect</div>
-    <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none">Leaders</div>
+  <div class="row view-tab match">
+    <div class="col font-thin" ng-class="{'balanced' : view.type === 1}" ng-click="view.type = 1" style="border: none;margin-top: 3px;">Connect</div>
+    <div class="col font-thin" ng-class="{'balanced' : view.type === 2}" ng-click="view.type = 2" style="border: none;margin-top: 3px;">Leaders</div>
   </div>
-    <ion-content class="has-header" style="top: 128px;">
+
+    <ion-content  scroll-sista = "header" class="has-subheader">
         <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()">
-          <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;"ng-repeat = "ab in abs | limitTo: limit track by $index">
+          <div class="row row-no-padding category-2-outer" style="padding:0;"ng-repeat = "ab in abs | limitTo: limit track by $index">
             <div class="col">
               <a ui-sref="contacts({activity:ab.id})">
                 <div class="category-2-item-wrapper">

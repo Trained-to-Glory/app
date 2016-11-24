@@ -33,6 +33,7 @@ angular.module('full_starter.routes', [])
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("left");
     $ionicConfigProvider.tabs.position("top");
+    $ionicConfigProvider.scrolling.jsScrolling(true);
     //turning off $log
     $logProvider.debugEnabled(false);
 

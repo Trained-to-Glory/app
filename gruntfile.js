@@ -2,31 +2,85 @@
 module.exports = function(grunt) {
 
     // Project configuration.
-    grunt.initConfig({
+    var config = {
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
+        js_files: ['www/lib/angular/angular.js',
+        'www/lib/jquery/dist/jquery.js',
+        'www/lib/ionic/js/ionic.bundle.js',
+        'www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+        'www/lib/moment/moment.js', 'www/lib/angular-moment/angular-moment.js',
+        'www/lib/moment-range/dist/moment-range.js',
+        'www/lib/ion-affix/ion-affix.js',
+        'www/lib/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
+        'www/lib/angular-elastic/elastic.js',
+        'www/lib/ion-google-place/ion-google-place.js',
+       'www/lib/angular-filter/dist/angular-filter.js',
+       'www/lib/ngCordova/dist/ng-cordova.js',
+       'www/lib/ng-lodash/build/ng-lodash.js',
+       'www/lib/ionic-ion-header-shrink/ionic.headerShrink.js',
+       'www/lib/ion-floating-menu/dist/ion-floating-menu.js',
+       'www/lib/ngstorage/ngStorage.js',
+       'www/lib/ionic-scroll-sista/dist/ionic.scroll.sista.js',
+       'www/app/core/views.glory.js'],
+        css_files: ['www/css/materialize.css',
+        'www/css/animate.css',
+        'www/css/ionic.app.css',
+        'www/css/design.css',
+        'www/css/match.css',
+        'www/css/feed.css',
+        'www/lib/ion-floating-menu/dist/ion-floating-menu.css',
+        'www/lib/ionic-nifty-modal/nifty.modal.css'],
+        concat: {
+          options: {
+            separator: ';',
+          },
+          distCSS: {
+            dest: 'www/dist/<%= pkg.name %>.css',
+          },
+          distJS: {
+            dest: 'www/dist/<%= pkg.name %>.js'
+          },
+        },
+        uglify: {
+          dist: {
+              src: 'www/dist/<%= pkg.name %>.js',
+              dest :'www/dist/<%= pkg.name %>.min.js'
+          }
+        },
+        cssmin: {
+          options: {
+            shorthandCompacting: false,
+            roundingPrecision: -1
+          }
+        },
         injector: {
-            local_dependencies: {
-                files: {
-                    'www/index.html': ['www/lib/**/*.js',
-                                        'www/app/core/**/*.js',
-                                        'www/app/controllers/**/*.js',
-                                        'www/app/directives/**/*.js',
-                                        'www/app/services/**/*.js',
-                                       'www/css/materialize.css',
-                                       'www/css/animate.css',
-                                       'www/css/ionic.app.css',
-                                       'www/css/design.css',
-                                       'www/css/match.css',
-                                       'www/css/feed.css'
-                                      ]
-                },
+            dev: {
+                files: {},
                 options:{
-                    ignorePath:[
-                        'www/'
-                    ],
+                  transform: function (filePath) {
+                      filePath = filePath.replace('/www/', '');
+                      var isCss = filePath.indexOf('.css') > -1;
+                      return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
+                  }
+
                 }
-            }
+            },
+             prod: {
+                 files: {
+                     'www/index.html': ['www/dist/<%= pkg.name %>.min.css', 'www/dist/<%= pkg.name %>.min.js']
+                 },
+                 options:{
+                   transform: function (filePath) {
+                       filePath = filePath.replace('/www/', '');
+                       var isCss = filePath.indexOf('.css') > -1;
+                       return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
+                   },
+                     ignorePath:[
+                         'www/'
+                    ],
+                 }
+             }
         },
         ngtemplates: {
             'views.glory': {
@@ -39,28 +93,23 @@ module.exports = function(grunt) {
                 }
             }
         },
-        concat: {
-          options: {
-            separator: ';',
-          },
-          distJS: {
-            src: ['www/lib/angular/angular.min.js',
-                  'www/lib/angular/jquery.min.js',
-                  'www/app/core/views.glory.js',
-                  'www/js/**/*.js']
-            dest: 'www/lib/ttg-final.min.js',
-          },
-          distCSS: {
-            src: ['www/css/**/*.css']
-            dest: 'www/css/styles.min.js',
-          },
-        },
         karma: {
             unit: {
                 configFile: 'karma.conf.js'
             }
         }
-    });
+    };
+    config.concat.distCSS.src = config.css_files;
+    config.concat.distJS.src = config.js_files;
+    config.injector.dev.files = {
+      'www/index.html': [config.js_files, config.css_files]
+    };
+    config.cssmin.target= {
+      files: {
+        'www/dist/<%= pkg.name %>.min.css': config.css_files
+      }
+    };
+    grunt.initConfig(config);
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-injector');
@@ -68,11 +117,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     // grunt.registerTask('default', ['clean', 'ngtemplates', 'copy:main', 'injector']);
     // grunt.registerTask('unit', ['ngtemplates', 'copy:unit', 'karma:unit', 'clean:unit']);
     // Default task.
     grunt.registerTask('default', ['ngtemplates','injector:dev']);
-    grunt.registerTask('prod', ['ngtemplates','concat','injector:prod']);
+    grunt.registerTask('prod', ['ngtemplates','concat:distCSS', 'concat:distJS','uglify','cssmin', 'injector:prod']);
     grunt.registerTask('unit', ['karma']);
     //grunt.registerTask('changes', ['watch']);
 };

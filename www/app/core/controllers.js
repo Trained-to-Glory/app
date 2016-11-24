@@ -10,7 +10,6 @@
         'monospaced.elastic',
         'ngLodash',
         'angular.filter',
-        'ion-datetime-picker',
         'ion-google-place',
         'module.view.login',
         'module.view.communicate',
@@ -528,18 +527,6 @@
         })
 
 })();
-
-moment.locale('en', {
-    calendar: {
-        lastDay: '[Yesterday]',
-        sameDay: '[Today]',
-        nextDay: '[Tomorrow, ] MMM Do dddd',
-        lastWeek: '[Last] MMM Do dddd',
-        nextWeek: 'MMM Do dddd',
-        sameElse: 'L'
-    }
-})
-
 var searchTemplate =
     '<ion-popover-view class="search">' +
     '<ion-content scroll="false">' +

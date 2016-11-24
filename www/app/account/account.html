@@ -4,8 +4,8 @@
           <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>
       </ion-nav-buttons>
 
-    <ion-content class="has-header bt-grey profile" on-swipe-right="onSwipeRight()">
-    <div style="height:100%; overflow:scroll;margin-top: 10px;" class="bg-lightgrey">
+    <ion-content on-swipe-right="onSwipeRight()" scroll-sista="header">
+    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">
         <div class="item profile item-image bg-image" style="max-height: 400px;filter: brightness(90%) grayscale(20%);margin-top: 17px;background-image: url({{profile.userPhoto}})">
             <!-- <img ng-src="{{profile.userPhoto}}"> -->
