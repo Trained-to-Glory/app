@@ -20,6 +20,17 @@
   top:44px !important;
 }
 
+.tab-item.activated {
+  border-bottom: 1px solid #F10707 !important;
+  border-top: none;
+  border-bottom: 1px solid #F10707;
+  color: #F10707;
+  border-top: none;
+  margin-top: 1px;
+border-width: 0px 0px 1px 0px !important;
+border-style: solid;
+}
+
 .view-tab.match {
   font-size: 16px;
     /* top: 91px; */

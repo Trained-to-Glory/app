@@ -1,5 +1,6 @@
 angular.module('module.view.roleRather', [])
-	.controller('roleRatherCtrl', function($scope,$rootScope,$ionicHistory,$state,interestService,$localStorage, engagementService) {
+	.controller('roleRatherCtrl', ['$scope','$rootScope','$ionicHistory','$state','interestService','$localStorage', 'engagementService',
+		function($scope,$rootScope,$ionicHistory,$state,interestService,$localStorage, engagementService) {
 		$scope.data = {};
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;
 
@@ -78,4 +79,4 @@ angular.module('module.view.roleRather', [])
 		    };
 
 
-});
+}]);

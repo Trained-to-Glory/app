@@ -4507,9 +4507,10 @@ a.subdued {
   padding-top: 2px; }
 
 .tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {
-  margin-top: -2px;
+  margin-top: 0px;
   border-style: solid;
   border-width: 2px 0 0 0;
+  border-top: none
   border-color: #F10707; }
   .tabs-striped .tab-item.tab-item-active .badge, .tabs-striped .tab-item.active .badge, .tabs-striped .tab-item.activated .badge {
     top: 2px;
@@ -5084,7 +5085,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
     transition: color .1s ease; }
     .tabs-top.tabs-striped .tab-item.tab-item-active, .tabs-top.tabs-striped .tab-item.active, .tabs-top.tabs-striped .tab-item.activated {
       margin-top: 1px;
-      border-width: 0px 0px 2px 0px !important;
+      border-width: 0px 0px 3px 0px !important;
       border-style: solid; }
       .tabs-top.tabs-striped .tab-item.tab-item-active > .badge, .tabs-top.tabs-striped .tab-item.tab-item-active > i, .tabs-top.tabs-striped .tab-item.active > .badge, .tabs-top.tabs-striped .tab-item.active > i, .tabs-top.tabs-striped .tab-item.activated > .badge, .tabs-top.tabs-striped .tab-item.activated > i {
         margin-top: -1px; }
@@ -8010,7 +8011,7 @@ input:checked + .checkbox-icon:before {
   display: table;
   width: 14px;
   height: 6px;
-  border: 1px solid #F10707;
+  border: 1px solid green;
   border-top: 0;
   border-right: 0;
   content: ' ';
@@ -8630,6 +8631,7 @@ progress {
     display: inline-block;
     padding: 0 0 1px 0;
     vertical-align: inherit;
+    margin-right: 10px;
     font-size: 24px;
     line-height: 41px;
     pointer-events: none; }

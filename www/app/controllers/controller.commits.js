@@ -1,5 +1,6 @@
 angular.module('module.view.commits', [])
-	.controller('commitsCtrl', function($scope,$rootScope,$state,$localStorage,$stateParams,postService,$ionicHistory,$ionicPopover) {
+	.controller('commitsCtrl',['$scope','$rootScope','$state','$localStorage','$stateParams','postService','$ionicHistory','$ionicPopover',
+	 function($scope,$rootScope,$state,$localStorage,$stateParams,postService,$ionicHistory,$ionicPopover) {
 		$scope.profile = $localStorage.account;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -75,7 +76,7 @@ angular.module('module.view.commits', [])
                     }
         };
 
-});
+}]);
 var searchTemplate =
     '<ion-popover-view class="search">' +
     '<ion-content scroll="false">' +

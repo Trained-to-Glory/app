@@ -1,5 +1,6 @@
 angular.module('module.view.interest', [])
-	.controller('interestCtrl', function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, engagementService) {
+	.controller('interestCtrl', ['$scope','$rootScope','$state','$ionicPopover','usersService','interestService','$localStorage', 'engagementService',
+		function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, engagementService) {
 		$scope.getInterest = function(id){
 			return interestService.get(id);
 		};
@@ -206,4 +207,4 @@ angular.module('module.view.interest', [])
             $state.go(ui_sref);
         }
     }
-});
+}]);

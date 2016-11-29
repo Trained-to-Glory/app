@@ -1,5 +1,6 @@
 angular.module('module.view.lead', [])
-	.controller('leadCtrl', function($scope,$rootScope,$state,$localStorage,engagementService,$stateParams,interestService) {
+	.controller('leadCtrl', ['$scope','$rootScope','$state','$localStorage','engagementService','$stateParams','interestService',
+		function($scope,$rootScope,$state,$localStorage,engagementService,$stateParams,interestService) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -130,7 +131,7 @@ angular.module('module.view.lead', [])
 
 
 
-}).filter('orderByLocation', function() {
+}]).filter('orderByLocation', function() {
 
   // In the return function, we must pass in a single parameter which will be the data we will work on.
   // We have the ability to support multiple other parameters that can be passed into the filter optionally
@@ -169,87 +170,6 @@ angular.module('module.view.lead', [])
     // Do filter work here
     return output;
   }
-
-	$scope.browse = function () {
-		$scope.closePopover();
-			$state.go('tabs.news');
-	};
-
-	$scope.explore = function () {
-		$scope.closePopover();
-		$state.go('tabs.explore');
-	};
-
-	$scope.match = function () {
-		$scope.closePopover();
-			$state.go('tabs.match');
-
-	};
-
-	$scope.coach = function () {
-		 $scope.closePopover();
-			$state.go('tabs.coach');
-	};
-
-	$scope.plans = function () {
-		 $scope.closePopover();
-			$state.go('tabs.sentPlans');
-	};
-
-	$scope.reminder = function () {
-		$scope.closePopover();
-			$state.go('tabs.reminders');
-	};
-
-	$scope.partners = function () {
-		$scope.closePopover();
-			$state.go('tabs.partners');
-	};
-
-	$scope.settings = function () {
-		$scope.closePopover();
-			$state.go('tabs.settings');
-	};
-
-	$scope.search = function () {
-		$scope.closePopover();
-			$state.go('tabs.search');
-	};
-
-	$scope.calendar = function () {
-		$scope.closePopover();
-			$state.go('tabs.reminders');
-	};
-
-	$scope.account = function (){
-		$scope.closePopover();
-		$state.go('tabs.account');
-	};
-
-	$scope.notifications = function (){
-		$scope.closePopover();
-		$state.go('tabs.communicate');
-	};
-
-	$scope.logout = function() {
-	 if (firebase.auth()) {
-		 firebase.auth().signOut().then(function() {
-			 //Clear the saved credentials.
-			 $localStorage.$reset();
-			$scope.closePopover();
-			 //Proceed to login screen.
-			 $state.go('authentication');
-		 }, function(error) {
-			 //Show error message.
-			 Utils.message(Popup.errorIcon, Popup.errorLogout);
-		 });
-	 }
- };
-
- $scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-		 scope: $scope
- });
-
 });
 
 var contactTemplate =

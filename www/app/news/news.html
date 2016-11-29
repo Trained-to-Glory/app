@@ -1,22 +1,37 @@
-<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false">
+<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false" hide-nav-bar="true">
   <ion-nav-buttons side="right">
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
 
     <ion-floating-menu>
-        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;"></ion-floating-item>
-        <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;"></ion-floating-item>
-        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>
+      <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;" text ="Create Post"></ion-floating-item>
+      <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;" text="Create Event"></ion-floating-item>
+        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;" text="Create Goal"></ion-floating-item>
     </ion-floating-menu>
 
-    <ion-content scroll-sista="header" class="has-subheader">
+    <ion-content class="has-tabs-top">
+      <div class="list card image" style="box-shadow: none;" ng-repeat = "plan in plan.itemsArr | limitTo: 1" ng-if="planLength >= 1">
+            <div class="item item-image">
+                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">
+                  <ion-list>
+                    <ion-item>
+                      {{plan.title}}
+                    </ion-item>
+                    <ion-item>
+                      {{plan.description}}
+                    </ion-item>
+                  </ion-list>
+                </div>
+            </div>
+        </div>
+
       <div class="list card" ng-repeat="posts in totalPost | orderBy: 'created': true | limitTo: limit" on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">
         <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">
             <img ng-src="{{posts.photo}}">
           </div>
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
           <img ng-src="{{posts.avatar}}" style="background-color: transparent">
-          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.owner}}</h2>
+          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{posts.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>

@@ -2,30 +2,39 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   'use strict';
 
   $templateCache.put('app/account/account.html',
-    '<ion-view cache-view="false" class="font-thin" view-title="Profile">\n' +
+    '<ion-view view-title="Profile" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false" hide-nav-bar="true">\n' +
     '\n' +
     '    <ion-nav-buttons side="right">\n' +
     '          <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>\n' +
     '      </ion-nav-buttons>\n' +
     '\n' +
-    '    <ion-content on-swipe-right="onSwipeRight()" scroll-sista="header">\n' +
-    '    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey">\n' +
+    '    <ion-content class="has-tabs-top" style="top: 32px !important;">\n' +
+    '    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey" on-swipe-right="onSwipeRight()">\n' +
     '      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">\n' +
-    '        <div class="item profile item-image bg-image" style="max-height: 400px;filter: brightness(90%) grayscale(20%);margin-top: 17px;background-image: url({{profile.userPhoto}})">\n' +
-    '            <!-- <img ng-src="{{profile.userPhoto}}"> -->\n' +
-    '            <h1 ng-if= "!profile.fullName" class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">\n' +
+    '        <div class="item profile item-image bg-image" style="max-height: 400px;margin-top: 17px;background-image: url({{profile.userPhoto}})">\n' +
+    '          <div class = "row" style="position: inherit;bottom: 9px;">\n' +
+    '          <!-- <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;left: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ui-sref="settings">\n' +
+    '            <i class="icons ion-ios-gear" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>\n' +
+    '          </a> -->\n' +
+    '          <ion-list>\n' +
+    '            <ion-item ng-if= "!profile.fullName" style="border:none;padding-bottom: 5px;background-color: transparent !important;left: 0;font-size: 20px;color:white; font-weight: 700;letter-spacing: 1.2px;">\n' +
     '              {{profile.firstName + " " + profile.lastName }}\n' +
-    '          </h1>\n' +
-    '            <h1 ng-if= "profile.fullName" class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">\n' +
-    '            {{profile.fullName }}\n' +
-    '          </h1>\n' +
-    '          <h2 class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 164px;font-size: 12px;letter-spacing: 1px;">{{profile.userName }}</h2>\n' +
-    '          </div>\n' +
-    '          <a class="btn-floating btn-small waves-effect waves-light lighten-1" style="bottom: -357px;z-index: 5;left: 356px;background-color: white;display: inline-flex;width:42px;height:42px;" ng-click="uploadUserPhoto()">\n' +
-    '            <i class="icons ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i>\n' +
+    '            </ion-item>\n' +
+    '            <ion-item ng-if= "profile.fullName" style="border:none;background-color: transparent !important;left: 0;font-size: 20px;font-weight: 700;color: white;letter-spacing: 1.2px;">\n' +
+    '              {{profile.fullName }}\n' +
+    '            </ion-item>\n' +
+    '            <ion-item style="left: 0;border:none;text-align: left;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
+    '              {{profile.userName }}\n' +
+    '            </ion-item>\n' +
+    '          </ion-list>\n' +
+    '          <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;right: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ng-click="uploadUserPhoto()">\n' +
+    '            <i class="icons ion-ios-camera" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>\n' +
     '          </a>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
     '      </div>\n' +
-    '      <div ng-if = "profile.userDescription" style="text-align: center; margin-top: 20px;max-height: 100px;margin-bottom: 5px;margin-left: 30px;margin-right: 30px;line-height: 25px;">{{ profile.userDescription }}</div>\n' +
+    '      <div class = "button button-clear icon ion-ios-gear profile-settings" ui-sref="settings" style="width: 100%">Settings</div>\n' +
+    '      <div ng-if = "profile.userDescription" style="text-align: center; max-height: 100px;margin-bottom: 5px;margin-left: 30px;margin-right: 30px;line-height: 25px;">{{ profile.userDescription }}</div>\n' +
     '\n' +
     '        <div class="row no-padding bb-grey text-center" style="text-transform: capitalize;" >\n' +
     '            <div class="col font-thin" ng-class="{\'text-medium balanced bb\' : view.type === 1}" ng-click="view.type = 1">{{userTotalPost}}<br/>Posts</div>\n' +
@@ -76,7 +85,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '\n' +
     '          <div ng-if="view.type === 2" style="height:100%;">\n' +
     '            <div ng-if="userTotalCommits == 0" class = "noCommits">\n' +
-    '              Commit to an event post.\n' +
+    '              You have not commited to any event post yet.\n' +
     '            </div>\n' +
     '                      <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">\n' +
     '                        <div class="col" style="padding: 5px !important">\n' +
@@ -113,9 +122,14 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                </div>\n' +
     '\n' +
     '        <div ng-if="view.type === 3" style="background: transparent; box-shadow: none; margin-top: 20px;">\n' +
-    '          <div ng-if="userPartners == 0" class = "noCommits">\n' +
-    '          You have no friends yet\n' +
-    '          </div>\n' +
+    '          <ion-list ng-if="userPartners == 0" class = "noCommits">\n' +
+    '            <ion-item>\n' +
+    '              You have no friends yet\n' +
+    '            </ion-item>\n' +
+    '              <ion-item class="item-note" style="width: 100%; border: none;" ui-sref = "friendPartners({friendPartner:profile})">\n' +
+    '                <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">Find Friends</a>\n' +
+    '              </ion-item>\n' +
+    '          </ion-list>\n' +
     '            <div class="item item-divider" ng-if="userPartners > 0">\n' +
     '                FRIENDS\n' +
     '                <span class="item-note" ui-sref = "partners({partner:profile.userId})">\n' +
@@ -124,13 +138,13 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            </div>\n' +
     '              <div class="item item-avatar item-button-right followers" ng-if="userPartners > 0" style = "border: none" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">\n' +
     '                <img ng-src="{{value.userPhoto}}">\n' +
-    '                <h2 class="font-thin">{{value.userName}}</h2>\n' +
+    '                <h2 style="font-weight: 400">{{value.userName}}</h2>\n' +
     '            </div>\n' +
     '\n' +
     '            </div>\n' +
     '        </div>\n' +
     '      </div>\n' +
-    '      <!-- <ion-infinite-scroll on-infinite="loadMore() && loadMoreUserCommits() && loadMorePartnerPost() && loadMoreContacts()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll> -->\n' +
+    '      <ion-infinite-scroll on-infinite="loadMore() || loadMoreUserCommits() || loadMorePartnerPost() || loadMoreContacts()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
@@ -207,9 +221,41 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   );
 
 
+  $templateCache.put('app/account/findPartners.html',
+    '<ion-view title="Add Friends" class="font-thin" hide-nav-bar="true">\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back" style="color: gray"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Add Friends</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="right" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;margin-right:15px;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ui-sref="intro">\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-right: 15px;" ui-sref="intro">Next</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
+    '    <ion-content class="has-header">\n' +
+    '    <div class = "list card" style="background: transparent; box-shadow: none">\n' +
+    '      <div class="item item-avatar item-button-right followers" ng-repeat="person in people" ng-if="person.partnered === false" style="border: none; border-style: none">\n' +
+    '          <img ng-src="{{person.userPhoto}}">\n' +
+    '          <h2 style="font-weight: 400">{{person.userName}}</h2>\n' +
+    '          <button class="button button-small icon " ng-class="{\'button-balanced button-outline ion-ios-personadd-outline\': person.partnered, \'button-balanced ion-ios-undo-outline\':!person.partnered }" ng-click="togglePartner(person.userId)">\n' +
+    '              <span ng-if="!person.partnered"> Friend</span>\n' +
+    '              <span ng-if="person.partnered"> Friend</span>\n' +
+    '          </button>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '    </ion-content>\n' +
+    '</ion-view>\n'
+  );
+
+
   $templateCache.put('app/account/friend.html',
-    '<ion-view title="Profile" class="font-thin">\n' +
-    '  <ion-nav-bar>\n' +
+    '<ion-view title="Profile" class="font-thin" hide-nav-bar="true">\n' +
+    '  <!-- <ion-nav-bar>\n' +
     '    <ion-nav-back-button style="display: block">\n' +
     '    </ion-nav-back-button>\n' +
     '  </ion-nav-bar>\n' +
@@ -217,19 +263,55 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '  <ion-nav-buttons side = "right">\n' +
     '    <button class="button button-small icon " style = "min-width: 100px" ng-class="{\'button ion-ios-plus-outline\': ones.partnered, \'button ion-ios-checkmark-outline\':!ones.partnered }" ng-click="togglePartner(ones.userId)">\n' +
     '    </button>\n' +
-    '  </ion-nav-buttons>\n' +
+    '  </ion-nav-buttons> -->\n' +
+    '\n' +
+    '   <div class = "tabs tabs-icon-top tabs-striped tabs-color-active-assertive" style="top: 0 !important;height: 65px !important;\n' +
+    '    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '      <a class = "bar-subheader tab-item" style="background: #fafafc !important;border-top: none" icon ="ion-ios-home" ui-sref = "tabs.news">\n' +
+    '         <i class = "icon ion-ios-home" style="margin-top: 14px;"></i>\n' +
+    '      </a>\n' +
+    '\n' +
+    '      <a class = "bar-subheader tab-item" style="background: #fafafc !important;border-top: none" icon ="ion-ios-search" ui-sref = "tabs.explore">\n' +
+    '         <i class = "icon ion-ios-search" style="margin-top: 14px;"></i>\n' +
+    '      </a>\n' +
+    '\n' +
+    '      <a class = "bar-subheader tab-item" style="background: #fafafc !important;border-top: none" icon ="ion-ttg-icon" ui-sref = "tabs.match">\n' +
+    '         <i class = "icon ion-ttg-icon" style="margin-top: 14px;"></i>\n' +
+    '      </a>\n' +
+    '\n' +
+    '      <a class = "bar-subheader tab-item" style="background: #fafafc !important;border-top: none" icon ="ion-ios-star" ui-sref = "tabs.sentPlans">\n' +
+    '         <i class = "icon ion-ios-star" style="margin-top: 14px;"></i>\n' +
+    '      </a>\n' +
+    '      <a class = "bar-subheader tab-item" style="background: #fafafc !important;border-top: none" icon ="ion-android-person" ui-sref = "tabs.account">\n' +
+    '         <i class = "icon ion-android-person" style="margin-top: 14px;"></i>\n' +
+    '      </a>\n' +
+    '   </div>\n' +
     '\n' +
     '    <ion-content class="has-header bt-grey" scroll="true">\n' +
     '    <div style="height:100%; overflow:scroll" class="bg-lightgrey">\n' +
     '      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">\n' +
-    '        <div class="item profile item-image bg-image" style="max-height: 400px;filter: brightness(90%) grayscale(20%);background-image: url({{ones.userPhoto}})">\n' +
-    '            <!-- <img ng-src="{{ones.userPhoto}}"> -->\n' +
-    '            <h1 class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 140px;font-size: 20px;font-weight: 700;letter-spacing: 1.2px;">\n' +
-    '            {{ones.firstName + " " + ones.lastName }}\n' +
-    '          </h1>\n' +
-    '          <h2 class = "profile-info" style="margin-left: 20px;display: inline-flex;left: 0;margin-top: 164px;font-size: 12px;letter-spacing: 1px;">{{ones.userName }}</h2>\n' +
+    '        <div class="item profile item-image bg-image" style="max-height: 400px;background-image: url({{ones.userPhoto}})">\n' +
+    '          <div class = "row" style="position: inherit;bottom: 9px;">\n' +
+    '          <!-- <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;left: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ui-sref="settings">\n' +
+    '            <i class="icons ion-ios-gear" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>\n' +
+    '          </a> -->\n' +
+    '          <ion-list>\n' +
+    '            <ion-item ng-if= "!ones.fullName" style="border:none;padding-bottom: 5px;background-color: transparent !important;left: 0;font-size: 20px;color:white; font-weight: 700;letter-spacing: 1.2px;">\n' +
+    '              {{ones.firstName + " " + ones.lastName }}\n' +
+    '            </ion-item>\n' +
+    '            <ion-item ng-if= "ones.fullName" style="border:none;background-color: transparent !important;left: 0;font-size: 20px;font-weight: 700;color: white;letter-spacing: 1.2px;">\n' +
+    '              {{ones.fullName }}\n' +
+    '            </ion-item>\n' +
+    '            <ion-item style="left: 0;border:none;text-align: left;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
+    '              {{ones.userName }}\n' +
+    '            </ion-item>\n' +
+    '          </ion-list>\n' +
+    '          <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;right: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ng-click="uploadUserPhoto()">\n' +
+    '            <i class="icons ion-ios-camera" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>\n' +
+    '          </a>\n' +
     '          </div>\n' +
     '      </div>\n' +
+    '    </div>\n' +
     '      <div ng-if = "ones.userDescription" style="text-align: center; margin-top: 20px;max-height: 100px;margin-bottom: 5px;margin-left: 30px;margin-right: 30px;line-height: 25px;">{{ ones.userDescription }}</div>\n' +
     '\n' +
     '\n' +
@@ -241,6 +323,9 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '\n' +
     '        <div class="list card profile" style="background: transparent; height:100%; box-shadow: none;height:100%;">\n' +
     '          <div ng-if="view.type === 1" style="height:100%;">\n' +
+    '            <div ng-if="userTotalPost == 0" class = "noCommits">\n' +
+    '            This user has no post yet.\n' +
+    '            </div>\n' +
     '                  <div style="height: 700px">\n' +
     '                      <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr" ng-if="$index % 3 == 0">\n' +
     '                        <div class="col" style="padding: 5px !important">\n' +
@@ -278,6 +363,9 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '              </div>\n' +
     '\n' +
     '    <div ng-if="view.type === 2" style="height:100%;">\n' +
+    '      <div ng-if="userTotalCommits == 0" class = "noCommits">\n' +
+    '      This user has not commited to any events yet.\n' +
+    '      </div>\n' +
     '                <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">\n' +
     '                  <div class="col" style="padding: 5px !important">\n' +
     '                    <a ui-sref="post-detail({post:userCommits.itemsArr[$index].key})">\n' +
@@ -313,7 +401,10 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          </div>\n' +
     '\n' +
     '          <div ng-if="view.type === 3" style="background: transparent; box-shadow: none">\n' +
-    '              <div class="item item-divider">\n' +
+    '            <div ng-if="userPartners == 0" class = "noCommits">\n' +
+    '            This user has no friends yet.\n' +
+    '            </div>\n' +
+    '              <div class="item item-divider" ng-if="userPartners > 0">>\n' +
     '                FRIENDS\n' +
     '                <span class="item-note" ui-sref = "friendPartners({friendPartner:profile})">\n' +
     '                    <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">More</a>\n' +
@@ -334,18 +425,21 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/account/partners.html',
-    '<ion-view title="Find Friends" class="font-thin">\n' +
+    '<ion-view title="Find Friends" class="font-thin" hide-nav-bar="true">\n' +
     '\n' +
-    '  <ion-nav-bar>\n' +
-    '    <ion-nav-back-button style="display: block">\n' +
-    '    </ion-nav-back-button>\n' +
-    '  </ion-nav-bar>\n' +
+    '  <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back" style="color: gray"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Add Friends</div>\n' +
+    '  </ion-header-bar>\n' +
     '\n' +
     '    <ion-content class="has-header">\n' +
     '    <div class = "list card" style="background: transparent; box-shadow: none">\n' +
     '      <div class="item item-avatar item-button-right followers" ng-repeat="person in people" ng-if="person.partnered === false" style="border: none; border-style: none">\n' +
     '          <img ng-src="{{person.userPhoto}}">\n' +
-    '          <h2 class="font-thin">{{person.userName}}</h2>\n' +
+    '          <h2 style="font-weight: 400">{{person.userName}}</h2>\n' +
     '          <button class="button button-small icon " ng-class="{\'button-balanced button-outline ion-ios-personadd-outline\': person.partnered, \'button-balanced ion-ios-undo-outline\':!person.partnered }" ng-click="togglePartner(person.userId)">\n' +
     '              <span ng-if="!person.partnered"> Friend</span>\n' +
     '              <span ng-if="person.partnered"> Friend</span>\n' +
@@ -359,24 +453,23 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/chat/sentPlans.html',
-    '<ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
+    '<ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" hide-nav-bar="true">\n' +
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
     '\n' +
     '    <ion-floating-menu>\n' +
-    '        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
-    '        <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
-    '        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
+    '      <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;" text ="Create Post"></ion-floating-item>\n' +
+    '      <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;" text="Create Event"></ion-floating-item>\n' +
+    '        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;" text="Create Goal"></ion-floating-item>\n' +
     '    </ion-floating-menu>\n' +
     '\n' +
-    '    <ion-content on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" scroll-sista="header">\n' +
+    '    <ion-content class="has-tabs-top" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
     '      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: \'created\': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">\n' +
     '      <div class="list card image" style="box-shadow: none;">\n' +
     '            <div class="item item-image">\n' +
     '                <img ng-src="{{plan.photo}}">\n' +
-    '                <div class="item item-avatar">\n' +
-    '                  <img ng-src="{{plan.avatar}}">\n' +
+    '                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">\n' +
     '                  <ion-list>\n' +
     '                    <ion-item>\n' +
     '                      {{plan.title}}\n' +
@@ -388,11 +481,12 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '\n' +
-    '        <ion-list>\n' +
-    '          <ion-item style="border: none" ng-repeat = "item in plan.checklist">\n' +
-    '            <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="isChecked"\n' +
-    '              ng-change="checkedOrNot(item, isChecked, $index, $localStorage, plan.checklist.length)" ng-init=\'isChecked=false\'>\n' +
+    '        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;" class = "font-thin" >Checklist</div>\n' +
+    '        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;position: fixed;right: 20px;color: green;" class = "font-thin">Complete</div>\n' +
+    '        <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '          <ion-item style="border: none;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ng-repeat = "item in plan.checklist" ng-class="{\'text-color sentPlans\' : item.isChecked}">\n' +
+    '            <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="item.isChecked"\n' +
+    '              ng-change="checkedOrNot(item, $index, plan.checklist.length)" ng-class="{\'text-color sentPlans\' : item.isChecked}">\n' +
     '              {{item.displayName}}\n' +
     '          </ion-checkbox>\n' +
     '          </ion-item>\n' +
@@ -401,34 +495,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          <a href = "#progress-bar"></a>\n' +
     '        </div>\n' +
     '      </div>\n' +
-    '\n' +
-    '        <div style="margin-left: 20px;margin-top: 30px;" class = "font-thin">People that may help</div>\n' +
-    '          <ion-scroll direction="x">\n' +
-    '          <div class="row">\n' +
-    '            <div class="col item-avatar" ng-repeat="user in scrollPeople | limitTo: 8" style="margin-right: 30px;">\n' +
-    '                <img ng-src="{{user.userPhoto}}">\n' +
-    '              <h2 class="lead" style="font-size: 12px;margin-top: 53px;">{{user.userName}}</h2>\n' +
-    '            </div>\n' +
-    '          </div>\n' +
-    '        </ion-scroll>\n' +
-    '\n' +
-    '          <div style="margin-left: 20px;margin-top: 30px" class = "font-thin">Events that may help</div>\n' +
-    '          <div class="list card image" style="box-shadow: none;" ng-repeat = "picture in news.itemsArr" ng-if = "picture.postType === \'Event\' && !profile">\n' +
-    '            <div class="item item-image">\n' +
-    '                <div class="item item-avatar">\n' +
-    '                  <img ng-src="{{picture.avatar}}">\n' +
-    '                  <ion-list>\n' +
-    '                    <ion-item>\n' +
-    '                      {{picture.title}}\n' +
-    '                    </ion-item>\n' +
-    '                    <ion-item>\n' +
-    '                      {{picture.description}}\n' +
-    '                    </ion-item>\n' +
-    '                  </ion-list>\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '            </div>\n' +
-    '        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
+    '        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
@@ -460,23 +527,28 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/dashboard/contacts.html',
-    '<ion-view title="Connect" class="font-thin">\n' +
-    '  <ion-nav-bar>\n' +
-    '    <ion-nav-back-button style="display: block">\n' +
-    '    </ion-nav-back-button>\n' +
-    '  </ion-nav-bar>\n' +
-    '    <ion-content class="has-header" scroll="true">\n' +
+    '<ion-view title="Connect" hide-nav-bar="true">\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Connect</div>\n' +
+    '  </ion-header-bar>\n' +
+    '  \n' +
+    '    <ion-content class="has-header" style="top: 44px;">\n' +
     '      <div class="list card" style="background: transparent; box-shadow: none;">\n' +
     '          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in orderByLocation1(users,myLocation)" ui-sref="friend({contact: user.userId})">\n' +
     '              <img ng-src="{{user.userPhoto}}">\n' +
-    '              <h2 class="lead">{{user.userName}}</h2>\n' +
+    '              <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>\n' +
     '            </div>\n' +
     '      </div>\n' +
     '\n' +
     '      <div class="list card" style="background: transparent; box-shadow: none;">\n' +
     '          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="person in orderByLocation1(people,myLocation)" ui-sref="friend({contact: person.userId})">\n' +
     '              <img ng-src="{{person.userPhoto}}">\n' +
-    '              <h2 class="lead">{{person.userName}}</h2>\n' +
+    '              <h2 class="lead" style="font-weight: 400">{{person.userName}}</h2>\n' +
     '            </div>\n' +
     '      </div>\n' +
     '\n' +
@@ -485,7 +557,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <div class="list card" style="background: transparent; box-shadow: none; margin-top: 30px;">\n' +
     '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in scrollPeople | limitTo: 10" ui-sref="friend({contact: user.userId})">\n' +
     '                <img ng-src="{{user.userPhoto}}">\n' +
-    '                <h2 class="font-thin">{{user.userName}}</h2>\n' +
+    '                <h2 style="font-weight: 400">{{user.userName}}</h2>\n' +
     '                <div class="button button-small icon " style = "position: fixed;right: 5px;margin-top: -20px;" ng-class="{\'button-balanced button-outline ion-ios-personadd-outline\': user.partnered, \'button-balanced ion-ios-undo-outline\':!user.partnered }" ng-click="togglePartner(user.userId)">\n' +
     '                    <span ng-if="!user.partnered"> Friend</span>\n' +
     '                    <span ng-if="user.partnered"> Friend</span>\n' +
@@ -500,7 +572,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/dashboard/create-plan.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent;height: 48px;">\n' +
+    '  <ion-header-bar style="background-color: #fafafc;height: 48px;top: 0px !important;position: absolute;">\n' +
     '        <div class="row text-center">\n' +
     '            <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPlan()">Send</div>\n' +
@@ -508,7 +580,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content style="top: 54px;">\n' +
+    '  <ion-content class="has-header">\n' +
     '    <div class="event-form">\n' +
     '      <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
     '        <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "pictureLook.type === 1">\n' +
@@ -620,16 +692,19 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '(*) assigned classes -->\n' +
     '\n' +
     '<!-- * view-login / container general -->\n' +
-    '<ion-view class="view-login" style="color: white;">\n' +
-    '  <ion-nav-bar class="signup-bar-clear bar-edit-profile" style="background:none">\n' +
-    '    <ion-header-bar align-title="left" style="background: transparent !important;">\n' +
-    '        <h1 class="title" style="color: white; font-weight: 400" ui-sref="interest">Create Account</h1>\n' +
-    '    </ion-header-bar>\n' +
-    '\n' +
-    '    <ion-nav-back-button style="display: block; color: white">\n' +
+    '<ion-view class="view-login" style="color: white;" hide-nav-bar="true">\n' +
+    '  <ion-nav-bar>\n' +
+    '    <ion-nav-back-button style="display: block">\n' +
     '    </ion-nav-back-button>\n' +
-    '\n' +
     '  </ion-nav-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: transparent !important;">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back" style="color: white;"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);color: white;">Create Account</div>\n' +
+    '  </ion-header-bar>\n' +
     '    <!-- * bg-image / background image -->\n' +
     '    <!-- class bg-image is in the file general.scss -->\n' +
     '    <div class="bg-image" style="background-image:url(\'img/bg-photo.jpg\')">\n' +
@@ -664,8 +739,8 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                      </div>\n' +
     '\n' +
     '                      <h1 class="font-thin" style="color: white; font-size: 14px; font-weight: 400 !important;margin-left: 20px;margin-top: 24px">Would you like to be considered a leader?</h1>\n' +
-    '                       <ion-radio ng-model="user.leader" ng-value="\'leader\'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>\n' +
-    '                       <ion-radio ng-model="user.person" ng-value="\'person\'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>\n' +
+    '                       <ion-radio ng-model="user.leader" ng-value="\'yes\'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>\n' +
+    '                       <ion-radio ng-model="user.person" ng-value="\'no\'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>\n' +
     '\n' +
     '                        <input class="button button-block button-calm" ng-if="user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>\n' +
     '                        <input class="button button-block button-calm" ng-if="!user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>\n' +
@@ -675,7 +750,69 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            </ion-content>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '</ion-view>\n'
+    '</ion-view>\n' +
+    '\n' +
+    '<!--\n' +
+    '    <ion-content cache-view="false" class="auth">\n' +
+    '      <form name="registerForm" novalidate ng-submit="registerForm.$valid && register(user)">\n' +
+    '        <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">\n' +
+    '        <div class="col">\n' +
+    '            <div class="category-2-item-wrapper">\n' +
+    '              <div class="category-2-item-content">\n' +
+    '                <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/juggler.jpg);">\n' +
+    '                  <div class="logo">\n' +
+    '                    <img ng-src = "img/TTG-Logo-NowhiteOutline.png">\n' +
+    '                  </div>\n' +
+    '                </div>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="row text-center" style="color: white;top: 230px;position: absolute;">\n' +
+    '        <div class="col" style="z-index: 999;position: relative;display: block;">Sign Up</div>\n' +
+    '        <div class="col" style="z-index: 999;position: relative;display: block;" ui-sref="signin">Sign In</div>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">\n' +
+    '\n' +
+    '      <div class="row" style="width: 50%;border-bottom: 1px solid silver; margin:auto;">\n' +
+    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">\n' +
+    '          <input type="text" style="text-align:center" placeholder="First Name" ng-model="user.firstName" validate>\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div class = "row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">\n' +
+    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">\n' +
+    '          <input type="text" style="text-align:center" placeholder="Last Name" ng-model="user.lastName" validate>\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '\n' +
+    '       <div class="row" style="width: 80%;border-bottom: 1px solid silver;margin:auto;">\n' +
+    '         <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">\n' +
+    '           <input type="text" style="text-align:center;" placeholder="User Name" ng-model="user.userName" validate>\n' +
+    '         </label>\n' +
+    '      </div>\n' +
+    '      <div class="row" style="width: 90%;border-bottom: 1px solid silver;margin:auto;">\n' +
+    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">\n' +
+    '          <input type="email" style="text-align:center;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '      <div class="row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">\n' +
+    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center;width:100%;">\n' +
+    '          <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>\n' +
+    '        </label>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <ion-label style="margin-left:60px;margin-top:6px;">Would you like to be considered a leader?</ion-label>\n' +
+    '      <ion-radio ng-model="user.leader" ng-value="\'leader\'" style="width:30%;border-color: #fafafc;margin-left:166px;">Yes</ion-radio>\n' +
+    '      <ion-radio ng-model="user.person" ng-value="\'person\'" style="width:30%;border-color: #fafafc;margin-left:166px;">No</ion-radio>\n' +
+    '\n' +
+    '      <input type="submit" ng-if="user.leader"class="button button-block button-login button-positive" value="Sign Up" ng-disabled="registerForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;margin-top: 4vh; display:block;">\n' +
+    '      <input type="submit"  ng-if="!user.leader" class="button button-block button-login button-positive" value="Sign Up" ng-disabled="registerForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">\n' +
+    '      <p ng-if="user.leader || !user.leader" style="text-overflow: initial;white-space: initial;margin-bottom:20px;color: black !important;text-align: center;">By clicking sign up you are indicating that you have read the privacy policy and agree to the Terms of Use found on trainedtoglory.com.</p>\n' +
+    '    </div>\n' +
+    '  </form>\n' +
+    '    </ion-content> -->\n'
   );
 
 
@@ -712,12 +849,12 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          <ion-slide style="background-color: #fafafc">\n' +
     '            <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0; margin: 0;">\n' +
     '              <div class="item item-image" style="max-height: 500px;">\n' +
-    '                  <img ng-src="img/audience.jpg">\n' +
+    '                  <img ng-src="img/commit-party.jpg">\n' +
     '                </div>\n' +
     '              <div class="item item-avatar" style="border: none">\n' +
-    '                <img ng-src="img/walkthrough-person.jpg" style="background-color: transparent">\n' +
-    '                <h2 style="color:black !important" class="font-thin">The Lifestyle</h2>\n' +
-    '                <p style="color:black !important" class="font-thin">Come out</p>\n' +
+    '                <img ng-src="img/bg-m.jpg" style="background-color: transparent">\n' +
+    '                <h2 style="color:black !important; font-weight: 400;">Jaylen</h2>\n' +
+    '                <p style="color:black !important" class="font-thin">Commit to my dinner party</p>\n' +
     '                <p style="color:black !important" class="font-thin">Event</p>\n' +
     '                <p style="color:black !important" class="font-thin">Just Now</p>\n' +
     '              </div>\n' +
@@ -735,20 +872,19 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          <p class = "font-thin" style="margin-left: 20px">\n' +
     '            Commit to event post and explore your community.\n' +
     '          </p>\n' +
-    '            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index: 999" ng-click="goToLogin()">Skip</div>\n' +
+    '            <div class="button font-thin" style="font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-left: 20px;z-index: 999;padding-left: 0;" ng-click="goToLogin()">Skip</div>\n' +
     '          </ion-slide>\n' +
     '          <ion-slide>\n' +
     '            <div class="list card image" style="box-shadow: none;margin-left: 0; margin-right: 0;margin-top: 0;">\n' +
     '                  <div class="item item-image">\n' +
-    '                      <img ng-src="img/mountain-commits.jpg">\n' +
-    '                      <div class="item item-avatar">\n' +
-    '                        <img ng-src="img/mountain-commits.jpg">\n' +
+    '                      <img ng-src="img/paint-house.jpeg" style="filter: brightness(100%) grayscale(0%);-webkit-filter: brightness(100%) grayscale(0%);">\n' +
+    '                      <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">\n' +
     '                        <ion-list>\n' +
     '                          <ion-item>\n' +
-    '                            Get a little bit better today.\n' +
+    '                            Paint the House\n' +
     '                          </ion-item>\n' +
     '                          <ion-item>\n' +
-    '                            Make a small difference.\n' +
+    '                            Start with the kitchen on friday.\n' +
     '                          </ion-item>\n' +
     '                        </ion-list>\n' +
     '                      </div>\n' +
@@ -759,21 +895,21 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '              <p class = "font-thin" style="margin-left: 20px">\n' +
     '                Create and stay on track with your goals.\n' +
     '              </p>\n' +
-    '            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index: 999" ng-click="goToLogin()">Skip</div>\n' +
+    '            <div class="button font-thin" style="font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-left: 20px;z-index: 999;padding-left: 0;" ng-click="goToLogin()">Skip</div>\n' +
     '          </ion-slide>\n' +
     '          <ion-slide on-swipe-left="goToLogin()">\n' +
     '            <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll;" onSwipeRight="goToLogin()">\n' +
     '              <div class="col">\n' +
     '                  <div class="category-2-item-wrapper">\n' +
     '                    <div class="category-2-item-content">\n' +
-    '                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/animal.jpg);">\n' +
-    '                        <img bg="" class="multi-bg category-with-image" ng-src="img/animal.jpg">\n' +
+    '                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/fashion-train.jpg);">\n' +
+    '                        <img bg="" class="multi-bg category-with-image" ng-src="img/fashion-train.jpg">\n' +
     '                        <span class="bg-overlay"></span>\n' +
     '                        <h1 class="category-heading" style="width: 80%">\n' +
     '                          <span>1\n' +
     '                            <span class="bubble"></span>\n' +
     '                          </span>\n' +
-    '                          <span style="border-bottom: 1px solid #F10707;">Animals</span>\n' +
+    '                          <span style="border-bottom: 1px solid #F10707;">Fashion</span>\n' +
     '                        </h1>\n' +
     '                      </div>\n' +
     '                    </div>\n' +
@@ -784,14 +920,14 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '              <div class="col">\n' +
     '                  <div class="category-2-item-wrapper">\n' +
     '                    <div class="category-2-item-content">\n' +
-    '                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/architecture.jpg);">\n' +
-    '                        <img bg="" class="multi-bg category-with-image" ng-src="img/architecture.jpg">\n' +
+    '                      <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url(img/food-train.jpeg);">\n' +
+    '                        <img bg="" class="multi-bg category-with-image" ng-src="img/food-train.jpeg">\n' +
     '                        <span class="bg-overlay"></span>\n' +
     '                        <h1 class="category-heading" style="width: 80%">\n' +
     '                          <span>2\n' +
     '                            <span class="bubble"></span>\n' +
     '                          </span>\n' +
-    '                          <span style="border-bottom: 1px solid #F10707;">Architecture</span>\n' +
+    '                          <span style="border-bottom: 1px solid #F10707;">Food & Drink</span>\n' +
     '                        </h1>\n' +
     '                      </div>\n' +
     '                    </div>\n' +
@@ -802,7 +938,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            <p class="font-thin" style="margin-left: 20px;" on-swipe-left="goToLogin()">\n' +
     '              Connect with people to help expand on your interest.\n' +
     '            </p>\n' +
-    '            <div class="font-thin" style="position: absolute;font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-right: 25px;z-index:999" ng-click="goToLogin()">Skip</div>\n' +
+    '            <div class="button font-thin" style="font-size:16px;display: inline-flex;bottom: 0;right: 0;margin-bottom: 15px;margin-left: 20px;z-index:999;padding-left: 0;" ng-click="goToLogin()">Skip</div>\n' +
     '          </ion-slide>\n' +
     '        </ion-slide-box>\n' +
     '      </ion-view>\n'
@@ -1051,80 +1187,42 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '(*) assigned classes -->\n' +
     '\n' +
     '<!-- * view-login / container general -->\n' +
-    '<ion-view class="view-login" hide-nav-bar="true">\n' +
+    '<ion-view hide-nav-bar="true">\n' +
+    '  <!-- <ion-header-bar align-title="center" class="bar bar-header has-tabs-top" style="top: 0 !important;box-shadow:none !important;background: #fafafc !important;">\n' +
+    '    <div class="title title-center header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Glory</div>\n' +
+    '  </ion-header-bar> -->\n' +
     '<!-- * bg-image / background image -->\n' +
     '<!-- class bg-image is in the file general.scss -->\n' +
     '  <!-- * bg-color / background-color -->\n' +
-    '  <div class="bg-color">\n' +
-    '      <ion-content style="background: transparent !important">\n' +
-    '        <div class="bg-image" style="background-image:url(\'img/bg.jpg\');filter: blur(6px);height: 108%;"></div>\n' +
+    '      <ion-content>\n' +
+    '                <div class="bg-image" style="background-image:url(\'img/goals-image-1.jpeg\');"</div>\n' +
     '          <!-- * logo / logo company -->\n' +
-    '          <div class="logo" >\n' +
+    '          <div class="logo">\n' +
     '              <img ng-src="img/TTG-Symbol-2015-02.png" alt="logo" style="height: 160px;">\n' +
     '          </div>\n' +
     '          <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">\n' +
-    '              <div class="list list-inset" style="background-color:transparent !important;padding-top: 26vh;width:95%">\n' +
-    '                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 16px;">\n' +
-    '                  <label class="item item-input" style="border: none; margin-top:2px;background-color:transparent !important; text-align:center;width:100%;">\n' +
-    '                    <input type="text" style="text-align:center;margin-left: 20px;color: white !important" placeholder="Email" ng-model="user.email" class="validate signin" ng-minlength="5" ng-maxlength="30" required>\n' +
-    '                  </label>\n' +
+    '              <div class="list list-inset" style="background-color:transparent !important;padding-top: 26vh;margin-right: 0;">\n' +
+    '                <i class="icon ion-ios-email placeholder-icon" style="font-size: 32px;position: fixed;color: white;display: inline-flex;left: 6%;margin-top: 17px;"></i>\n' +
+    '                <div class = "item" style="border-bottom: 1px solid white;padding-left:0;padding-bottom: 0;border-top: none;border-left: none;border-right: none;margin:auto;margin-bottom: 10px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;">\n' +
+    '                    <input type="text"  class="validate signin" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>\n' +
     '                </div>\n' +
     '\n' +
-    '                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;">\n' +
-    '                  <label class="item item-input" style="border: none; margin-top:2px;background-color:transparent !important; text-align:center;width:100%;">\n' +
-    '                    <input type="password" style="text-align:center;margin-left: 20px;color: white !important" placeholder="Password" ng-model="user.password" class="validate signin" ng-minlength="5" ng-maxlength="30" required>\n' +
-    '                  </label>\n' +
+    '                <i class="icon ion-ios-locked placeholder-icon" style="font-size: 32px;position: fixed;display: inline-flex;left: 6%;color: white"></i>\n' +
+    '                <div class = "item"  style="padding-left:0;padding-bottom: 0;border: none;margin:auto;margin-bottom: 16px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;padding-top: 0;">\n' +
+    '                    <input class="validate signin" type="password" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>\n' +
     '                </div>\n' +
-    '                <p style="position: relative;margin-top: 11px;margin-left: 280px;color: white !important; font-weight: 400 !important" ng-click="openForgot()">\n' +
-    '                    Forgot Password\n' +
-    '                </p>\n' +
+    '\n' +
+    '                <div class = "row">\n' +
+    '                  <button class = "col button-clear" style="font-size: 16px; font-weight: 400;text-align: right;color: white;" ng-click="openForgot()">Forgot</button>\n' +
+    '                </div>\n' +
+    '                  <div style="margin-right: 8px;">\n' +
     '                  <button class="button button-block button-calm" type="submit" style="border-radius: 0px;margin-top: 115px;background-color: white;color: black">SIGN IN</button>\n' +
     '                  <button class="button button-block button-calm" type="submit" style="border-radius: 0px;background-color: transparent;"  ui-sref="authentication">SIGN UP</button>\n' +
-    '                  <!-- * line / line separation -->\n' +
-    '                  <!-- <p style="position: relative;margin-top: 4px;" ui-sref="register">\n' +
-    '                      SIGN UP\n' +
-    '                  </p> -->\n' +
+    '                </div>\n' +
     '              </div>\n' +
     '          </form>\n' +
     '      </ion-content>\n' +
-    '  </div>\n' +
-    '</ion-view>\n' +
-    '\n' +
-    '      <!-- <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">\n' +
-    '      <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">\n' +
-    '        <div class="col">\n' +
-    '            <div class="category-2-item-wrapper" style="padding-top:84.66%">\n' +
-    '              <div class="category-2-item-content">\n' +
-    '                <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/jump-water.jpg);">\n' +
-    '                  <div class="logo">\n' +
-    '                    <img ng-src = "img/TTG-Logo-NowhiteOutline.png">\n' +
-    '                  </div>\n' +
-    '                </div>\n' +
-    '              </div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '      <div class="row text-center" style="color: white;top: 304px;position: absolute;">\n' +
-    '        <div class="col" style="z-index: 999;position: relative;display: block;" ui-sref="authentication">Sign Up</div>\n' +
-    '        <div class="col" style="z-index: 999;position: relative;display: block;">Sign In</div>\n' +
-    '      </div>\n' +
-    '\n' +
-    '      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">\n' +
-    '      <div class="row" style="width: 90%;border-bottom: 1px solid silver;margin:auto;">\n' +
-    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center; width:100%;">\n' +
-    '          <input type="email" style="text-align:center;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>\n' +
-    '        </label>\n' +
-    '      </div>\n' +
-    '      <div class="row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">\n' +
-    '        <label class="item item-input" style="border: none; margin-top:2px; text-align:center; width:100%;">\n' +
-    '          <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>\n' +
-    '        </label>\n' +
-    '      </div>\n' +
-    '      <input type="submit" class="button button-block button-login button-positive" value="Sign In" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">\n' +
-    '    </form>\n' +
-    '  </div>\n' +
-    '      <h1 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ui-sref="authentication"> Create a new account </h1>\n' +
-    '      <h2 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ng-click="openForgot()"> Forgot </h2> -->\n'
+    '</ion-view>\n'
   );
 
 
@@ -1220,46 +1318,34 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/contactList.html',
-    '<ion-view title="Friends" class="font-thin">\n' +
-    '  <ion-nav-bar>\n' +
-    '    <ion-nav-back-button style="display: block">\n' +
-    '    </ion-nav-back-button>\n' +
-    '  </ion-nav-bar>\n' +
-    '\n' +
-    '    <ion-content class="has-header">\n' +
-    '\n' +
-    '      <div class="padding">\n' +
-    '          <button class="button" ng-click="getContacts()">Get My Contacts</button>\n' +
-    '          <div class="list" ng-show="phoneContacts">\n' +
-    '            <div class="card" ng-repeat="contact in phoneContacts">\n' +
-    '              <div class="item item-divider">\n' +
-    '                {{ contact.name.formatted }}\n' +
-    '              </div>\n' +
-    '              <div class="item item-text-wrap">\n' +
-    '                <p><strong>Phone(s)</strong></p>\n' +
-    '                <div ng-repeat="number in contact.phoneNumbers">\n' +
-    '                  <p>{{ number.value }}</p>\n' +
-    '                </div>\n' +
-    '                <p><strong>Email(s)</strong></p>\n' +
-    '                <div ng-repeat="email in contact.emails">\n' +
-    '                  <p>{{ email.value }}</p>\n' +
-    '                </div>\n' +
-    '              </div>\n' +
-    '            </div>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '\n' +
-    '    </ion-content>\n' +
-    '\n' +
-    '\n' +
-    '</ion-view>\n'
+    '<ion-pane>\n' +
+    '      <ion-header-bar class="bar-stable">\n' +
+    '        <h1 class="title">Ionic Contacts Example</h1>\n' +
+    '      </ion-header-bar>\n' +
+    '      <ion-content class="padding">\n' +
+    '        <button class="button button-full button-positive" ng-click="getAllContacts()">\n' +
+    '          Load Contacts\n' +
+    '        </button>\n' +
+    '        <button class="button button-full button-positive" ng-click="addContact()">\n' +
+    '          Add Contact - Gajotres\n' +
+    '        </button>\n' +
+    '        <button class="button button-full button-positive" ng-click="removeContact()">\n' +
+    '          Remove Contact - Gajotres\n' +
+    '        </button>\n' +
+    '        <ion-list>\n' +
+    '          <ion-item ng-repeat="con in contacts">\n' +
+    '            {{con.displayName}}\n' +
+    '          </ion-item>\n' +
+    '        </ion-list>\n' +
+    '      </ion-content>\n' +
+    '    </ion-pane>\n'
   );
 
 
   $templateCache.put('app/news/event.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent;background-color: transparent;height: 48px;">\n' +
+    '  <ion-header-bar style="background-color: #fafafc;height: 48px;top: 0px !important;position: absolute;">\n' +
     '        <div class="row text-center">\n' +
     '          <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createEvent()">Send</div>\n' +
@@ -1267,8 +1353,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content class="has-header" style="top: 54px;">\n' +
-    '\n' +
+    '  <ion-content class="has-header">\n' +
     '    <div class="event-form">\n' +
     '        <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
     '          <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "view.type === 1">\n' +
@@ -1300,7 +1385,6 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '\n' +
     '          <label class="item item-input event__input">\n' +
     '            <input type="datetime-local" displayFormat="MM/YYYY" name="date" style="margin-left:5px;font-weight:300">{{post.date}}\n' +
-    '            <!-- <input type="date" name="date">{{post.date}} -->\n' +
     '            <span class="input-label" style="margin-left:5px">Date/Time</span>\n' +
     '          </label>\n' +
     '\n' +
@@ -1313,15 +1397,32 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/explore.html',
-    '<ion-view title="Discover" class="view-browse" cache-view="false">\n' +
+    '<ion-view title="Discover" class="view-browse" cache-view="false" hide-nav-bar="true">\n' +
     '\n' +
     '  <ion-nav-buttons side="right">\n' +
-    '        <button class="button button-dark button-clear icon ion-ios-search" style="margin-right: 30px"></button>\n' +
+    '        <button class="button button-dark button-clear icon ion-ios-search" ng-click="searchPopover.show($event)" style="margin-right: 30px"></button>\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
     '\n' +
-    '    <ion-content scroll-sista="header" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
-    '      <div ng-if="view.type === 1" style="margin-top: 28px;top: 100px;">\n' +
+    '    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
+    '      <div class="list list-inset" ng-click="view.type = 2" ng-if = "view.type === 1 || view.type === 2"  style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '        <label class="item item-input" ng-if = "view.type === 1 || view.type === 2">\n' +
+    '          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);" ng-if = "view.type === 1 || view.type === 2"></i>\n' +
+    '          <input type="text" class="search-people" ng-if = "view.type === 1 || view.type === 2" placeholder="Search People" style = "margin-left: 40px; font-size: 16px;width: 75%;position:absolute;padding-right:0px;">\n' +
+    '        </label>\n' +
+    '        <i  ng-if = "view.type === 2" class = "ion-ios-close-empty placeholder-icon" style="font-size: 24px;font-size: 32px;right: 12px;position: absolute;z-index: 999;top: 9px;" ng-click="clearSearch()"></i>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">\n' +
+    '        <div class="list card" style="background: transparent; box-shadow: none;">\n' +
+    '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzy: lookUp" ui-sref="friend({contact: user.userId})">\n' +
+    '                <img ng-src="{{user.userPhoto}}">\n' +
+    '                <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>\n' +
+    '              </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div ng-if="view.type === 1" style="top: 120px;margin-top: 80px;">\n' +
     '        <div style="height:100%;margin-top: 50px;" >\n' +
     '            <div class="row row-no-padding category-2-outer" ng-repeat="value in news.itemsArr | limitTo: limit" ng-if="$index % 2 == 0 && news.itemsArr[$index].photo">\n' +
     '              <div class="col" style="padding: 5px !important">\n' +
@@ -1382,25 +1483,40 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/news.html',
-    '<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false">\n' +
+    '<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false" hide-nav-bar="true">\n' +
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
     '\n' +
     '    <ion-floating-menu>\n' +
-    '        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
-    '        <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
-    '        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>\n' +
+    '      <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;" text ="Create Post"></ion-floating-item>\n' +
+    '      <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;" text="Create Event"></ion-floating-item>\n' +
+    '        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;" text="Create Goal"></ion-floating-item>\n' +
     '    </ion-floating-menu>\n' +
     '\n' +
-    '    <ion-content scroll-sista="header" class="has-subheader">\n' +
+    '    <ion-content class="has-tabs-top">\n' +
+    '      <div class="list card image" style="box-shadow: none;" ng-repeat = "plan in plan.itemsArr | limitTo: 1" ng-if="planLength >= 1">\n' +
+    '            <div class="item item-image">\n' +
+    '                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">\n' +
+    '                  <ion-list>\n' +
+    '                    <ion-item>\n' +
+    '                      {{plan.title}}\n' +
+    '                    </ion-item>\n' +
+    '                    <ion-item>\n' +
+    '                      {{plan.description}}\n' +
+    '                    </ion-item>\n' +
+    '                  </ion-list>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '\n' +
     '      <div class="list card" ng-repeat="posts in totalPost | orderBy: \'created\': true | limitTo: limit" on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
     '        <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">\n' +
     '            <img ng-src="{{posts.photo}}">\n' +
     '          </div>\n' +
     '        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">\n' +
     '          <img ng-src="{{posts.avatar}}" style="background-color: transparent">\n' +
-    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.owner}}</h2>\n' +
+    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{posts.owner}}</h2>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>\n' +
@@ -1438,12 +1554,20 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/post.html',
-    '<ion-view class="font-thin" view-title="Post">\n' +
+    '<ion-view class="font-thin" view-title="Post" hide-nav-bar = "true">\n' +
     '\n' +
     '  <ion-nav-bar>\n' +
     '    <ion-nav-back-button style="display: block">\n' +
     '    </ion-nav-back-button>\n' +
     '  </ion-nav-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Post</div>\n' +
+    '  </ion-header-bar>\n' +
     '\n' +
     '    <ion-content class="has-header" style="top: 0;" padding="false">\n' +
     '      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
@@ -1453,13 +1577,13 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">\n' +
     '          <img ng-src="{{post.avatar}}" style="background-color: transparent">\n' +
     '          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>\n' +
-    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 300;" class="font-thin">{{post.owner}}</h2>\n' +
+    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;" class="font-thin">{{post.owner}}</h2>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>\n' +
     '        </div>\n' +
-    '        <a class="item" ng-if = "post.postType === \'Event\'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">\n' +
+    '        <a class="item" ng-if = "post.postType === \'Event\'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">\n' +
     '          {{post.totalCommits}} Commit\n' +
     '        </a>\n' +
     '        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">\n' +
@@ -1488,7 +1612,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/news/regular.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent;height: 48px;">\n' +
+    '    <ion-header-bar style="background-color: #fafafc;height: 48px;top: 0px !important;position: absolute;">\n' +
     '        <div class="row text-center">\n' +
     '            <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPost()">Send</div>\n' +
@@ -1496,8 +1620,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        </div>\n' +
     '    </ion-header-bar>\n' +
     '\n' +
-    '  <ion-content class="has-header" style="top: 54px;">\n' +
-    '\n' +
+    '  <ion-content class="has-header">\n' +
     '    <div class="event-form">\n' +
     '        <div class="list edit padding-horizontal padding-vertical" style="padding:0">\n' +
     '          <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "view.type === 1">\n' +
@@ -1536,11 +1659,20 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/settings/communicate.html',
-    '<ion-view title="Notifications" scroll="true">\n' +
+    '<ion-view title="Notifications" scroll="true" hide-nav-bar="true">\n' +
     '  <ion-nav-bar>\n' +
     '    <ion-nav-back-button style="display: block">\n' +
     '    </ion-nav-back-button>\n' +
     '  </ion-nav-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Notifications</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
     '\n' +
     '    <ion-content class="has-header bt-grey profile">\n' +
     '\n' +
@@ -1586,17 +1718,21 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/settings/settings.html',
-    '<ion-view title="Settings" class="font-thin">\n' +
-    '  <ion-nav-bar>\n' +
-    '    <ion-nav-back-button style="display: block">\n' +
-    '    </ion-nav-back-button>\n' +
-    '  </ion-nav-bar>\n' +
+    '<ion-view title="Settings" hide-nav-bar="true">\n' +
     '\n' +
-    '    <ion-content scroll="true" overflow-scroll="true" class="iframe-wrapper">\n' +
+    '  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Settings</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
+    '    <ion-content class="has-header" style="top: 44px;">\n' +
     '    <div class="list" style="margin-bottom: 0">\n' +
     '        <div class="item item-divider" style="background-color: white; color: #F10707;" style="border: none">Profile</div>\n' +
     '        <div class="item" ui-sref="edit-profile" style="border: none">Edit Profile</div>\n' +
-    '          <div class="item" ng-click="interests()" style="border: none">Interest</div>\n' +
+    '          <div class="item" ng-click="interests()" style="border: none">Update Interest</div>\n' +
     '          <div class="item" ui-sref="communicate" style="border: none">Notifications</div>\n' +
     '        </div>\n' +
     '\n' +
@@ -1674,15 +1810,19 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/shop/interest.html',
-    '<ion-view class="view-login" style="color: white;" cache-view="false">\n' +
-    '  <ion-nav-bar class="signup-bar-clear bar-edit-profile" style="background:none">\n' +
-    '    <ion-header-bar align-title="left" style="background: transparent !important;">\n' +
-    '        <h1 class="title font-thin" style="color: black; font-weight: 400; left: 0px !important">Select your interest</h1>\n' +
-    '    </ion-header-bar>\n' +
-    '    <ion-header-bar align-title="right" style="background: transparent !important;z-index: 999;" ui-sref="tabs.account">\n' +
-    '        <h1 class="title font-thin" style="color: black; font-weight: 400; z-index: 999;" ui-sref="tabs.account">Next</h1>\n' +
-    '    </ion-header-bar>\n' +
-    '  </ion-nav-bar>\n' +
+    '<ion-view class="view-login" style="color: white;" hide-nav-bar="true">\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back" style="color: gray"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Select your interest</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="right" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;margin-right:15px;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ui-sref="findPartners">\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-right: 15px;" ui-sref="findPartners">Next</div>\n' +
+    '  </ion-header-bar>\n' +
     '\n' +
     '  <ion-content class="has-header" scroll="true">\n' +
     '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interests | limitTo: limit  track by $index">\n' +
@@ -1720,17 +1860,24 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/shop/match.html',
-    '<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" cache-view="false">\n' +
+    '<ion-view view-title="Connect" class="font-thin" style="background:#fafafc;" hide-nav-bar="true">\n' +
     '  <ion-nav-buttons side="right">\n' +
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
-    '  <div class="row view-tab match">\n' +
+    '\n' +
+    '    <ion-floating-button ng-if="view.type === 1" ng-click="view.type = 2"class="match-float" has-footer="false" button-color="#F10707" style= "left: 20px;" icon="ion-ios-shuffle-strong" iconColor="#fff">\n' +
+    '    </ion-floating-button>\n' +
+    '\n' +
+    '    <ion-floating-button ng-if="view.type === 2" ng-click="view.type = 1"class="match-float" has-footer="false" button-color="#F10707" style= "left: 20px;" icon="ion-ios-shuffle-strong" iconColor="#fff">\n' +
+    '    </ion-floating-button>\n' +
+    '  <!-- <div class="row view-tab match">\n' +
     '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 1}" ng-click="view.type = 1" style="border: none;margin-top: 3px;">Connect</div>\n' +
     '    <div class="col font-thin" ng-class="{\'balanced\' : view.type === 2}" ng-click="view.type = 2" style="border: none;margin-top: 3px;">Leaders</div>\n' +
-    '  </div>\n' +
+    '  </div> -->\n' +
     '\n' +
-    '    <ion-content  scroll-sista = "header" class="has-subheader">\n' +
-    '        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()">\n' +
+    '    <ion-content  class="has-tabs-top">\n' +
+    '      <div ng-if="view.type === 1" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Connect</div>\n' +
+    '        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()" style="position: relative;top:53px;">\n' +
     '          <div class="row row-no-padding category-2-outer" style="padding:0;"ng-repeat = "ab in abs | limitTo: limit track by $index">\n' +
     '            <div class="col">\n' +
     '              <a ui-sref="contacts({activity:ab.id})">\n' +
@@ -1753,7 +1900,8 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          </div>\n' +
     '        </div>\n' +
     '\n' +
-    '      <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()">\n' +
+    '      <div ng-if="view.type === 2" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Leaders</div>\n' +
+    '      <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()" style="position: relative;top:53px;">\n' +
     '        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in trainers | limitTo: limit track by $index">\n' +
     '          <div class="col">\n' +
     '            <a ui-sref="contacts({activity:trainer.id})">\n' +
@@ -1774,22 +1922,27 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            </a>\n' +
     '          </div>\n' +
     '        </div>\n' +
-    '          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
+    '          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
 
 
   $templateCache.put('app/shop/roleRather.html',
-    '<ion-view class="view-login" style="color: white;" cache-view="false">\n' +
-    '  <ion-nav-bar class="signup-bar-clear bar-edit-profile" style="background:none">\n' +
-    '    <ion-header-bar align-title="left" style="background: transparent !important;">\n' +
-    '        <h1 class="title font-thin" style="color: black; font-weight: 400; left: 0px !important">Select your interest</h1>\n' +
-    '    </ion-header-bar>\n' +
-    '    <ion-header-bar align-title="right" style="background: transparent !important;z-index: 999;" ui-sref="tabs.account">\n' +
-    '        <h1 class="title font-thin" style="color: black; font-weight: 400; z-index: 999;" ui-sref="tabs.account">Next</h1>\n' +
-    '    </ion-header-bar>\n' +
-    '  </ion-nav-bar>\n' +
+    '<ion-view class="view-login" style="color: white;" hide-nav-bar="true">\n' +
+    '\n' +
+    '  <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">\n' +
+    '      <i class="icon ion-ios-arrow-back" style="color: gray"></i>\n' +
+    '      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>\n' +
+    '    </button>\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Select your interest</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
+    '  <ion-header-bar align-title="right" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;margin-right:15px;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ui-sref="findPartners">\n' +
+    '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-right: 15px;" ui-sref="findPartners">Next</div>\n' +
+    '  </ion-header-bar>\n' +
+    '\n' +
     '\n' +
     '  <ion-content class="has-header" scroll="true">\n' +
     '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interests | limitTo: limit  track by $index">\n' +

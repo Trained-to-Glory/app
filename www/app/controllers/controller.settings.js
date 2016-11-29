@@ -1,5 +1,6 @@
 angular.module('module.view.settings', [])
-	.controller('settingsCtrl', function($scope,$rootScope,$cordovaInAppBrowser,$state,$ionicPopover,$stateParams,$ionicLoading,$timeout,Popup,$localStorage) {
+	.controller('settingsCtrl',['$scope','$rootScope','$cordovaInAppBrowser','$state','$ionicPopover','$stateParams','$ionicLoading','$timeout','Popup','$localStorage',
+		function($scope,$rootScope,$cordovaInAppBrowser,$state,$ionicPopover,$stateParams,$ionicLoading,$timeout,Popup,$localStorage) {
 				$scope.service = function(){
 					$cordovaInAppBrowser.open('https://www.trainedtoglory.com/terms-of-service','_blank', 'location=yes');return false;
 					$state.go('service');
@@ -31,7 +32,6 @@ angular.module('module.view.settings', [])
                 };
 
 								$scope.profile = $localStorage.account;
-								console.log($scope.profile);
 
 								$scope.interests = function (){
 									var profile = $scope.profile;
@@ -90,7 +90,7 @@ angular.module('module.view.settings', [])
 				 }
 			 };
 
-});
+}]);
 
 var popoverTemplate =
 		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +

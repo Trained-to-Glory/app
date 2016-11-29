@@ -1,5 +1,6 @@
 angular.module('module.view.explore', ['angular.filter'])
-	.controller('exploreCtrl', function($scope,$rootScope,$localStorage,$state,postService,usersService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
+	.controller('exploreCtrl', ['$scope','$rootScope','$localStorage','$state','postService','usersService','engagementService','$ionicSideMenuDelegate','$ionicPopover',
+		function($scope,$rootScope,$localStorage,$state,postService,usersService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
         $scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
                     scope: $scope
         });
@@ -236,8 +237,7 @@ angular.module('module.view.explore', ['angular.filter'])
 				 }
 			 };
 
-	});
-
+	}]);
 
 
 	var searchTemplate =
@@ -256,36 +256,13 @@ angular.module('module.view.explore', ['angular.filter'])
 	'</ion-content>' +
 	'</ion-popover-view>';
 
-var popoverTemplate =
- '<ion-popover-view class="menu popover" style="background-color: #fff;top: -9px;">' +
- '<ion-content scroll="true">' +
- '<ion-list style="position:absolute;top:-10vh;">' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="browse()"> Home' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="search()"> Search' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="partners()"> Partners' +
- '</ion-item>' +
- '<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
- '</ion-item>' +
- '<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;margin-left:2px;" ng-click="account()">'+
- '<img ng-src="{{ profile.userPhoto }}" style="margin-left: 2px;">'+
- '<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
- '</a>'+
- '<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +
- '</ion-item>' +
- '</ion-list>'+
- '</ion-content>' +
- '</ion-popover-view>';
+var searchTemplate =
+'<div class="bar bar-header item-input-inset"> '+
+' <label class="item-input-wrapper"> ' +
+'	 <i class="icon ion-ios-search placeholder-icon"></i> ' +
+'	 <input type="search" placeholder="Search"> ' +
+' </label>' +
+' <button class="button button-clear"> ' +
+'	 Cancel ' +
+' </button> '
+'</div>';

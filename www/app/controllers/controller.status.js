@@ -1,5 +1,6 @@
 angular.module('module.view.status', [])
-	.controller('statusCtrl', function($scope,$rootScope,$state,$localStorage) {
+	.controller('statusCtrl', ['$scope','$rootScope','$state','$localStorage',
+		function($scope,$rootScope,$state,$localStorage) {
      $scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -29,4 +30,4 @@ angular.module('module.view.status', [])
 					status: $scope.user.person || $scope.user.leader
 				});
 			});
-});
+}]);

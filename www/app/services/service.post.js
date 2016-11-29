@@ -1,5 +1,5 @@
 angular.module('service.post', [])
-    .service('postService', function ($localStorage, $q) {
+    .service('postService',['$localStorage', '$q', function ($localStorage, $q) {
 
         this.get = function (postId) {
             var posts = (postId) ? firebase.database().ref('posts/' + postId) : firebase.database().ref('posts');
@@ -455,8 +455,4 @@ angular.module('service.post', [])
             return arr[Math.floor(Math.random() * arr.length)];
         };
 
-    });
-
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
+    }]);

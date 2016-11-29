@@ -1,5 +1,6 @@
 angular.module('module.view.editProfile', [])
-	.controller('editProfileCtrl', function($scope, $rootScope, interestService,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,$localStorage, $ionicHistory, $ionicPopup) {
+	.controller('editProfileCtrl',['$scope', '$rootScope', 'interestService','usersService', '$state','$ionicActionSheet','appService','$cordovaCamera','$localStorage', '$ionicHistory', '$ionicPopup',
+	function($scope, $rootScope, interestService,usersService, $state,$ionicActionSheet,appService,$cordovaCamera,$localStorage, $ionicHistory, $ionicPopup) {
 
 		$scope.profile = $localStorage.account;
 
@@ -226,4 +227,4 @@ angular.module('module.view.editProfile', [])
 					return true;
 				}
 
-});
+}]);

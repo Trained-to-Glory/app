@@ -3,7 +3,8 @@
 // When the user is done registering, the user is automatically logged in.
 'Use Strict';
 angular.module('module.view.login', [])
-.controller('loginCtrl', function($scope, $state, $localStorage, Utils, Social, Popup, $ionicPopup) {
+.controller('loginCtrl', ['$scope', '$state', '$localStorage', 'Utils', 'Popup', '$ionicPopup',
+  function($scope, $state, $localStorage, Utils, Popup, $ionicPopup) {
   $scope.$on('$ionicView.enter', function() {
     //Clear the Registration Form.
     $scope.user = {
@@ -29,6 +30,7 @@ angular.module('module.view.login', [])
               firebase.database().ref('accounts').child($scope.userId).set({
                  fullName: user.fullName,
                  userPhoto: ttgLogo,
+                 backUpPhoto: ttgLogo,
                  status: user.person || user.leader,
                  userName: user.userName,
                  userId: firebase.auth().currentUser.uid,
@@ -50,6 +52,7 @@ angular.module('module.view.login', [])
                    $localStorage.userName = user.userName;
                    $localStorage.status = user.person || user.leader;
                    $localStorage.photo= ttgLogo;
+                   $localStorage.backUpPhoto = ttgLogo;
                    $localStorage.userId = firebase.auth().currentUser.uid;
                    $localStorage.password = user.password;
               });
@@ -97,4 +100,4 @@ angular.module('module.view.login', [])
     });
   };
 
-});
+}]);

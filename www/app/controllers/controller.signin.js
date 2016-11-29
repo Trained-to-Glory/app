@@ -1,5 +1,6 @@
 angular.module('module.view.signin', [])
-  .controller('signinCtrl', function ($scope, $ionicPopup, $rootScope, $state, $ionicModal, postService, $ionicLoading,$firebaseAuth, $timeout, $localStorage, Utils, $cordovaOauth, Popup, Social) {
+  .controller('signinCtrl', ['$scope', '$ionicPopup', '$rootScope', '$state', '$ionicModal', 'postService', '$ionicLoading','$firebaseAuth', '$timeout','$ionicSlideBoxDelegate', '$localStorage', 'Utils', '$cordovaOauth', 'Popup',
+    function ($scope, $ionicPopup, $rootScope, $state, $ionicModal, postService, $ionicLoading,$firebaseAuth, $timeout,$ionicSlideBoxDelegate, $localStorage, Utils, $cordovaOauth, Popup) {
     $scope.$on('$ionicView.enter', function() {
       //Clear the Login Form.
       $scope.user = {
@@ -194,6 +195,18 @@ angular.module('module.view.signin', [])
       }
     };
 
+    $scope.next = function() {
+        $ionicSlideBoxDelegate.next();
+      };
+      $scope.previous = function() {
+        $ionicSlideBoxDelegate.previous();
+      };
+
+      // Called each time the slide changes
+      $scope.slideChanged = function(index) {
+        $scope.slideIndex = index;
+      };
+
 
     //Check if the Social Login used already has an account on the Firebase Database. If not, the user is asked to complete a form.
-  });
+  }]);

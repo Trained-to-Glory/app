@@ -1,5 +1,6 @@
 angular.module('module.view.createPlan', [])
-	.controller('createPlanCtrl', function($scope,$rootScope,$state,$ionicHistory,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
+	.controller('createPlanCtrl',['$scope','$rootScope','$state','$ionicHistory','$localStorage','appService','$cordovaCamera', 'postService', '$stateParams','$ionicActionSheet',
+		 function($scope,$rootScope,$state,$ionicHistory,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 		$scope.postId = $stateParams.post;
 
@@ -95,4 +96,4 @@ angular.module('module.view.createPlan', [])
           });
       };
 
-});
+}]);

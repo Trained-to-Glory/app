@@ -1,5 +1,6 @@
 angular.module('module.view.leader', [])
-	.controller('leaderCtrl', function($scope,$rootScope,$state,usersService,$stateParams,engagementService,$localStorage) {
+	.controller('leaderCtrl', ['$scope','$rootScope','$state','usersService','$stateParams','engagementService','$localStorage',
+		function($scope,$rootScope,$state,usersService,$stateParams,engagementService,$localStorage) {
 		$scope.profile = $localStorage.account;
 
 	 $scope.togglePartner = function(partnerId){
@@ -306,7 +307,7 @@ angular.module('module.view.leader', [])
 			};
 
 
-});
+}]);
 
 var searchTemplate =
     '<ion-popover-view class="search">' +

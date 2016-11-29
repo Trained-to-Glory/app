@@ -1,5 +1,6 @@
 angular.module('module.view.contacts', [])
-	.controller('contactsCtrl', function($scope,$rootScope,$state,usersService,$ionicPopover,$localStorage,engagementService,$stateParams,interestService) {
+	.controller('contactsCtrl',['$scope','$rootScope','$state','usersService','$ionicPopover','$localStorage','engagementService','$stateParams','interestService','$cordovaContacts','$ionicPlatform',
+	function($scope,$rootScope,$state,usersService,$ionicPopover,$localStorage,engagementService,$stateParams,interestService,$cordovaContacts,$ionicPlatform) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -144,67 +145,6 @@ angular.module('module.view.contacts', [])
 				 $scope.$broadcast('scroll.infiniteScrollComplete');
 			 };
 
-			 $scope.browse = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.news');
-			 };
-
-			 $scope.explore = function () {
-				 $scope.closePopover();
-				 $state.go('tabs.explore');
-			 };
-
-			 $scope.match = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.match');
-
-			 };
-
-			 $scope.coach = function () {
-					$scope.closePopover();
-					 $state.go('tabs.coach');
-			 };
-
-			 $scope.plans = function () {
-					$scope.closePopover();
-					 $state.go('tabs.sentPlans');
-			 };
-
-			 $scope.reminder = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.reminders');
-			 };
-
-			 $scope.partners = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.partners');
-			 };
-
-			 $scope.settings = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.settings');
-			 };
-
-			 $scope.search = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.search');
-			 };
-
-			 $scope.calendar = function () {
-				 $scope.closePopover();
-					 $state.go('tabs.reminders');
-			 };
-
-			 $scope.account = function (){
-				 $scope.closePopover();
-				 $state.go('tabs.account');
-			 };
-
-			 $scope.notifications = function (){
-				 $scope.closePopover();
-				 $state.go('tabs.communicate');
-			 };
-
 			 $scope.logout = function() {
 				if (firebase.auth()) {
 					firebase.auth().signOut().then(function() {
@@ -220,11 +160,79 @@ angular.module('module.view.contacts', [])
 				}
 			};
 
+			$scope.addContact = function() {
+			    $cordovaContacts.save($scope.contact).then(function(result) {
+			        console.log('Contact Saved!');
+			    }, function(err) {
+			        console.log('An error has occured while saving contact data!');
+			    });
+			};
+
+			$scope.getAllContacts = function() {
+			    $cordovaContacts.find({filter : '', fields:  [ 'displayName']}).then(function(allContacts) { //omitting parameter to .find() causes all contacts to be returned
+			        $scope.contacts = allContacts;
+			        console.log(JSON.stringify(allContacts));
+			    });
+			};
+
+			$scope.removeContact = function() {
+
+			    $scope.removeContact = {};   // We will use it to save a contact
+			    $scope.removeContact.displayName = 'Gajotres'; // Contact Display Name
+
+			    $cordovaContacts.remove($scope.removeContact).then(function(result) {
+			        console.log('Contact Deleted!');
+			        console.log(JSON.stringify(result));
+			    }, function(error) {
+			        console.log('An error has occured while deleting contact data!');
+			        console.log(JSON.stringify(error));
+			    });
+			}
+
 			$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
 					scope: $scope
 			});
 
-})
+}]).filter('orderByLocation', function() {
+
+  // In the return function, we must pass in a single parameter which will be the data we will work on.
+  // We have the ability to support multiple other parameters that can be passed into the filter optionally
+  return function(input, location, order) {
+		if(!input){
+			return input;
+		}
+    var output = [];
+		var tempObj = {};
+		var rad = function(x) {
+			return x * Math.PI / 180;
+		};
+
+	 var getDistance = function(p1, p2) {
+		 var R = 3963.190592; // Earth’s mean radius in miles
+		 var dLat = rad(p2.lat - p1.lat);
+		 var dLong = rad(p2.long - p1.long);
+		 var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+		 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		 var d = R * c;
+		 return d; // returns the distance in miles
+	 };
+
+	 for(var key in input){
+		 tempObj[key] = input[key];
+		 tempObj[key].distance = getDistance(location,tempObj[key].location);
+	 }
+
+	 var tempArr = Object.keys(tempObj).sort(function(a,b){return tempObj[a].distance - tempObj[b].distance});
+
+	 for(var i = 0; i < tempArr.length; i++){
+		 output.push(tempObj[tempArr[i]]);
+	 }
+    // Do filter work here
+    return output;
+  }
+});
 
 var contactTemplate =
     '<ion-popover-view class="right large">' +

@@ -1,5 +1,6 @@
 angular.module('module.view.friend', [])
-	.controller('friendCtrl', function($scope,$log,engagementService,$localStorage, $rootScope,$state,postService, usersService,$stateParams) {
+	.controller('friendCtrl',['$scope','$log','engagementService','$localStorage', '$rootScope','$state','postService', 'usersService','$stateParams',
+		 function($scope,$log,engagementService,$localStorage, $rootScope,$state,postService, usersService,$stateParams) {
 		 $scope.profile = $localStorage.account;
 
 		$scope.togglePartner = function(partnerId){
@@ -308,7 +309,7 @@ angular.module('module.view.friend', [])
 			}
 		};
 
-});
+}]);
 var popoverTemplate =
 		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +
 		'<ion-content scroll="true">' +

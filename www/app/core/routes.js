@@ -24,16 +24,21 @@ angular.module('full_starter.routes', [])
     manyRequests: "Sorry, but we\'re still proccessing your previous login. Please try again later."
   })
 
-  .constant('Social', {
-    googleWebClientId: "778952668094-pu4uhti4hi5m0g51ih0uiapvdu4mjj5i.apps.googleusercontent.com"
-  })
-
-  .config(function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider) {
+  .config(['$stateProvider', '$urlRouterProvider','$ionicConfigProvider', '$logProvider', 'calendarConfig', function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider, calendarConfig) {
     $ionicConfigProvider.backButton.previousTitleText(false);
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("left");
     $ionicConfigProvider.tabs.position("top");
-    $ionicConfigProvider.scrolling.jsScrolling(true);
+
+    calendarConfig.titleFormats.week = 'MMMM';
+    calendarConfig.dateFormatter = 'moment';
+    calendarConfig.allDateFormats.moment.date.hour = 'h:mm a';
+    calendarConfig.allDateFormats.moment.title.day = 'MMM D ddd';
+    calendarConfig.i18nStrings.weekNumber = 'Week {week}';
+    calendarConfig.dateFormats.weekDay = 'ddd';
+    calendarConfig.dateFormats.day = 'D';
+    calendarConfig.displayAllMonthEvents = true;
+    calendarConfig.displayEventEndTimes = true;
     //turning off $log
     $logProvider.debugEnabled(false);
 
@@ -166,12 +171,6 @@ angular.module('full_starter.routes', [])
         controller: 'leadCtrl'
       })
 
-      .state('contactList', {
-        url: '/contactList',
-        templateUrl: 'app/news/contactList.html',
-        controller: 'commentCtrl'
-      })
-
       .state('roleRather', {
         url: '/roleRather',
         templateUrl: 'app/shop/roleRather.html',
@@ -188,6 +187,13 @@ angular.module('full_starter.routes', [])
         url: '/partners',
         params: { partner: null, mode: null },
         templateUrl: 'app/account/partners.html',
+        controller: 'partnersCtrl'
+      })
+
+      .state('findPartners', {
+        url: '/findPartners',
+        params: { partner: null, mode: null },
+        templateUrl: 'app/account/findPartners.html',
         controller: 'partnersCtrl'
       })
 
@@ -265,21 +271,7 @@ angular.module('full_starter.routes', [])
         url: '/signin',
         templateUrl: 'app/intro/signin.html',
         controller: 'signinCtrl',
-      })
-    $urlRouterProvider.otherwise('intro')
+      });
+    $urlRouterProvider.otherwise('signin');
 
-  })
-
-  .config(function ($ionicConfigProvider, calendarConfig) {
-
-
-    calendarConfig.titleFormats.week = 'MMMM';
-    calendarConfig.dateFormatter = 'moment';
-    calendarConfig.allDateFormats.moment.date.hour = 'h:mm a';
-    calendarConfig.allDateFormats.moment.title.day = 'MMM D ddd';
-    calendarConfig.i18nStrings.weekNumber = 'Week {week}';
-    calendarConfig.dateFormats.weekDay = 'ddd';
-    calendarConfig.dateFormats.day = 'D';
-    calendarConfig.displayAllMonthEvents = true;
-    calendarConfig.displayEventEndTimes = true;
-  })
+  }]);

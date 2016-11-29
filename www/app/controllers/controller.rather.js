@@ -1,5 +1,6 @@
 angular.module('module.view.rather', [])
-	.controller('ratherCtrl', function($scope,$rootScope,$state,$ionicHistory,interestService,$localStorage, engagementService) {
+	.controller('ratherCtrl', ['$scope','$rootScope','$state','$ionicHistory','interestService','$localStorage', 'engagementService',
+		function($scope,$rootScope,$state,$ionicHistory,interestService,$localStorage, engagementService) {
 		$scope.data = {};
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;
 		$scope.goBack = function (ui_sref) {
@@ -75,4 +76,4 @@ angular.module('module.view.rather', [])
 		        }
 		    };
 
-});
+}]);

@@ -1,21 +1,20 @@
-<ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+<ion-view view-title="Goals" cache-view="false" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" hide-nav-bar="true">
   <ion-nav-buttons side="right">
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
 
     <ion-floating-menu>
-        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;"></ion-floating-item>
-        <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;"></ion-floating-item>
-        <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;"></ion-floating-item>
+      <ion-floating-item icon="ion-ios-camera" click="createPost()" style="background-color: #F10707 !important;" text ="Create Post"></ion-floating-item>
+      <ion-floating-item icon="ion-ios-bell" click="createEvent()" style="background-color: #F10707 !important;" text="Create Event"></ion-floating-item>
+        <ion-floating-item icon="ion-ios-star" click="createGoal()" style="background-color: #F10707 !important;" text="Create Goal"></ion-floating-item>
     </ion-floating-menu>
 
-    <ion-content on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" scroll-sista="header">
+    <ion-content class="has-tabs-top" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
       <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">
       <div class="list card image" style="box-shadow: none;">
             <div class="item item-image">
                 <img ng-src="{{plan.photo}}">
-                <div class="item item-avatar">
-                  <img ng-src="{{plan.avatar}}">
+                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">
                   <ion-list>
                     <ion-item>
                       {{plan.title}}
@@ -27,11 +26,12 @@
                 </div>
             </div>
         </div>
-
-        <ion-list>
-          <ion-item style="border: none" ng-repeat = "item in plan.checklist">
-            <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="isChecked"
-              ng-change="checkedOrNot(item, isChecked, $index, $localStorage, plan.checklist.length)" ng-init='isChecked=false'>
+        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;" class = "font-thin" >Checklist</div>
+        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;position: fixed;right: 20px;color: green;" class = "font-thin">Complete</div>
+        <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
+          <ion-item style="border: none;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ng-repeat = "item in plan.checklist" ng-class="{'text-color sentPlans' : item.isChecked}">
+            <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="item.isChecked"
+              ng-change="checkedOrNot(item, $index, plan.checklist.length)" ng-class="{'text-color sentPlans' : item.isChecked}">
               {{item.displayName}}
           </ion-checkbox>
           </ion-item>
@@ -40,33 +40,6 @@
           <a href = "#progress-bar"></a>
         </div>
       </div>
-
-        <div style="margin-left: 20px;margin-top: 30px;" class = "font-thin">People that may help</div>
-          <ion-scroll direction="x">
-          <div class="row">
-            <div class="col item-avatar" ng-repeat="user in scrollPeople | limitTo: 8" style="margin-right: 30px;">
-                <img ng-src="{{user.userPhoto}}">
-              <h2 class="lead" style="font-size: 12px;margin-top: 53px;">{{user.userName}}</h2>
-            </div>
-          </div>
-        </ion-scroll>
-
-          <div style="margin-left: 20px;margin-top: 30px" class = "font-thin">Events that may help</div>
-          <div class="list card image" style="box-shadow: none;" ng-repeat = "picture in news.itemsArr" ng-if = "picture.postType === 'Event' && !profile">
-            <div class="item item-image">
-                <div class="item item-avatar">
-                  <img ng-src="{{picture.avatar}}">
-                  <ion-list>
-                    <ion-item>
-                      {{picture.title}}
-                    </ion-item>
-                    <ion-item>
-                      {{picture.description}}
-                    </ion-item>
-                  </ion-list>
-                </div>
-            </div>
-            </div>
-        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
+        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

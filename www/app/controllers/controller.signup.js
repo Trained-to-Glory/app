@@ -1,5 +1,6 @@
-angular.module('module.view.signup', ['full_starter.factory'])
-	.controller('signupCtrl', function($scope,$rootScope,engagementService,$ionicPopup,$state,Utils,Popup,$localStorage,interestService) {
+angular.module('module.view.signup', [])
+	.controller('signupCtrl', ['$scope','$rootScope','engagementService','$ionicPopup','$state','Utils','Popup','$localStorage','interestService',
+		function($scope,$rootScope,engagementService,$ionicPopup,$state,Utils,Popup,$localStorage,interestService) {
 		$scope.$on('$ionicView.enter', function() {
      //Clear the Registration Form.
      $scope.user = {
@@ -76,4 +77,4 @@ angular.module('module.view.signup', ['full_starter.factory'])
      $state.go('home');
    };
 
-});
+}]);

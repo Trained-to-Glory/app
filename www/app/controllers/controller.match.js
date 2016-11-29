@@ -1,5 +1,6 @@
 angular.module('module.view.match', [])
-	.controller('matchCtrl', function($scope,$localStorage,$ionicPopup,$ionicScrollDelegate,$ionicNavBarDelegate,$ionicPopover,$ionicPlatform, $cordovaGeolocation,$rootScope,usersService,$state,interestService,$stateParams) {
+	.controller('matchCtrl', ['$scope','$localStorage','$ionicPopup','$ionicScrollDelegate','$ionicNavBarDelegate','$ionicPopover','$ionicPlatform', '$cordovaGeolocation','$rootScope','usersService','$state','interestService','$stateParams',
+		function($scope,$localStorage,$ionicPopup,$ionicScrollDelegate,$ionicNavBarDelegate,$ionicPopover,$ionicPlatform, $cordovaGeolocation,$rootScope,usersService,$state,interestService,$stateParams) {
 		$scope.$on('$ionicView.enter', function(event) {
 			//  $ionicPopup.show({
 			//  	title: 'Location',
@@ -66,6 +67,14 @@ angular.module('module.view.match', [])
 
 			$scope.onSwipeLeft1 = function () {
 				$scope.view = { type: 2 };
+			}
+
+			$scope.changeView = function () {
+				if ($scope.view == { type: 1 }){
+					$scope.view == { type: 2 }
+				} else if ($scope.view == { type: 1 }) {
+					$scope.view == { type: 1}
+				}
 			}
 
 			$scope.onSwipeRight1 = function () {
@@ -188,7 +197,7 @@ angular.module('module.view.match', [])
 
         };
 
-});
+}]);
 
 var popoverTemplate =
 		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +

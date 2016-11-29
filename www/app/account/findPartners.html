@@ -1,0 +1,28 @@
+<ion-view title="Add Friends" class="font-thin" hide-nav-bar="true">
+
+  <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
+    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
+      <i class="icon ion-ios-arrow-back" style="color: gray"></i>
+      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
+    </button>
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Add Friends</div>
+  </ion-header-bar>
+
+  <ion-header-bar align-title="right" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;margin-right:15px;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" ui-sref="intro">
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-right: 15px;" ui-sref="intro">Next</div>
+  </ion-header-bar>
+
+    <ion-content class="has-header">
+    <div class = "list card" style="background: transparent; box-shadow: none">
+      <div class="item item-avatar item-button-right followers" ng-repeat="person in people" ng-if="person.partnered === false" style="border: none; border-style: none">
+          <img ng-src="{{person.userPhoto}}">
+          <h2 style="font-weight: 400">{{person.userName}}</h2>
+          <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': person.partnered, 'button-balanced ion-ios-undo-outline':!person.partnered }" ng-click="togglePartner(person.userId)">
+              <span ng-if="!person.partnered"> Friend</span>
+              <span ng-if="person.partnered"> Friend</span>
+          </button>
+      </div>
+    </div>
+
+    </ion-content>
+</ion-view>

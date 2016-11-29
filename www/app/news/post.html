@@ -1,9 +1,17 @@
-<ion-view class="font-thin" view-title="Post">
+<ion-view class="font-thin" view-title="Post" hide-nav-bar = "true">
 
   <ion-nav-bar>
     <ion-nav-back-button style="display: block">
     </ion-nav-back-button>
   </ion-nav-bar>
+
+  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
+    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
+      <i class="icon ion-ios-arrow-back"></i>
+      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
+    </button>
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Post</div>
+  </ion-header-bar>
 
     <ion-content class="has-header" style="top: 0;" padding="false">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;">
@@ -13,13 +21,13 @@
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
           <img ng-src="{{post.avatar}}" style="background-color: transparent">
           <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
-          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 300;" class="font-thin">{{post.owner}}</h2>
+          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;" class="font-thin">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>
         </div>
-        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">
+        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">
           {{post.totalCommits}} Commit
         </a>
         <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">

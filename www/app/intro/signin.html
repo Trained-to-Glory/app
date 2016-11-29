@@ -3,77 +3,39 @@
 (*) assigned classes -->
 
 <!-- * view-login / container general -->
-<ion-view class="view-login" hide-nav-bar="true">
+<ion-view hide-nav-bar="true">
+  <!-- <ion-header-bar align-title="center" class="bar bar-header has-tabs-top" style="top: 0 !important;box-shadow:none !important;background: #fafafc !important;">
+    <div class="title title-center header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Glory</div>
+  </ion-header-bar> -->
 <!-- * bg-image / background image -->
 <!-- class bg-image is in the file general.scss -->
   <!-- * bg-color / background-color -->
-  <div class="bg-color">
-      <ion-content style="background: transparent !important">
-        <div class="bg-image" style="background-image:url('img/bg.jpg');filter: blur(6px);height: 108%;"></div>
+      <ion-content>
+                <div class="bg-image" style="background-image:url('img/goals-image-1.jpeg');"</div>
           <!-- * logo / logo company -->
-          <div class="logo" >
+          <div class="logo">
               <img ng-src="img/TTG-Symbol-2015-02.png" alt="logo" style="height: 160px;">
           </div>
           <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
-              <div class="list list-inset" style="background-color:transparent !important;padding-top: 26vh;width:95%">
-                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 16px;">
-                  <label class="item item-input" style="border: none; margin-top:2px;background-color:transparent !important; text-align:center;width:100%;">
-                    <input type="text" style="text-align:center;margin-left: 20px;color: white !important" placeholder="Email" ng-model="user.email" class="validate signin" ng-minlength="5" ng-maxlength="30" required>
-                  </label>
+              <div class="list list-inset" style="background-color:transparent !important;padding-top: 26vh;margin-right: 0;">
+                <i class="icon ion-ios-email placeholder-icon" style="font-size: 32px;position: fixed;color: white;display: inline-flex;left: 6%;margin-top: 17px;"></i>
+                <div class = "item" style="border-bottom: 1px solid white;padding-left:0;padding-bottom: 0;border-top: none;border-left: none;border-right: none;margin:auto;margin-bottom: 10px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;">
+                    <input type="text"  class="validate signin" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
                 </div>
 
-                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;">
-                  <label class="item item-input" style="border: none; margin-top:2px;background-color:transparent !important; text-align:center;width:100%;">
-                    <input type="password" style="text-align:center;margin-left: 20px;color: white !important" placeholder="Password" ng-model="user.password" class="validate signin" ng-minlength="5" ng-maxlength="30" required>
-                  </label>
+                <i class="icon ion-ios-locked placeholder-icon" style="font-size: 32px;position: fixed;display: inline-flex;left: 6%;color: white"></i>
+                <div class = "item"  style="padding-left:0;padding-bottom: 0;border: none;margin:auto;margin-bottom: 16px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;padding-top: 0;">
+                    <input class="validate signin" type="password" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
                 </div>
-                <p style="position: relative;margin-top: 11px;margin-left: 280px;color: white !important; font-weight: 400 !important" ng-click="openForgot()">
-                    Forgot Password
-                </p>
+
+                <div class = "row">
+                  <button class = "col button-clear" style="font-size: 16px; font-weight: 400;text-align: right;color: white;" ng-click="openForgot()">Forgot</button>
+                </div>
+                  <div style="margin-right: 8px;">
                   <button class="button button-block button-calm" type="submit" style="border-radius: 0px;margin-top: 115px;background-color: white;color: black">SIGN IN</button>
                   <button class="button button-block button-calm" type="submit" style="border-radius: 0px;background-color: transparent;"  ui-sref="authentication">SIGN UP</button>
-                  <!-- * line / line separation -->
-                  <!-- <p style="position: relative;margin-top: 4px;" ui-sref="register">
-                      SIGN UP
-                  </p> -->
+                </div>
               </div>
           </form>
       </ion-content>
-  </div>
 </ion-view>
-
-      <!-- <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
-      <div class="row row-no-padding category-2-outer" style="padding: 0; margin: 0;">
-        <div class="col">
-            <div class="category-2-item-wrapper" style="padding-top:84.66%">
-              <div class="category-2-item-content">
-                <div class = "multi-bg-outer" helper-class="category-with-image" style="background-image: url(img/jump-water.jpg);">
-                  <div class="logo">
-                    <img ng-src = "img/TTG-Logo-NowhiteOutline.png">
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="row text-center" style="color: white;top: 304px;position: absolute;">
-        <div class="col" style="z-index: 999;position: relative;display: block;" ui-sref="authentication">Sign Up</div>
-        <div class="col" style="z-index: 999;position: relative;display: block;">Sign In</div>
-      </div>
-
-      <div class="item no-padding" style="background-color: transparent;border-color: transparent;">
-      <div class="row" style="width: 90%;border-bottom: 1px solid silver;margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center; width:100%;">
-          <input type="email" style="text-align:center;" placeholder="Email" ng-model="user.email" class="validate" ng-minlength="5" ng-maxlength="30" required>
-        </label>
-      </div>
-      <div class="row" style="width: 50%;border-bottom: 1px solid silver;margin:auto;">
-        <label class="item item-input" style="border: none; margin-top:2px; text-align:center; width:100%;">
-          <input type="password" style="text-align:center" placeholder="Password" ng-model="user.password" class="validate" ng-minlength="5" ng-maxlength="30" required>
-        </label>
-      </div>
-      <input type="submit" class="button button-block button-login button-positive" value="Sign In" ng-disabled="loginForm.$invalid" style="border-radius: 50px;width: 50%;position: relative;margin-left: 103px;;margin-top: 4vh; display:block;">
-    </form>
-  </div>
-      <h1 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ui-sref="authentication"> Create a new account </h1>
-      <h2 class = "font-thin" style="color: black;font-size:16px;text-align:center;" ng-click="openForgot()"> Forgot </h2> -->

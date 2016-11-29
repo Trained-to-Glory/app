@@ -1,5 +1,6 @@
 angular.module('module.view.forgot', [])
-  .controller('forgotCtrl', function($scope,$rootScope,$state,engagementsService,$stateParams,Utils,Popup) {
+  .controller('forgotCtrl', ['$scope','$rootScope','$state','engagementsService','$stateParams','Utils','Popup',
+     function($scope,$rootScope,$state,engagementsService,$stateParams,Utils,Popup) {
   $scope.$on('$ionicView.enter', function() {
     //Clears the Forgot Password Form.
     $scope.user = {
@@ -41,4 +42,4 @@ angular.module('module.view.forgot', [])
         });
     }
   };
-});
+}]);

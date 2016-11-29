@@ -24,10 +24,10 @@ angular.module('service.interest', [])
      var outdoorsExplore = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/outdoors-explore.jpeg?alt=media&token=0a43c67e-cc12-481a-94a7-639618b672ea';
      var technologyExplore = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/technology-explore.jpeg?alt=media&token=03bb5394-81ba-4fba-8b9d-ce4a3237c4e0';
 
-     var animalsMatch  ='https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/new-animal.jpeg?alt=media&token=e956ea78-fea2-4cbb-ab2c-2ce0087ea5a2';
-     var architectureMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/new-architecture.jpeg?alt=media&token=7d475c7d-cd66-47b6-b78e-f2ec100a84d9';
-     var artMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/art-match.jpg?alt=media&token=3ad7f50c-8ecd-4e64-a25f-b2e66c71d33c';
-     var carMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/cars-train.jpeg?alt=media&token=341259a6-56ae-4eef-85db-ab5e7c909387';
+     var animalsMatch  ='https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/bright-animal.jpeg?alt=media&token=978a67ac-ace7-4145-a797-33688a65d998';
+     var architectureMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/bright-architecture.jpeg?alt=media&token=58db4f47-9a11-470a-af27-664904cea17a';
+     var artMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/bright-art.jpeg?alt=media&token=ae5e49d9-1c03-4faf-a07f-b5ed072c9ef6';
+     var carMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/rari-car.jpg?alt=media&token=1dc19291-2faa-4784-95c1-3684367dca2f';
      var designMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/design-match.jpg?alt=media&token=a0a91a8a-27dd-40e3-8086-640f75cdf203';
      var diyMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/diy-match.jpeg?alt=media&token=437f14b9-b6e4-46f2-942a-0460661e927b';
      var educationMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/education-match.jpeg?alt=media&token=1b5465ce-34e6-4544-a9d8-f18c3beb338c';
@@ -40,7 +40,7 @@ angular.module('service.interest', [])
      var healthMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/health-match.jpg?alt=media&token=7bf910f9-33d1-44fb-a632-688817b38d7a';
      var musicMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/music-match.jpeg?alt=media&token=d4c4739f-7a31-4e61-b3ea-19ff2a05166f';
      var outdoorsMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/new-outdoors.jpg?alt=media&token=d2fa10a5-4049-4f30-bfa0-b8e85ce17a37';
-     var technologyMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/technology-match.jpeg?alt=media&token=48cde377-81c8-48a3-8b3a-f6df71d87fd6';
+     var technologyMatch = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/new-tech.jpeg?alt=media&token=dce12ecc-5f0c-415c-957b-f06a3d37a91e';
 
      var ref = firebase.database().ref('interest');
 
@@ -120,7 +120,7 @@ angular.module('service.interest', [])
       var technologyExplore = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/tech-phone.jpeg?alt=media&token=dc7f1164-2515-44e1-9871-0c31cc569033';
 
       var animalsLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/animals-lead.jpg?alt=media&token=fed29e19-525d-46ac-9466-406e680cb5fb';
-      var architectureLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/architecture-lead.jpg?alt=media&token=04c7b65a-b269-4632-883c-5aa1254d3cfa';
+      var architectureLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/better-architecture.jpeg?alt=media&token=a366de38-6a02-4b75-89a5-2d656a111b4e';
       var artLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/art-lead.jpg?alt=media&token=86b6ae01-5b25-495b-8d44-c3b74629d810';
       var carsLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/cars-lead.jpg?alt=media&token=3bff43d2-1f3c-4f05-be42-09f42ba9a070';
       var designLead = 'https://firebasestorage.googleapis.com/v0/b/trained-to-glory.appspot.com/o/design-lead.jpg?alt=media&token=19201b2c-2e17-4f34-b027-dec19ea6afdf';

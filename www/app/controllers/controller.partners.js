@@ -1,5 +1,6 @@
 angular.module('module.view.partners', [])
-	.controller('partnersCtrl', function($scope,$rootScope, postService,$ionicPopover,$state,$ionicHistory,$localStorage,$stateParams,usersService,engagementService) {
+	.controller('partnersCtrl', ['$scope','$rootScope', 'postService','$ionicPopover','$state','$ionicHistory','$localStorage','$stateParams','usersService','engagementService',
+		function($scope,$rootScope, postService,$ionicPopover,$state,$ionicHistory,$localStorage,$stateParams,usersService,engagementService) {
 		usersService.getPartners($localStorage.account.userId).then(function(results){
 			var arr = [];
 			for(var key in results){
@@ -202,7 +203,7 @@ angular.module('module.view.partners', [])
 					 }
 				 };
 
-});
+}]);
 
 var searchTemplate =
     '<ion-popover-view class="search">' +

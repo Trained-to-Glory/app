@@ -1,5 +1,6 @@
 angular.module('module.view.regular', [])
-	.controller('regularCtrl', function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
+	.controller('regularCtrl', ['$scope','$rootScope','$state','interestService','$localStorage','appService','$cordovaCamera', 'postService', '$stateParams','$ionicActionSheet',
+		function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 
 
@@ -72,4 +73,4 @@ angular.module('module.view.regular', [])
           });
       };
 
-});
+}]);

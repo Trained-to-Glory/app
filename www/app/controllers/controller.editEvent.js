@@ -1,5 +1,6 @@
 angular.module('module.view.editEvent', [])
-	.controller('editEventCtrl', function($scope,$rootScope,$state,engagementsService,$ionicPopover) {
+	.controller('editEventCtrl', ['$scope','$rootScope','$state','engagementsService','$ionicPopover',
+	function($scope,$rootScope,$state,engagementsService,$ionicPopover) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -34,7 +35,7 @@ angular.module('module.view.editEvent', [])
                     scope: $scope
                 });
 
-});
+}]);
 var eventTemplate =
     '<ion-popover-view class="small center" style="height: 58px !important;top: 602.422px;">' +
     '<ion-content>' +

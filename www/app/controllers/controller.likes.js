@@ -1,5 +1,6 @@
 angular.module('module.view.likes', [])
-	.controller('likesCtrl', function($scope,$rootScope,$log,$state,$localStorage,$stateParams,engagementService,postService,$ionicHistory,usersService) {
+	.controller('likesCtrl', ['$scope','$rootScope','$log','$state','$localStorage','$stateParams','engagementService','postService','$ionicHistory','usersService',
+		function($scope,$rootScope,$log,$state,$localStorage,$stateParams,engagementService,postService,$ionicHistory,usersService) {
 				$scope.profile = $localStorage.account;
 				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -110,16 +111,4 @@ angular.module('module.view.likes', [])
                     }
         };
 
-
-var searchTemplate =
-    '<ion-popover-view class="search">' +
-    '<ion-content scroll="false">' +
-    '<div class="list item-input-inset">' +
-    '<label class="item-input-wrapper">' +
-    '<i class="icon ion-ios-search placeholder-icon"></i>' +
-    '<input type="search" placeholder="Search" ng-model="schoolSearch" ng-model-options="{ debounce: 550 }" ng-change="getSearch(schoolSearch)"></label>' +
-    ' <i class="icon ion-close" ng-show="schoolSearch" ng-click="getSearch(\'\');popover.hide($event);schoolSearch=\'\'"></i>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
-});
+}]);

@@ -1,6 +1,6 @@
 <ion-view hide-nav-bar="true" class="bg-lightgrey">
 
-    <ion-header-bar style="background-color: transparent;height: 48px;">
+    <ion-header-bar style="background-color: #fafafc;height: 48px;top: 0px !important;position: absolute;">
         <div class="row text-center">
             <div class="col font-thin text-large dark" ng-click="$ionicGoBack()" style="color:gray;">Cancel</div>
             <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-if="!post.created" ng-click="createPost()">Send</div>
@@ -8,8 +8,7 @@
         </div>
     </ion-header-bar>
 
-  <ion-content class="has-header" style="top: 54px;">
-
+  <ion-content class="has-header">
     <div class="event-form">
         <div class="list edit padding-horizontal padding-vertical" style="padding:0">
           <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "view.type === 1">

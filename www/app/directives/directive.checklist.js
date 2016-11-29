@@ -1,3 +1,5 @@
+(function () {
+
 'use strict';
 
 angular.module('directive.checklist', [])
@@ -31,3 +33,4 @@ angular.module('directive.checklist', [])
       }
     };
   });
+})();

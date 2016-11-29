@@ -1,6 +1,7 @@
 
 angular.module('full_starter.factory',[])
-.factory('Utils', function($ionicLoading, $timeout, Popup) {
+.factory('Utils', ['$ionicLoading', '$timeout', 'Popup',
+  function($ionicLoading, $timeout, Popup) {
   var promise;
   var Utils = {
     show: function() {
@@ -29,4 +30,4 @@ angular.module('full_starter.factory',[])
   };
 
   return Utils;
-});
+}]);

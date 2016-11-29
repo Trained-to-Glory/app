@@ -1,5 +1,6 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', function($scope,$rootScope,$state,$localStorage,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', ['$scope','$rootScope','$state','$timeout', 'ngProgressFactory','$localStorage','$stateParams','$ionicScrollDelegate','$ionicNavBarDelegate','$log','usersService', '$ionicPopover','appService','postService', 'engagementService','$ionicScrollDelegate',
+		function($scope,$rootScope,$state,$timeout, ngProgressFactory,$localStorage,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -17,14 +18,8 @@ angular.module('module.view.sentPlans', [])
                         $state.go(ui_sref);
                     }
                 }
-								// angular.element(document).ready(function () {
-								// 	$scope.progressbar = ngProgressFactory.createInstance();
-								// 	$scope.progressbar.setHeight('20px');
-								// 	$scope.progressbar.setColor('red');
-								// 	$scope.progressbar.set(0);
-								// 	var element = $scope.progressbar.getDomElement();
-								// 	$scope.progressbar.setParent(document.querySelector('.progress-bar'));
-							  //   });
+
+
 
 
         $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
@@ -93,15 +88,22 @@ angular.module('module.view.sentPlans', [])
 
 								$scope.isChecked = false;
 									$scope.selected = [];
-									$scope.checkedOrNot = function (item, isChecked, index, totalChecklist) {
-											if (isChecked) {
+									$scope.totalChecked = 0;
+									$scope.checkedOrNot = function (item, index, totalChecklist) {
+										console.log(arguments);
+											if (item.isChecked) {
 													$scope.selected.push(item);
+													$scope.totalChecked++;
+													console.log($scope.totalChecked);
 													engagementService.engagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
 											} else {
-													var _index = $scope.selected.indexOf(interest);
+													var _index = $scope.selected.indexOf(item);
 													$scope.selected.splice(_index, 1);
+													$scope.totalChecked--;
 													engagementService.disEngagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
 											}
+											$scope.progress($scope.totalChecked, totalChecklist);
+											console.log(totalChecklist);
 									};
 
 									usersService.getAllUsers($localStorage.account.userId).then(function(results){
@@ -159,8 +161,25 @@ angular.module('module.view.sentPlans', [])
 				          }
 				          //make it available to the directive to officially show/hide, toggle
 				          $scope.view = view;
+									$scope.progressbar = ngProgressFactory.createInstance();
+									 $scope.progressbar.setHeight('5px');
+									 $scope.progressbar.setColor('green');
+									 $scope.progressbar.set(0);
+
+									var newParent = document.querySelector('.progress-bar');
+									$scope.progressbar.setParent(newParent);
 				        });
 
+								$scope.see = { type: 1 };
+
+								$scope.progress = function(progress, total){
+									var percent = total > 0 ? (progress/total) * 100: 0;
+									$scope.progressbar.set(percent);
+									if (percent === 100) {
+										$scope.progressbar.complete();
+										$scope.doneBar = { type: 1 };
+									}
+								};
 								$scope.limit = 10;
 
 								$scope.loadMore = function(){
@@ -320,7 +339,7 @@ angular.module('module.view.sentPlans', [])
 			           $state.go('create-plan');
 			         }
 
-});
+}]);
 var searchTemplate =
     '<ion-popover-view class="search" style= "top:510.703 !important">' +
     '<ion-content scroll="false">' +

@@ -1,5 +1,5 @@
 angular.module('service.users', [])
- .service('usersService', function($localStorage){
+ .service('usersService', ['$localStorage', function($localStorage){
    var table = 'accounts';
    function get(userId) {
        var user = (userId) ? firebase.database().ref(table + '/' + userId) : firebase.database().ref(table);
@@ -10,7 +10,7 @@ angular.module('service.users', [])
              }
              return undefined;
          });
-   };
+   }
 
    this.getInterestDisplay = function(userId) {
        var user = (userId) ? firebase.database().ref(['engagedActivities', 'interest'].join('/')) : firebase.database().ref(table);
@@ -32,7 +32,7 @@ angular.module('service.users', [])
              }
              return undefined;
          });
-   };
+   }
 
    this.get = get;
 
@@ -57,15 +57,15 @@ angular.module('service.users', [])
                 var accountsPromise = firebase.database().ref(['accounts'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
                   var accounts = snapshot.val();
+                  var key;
                   if(accounts){
-                    for(var key in myPartners){
+                    for(key in myPartners){
                       obj[key] = accounts[key].posts;
                     }
                     return obj[key];
                   }
                   return obj[key];
                 });
-                 return obj[ke];
              }
              return obj;
          });
@@ -83,17 +83,6 @@ angular.module('service.users', [])
          });
    };
 
-   this.getMoreUserPost = function (userId) {
-       var posts = (userId) ? firebase.database().ref(['accounts', userId , 'posts'].join('/')) : firebase.database().ref('accounts');
-       return posts.once('value').then(function (snapshot) {
-             var currentObj = snapshot.val();
-             var numberPost = snapshot.numChildren();
-             if (numberPost => 10 && currentObj) {
-                 return currentObj;
-             }
-             return undefined;
-         });
-   };
 
    this.getPartners = function (userId) {
        var myPostsPromise = firebase.database().ref(['userPartners', 'partners', userId].join('/'));
@@ -112,7 +101,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -135,7 +123,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -158,38 +145,12 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
    };
 
-   this.getMorePartnerPosts = function (userId) {
-       var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners'].join('/'));
-       return myPartnersPromise.once('value').then(function (snapshot) {
-             var obj = {};
-             var myPartners = snapshot.val();
-             if (myPartners) {
-                var accountsPromise = firebase.database().ref(['accounts'].join('/'));
-                return accountsPromise.once('value').then(function(snapshot){
-                  var accounts = snapshot.val();
-                  if(accounts){
-                    for(var key in myPartners){
-                      var numberPost = Object.keys(accounts[key].posts).length;
-                      if(numberPost => 10){
-                        obj[key] = accounts[key].posts;
-                      }
-                    }
-                    return obj;
-                  }
-                  return obj;
-                });
-                 return obj;
-             }
-             return obj;
-         });
-   };
-
+//One half
    this.getUserPostsLikes = function (userId) {
        var myPostsPromise = firebase.database().ref(['accounts', userId , 'posts'].join('/'));
       //step 1
@@ -219,7 +180,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -254,7 +214,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -289,7 +248,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -324,7 +282,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -348,7 +305,6 @@ angular.module('service.users', [])
                   }
                   return obj;
                 });
-                 return obj;
              }
              return obj;
          });
@@ -450,4 +406,4 @@ angular.module('service.users', [])
      };
 
 
-});
+}]);

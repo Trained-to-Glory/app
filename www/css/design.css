@@ -340,6 +340,7 @@
 	text-align: left;
 	width: 100%;
 	border: none;
+	padding-top: 0;
 }
 
 .event-form .edit .event__input input
@@ -521,6 +522,30 @@
     z-index: 2;
 }
 
+.match-float #floating-button {
+	bottom: 20px;
+    position: fixed;
+    right: 20px;
+		top: 79px;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    transform: translate3d(0, 0, 0);
+    background-color: #F10707 !important;
+    backface-visibility: hidden;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+}
+
 .bar-subheader {
     z-index: 1;
     transition: top 0.25s ease;
@@ -552,6 +577,8 @@
 	 -webkit-transition: background-color .0001s all linear !important;
 		-moz-transition: background-color .0001s all linear !important;
 		-o-transition: background-color .0001s all linear !important;
+		box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+		height: 48px;
 }
 
 .tabs-top > .tabs, .tabs.tabs-top {

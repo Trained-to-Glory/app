@@ -1,5 +1,6 @@
 angular.module('module.view.comments', [])
-	.controller('commentsCtrl', function($scope,$rootScope,$state,$localStorage,$ionicPopover, postService,appService,$stateParams,$timeout,$ionicHistory) {
+	.controller('commentsCtrl',['$scope','$rootScope','$state','$localStorage','$ionicPopover', 'postService','appService','$stateParams','$timeout','$ionicHistory',
+		 function($scope,$rootScope,$state,$localStorage,$ionicPopover, postService,appService,$stateParams,$timeout,$ionicHistory) {
 				$scope.profile = $localStorage.account;
 				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -99,16 +100,4 @@ angular.module('module.view.comments', [])
 						});
         };
 
-
-var searchTemplate =
-    '<ion-popover-view class="search">' +
-    '<ion-content scroll="false">' +
-    '<div class="list item-input-inset">' +
-    '<label class="item-input-wrapper">' +
-    '<i class="icon ion-ios-search placeholder-icon"></i>' +
-    '<input type="search" placeholder="Search" ng-model="schoolSearch" ng-model-options="{ debounce: 550 }" ng-change="getSearch(schoolSearch)"></label>' +
-    ' <i class="icon ion-close" ng-show="schoolSearch" ng-click="getSearch(\'\');popover.hide($event);schoolSearch=\'\'"></i>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
-});
+}]);

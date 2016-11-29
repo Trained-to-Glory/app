@@ -1,5 +1,6 @@
 angular.module('module.view.news', [])
-    .controller('newsCtrl', function ($scope, $rootScope,$http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService,appointmentsService) {
+    .controller('newsCtrl', ['$scope', '$rootScope','$http','$timeout','$ionicHistory','$ionicNavBarDelegate','$ionicScrollDelegate','interestService','usersService', '$state', '$cordovaCamera', '$localStorage', '$ionicActionSheet', '$ionicSideMenuDelegate', '$ionicPopover', '$log', 'engagementService', 'postService', 'appService',
+       function ($scope, $rootScope,$http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService) {
       $scope.$on('$ionicView.enter', function() {
     //Check if there's an authenticated user, if there is non, redirect to login.
     if(firebase.auth().currentUser) {
@@ -27,8 +28,7 @@ angular.module('module.view.news', [])
 
         var publicServices = {
             'post': true,
-            'engagement': true,
-            'appointments': true
+            'engagement': true
         }
 
         //for dev purposes only. remove when done
@@ -37,7 +37,42 @@ angular.module('module.view.news', [])
                 $scope[key + 'Service'] = eval(key + 'Service');
                 window[key + 'Service'] = $scope[key + 'Service'];
             }
-        }
+        };
+
+        usersService.getUserPlans($localStorage.account.userId).then(function(results) {
+          //create a local object so we can create the datastructure we want
+          var arr = [];
+          for(var key in results){
+            results[key].key = key;
+            arr.push(results[key]);
+          }
+          var plan = {
+              type: 'item',
+              items: results,
+              itemsArr: arr
+          };
+          for(var id in plan.items){
+           //check to see if there is a like on this post
+           (function(id, items){
+             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+              items.liked = liked;
+             });
+             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+               items.committed = committed;
+             });
+             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+               items.totalLikes = totalLikes;
+             });
+             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+               items.totalCommits = totalCommits;
+             });
+           })(id, plan.items[id]);
+          }
+          //make it available to the directive to officially show/hide, toggle
+          $scope.plan = plan;
+          $scope.planArr = plan.itemsArr;
+          $scope.planLength = $scope.planArr.length;
+        });
 
         $scope.goBack = function (ui_sref) {
             var currentView = $ionicHistory.currentView();
@@ -395,7 +430,7 @@ angular.module('module.view.news', [])
          }
 
      })
-    });
+   }]);
 
 var newsTemplate =
     '<ion-popover-view class="medium right">' +

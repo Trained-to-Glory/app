@@ -1,5 +1,6 @@
 angular.module('module.view.intro', [])
-	.controller('introCtrl', function($scope,$rootScope,$state,$ionicSlideBoxDelegate,$stateParams) {
+	.controller('introCtrl', ['$scope','$rootScope','$state','$ionicSlideBoxDelegate','$stateParams',
+		function($scope,$rootScope,$state,$ionicSlideBoxDelegate,$stateParams) {
     $scope.next = function() {
         $ionicSlideBoxDelegate.next();
       };
@@ -13,6 +14,6 @@ angular.module('module.view.intro', [])
       };
 
       $scope.goToLogin = function(){
-        $state.go('signin');
+        $state.go('tabs.account');
       };
-    });
+    }]);

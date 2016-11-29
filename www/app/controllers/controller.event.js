@@ -1,5 +1,6 @@
 angular.module('module.view.event', [])
-	.controller('eventCtrl', function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
+	.controller('eventCtrl', ['$scope','$rootScope','$state','interestService','$localStorage','appService','$cordovaCamera', 'postService', '$stateParams','$ionicActionSheet',
+		function($scope,$rootScope,$state,interestService,$localStorage,appService,$cordovaCamera, postService, $stateParams,$ionicActionSheet) {
     $scope.profile = $localStorage.account;
 		$scope.postId = $stateParams.post;
 
@@ -102,4 +103,4 @@ angular.module('module.view.event', [])
           });
       };
 
-});
+}]);

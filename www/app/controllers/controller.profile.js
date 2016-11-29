@@ -1,17 +1,11 @@
 angular.module('module.view.profile', [])
-	.controller('profileCtrl', function($scope,$rootScope,$timeout,$cordovaCamera,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,appService,$ionicActionSheet,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
+	.controller('profileCtrl',['$scope','$rootScope','$timeout','$cordovaCamera','$log','$ionicPopover','$stateParams','$ionicScrollDelegate','$ionicNavBarDelegate','appService','$ionicActionSheet','engagementService','usersService','$state','postService','$ionicSideMenuDelegate','$localStorage',
+		function($scope,$rootScope,$timeout,$cordovaCamera,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,appService,$ionicActionSheet,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 		$rootScope.slideHeader = false;
    	$rootScope.slideHeaderPrevious = 0;
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
-  };
-
-	$scope.getScrollPosition = function() {
-      $timeout(function () {
-       $scope.data = $ionicScrollDelegate.getScrollPosition().top;
-
-    });
   };
 
 
@@ -211,15 +205,6 @@ angular.module('module.view.profile', [])
 		$scope.news = news;
 	});
 
-	$scope.scrollEvent = function() {
-			var scrollamount = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().top;
-			//$ionicScrollDelegate.scrollBy(0,20, true);
-			if (scrollamount > 0) { // Would hide nav-bar immediately when scrolled and show it only when all the way at top. You can fiddle with it to find the best solution for you
-				$ionicNavBarDelegate.showBar(false);
-			} else {
-				$ionicNavBarDelegate.showBar(true);
-			}
-		}
 
 	usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
@@ -457,81 +442,4 @@ angular.module('module.view.profile', [])
 			};
 
 
-}).directive('scrollWatch', function($rootScope) {
-  return function(scope, elem, attr) {
-    var start = 0;
-    var threshold = 150;
-
-    elem.bind('scroll', function(e) {
-      if(e.detail.scrollTop - start > threshold) {
-        $rootScope.slideHeader = true;
-      } else {
-        $rootScope.slideHeader = false;
-      }
-      if ($rootScope.slideHeaderPrevious >= e.detail.scrollTop - start) {
-        $rootScope.slideHeader = false;
-      }
-      $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
-      $rootScope.$apply();
-    });
-  };
-});
-
-var popoverTemplate =
-		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +
-		'<ion-content scroll="true">' +
-		'<ion-list style="position:absolute;top:-10vh;">' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="browse()"> Home' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="search()"> Search' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Plans' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Calendar' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="partners()"> Partners' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
-		'</ion-item>' +
-		'<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;" ng-click="account()">'+
-		'<img ng-src="{{ profile.userPhoto }}" style="margin-left: 2px;">'+
-		'<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
-		'</a>'+
-		'<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +
-		'</ion-item>' +
-		'</ion-list>'+
-		'</ion-content>' +
-		'</ion-popover-view>';
-
-var searchTemplate =
-    '<ion-popover-view class="search">' +
-    '<ion-content scroll="false">' +
-    '<div class="list item-input-inset">' +
-    '<label class="item-input-wrapper">' +
-    '<i class="icon ion-ios-search placeholder-icon"></i>' +
-    '<input type="search" placeholder="Search" ng-model="schoolSearch" ng-model-options="{ debounce: 550 }" ng-change="getSearch(schoolSearch)"></label>' +
-    ' <i class="icon ion-close" ng-show="schoolSearch" ng-click="getSearch(\'\');popover.hide($event);schoolSearch=\'\'"></i>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
-
-var contactTemplate =
-    '<ion-popover-view class="right large">' +
-    '<ion-content>' +
-    '<div class="list">' +
-    '<div class="item item-avatar item-text-wrap" ng-click="contactPopover.hide($event);"ng-repeat="contact in contacts" ui-sref="tabs.chat({chat: contact})">' +
-    '<img ng-src="{{contact.photo}}">' +
-    '<h2 class="dark font-thin">{{contact.name}}</h2>' +
-    '<p class="dark font-thin">{{contact.subject}}</p>' +
-    '</div>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
+}]);

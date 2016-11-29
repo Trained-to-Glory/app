@@ -1,5 +1,6 @@
 angular.module('module.view.communicate', [])
-	.controller('communicateCtrl', function($scope,$rootScope,$state,$ionicHistory,$ionicPopover,usersService,$localStorage,interestService) {
+	.controller('communicateCtrl', ['$scope','$rootScope','$state','$ionicHistory','$ionicPopover','usersService','$localStorage','interestService',
+	function($scope,$rootScope,$state,$ionicHistory,$ionicPopover,usersService,$localStorage,interestService) {
 
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -274,7 +275,7 @@ angular.module('module.view.communicate', [])
 					 };
 
 
-});
+}]);
 var menuTemplate =
     '<ion-popover-view class="menu popover" style="background-color: #fff;top: -9px;">' +
     '<ion-content scroll="true">' +

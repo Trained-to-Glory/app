@@ -1,5 +1,6 @@
 angular.module('module.view.post', [])
-	.controller('postCtrl', function($scope,$rootScope,$ionicActionSheet,$state,appointmentsService,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
+	.controller('postCtrl', ['$scope','$rootScope','$ionicActionSheet','$state','$ionicPopover','$ionicSideMenuDelegate','postService','$localStorage', 'appService', '$cordovaSocialSharing', '$ionicHistory','$ionicPopup','$cordovaSocialSharing','postService','engagementService','$stateParams',
+		function($scope,$rootScope,$ionicActionSheet,$state,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
 		$scope.postId = $stateParams.post;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -227,7 +228,7 @@ angular.module('module.view.post', [])
 				};
 
 
-});
+}]);
 
 var menuTemplate =
     '<ion-popover-view class="small" style="height: 101px !important;box-shadow: none !important;background-color: transparent;">' +

@@ -1,32 +1,19 @@
 (function () {
 
-    'use strict'
+    'use strict';
 
-    angular.module('full_starter.services', ['firebase','service.engagements',
-        'service.interest','service.post','service.users', 'service.appointments'])
+    angular.module('full_starter.services',[
+      'firebase',
+      'service.engagements',
+      'service.interest',
+      'service.post',
+      'service.users',
+      'service.appointments'])
 
       .factory('appService', ['$state', '$ionicPopup', '$ionicActionSheet', '$ionicHistory', '$ionicLoading', '$timeout',
             function ($state, $ionicPopup, $ionicActionSheet, $ionicHistory, $ionicLoading, $timeout) {
 
                 return {
-                    getNews: function () {
-                        return _news;
-                    },
-                    getMessages: function () {
-                        return _messages;
-                    },
-                    getContacts: function () {
-                        return _contacts;
-                    },
-                    getProducts: function () {
-                        return _products;
-                    },
-                    getNotifications: function () {
-                        return _notifications;
-                    },
-                    getRandomMessages: function () {
-                        return _randMessages;
-                    },
                     getRandomObject: function (arr) {
                         return arr[Math.floor(Math.random() * arr.length)];
                     },
@@ -56,27 +43,9 @@
                         }, 1500000);
 
                         alertPopup.then(function (res) {
-                            page != null ? $state.go(page) : '';
+                            page !== null ? $state.go(page) : '';
                             alertPopup.close();
                         });
-                    },
-                    getGreetingTime: function (m) {
-                        var g = null;
-
-                        if (!m || !m.isValid()) { return; } //if we can't find a valid or filled moment, we return.
-
-                        var split_afternoon = 12 //24hr time to split the afternoon
-                        var split_evening = 17 //24hr time to split the evening
-                        var currentHour = parseFloat(m.format("HH"));
-
-                        if (currentHour >= split_afternoon && currentHour <= split_evening) {
-                            g = "Good Afternoon";
-                        } else if (currentHour >= split_evening) {
-                            g = "Good Evening";
-                        } else {
-                            g = "Good Morning";
-                        }
-                        return g;
                     },
                     getCameraOptions: function () {
                         return {
@@ -121,7 +90,7 @@
                             saveToPhotoAlbum: false,
                             correctOrientation: true
                         };
-                    },
+                    }
                 }
             }]);
 })();

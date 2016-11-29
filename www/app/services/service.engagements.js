@@ -1,5 +1,5 @@
 angular.module('service.engagements', [])
-    .service('engagementService', function ($localStorage) {
+    .service('engagementService',['$localStorage', function ($localStorage) {
         //check if user has already engaged with this item
         var get = function(type ,category, categoryId, itemId){
           var arr = [type, category, categoryId, itemId];
@@ -530,4 +530,4 @@ angular.module('service.engagements', [])
             return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };
 
-    });
+    }]);

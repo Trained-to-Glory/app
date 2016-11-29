@@ -1,5 +1,6 @@
 angular.module('service.appointments', [])
- .service('appointmentsService',function($localStorage, $q){
+ .service('appointmentsService',['$localStorage, $q',
+  function($localStorage, $q){
    var table = 'appointments';
         var get = function (id) {
             var refId = (id) ? [table, id].join('/'): table;
@@ -106,4 +107,4 @@ angular.module('service.appointments', [])
         this.remove = remove;
         this.get = get;
 
-});
+}]);
