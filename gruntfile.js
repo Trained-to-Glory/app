@@ -139,46 +139,6 @@ module.exports = function(grunt) {
     };
     grunt.initConfig(config);
 
-    // gulp.task('ng_annotate', function (done) {
-    //   gulp.src('www/lib/angular/angular.js',
-    //   'www/lib/jquery/dist/jquery.js',
-    //   'www/lib/ionic/js/ionic.bundle.js',
-    //   'www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
-    //   'www/lib/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
-    //  'www/lib/angular-filter/dist/angular-filter.js',
-    //
-    //  //First Half
-    //  'www/lib/ngCordova/dist/ng-cordova.js',
-    //  'www/lib/ng-lodash/build/ng-lodash.js',
-    //  'www/lib/ion-floating-menu/dist/ion-floating-menu.js',
-    //  'www/lib/ngstorage/ngStorage.js',
-    //  'www/lib/ionic-scroll-sista/dist/ionic.scroll.sista.js',
-    //  'www/lib/ngprogress/build/ngprogress.js',
-    //  'www/app/*.js',
-    //  'www/app/services/service.interest.js',
-    //   'www/app/services/service.post.js',
-    //   //users is the broken file
-    //   'www/app/services/service.users.js',
-    //  'www/app/services/service.appointments.js',
-    //   'www/app/services/service.engagements.js',
-    //  'www/app/controllers/*.js',
-    //  'www/app/core/*.js',
-    //  'www/app/directives/*.js')
-    //   .pipe(ngAnnotate({single_quotes: true}))
-    //   .pipe(gulp.dest('./www/dist/dist_js/app'))
-    //   .on('end', done);
-    // });
-    //
-    // gulp.task('useref', function (done) {
-    //   var assets = useref.assets();
-    //   gulp.src('./www/*.html')
-    //   .pipe(assets)
-    //   .pipe(assets.restore())
-    //   .pipe(useref())
-    //   .pipe(gulp.dest('./www/dist'))
-    //   .on('end', done);
-    // });
-
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-karma');
@@ -187,8 +147,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('gulp-ng-annotate');
-    grunt.loadNpmTasks('gulp-useref');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-debug-task');

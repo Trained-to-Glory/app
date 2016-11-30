@@ -23,7 +23,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            <ion-item ng-if= "profile.fullName" style="border:none;background-color: transparent !important;left: 0;font-size: 20px;font-weight: 700;color: white;letter-spacing: 1.2px;">\n' +
     '              {{profile.fullName }}\n' +
     '            </ion-item>\n' +
-    '            <ion-item style="left: 0;border:none;text-align: left;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
+    '            <ion-item style="left: 0;border:none;text-align: left;font-weight: 500;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
     '              {{profile.userName }}\n' +
     '            </ion-item>\n' +
     '          </ion-list>\n' +
@@ -153,7 +153,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
   $templateCache.put('app/account/edit-profile.html',
     '<ion-view hide-nav-bar="true" class="bg-lightgrey">\n' +
     '\n' +
-    '    <ion-header-bar style="background-color: transparent">\n' +
+    '    <ion-header-bar style="background-color: transparent;top: 0 !important;">\n' +
     '        <div class="row text-center">\n' +
     '            <div class="col font-thin text-large dark" ui-sref="settings" style="color:gray;">Cancel</div>\n' +
     '            <div class="col font-thin text-large balanced bl-grey profile" style="color:green;" ng-click="save()">Save</div>\n' +
@@ -302,7 +302,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            <ion-item ng-if= "ones.fullName" style="border:none;background-color: transparent !important;left: 0;font-size: 20px;font-weight: 700;color: white;letter-spacing: 1.2px;">\n' +
     '              {{ones.fullName }}\n' +
     '            </ion-item>\n' +
-    '            <ion-item style="left: 0;border:none;text-align: left;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
+    '            <ion-item style="left: 0;border:none;text-align: left;font-weight: 500;padding-top: 0px;padding-bottom: 0px;background-color: transparent !important;font-size: 12px;letter-spacing: 1px;color: white">\n' +
     '              {{ones.userName }}\n' +
     '            </ion-item>\n' +
     '          </ion-list>\n' +
@@ -1405,19 +1405,20 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '    </ion-nav-buttons>\n' +
     '\n' +
     '    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
-    '      <div class="list list-inset" ng-click="view.type = 2" ng-if = "view.type === 1 || view.type === 2"  style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
-    '        <label class="item item-input" ng-if = "view.type === 1 || view.type === 2">\n' +
-    '          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);" ng-if = "view.type === 1 || view.type === 2"></i>\n' +
-    '          <input type="text" class="search-people" ng-if = "view.type === 1 || view.type === 2" placeholder="Search People" style = "margin-left: 40px; font-size: 16px;width: 75%;position:absolute;padding-right:0px;">\n' +
+    '      <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
+    '        <label class="item item-input" ng-click="view.type = 2">\n' +
+    '          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);"></i>\n' +
+    '          <input type="text" ng-model="lookUp" class="search-people" placeholder="Search People" style = "margin-left: 40px;color: gray; font-size: 16px;width: 75%;position:absolute;padding-right:0px;">\n' +
     '        </label>\n' +
+    '        <a class="clear" ng-click="lookUp = null">\n' +
     '        <i  ng-if = "view.type === 2" class = "ion-ios-close-empty placeholder-icon" style="font-size: 24px;font-size: 32px;right: 12px;position: absolute;z-index: 999;top: 9px;" ng-click="clearSearch()"></i>\n' +
+    '      </a>\n' +
     '      </div>\n' +
-    '\n' +
     '      <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">\n' +
     '        <div class="list card" style="background: transparent; box-shadow: none;">\n' +
-    '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzy: lookUp" ui-sref="friend({contact: user.userId})">\n' +
+    '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzyBy: \'userName\': lookUp " ui-sref="friend({contact: user.userId})">\n' +
     '                <img ng-src="{{user.userPhoto}}">\n' +
-    '                <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>\n' +
+    '                <h2 class="lead" style="font-weight: 400 !important">{{user.userName}}</h2>\n' +
     '              </div>\n' +
     '        </div>\n' +
     '      </div>\n' +

@@ -15,7 +15,11 @@ angular.module('module.view.explore', ['angular.filter'])
 		$scope.clearSearch = function() {
 		    $scope.lookUp = null;
 				$scope.view = { type: 1}
+				console.log($scope.view);
 		}
+
+		console.log($scope.view);
+
 
 		$scope.gotoBrowse = function () {
                     $state.go('tabs.news');
@@ -136,106 +140,6 @@ angular.module('module.view.explore', ['angular.filter'])
 					//make it available to the directive to officially show/hide, toggle
 					$scope.news = news;
 				});
-
-				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-            scope: $scope
-        });
-
-				$scope.openPopover = function($event) {
-					 $scope.fullscreenPopover.show($event);
-				};
-
-				$scope.closePopover = function($event) {
-					 $scope.fullscreenPopover.hide();
-				};
-
-				// Execute action on hide popover
-				$scope.$on('popover.hidden', function() {
-					 // Execute action
-				});
-
-				// Execute action on remove popover
-				$scope.$on('popover.removed', function() {
-					 // Execute action
-				});
-
-				$scope.browse = function () {
-
-						$state.go('tabs.news');
-				};
-
-				$scope.explore = function () {
-
-						$state.go('tabs.explore');
-				};
-
-				$scope.match = function () {
-
-						$state.go('tabs.match');
-				};
-
-				$scope.coach = function () {
-
-						$state.go('tabs.coach');
-				};
-
-				$scope.plans = function () {
-
-						$state.go('tabs.sentPlans');
-				};
-
-				$scope.reminder = function () {
-
-						$state.go('tabs.reminders');
-				};
-
-				$scope.notifications = function(){
-						$state.go('tabs.communicate');
-				};
-
-				$scope.likeList = function () {
-
-						$state.go('tabs.likeList');
-				};
-
-				$scope.partners = function () {
-
-						$state.go('tabs.partners');
-				};
-
-				$scope.settings = function () {
-
-						$state.go('tabs.settings');
-				};
-
-				$scope.search = function () {
-
-						$state.go('tabs.search');
-				};
-
-				$scope.calendar = function () {
-
-						$state.go('tabs.reminders');
-				};
-
-				$scope.account = function (){
-					$state.go('tabs.account')
-				};
-
-				$scope.logout = function() {
-				 if (firebase.auth()) {
-					 firebase.auth().signOut().then(function() {
-						 //Clear the saved credentials.
-						 $localStorage.$reset();
-						 $scope.closePopover();
-						 //Proceed to login screen.
-						 $state.go('authentication');
-					 }, function(error) {
-						 //Show error message.
-						 Utils.message(Popup.errorIcon, Popup.errorLogout);
-					 });
-				 }
-			 };
 
 	}]);
 

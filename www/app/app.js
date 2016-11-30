@@ -42,6 +42,12 @@ angular.module('full_starter', ['ionic','angular.filter', 'ngProgress','ion-floa
         StatusBar.styleDefault();
       }
 
+      if (window.cordova && ionic.Platform.isIOS()) {
+        window.addEventListener("statusTap", function() {
+          $ionicScrollDelegate.scrollTop(true);
+        });
+      }
+
 
       if(window.cordova && window.cordova.InAppBrowser){
         window.open =  window.cordova.InAppBrowser.open;
