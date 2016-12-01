@@ -5,18 +5,95 @@ angular.module('module.view.interest', [])
 			return interestService.get(id);
 		};
 
+		$scope.interestImages = [{
+			src: 'img/interest/animal.jpg',
+			label: 'Animals',
+			id: '-KXc-PKqyc7JRXpB98vc'
+		},{
+			src: 'img/interest/architecture.jpg',
+			label: 'Architecture',
+			id: '-KXc-PKubG8nUAF4rbDW'
+		},{
+			src: 'img/interest/art.jpg',
+			label: 'Art',
+			id: '-KXc-PKubG8nUAF4rbDX'
+		},{
+			src: 'img/interest/car.jpg',
+			label: 'Cars',
+			id: '-KXc-PKvsIOIXTjTComa'
+		},{
+			src: 'img/interest/design.jpg',
+			label: 'Design',
+			id: '-KXc-PKvsIOIXTjTComb'
+		},{
+			src: 'img/interest/diy.jpg',
+			label: 'DIY',
+			id: '-KXc-PKvsIOIXTjTComc'
+		},{
+			src: 'img/interest/education.jpg',
+			label: 'Education',
+			id: '-KXc-PKvsIOIXTjTComd'
+		},{
+			src: 'img/interest/events.jpg',
+			label: 'Events',
+			id: '-KXc-PKvsIOIXTjTCome'
+		},{
+			src: 'img/interest/fashion.jpg',
+			label: 'Fashion',
+			id: '-KXc-PKyp2pTaXsaG6Ff'
+		},{
+			src: 'img/interest/beer.jpg',
+			label: 'Food & Drink',
+			id: '-KXc-PKzxbTiOJzK6j72'
+		},{
+			src: 'img/interest/video-controller.jpg',
+			label: 'Games',
+			id: '-KXc-PL0mQ1oYXeDiEyq'
+		},{
+			src: 'img/interest/garden.jpg',
+			label: 'Gardening',
+			id: '-KXc-PL0mQ1oYXeDiEyr'
+		},{
+			src: 'img/interest/hair.jpg',
+			label: 'Hair & Beauty',
+			id: '-KXc-PL0mQ1oYXeDiEys'
+		},{
+			src: 'img/interest/roller-skates.jpg',
+			label: 'Health & Sports',
+			id: '-KXc-PL1IJeRKtEt1R70'
+		},{
+			src: 'img/interest/music.jpg',
+			label: 'Music',
+			id: '-KXc-PL1IJeRKtEt1R71'
+		},{
+			src: 'img/interest/outdoor.jpg',
+			label: 'Outdoors',
+			id: '-KXc-PL3SLOgnBvXlR5i'
+		},{
+			src: 'img/interest/technology.jpg',
+			label: 'Technology',
+			id: '-KXc-PL3SLOgnBvXlR5j'
+	}];
+
+	$scope.repeatData = $scope.interestImages.map(function(value, index) {
+			return {
+					src: value.src,
+					label: value.label,
+					id: $scope.abs
+			};
+	});
+
+
 		$scope.getInterest().then(function(results) {
 			var interests = [];
 			for (key in results){
 				interests.push({
-					id: key,
-					label: results[key].displayName,
-					photo: results[key].backgroundImg,
-					numbers: results[key].numbers,
-					subCategory: results[key].sub_categories
+					id: key
 				});
 			}
-			$scope.interests = interests;
+			$scope.interestId = interests;
+			console.log(interests);
+
 		});
 
 		$scope.profile = $localStorage.account;
@@ -29,9 +106,7 @@ angular.module('module.view.interest', [])
 			var interests = [];
 			for (key in results){
 				interests.push({
-					id: key,
-					label: results[key].displayName,
-					photo: results[key].backgroundImg
+					id: key
 				});
 			}
 			$scope.leadInterest = interests;

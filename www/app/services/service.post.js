@@ -80,6 +80,17 @@ angular.module('service.post', [])
               });
         };
 
+        this.getCommentsNumber = function (postId) {
+            var comments = (postId) ? firebase.database().ref(['engagementComments', postId].join('/')) : firebase.database().ref('engagementComments');
+            return comments.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
         this.getUserAppointments = function (userId) {
             var appointments = (userId) ? firebase.database().ref(['accounts', userId , 'appointments'].join('/')) : firebase.database().ref('accounts');
             return appointments.once('value').then(function (snapshot) {

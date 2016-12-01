@@ -16,13 +16,13 @@
     <ion-content  class="has-tabs-top">
       <div ng-if="view.type === 1" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Connect</div>
         <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()" style="position: relative;top:53px;">
-          <div class="row row-no-padding category-2-outer" style="padding:0;"ng-repeat = "ab in abs | limitTo: limit track by $index">
+          <div class="row row-no-padding category-2-outer" style="padding:0;" ng-repeat = "ab in connectImages track by $index" >
             <div class="col">
               <a ui-sref="contacts({activity:ab.id})">
                 <div class="category-2-item-wrapper">
                   <div class="category-2-item-content">
-                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">
-                      <img bg="" class="multi-bg category-with-image">
+                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.src}});">
+                      <img bg="" ng-src ="{{ab.src}}" class="multi-bg category-with-image">
                       <span class="bg-overlay"></span>
                       <h1 class="category-heading" style="width: 80%">
                         <span>{{$index +1}}
@@ -40,13 +40,13 @@
 
       <div ng-if="view.type === 2" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Leaders</div>
       <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()" style="position: relative;top:53px;">
-        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in trainers | limitTo: limit track by $index">
+        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in leaderImages track by $index">
           <div class="col">
             <a ui-sref="contacts({activity:trainer.id})">
               <div class="category-2-item-wrapper">
                 <div class="category-2-item-content">
-                  <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.photo}});">
-                    <img bg="" class="multi-bg category-with-image">
+                  <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.src}});">
+                    <img bg="" ng-src = "{{trainer.src}}" class="multi-bg category-with-image">
                     <span class="bg-overlay"></span>
                     <h1 class="category-heading" style="width: 80%">
                       <span>{{$index +1}}
@@ -60,6 +60,5 @@
             </a>
           </div>
         </div>
-          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

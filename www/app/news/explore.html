@@ -5,7 +5,7 @@
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>
     </ion-nav-buttons>
 
-    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" lazy-scroll>
       <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
         <label class="item item-input" ng-click="view.type = 2">
           <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);"></i>
@@ -18,7 +18,7 @@
       <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">
         <div class="list card" style="background: transparent; box-shadow: none;">
             <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzyBy: 'userName': lookUp " ui-sref="friend({contact: user.userId})">
-                <img ng-src="{{user.userPhoto}}">
+                <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">
                 <h2 class="lead" style="font-weight: 400 !important">{{user.userName}}</h2>
               </div>
         </div>
@@ -31,7 +31,7 @@
                 <a ui-sref="post-detail({post:news.itemsArr[$index].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index].photo}}); background-color: transparent;z-index:5">
+                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style="background-color: transparent;z-index:5">
                       </div>
                     </div>
                   </div>
@@ -41,7 +41,7 @@
                 <a ui-sref="post-detail({post:news.itemsArr[$index+1].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">
+                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index+1].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style=" background-color: transparent;z-index:5">
                       </div>
                     </div>
                   </div>

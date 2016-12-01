@@ -23802,6 +23802,41 @@ h2.lead
     	font-size:16px;
     	}
 
+      .image-loader-container {
+        margin: 9px;
+        max-width: 81px;
+        max-height: 81px;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        background-color: #e5e5e5;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: stretch;
+        align-items: center;
+      }
+
+      /*.image-loader-container {
+        margin: 9px;
+        max-width:414px;
+        max-height: 500px;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(128, 128, 128, 0.58);
+        height: 500px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: stretch;
+        align-items: center;
+      }*/
 
 .text-color.sentPlans {
     color: green !important;

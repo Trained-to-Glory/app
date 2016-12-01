@@ -288,7 +288,6 @@ angular.module('module.view.profile', [])
 				});
 
 		$scope.profile = $localStorage.account;
-
 		$scope.uploadUserPhoto = function () {
 					$ionicActionSheet.show({
 						titleText: 'Profile Picture',

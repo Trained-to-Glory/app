@@ -1,7 +1,93 @@
 angular.module('module.view.news', [])
-    .controller('newsCtrl', ['$scope', '$rootScope','$http','$timeout','$ionicHistory','$ionicNavBarDelegate','$ionicScrollDelegate','interestService','usersService', '$state', '$cordovaCamera', '$localStorage', '$ionicActionSheet', '$ionicSideMenuDelegate', '$ionicPopover', '$log', 'engagementService', 'postService', 'appService',
-       function ($scope, $rootScope,$http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService) {
+    .controller('newsCtrl', ['$scope', '$rootScope','$http', '$timeout','$ionicHistory','$ionicNavBarDelegate','$ionicScrollDelegate','interestService','usersService', '$state', '$cordovaCamera', '$localStorage', '$ionicActionSheet', '$ionicSideMenuDelegate', '$ionicPopover', '$log', 'engagementService', 'postService', 'appService',
+       function ($scope, $rootScope, $http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService) {
       $scope.$on('$ionicView.enter', function() {
+        usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
+          //create a local object so we can create the datastructure we want
+          var arr = [];
+          for(var key in results){
+            results[key].key = key;
+            arr.push(results[key]);
+          }
+          var partnerPost = {
+              type: 'item',
+              items: results,
+              itemsArr: arr
+          };
+          for(var id in partnerPost.items){
+           //check to see if there is a like on this post
+           (function(id, items){
+             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+              items.liked = liked;
+             });
+             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+               items.committed = committed;
+             });
+             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+               items.totalLikes = totalLikes;
+             });
+             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+               items.totalCommits = totalCommits;
+             });
+
+             engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
+               items.totalComments = totalComments;
+             });
+
+           })(id, partnerPost.items[id]);
+          }
+          //make it available to the directive to officially show/hide, toggle
+          $scope.partnerPostArr = partnerPost.itemsArr;
+          //merge view itemsArr into partnerPost for disaply purposes
+          $scope.totalPost = partnerPost.itemsArr.concat($scope.view.itemsArr);
+          $scope.partnerPost = partnerPost;
+        });
+
+
+                usersService.getUserPost($localStorage.account.userId).then(function(results) {
+                  //create a local object so we can create the datastructure we want
+                  var arr = [];
+                  for(var key in results){
+                    results[key].key = key;
+                    arr.push(results[key]);
+                  }
+                  var view = {
+                      type: 'item',
+                      items: results,
+                      itemsArr: arr
+                  };
+                  for(var id in view.items){
+                   //check to see if there is a like on this post
+                   (function(id, items){
+                     engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+                      items.liked = liked;
+                     });
+                     engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+                       items.committed = committed;
+                     });
+                     engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+                       items.totalLikes = totalLikes;
+                     });
+                     engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+                       items.totalCommits = totalCommits;
+                     });
+                     postService.getComments(id).then(function(results) {
+             					$scope.comments = [];
+             					for(var key in results){
+             						results[key].key = key;
+             						$scope.comments.push(results[key]);
+             					}
+             					var comments = {
+             							items: results
+             					};
+             					$scope.commmentsNumber = $scope.comments.length;
+             				});
+                   })(id, view.items[id]);
+                  }
+                  //make it available to the directive to officially show/hide, toggle
+                  $scope.viewArr = view.itemsArr;
+                  $scope.view = view;
+                });
     //Check if there's an authenticated user, if there is non, redirect to login.
     if(firebase.auth().currentUser) {
           $scope.loggedIn = true;
@@ -26,53 +112,75 @@ angular.module('module.view.news', [])
           $scope.loggedIn = true;
         }
 
-        var publicServices = {
-            'post': true,
-            'engagement': true
-        }
-
-        //for dev purposes only. remove when done
-        for (var key in publicServices) {
-            if (publicServices[key]) {
-                $scope[key + 'Service'] = eval(key + 'Service');
-                window[key + 'Service'] = $scope[key + 'Service'];
-            }
-        };
-
-        usersService.getUserPlans($localStorage.account.userId).then(function(results) {
-          //create a local object so we can create the datastructure we want
-          var arr = [];
-          for(var key in results){
-            results[key].key = key;
-            arr.push(results[key]);
-          }
-          var plan = {
-              type: 'item',
-              items: results,
-              itemsArr: arr
-          };
-          for(var id in plan.items){
-           //check to see if there is a like on this post
-           (function(id, items){
-             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
-              items.liked = liked;
-             });
-             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
-               items.committed = committed;
-             });
-             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-               items.totalLikes = totalLikes;
-             });
-             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-               items.totalCommits = totalCommits;
-             });
-           })(id, plan.items[id]);
-          }
-          //make it available to the directive to officially show/hide, toggle
-          $scope.plan = plan;
-          $scope.planArr = plan.itemsArr;
-          $scope.planLength = $scope.planArr.length;
-        });
+        $scope.connectImages = [{
+          src: 'img/connect/bright-animal.jpeg',
+  				label: 'Animals',
+  				id: '-KXc-PKqyc7JRXpB98vc'
+  			},{
+          src: 'img/connect/bright-architecture.jpeg',
+  				label: 'Architecture',
+  				id: '-KXc-PKubG8nUAF4rbDW'
+  			},{
+          src: 'img/connect/bright-art.jpeg',
+  				label: 'Art',
+  				id: '-KXc-PKubG8nUAF4rbDX'
+  			},{
+  				src: 'img/connect/rari-car.jpg',
+  				label: 'Cars',
+  				id: '-KXc-PKvsIOIXTjTComa'
+  			},{
+          src: 'img/connect/design-match.jpg',
+  				label: 'Design',
+  				id: '-KXc-PKvsIOIXTjTComb'
+  			},{
+  				src: 'img/connect/diy-match.jpeg',
+  				label: 'DIY',
+  				id: '-KXc-PKvsIOIXTjTComc'
+  			},{
+  				src: 'img/connect/education-match.jpeg',
+  				label: 'Education',
+  				id: '-KXc-PKvsIOIXTjTComd'
+  			},{
+  				src: 'img/connect/events-match.jpg',
+  				label: 'Events',
+  				id: '-KXc-PKvsIOIXTjTCome'
+  			},{
+  				src: 'img/connect/fashion-match.jpeg',
+  				label: 'Fashion',
+  				id: '-KXc-PKyp2pTaXsaG6Ff'
+  			},{
+  				src: 'img/connect/food-match.jpg',
+  				label: 'Food & Drink',
+  				id: '-KXc-PKzxbTiOJzK6j72'
+  			},{
+  				src: 'img/connect/games-match.jpg',
+  				label: 'Games',
+  				id: '-KXc-PL0mQ1oYXeDiEyq'
+  			},{
+  				src: 'img/connect/gardening-match.jpeg',
+  				label: 'Gardening',
+  				id: '-KXc-PL0mQ1oYXeDiEyr'
+  			},{
+  				src: 'img/connect/hair-match.jpeg',
+  				label: 'Hair & Beauty',
+  				id: '-KXc-PL0mQ1oYXeDiEys'
+  			},{
+  				src: 'img/connect/health-match.jpg',
+  				label: 'Health & Sports',
+  				id: '-KXc-PL1IJeRKtEt1R70'
+  			},{
+  				src: 'img/connect/music-match.jpeg',
+  				label: 'Music',
+  				id: '-KXc-PL1IJeRKtEt1R71'
+  			},{
+  				src: 'img/connect/new-outdoors.jpg',
+  				label: 'Outdoors',
+  				id: '-KXc-PL3SLOgnBvXlR5i'
+  			},{
+  				src: 'img/connect/new-tech.jpeg',
+  				label: 'Technology',
+  				id: '-KXc-PL3SLOgnBvXlR5j'
+      }];
 
         $scope.goBack = function (ui_sref) {
             var currentView = $ionicHistory.currentView();
@@ -115,14 +223,6 @@ angular.module('module.view.news', [])
             });
         };
 
-        $scope.doRefresh = function() {
-           $timeout( function() {
-             //simulate async response
-             //Stop the ion-refresher from spinning
-             $scope.$broadcast('scroll.refreshComplete');
-           }, 1000);
-
-         };
         $scope.gotoAccount = function () {
             $state.go('tabs.account');
 
@@ -209,18 +309,6 @@ angular.module('module.view.news', [])
           }
             return false;
         };
-
-        $scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
-            scope: $scope
-        });
-
-        $scope.bottomPopover = $ionicPopover.fromTemplate(bottomTemplate, {
-            scope: $scope
-        });
-
-        $scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-            scope: $scope
-        })
 
           $scope.openPopover = function($event) {
              $scope.fullscreenPopover.show($event);
@@ -322,98 +410,6 @@ angular.module('module.view.news', [])
     		});
 
 
-        usersService.getUserPost($localStorage.account.userId).then(function(results) {
-          //create a local object so we can create the datastructure we want
-          var arr = [];
-          for(var key in results){
-            results[key].key = key;
-            arr.push(results[key]);
-          }
-          var view = {
-              type: 'item',
-              items: results,
-              itemsArr: arr
-          };
-          for(var id in view.items){
-           //check to see if there is a like on this post
-           (function(id, items){
-             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
-              items.liked = liked;
-             });
-             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
-               items.committed = committed;
-             });
-             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-               items.totalLikes = totalLikes;
-             });
-             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-               items.totalCommits = totalCommits;
-             });
-             postService.getComments(id).then(function(results) {
-     					$scope.comments = [];
-     					for(var key in results){
-     						results[key].key = key;
-     						$scope.comments.push(results[key]);
-     					}
-     					var comments = {
-     							items: results
-     					};
-     					$scope.commmentsNumber = $scope.comments.length;
-     				});
-           })(id, view.items[id]);
-          }
-          //make it available to the directive to officially show/hide, toggle
-          $scope.viewArr = view.itemsArr;
-          $scope.view = view;
-        });
-
-        usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
-          //create a local object so we can create the datastructure we want
-          var arr = [];
-          for(var key in results){
-            results[key].key = key;
-            arr.push(results[key]);
-          }
-          var partnerPost = {
-              type: 'item',
-              items: results,
-              itemsArr: arr
-          };
-          for(var id in partnerPost.items){
-           //check to see if there is a like on this post
-           (function(id, items){
-             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
-              items.liked = liked;
-             });
-             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
-               items.committed = committed;
-             });
-             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-               items.totalLikes = totalLikes;
-             });
-             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-               items.totalCommits = totalCommits;
-             });
-             postService.getComments(id).then(function(results) {
-     					$scope.comments = [];
-     					for(var key in results){
-     						results[key].key = key;
-     						$scope.comments.push(results[key]);
-     					}
-     					var comments = {
-     							items: results
-     					};
-     					$scope.commmentsNumber = $scope.comments.length;
-     				});
-           })(id, partnerPost.items[id]);
-          }
-          //make it available to the directive to officially show/hide, toggle
-          $scope.partnerPostArr = partnerPost.itemsArr;
-          //merge view itemsArr into partnerPost for disaply purposes
-          $scope.totalPost = partnerPost.itemsArr.concat($scope.view.itemsArr);
-          $scope.partnerPost = partnerPost;
-        });
-
          $scope.createEvent = function () {
            $scope.closePopover();
            $state.go('event');
@@ -430,38 +426,4 @@ angular.module('module.view.news', [])
          }
 
      })
-   }]);
-
-var newsTemplate =
-    '<ion-popover-view class="medium right">' +
-    '<ion-content>' +
-    '<div class="list">' +
-    '<div class="item item-icon-left item-text-wrap" ng-click="createEvent()">' +
-    '<i class="icon ion-ios-bell-outline"></i>Create Event' +
-    '</div>' +
-    '<div class="item item-icon-left item-text-wrap" ng-click="createPost()">' +
-    '<i class="icon ion-ios-camera-outline"></i>Create Post' +
-    '</div>' +
-    '<div class="item item-icon-left item-text-wrap" ng-click="createGoal()">' +
-    '<i class="icon ion-ios-star-outline" style="margin-left:3px"></i>Create Goal' +
-    '</div>' +
-    '</div>' +
-    '</ion-content>' +
-    '</ion-popover-view>';
-
-    var bottomTemplate =
-        '<ion-popover-view class="medium right">' +
-        '<ion-content>' +
-        '<div class="list">' +
-        '<div class="item item-icon-left item-text-wrap" ng-click="createEvent()">' +
-        '<i class="icon ion-ios-bell-outline"></i>Create Event' +
-        '</div>' +
-        '<div class="item item-icon-left item-text-wrap" ng-click="createPost()">' +
-        '<i class="icon ion-ios-camera-outline"></i>Create Post' +
-        '</div>' +
-        '<div class="item item-icon-left item-text-wrap" ng-click="createGoal()">' +
-        '<i class="icon ion-ios-star-outline" style="margin-left:3px"></i>Create Goal' +
-        '</div>' +
-        '</div>' +
-        '</ion-content>' +
-        '</ion-popover-view>';
+   }])

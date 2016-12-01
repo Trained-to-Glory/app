@@ -1,4 +1,4 @@
-<ion-view class="font-thin" view-title="Post" hide-nav-bar = "true">
+<ion-view hide-nav-bar = "true">
 
   <ion-nav-bar>
     <ion-nav-back-button style="display: block">
@@ -21,19 +21,19 @@
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
           <img ng-src="{{post.avatar}}" style="background-color: transparent">
           <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
-          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;" class="font-thin">{{post.owner}}</h2>
+          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>
         </div>
-        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">
-          {{post.totalCommits}} Commit
+        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,profile.userId)">
+          {{post.state.totalCommits}} Commit
         </a>
-        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
-          {{post.totalLikes}} Likes
+        <a class="item" ng-click="toggleLike(posts.key, profile.userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
+          {{post.state.totalLikes}} Likes
         </a>
-        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
+        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
           {{commmentsNumber}} Comments
         </a>
       </div>

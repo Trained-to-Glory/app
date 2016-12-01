@@ -4,7 +4,7 @@
           <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>
       </ion-nav-buttons>
 
-    <ion-content class="has-tabs-top" style="top: 32px !important;">
+    <ion-content class="has-tabs-top" style="top: 32px !important;" lazy-scroll>
     <div style="height:100%; margin-top: 10px;" class="bg-lightgrey" on-swipe-right="onSwipeRight()">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">
         <div class="item profile item-image bg-image" style="max-height: 400px;margin-top: 17px;background-image: url({{profile.userPhoto}})">
@@ -133,7 +133,7 @@
                 </span>
             </div>
               <div class="item item-avatar item-button-right followers" ng-if="userPartners > 0" style = "border: none" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">
-                <img ng-src="{{value.userPhoto}}">
+                <img image-lazy-src="{{value.userPhoto}}" image-lazy-distance-from-top-to-load="50">
                 <h2 style="font-weight: 400">{{value.userName}}</h2>
             </div>
 

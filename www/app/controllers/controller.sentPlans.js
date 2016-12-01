@@ -90,11 +90,9 @@ angular.module('module.view.sentPlans', [])
 									$scope.selected = [];
 									$scope.totalChecked = 0;
 									$scope.checkedOrNot = function (item, index, totalChecklist) {
-										console.log(arguments);
 											if (item.isChecked) {
 													$scope.selected.push(item);
 													$scope.totalChecked++;
-													console.log($scope.totalChecked);
 													engagementService.engagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
 											} else {
 													var _index = $scope.selected.indexOf(item);
@@ -103,7 +101,6 @@ angular.module('module.view.sentPlans', [])
 													engagementService.disEngagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
 											}
 											$scope.progress($scope.totalChecked, totalChecklist);
-											console.log(totalChecklist);
 									};
 
 									usersService.getAllUsers($localStorage.account.userId).then(function(results){

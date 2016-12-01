@@ -126,7 +126,7 @@ angular.module('full_starter.routes', [])
 
       .state('post-detail', {
         url: '/post-detail',
-        params: { post: null },
+        params: { post: null, actionable: null },
         templateUrl: 'app/news/post.html',
         controller: 'postCtrl'
       })

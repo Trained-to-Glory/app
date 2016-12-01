@@ -7,18 +7,18 @@
     </button>
     <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Connect</div>
   </ion-header-bar>
-  
-    <ion-content class="has-header" style="top: 44px;">
+
+    <ion-content class="has-header" style="top: 44px;" lazy-scroll>
       <div class="list card" style="background: transparent; box-shadow: none;">
           <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in orderByLocation1(users,myLocation)" ui-sref="friend({contact: user.userId})">
-              <img ng-src="{{user.userPhoto}}">
+              <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">
               <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>
             </div>
       </div>
 
       <div class="list card" style="background: transparent; box-shadow: none;">
           <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="person in orderByLocation1(people,myLocation)" ui-sref="friend({contact: person.userId})">
-              <img ng-src="{{person.userPhoto}}">
+              <img image-lazy-src="{{person.userPhoto}}" image-lazy-distance-from-top-to-load="50">
               <h2 class="lead" style="font-weight: 400">{{person.userName}}</h2>
             </div>
       </div>

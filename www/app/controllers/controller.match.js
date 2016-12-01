@@ -77,6 +77,146 @@ angular.module('module.view.match', [])
 				}
 			}
 
+			$scope.connectImages = [{
+        src: 'img/connect/bright-animal.jpeg',
+				label: 'Animals',
+				id: '-KXc-PKqyc7JRXpB98vc'
+			},{
+        src: 'img/connect/bright-architecture.jpeg',
+				label: 'Architecture',
+				id: '-KXc-PKubG8nUAF4rbDW'
+			},{
+        src: 'img/connect/bright-art.jpeg',
+				label: 'Art',
+				id: '-KXc-PKubG8nUAF4rbDX'
+			},{
+				src: 'img/connect/rari-car.jpg',
+				label: 'Cars',
+				id: '-KXc-PKvsIOIXTjTComa'
+			},{
+        src: 'img/connect/design-match.jpg',
+				label: 'Design',
+				id: '-KXc-PKvsIOIXTjTComb'
+			},{
+				src: 'img/connect/diy-match.jpeg',
+				label: 'DIY',
+				id: '-KXc-PKvsIOIXTjTComc'
+			},{
+				src: 'img/connect/education-match.jpeg',
+				label: 'Education',
+				id: '-KXc-PKvsIOIXTjTComd'
+			},{
+				src: 'img/connect/events-match.jpg',
+				label: 'Events',
+				id: '-KXc-PKvsIOIXTjTCome'
+			},{
+				src: 'img/connect/fashion-match.jpeg',
+				label: 'Fashion',
+				id: '-KXc-PKyp2pTaXsaG6Ff'
+			},{
+				src: 'img/connect/food-match.jpg',
+				label: 'Food & Drink',
+				id: '-KXc-PKzxbTiOJzK6j72'
+			},{
+				src: 'img/connect/games-match.jpg',
+				label: 'Games',
+				id: '-KXc-PL0mQ1oYXeDiEyq'
+			},{
+				src: 'img/connect/gardening-match.jpeg',
+				label: 'Gardening',
+				id: '-KXc-PL0mQ1oYXeDiEyr'
+			},{
+				src: 'img/connect/hair-match.jpeg',
+				label: 'Hair & Beauty',
+				id: '-KXc-PL0mQ1oYXeDiEys'
+			},{
+				src: 'img/connect/health-match.jpg',
+				label: 'Health & Sports',
+				id: '-KXc-PL1IJeRKtEt1R70'
+			},{
+				src: 'img/connect/music-match.jpeg',
+				label: 'Music',
+				id: '-KXc-PL1IJeRKtEt1R71'
+			},{
+				src: 'img/connect/new-outdoors.jpg',
+				label: 'Outdoors',
+				id: '-KXc-PL3SLOgnBvXlR5i'
+			},{
+				src: 'img/connect/new-tech.jpeg',
+				label: 'Technology',
+				id: '-KXc-PL3SLOgnBvXlR5j'
+    }];
+
+		$scope.leaderImages = [{
+			src: 'img/leader/animals-lead.jpg',
+			label: 'Animals',
+			id: '-KXc-PL6yz4ugqb4XxuH'
+		},{
+			src: 'img/leader/better-architecture.jpeg',
+			label: 'Architecture',
+			id: '-KXc-PL6yz4ugqb4XxuI'
+		},{
+			src: 'img/leader/art-lead.jpg',
+			label: 'Art',
+			id: '-KXc-PL6yz4ugqb4XxuJ'
+		},{
+			src: 'img/leader/cars-lead.jpg',
+			label: 'Cars',
+			id: '-KXc-PL6yz4ugqb4XxuK'
+		},{
+			src: 'img/leader/design-lead.jpg',
+			label: 'Design',
+			id: '-KXc-PL6yz4ugqb4XxuL'
+		},{
+			src: 'img/leader/diy-lead.jpeg',
+			label: 'DIY',
+			id: '-KXc-PL73JPkLGBGOhT0'
+		},{
+			src: 'img/leader/education-lead.jpeg',
+			label: 'Education',
+			id: '-KXc-PL9UBFedjtGjwym'
+		},{
+			src: 'img/leader/events-lead.jpg',
+			label: 'Events',
+			id: '-KXc-PL9UBFedjtGjwyn'
+		},{
+			src: 'img/leader/fashion-lead.jpeg',
+			label: 'Fashion',
+			id: '-KXc-PL9UBFedjtGjwyo'
+		},{
+			src: 'img/leader/food-lead.jpeg',
+			label: 'Food & Drink',
+			id: '-KXc-PL9UBFedjtGjwyp'
+		},{
+			src: 'img/leader/game-lead.jpeg',
+			label: 'Games',
+			id: '-KXc-PLA0DrJOIW_0BOY'
+		},{
+			src: 'img/leader/gardening-lead.jpeg',
+			label: 'Gardening',
+			id: '-KXc-PLBtt6_xc6WZesE'
+		},{
+			src: 'img/leader/hair-lead.jpg',
+			label: 'Hair & Beauty',
+			id: '-KXc-PLBtt6_xc6WZesF'
+		},{
+			src: 'img/leader/health-lead.jpeg',
+			label: 'Health & Sports',
+			id: '-KXc-PLBtt6_xc6WZesG'
+		},{
+			src: 'img/leader/music-lead.jpeg',
+			label: 'Music',
+			id: '-KXc-PLCBDqeU-66GvDx'
+		},{
+			src: 'img/leader/outdoors-lead.jpg',
+			label: 'Outdoors',
+			id: '-KXc-PLCBDqeU-66GvDy'
+		},{
+			src: 'img/leader/technology-explore.jpeg',
+			label: 'Technology',
+			id: '-KXc-PLCBDqeU-66GvDz'
+	}];
+
 			$scope.onSwipeRight1 = function () {
 				$scope.view = { type: 1 };
 			}
@@ -93,23 +233,38 @@ angular.module('module.view.match', [])
 				return interestService.getTrainers(id);
 			};
 
-					$scope.getInterest = function(id){
-						return interestService.get(id);
-					};
+					// $scope.getInterest = function(id){
+					// 	return interestService.get(id);
+					// };
 
-					$scope.getInterest().then(function(results) {
+					$scope.getInterest = interestService.get().then(function(results) {
 						var interests = [];
 						for (key in results){
 							interests.push({
-								id: key,
-								label: results[key].displayName,
-								photo: results[key].matchImg,
-								numbers: results[key].numbers,
-								subCategory: results[key].sub_categories
+								id: key
 							});
 						}
-						$scope.abs = interests;
+						$scope.interestId = interests;
 					});
+
+
+
+					$scope.repeatData = $scope.connectImages.map(function(value, index) {
+							return {
+									src: value.src,
+									label: value.label,
+									id: $scope.abs
+							};
+					});
+
+					$scope.leaderRepeatData = $scope.leaderImages.map(function(value, index) {
+							return {
+									src: value.src,
+									label: value.label,
+									id: $scope.abs
+							};
+					});
+
 
 					$scope.limit = 10;
 					$scope.loadMore = function(){
@@ -130,7 +285,6 @@ angular.module('module.view.match', [])
 						$scope.$broadcast('scroll.infiniteScrollComplete');
 					};
 
-
 					$scope.loadMoreTrainers = function(){
 	          if($scope.trainers){
 	            var max = $scope.trainers.length;
@@ -149,28 +303,11 @@ angular.module('module.view.match', [])
 	          $scope.$broadcast('scroll.infiniteScrollComplete');
 	        };
 
-					// usersService.getInterestName($localStorage.account.userId).then(function(results) {
-					// 	var interests = [];
-					// 	for (key in results){
-					// 		interests.push({
-					// 			id: key,
-					// 			label: results[key].displayName,
-					// 			photo: results[key].matchImg,
-					// 			explorePhoto: results[key].matchImg,
-					// 			numbers: results[key].numbers
-					// 		});
-					// 	}
-					// 	$scope.abs = interests;
-					// });
-
 					$scope.getTrainersInterest().then(function(results) {
 						var coach = [];
 						for (key in results){
 							coach.push({
-								id: key,
-								label: results[key].displayName,
-								photo: results[key].leadImg,
-								numbers: results[key].numbers
+								id: key
 							});
 						}
 						$scope.trainers = coach;
@@ -198,37 +335,3 @@ angular.module('module.view.match', [])
         };
 
 }]);
-
-var popoverTemplate =
-		'<ion-popover-view class="menu popover" ng-click="popover.hide()" style="background-color: #fff;top: -9px;">' +
-		'<ion-content scroll="true">' +
-		'<ion-list style="position:absolute;top:-10vh;">' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="browse()"> Home' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="search()"> Search' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="match()"> Match' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="explore()"> Discover' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="coach()"> Leaders' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="plans()"> Goals' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="calendar()"> Sessions' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="notifications()"> Notifications' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="partners()"> Partners' +
-		'</ion-item>' +
-		'<ion-item class="font-thin" style="font-size: 24px;margin-bottom:3vh;display:table;" ng-click="settings()"> Settings' +
-		'</ion-item>' +
-		'<a class="item item-avatar" nav-clear style="padding-left: 65px;padding-top:15px;margin-left:2px;" ng-click="account()">'+
-		'<img ng-src="{{ profile.userPhoto }}" style="margin-left: 2px;">'+
-		'<p style="display: block;color: black !important;">{{profile.firstName + " " + profile.lastName}}<p style="display:block;color: red">{{profile.userName}}</p>'+
-		'</a>'+
-		'<ion-item class="font-thin" style="font-size: 18px;display:table;" ng-click="logout()"> Sign Out' +
-		'</ion-item>' +
-		'</ion-list>'+
-		'</ion-content>' +
-		'</ion-popover-view>';

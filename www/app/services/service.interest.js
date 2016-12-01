@@ -228,7 +228,7 @@ angular.module('service.interest', [])
  	  };
 
 	  this.get = function(id){
-      var intresets = (id) ? firebase.database().ref('interest/' + id) : firebase.database().ref('interest');
+      var intresets = (id) ? firebase.database().ref('interest/') : firebase.database().ref('interest');
       return intresets.once('value').then(function (snapshot) {
           var currentObj = snapshot.val();
           var numberPost = snapshot.numChildren();

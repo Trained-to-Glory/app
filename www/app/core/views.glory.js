@@ -8,7 +8,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '          <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>\n' +
     '      </ion-nav-buttons>\n' +
     '\n' +
-    '    <ion-content class="has-tabs-top" style="top: 32px !important;">\n' +
+    '    <ion-content class="has-tabs-top" style="top: 32px !important;" lazy-scroll>\n' +
     '    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey" on-swipe-right="onSwipeRight()">\n' +
     '      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">\n' +
     '        <div class="item profile item-image bg-image" style="max-height: 400px;margin-top: 17px;background-image: url({{profile.userPhoto}})">\n' +
@@ -137,7 +137,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                </span>\n' +
     '            </div>\n' +
     '              <div class="item item-avatar item-button-right followers" ng-if="userPartners > 0" style = "border: none" ui-sref="friend({contact:value.userId})" ng-repeat="value in contacts.itemsArr">\n' +
-    '                <img ng-src="{{value.userPhoto}}">\n' +
+    '                <img image-lazy-src="{{value.userPhoto}}" image-lazy-distance-from-top-to-load="50">\n' +
     '                <h2 style="font-weight: 400">{{value.userName}}</h2>\n' +
     '            </div>\n' +
     '\n' +
@@ -468,7 +468,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: \'created\': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">\n' +
     '      <div class="list card image" style="box-shadow: none;">\n' +
     '            <div class="item item-image">\n' +
-    '                <img ng-src="{{plan.photo}}">\n' +
+    '                <img image-lazy-src="{{plan.photo}}" image-lazy-distance-from-top-to-load="200" ng-if = "{{plan.photo}}">\n' +
     '                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">\n' +
     '                  <ion-list>\n' +
     '                    <ion-item>\n' +
@@ -536,18 +536,18 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '    </button>\n' +
     '    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Connect</div>\n' +
     '  </ion-header-bar>\n' +
-    '  \n' +
-    '    <ion-content class="has-header" style="top: 44px;">\n' +
+    '\n' +
+    '    <ion-content class="has-header" style="top: 44px;" lazy-scroll>\n' +
     '      <div class="list card" style="background: transparent; box-shadow: none;">\n' +
     '          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in orderByLocation1(users,myLocation)" ui-sref="friend({contact: user.userId})">\n' +
-    '              <img ng-src="{{user.userPhoto}}">\n' +
+    '              <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">\n' +
     '              <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>\n' +
     '            </div>\n' +
     '      </div>\n' +
     '\n' +
     '      <div class="list card" style="background: transparent; box-shadow: none;">\n' +
     '          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="person in orderByLocation1(people,myLocation)" ui-sref="friend({contact: person.userId})">\n' +
-    '              <img ng-src="{{person.userPhoto}}">\n' +
+    '              <img image-lazy-src="{{person.userPhoto}}" image-lazy-distance-from-top-to-load="50">\n' +
     '              <h2 class="lead" style="font-weight: 400">{{person.userName}}</h2>\n' +
     '            </div>\n' +
     '      </div>\n' +
@@ -1404,7 +1404,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>\n' +
     '    </ion-nav-buttons>\n' +
     '\n' +
-    '    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">\n' +
+    '    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" lazy-scroll>\n' +
     '      <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">\n' +
     '        <label class="item item-input" ng-click="view.type = 2">\n' +
     '          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);"></i>\n' +
@@ -1417,7 +1417,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '      <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">\n' +
     '        <div class="list card" style="background: transparent; box-shadow: none;">\n' +
     '            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzyBy: \'userName\': lookUp " ui-sref="friend({contact: user.userId})">\n' +
-    '                <img ng-src="{{user.userPhoto}}">\n' +
+    '                <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">\n' +
     '                <h2 class="lead" style="font-weight: 400 !important">{{user.userName}}</h2>\n' +
     '              </div>\n' +
     '        </div>\n' +
@@ -1430,7 +1430,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                <a ui-sref="post-detail({post:news.itemsArr[$index].key})">\n' +
     '                  <div class="category-2-item-wrapper">\n' +
     '                    <div class="category-2-item-content">\n' +
-    '                      <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index].photo}}); background-color: transparent;z-index:5">\n' +
+    '                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style="background-color: transparent;z-index:5">\n' +
     '                      </div>\n' +
     '                    </div>\n' +
     '                  </div>\n' +
@@ -1440,7 +1440,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                <a ui-sref="post-detail({post:news.itemsArr[$index+1].key})">\n' +
     '                  <div class="category-2-item-wrapper">\n' +
     '                    <div class="category-2-item-content">\n' +
-    '                      <div class = "multi-bg-outer" style="background-image: url({{news.itemsArr[$index+1].photo}}); background-color: transparent;z-index:5">\n' +
+    '                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index+1].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style=" background-color: transparent;z-index:5">\n' +
     '                      </div>\n' +
     '                    </div>\n' +
     '                  </div>\n' +
@@ -1496,27 +1496,13 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '    </ion-floating-menu>\n' +
     '\n' +
     '    <ion-content class="has-tabs-top">\n' +
-    '      <div class="list card image" style="box-shadow: none;" ng-repeat = "plan in plan.itemsArr | limitTo: 1" ng-if="planLength >= 1">\n' +
-    '            <div class="item item-image">\n' +
-    '                <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">\n' +
-    '                  <ion-list>\n' +
-    '                    <ion-item>\n' +
-    '                      {{plan.title}}\n' +
-    '                    </ion-item>\n' +
-    '                    <ion-item>\n' +
-    '                      {{plan.description}}\n' +
-    '                    </ion-item>\n' +
-    '                  </ion-list>\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
     '\n' +
-    '      <div class="list card" ng-repeat="posts in totalPost | orderBy: \'created\': true | limitTo: limit" on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
-    '        <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">\n' +
-    '            <img ng-src="{{posts.photo}}">\n' +
-    '          </div>\n' +
+    '      <div class="list card" ng-repeat="posts in totalPost  | orderBy: \'created\': true" on-swipe-left="onSwipeLeft()" style="box-shadow: none;margin-left:0;margin-right:0;">\n' +
+    '        <div class="item item-image" ui-sref="post-detail({post:posts.key, actionable: posts.state})" backgroundimg="{{posts.photo}}" style="max-height: 500px;">\n' +
+    '           <img src="img/art.jpg" ng-src="{{posts.photo}}">\n' +
+    '         </div>\n' +
     '        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">\n' +
-    '          <img ng-src="{{posts.avatar}}" style="background-color: transparent">\n' +
+    '          <img  ng-src="{{posts.avatar}}">\n' +
     '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{posts.owner}}</h2>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>\n' +
@@ -1528,11 +1514,11 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">\n' +
     '          {{posts.totalLikes}} Likes\n' +
     '        </a>\n' +
-    '        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">\n' +
-    '          {{commmentsNumber}} Comments\n' +
+    '        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">\n' +
+    '          {{posts.totalComments}} Comments\n' +
     '        </a>\n' +
     '      </div>\n' +
-    '        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
+    '        <!-- <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll> -->\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
@@ -1555,7 +1541,7 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
 
 
   $templateCache.put('app/news/post.html',
-    '<ion-view class="font-thin" view-title="Post" hide-nav-bar = "true">\n' +
+    '<ion-view hide-nav-bar = "true">\n' +
     '\n' +
     '  <ion-nav-bar>\n' +
     '    <ion-nav-back-button style="display: block">\n' +
@@ -1578,19 +1564,19 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">\n' +
     '          <img ng-src="{{post.avatar}}" style="background-color: transparent">\n' +
     '          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>\n' +
-    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;" class="font-thin">{{post.owner}}</h2>\n' +
+    '          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{post.owner}}</h2>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>\n' +
     '          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>\n' +
     '          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>\n' +
     '        </div>\n' +
-    '        <a class="item" ng-if = "post.postType === \'Event\'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,userId)">\n' +
-    '          {{post.totalCommits}} Commit\n' +
+    '        <a class="item" ng-if = "post.postType === \'Event\'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,profile.userId)">\n' +
+    '          {{post.state.totalCommits}} Commit\n' +
     '        </a>\n' +
-    '        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">\n' +
-    '          {{post.totalLikes}} Likes\n' +
+    '        <a class="item" ng-click="toggleLike(posts.key, profile.userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">\n' +
+    '          {{post.state.totalLikes}} Likes\n' +
     '        </a>\n' +
-    '        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">\n' +
+    '        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">\n' +
     '          {{commmentsNumber}} Comments\n' +
     '        </a>\n' +
     '      </div>\n' +
@@ -1826,12 +1812,12 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '  </ion-header-bar>\n' +
     '\n' +
     '  <ion-content class="has-header" scroll="true">\n' +
-    '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interests | limitTo: limit  track by $index">\n' +
+    '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interestImages track by $index">\n' +
     '             <div class="col">\n' +
     '                 <div class="category-2-item-wrapper" style="z-index: 1">\n' +
     '                   <div class="category-2-item-content" style="z-index: 1">\n' +
-    '                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{interest.photo}});">\n' +
-    '                       <img bg="" class="multi-bg category-with-image">\n' +
+    '                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{interest.src}});">\n' +
+    '                       <img bg="" ng-src="{{interest.src}}" class="multi-bg category-with-image">\n' +
     '                       <span class="bg-overlay"></span>\n' +
     '                       <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent;" data-interest-id="{{ interest.id }}" ng-model="isChecked"  ng-change="checkedOrNot(interest, isChecked, $index, $localStorage)" ng-init=\'isChecked=false\'>\n' +
     '                       </ion-checkbox>\n' +
@@ -1840,13 +1826,6 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                           <span class="bubble"></span>\n' +
     '                         </span>\n' +
     '                         <span style="border-bottom: 1px solid #F10707;">{{interest.label}}</span>\n' +
-    '                         <div ng-if="interest.subCategory" style="margin-top: 8px">\n' +
-    '                           <div class="button" style = "background-color: transparent; color: white; z-index: 999; margin-left: 6px; margin-bottom: 5px; margin-top: 10px;border-color: #F10707;min-height: 0; min-width: 0;border-width: 0;line-height:0"\n' +
-    '                              ng-repeat = "(key,value) in interest.subCategory" ng-if="isChecked" ng-class="class" ng-click="toggleInterest(key)">\n' +
-    '                              <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>\n' +
-    '                              <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>\n' +
-    '                          </div>\n' +
-    '                         </div>\n' +
     '                       </h1>\n' +
     '                     </div>\n' +
     '                   </div>\n' +
@@ -1854,7 +1833,6 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '             </div>\n' +
     '           </div>\n' +
     '\n' +
-    '         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
@@ -1879,13 +1857,13 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '    <ion-content  class="has-tabs-top">\n' +
     '      <div ng-if="view.type === 1" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Connect</div>\n' +
     '        <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()" style="position: relative;top:53px;">\n' +
-    '          <div class="row row-no-padding category-2-outer" style="padding:0;"ng-repeat = "ab in abs | limitTo: limit track by $index">\n' +
+    '          <div class="row row-no-padding category-2-outer" style="padding:0;" ng-repeat = "ab in connectImages track by $index" >\n' +
     '            <div class="col">\n' +
     '              <a ui-sref="contacts({activity:ab.id})">\n' +
     '                <div class="category-2-item-wrapper">\n' +
     '                  <div class="category-2-item-content">\n' +
-    '                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.photo}});">\n' +
-    '                      <img bg="" class="multi-bg category-with-image">\n' +
+    '                    <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.src}});">\n' +
+    '                      <img bg="" ng-src ="{{ab.src}}" class="multi-bg category-with-image">\n' +
     '                      <span class="bg-overlay"></span>\n' +
     '                      <h1 class="category-heading" style="width: 80%">\n' +
     '                        <span>{{$index +1}}\n' +
@@ -1903,13 +1881,13 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '\n' +
     '      <div ng-if="view.type === 2" style="top: 37px;position: relative;font-size: 18px;margin-left: 20px;">Leaders</div>\n' +
     '      <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()" style="position: relative;top:53px;">\n' +
-    '        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in trainers | limitTo: limit track by $index">\n' +
+    '        <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in leaderImages track by $index">\n' +
     '          <div class="col">\n' +
     '            <a ui-sref="contacts({activity:trainer.id})">\n' +
     '              <div class="category-2-item-wrapper">\n' +
     '                <div class="category-2-item-content">\n' +
-    '                  <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.photo}});">\n' +
-    '                    <img bg="" class="multi-bg category-with-image">\n' +
+    '                  <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.src}});">\n' +
+    '                    <img bg="" ng-src = "{{trainer.src}}" class="multi-bg category-with-image">\n' +
     '                    <span class="bg-overlay"></span>\n' +
     '                    <h1 class="category-heading" style="width: 80%">\n' +
     '                      <span>{{$index +1}}\n' +
@@ -1923,7 +1901,6 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            </a>\n' +
     '          </div>\n' +
     '        </div>\n' +
-    '          <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );
@@ -1946,12 +1923,12 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '\n' +
     '\n' +
     '  <ion-content class="has-header" scroll="true">\n' +
-    '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in interests | limitTo: limit  track by $index">\n' +
+    '           <div class="row row-no-padding category-2-outer" style="padding:0;overflow:scroll" ng-repeat = "interest in ratherImages track by $index">\n' +
     '             <div class="col">\n' +
     '                 <div class="category-2-item-wrapper" style="z-index: 1">\n' +
     '                   <div class="category-2-item-content" style="z-index: 1">\n' +
-    '                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{interest.photo}});">\n' +
-    '                       <img bg="" class="multi-bg category-with-image">\n' +
+    '                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{interest.src}});">\n' +
+    '                       <img bg=""  ng-src = "{{interest.src}}" class="multi-bg category-with-image">\n' +
     '                       <span class="bg-overlay"></span>\n' +
     '                       <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent;" data-interest-id="{{ interest.id }}" ng-model="isChecked"  ng-change="checkedOrNot(interest, isChecked, $index, $localStorage)" ng-init=\'isChecked=false\'>\n' +
     '                       </ion-checkbox>\n' +
@@ -1960,21 +1937,12 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '                           <span class="bubble"></span>\n' +
     '                         </span>\n' +
     '                         <span style="border-bottom: 1px solid #F10707;">{{interest.label}}</span>\n' +
-    '                         <div ng-if="interest.subCategory" style="margin-top: 8px">\n' +
-    '                           <div class="button" style = "background-color: transparent; color: white; z-index: 999; margin-left: 6px; margin-bottom: 5px; margin-top: 10px;border-color: #F10707;min-height: 0; min-width: 0;border-width: 0;line-height:0"\n' +
-    '                              ng-repeat = "(key,value) in interest.subCategory" ng-if="isChecked" ng-class="class" ng-click="toggleInterest(key)">\n' +
-    '                              <span ng-if="!value.state.active && isChecked"> {{value.displayName}}</span>\n' +
-    '                              <span ng-if="value.state.active && isChecked"> {{value.displayName}}</span>\n' +
-    '                          </div>\n' +
-    '                         </div>\n' +
     '                       </h1>\n' +
     '                     </div>\n' +
     '                   </div>\n' +
     '                 </div>\n' +
     '             </div>\n' +
     '           </div>\n' +
-    '\n' +
-    '         <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>\n'
   );

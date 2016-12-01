@@ -285,38 +285,6 @@ angular.module('service.engagements', [])
             return updateEngagement(type, data.category, data.categoryId, data.itemId, undefined, undefined, false, false, false);
         };
 
-        this.getComments = function (data) {
-            var type = 'engagementComments';
-            var refId = type;
-            //get all comments in category
-            refId += (data.category) ? '/' + data.category : '';
-            //get all comments for category Id
-            refId += (data.categoryId) ? '/' + data.categoryId : '';
-            //get all comments for itemId
-            refId += (data.itemId) ? '/' + data.itemId : '';
-
-            var comments = firebase.database().ref(refId);
-            return comments.once('value').then(function (snapshot) {
-                var currentObj = snapshot.val();
-                if (currentObj) {
-                    return currentObj;
-                }
-                return undefined;
-            });
-        };
-
-        this.totalComments = function(data){
-          return this.getComments(data).then(function(result){
-            var count = 0;
-            if(result){
-              for(var key in result){
-                ++count;
-              }
-            }
-            return count;
-          });
-        };
-
         this.liked = function (data) {
             var type = 'engagementLikes';
             var data = get(type, data.category, data.categoryId, data.itemId);
@@ -466,6 +434,27 @@ angular.module('service.engagements', [])
           //check if engagement item is already in hash
           return data.then(function(result){
               return result;
+          });
+        };
+
+        this.comments = function(data){
+          var type = 'engagementComments';
+          var data = get(type, data.category, data.categoryId);
+          //check if engagement item is already in hash
+          return data.then(function(result){
+              return result;
+          });
+        };
+
+        this.totalComments = function(data){
+          return this.comments(data).then(function(result){
+            var count = 0;
+            if(result){
+              for(var key in result){
+                ++count;
+              }
+            }
+            return count;
           });
         };
 

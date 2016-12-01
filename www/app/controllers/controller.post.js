@@ -36,6 +36,28 @@ angular.module('module.view.post', [])
 						items: results,
 						itemsArr: arr
 					}
+					for(var id in data.items){
+           //check to see if there is a like on this post
+           (function(id, items){
+             engagementService.liked({category:'post', categoryId:$stateParams.post, userId: $localStorage.account.userId}).then(function(liked){
+              items.liked = liked;
+             });
+             engagementService.committed({category:'post',categoryId:$stateParams.post, userId: $localStorage.account.userId}).then(function(committed){
+               items.committed = committed;
+             });
+             engagementService.totalLikes({category:'post', categoryId: $stateParams.post}).then(function(totalLikes){
+               items.totalLikes = totalLikes;
+             });
+             engagementService.totalCommits({category:'post', categoryId: $stateParams.post}).then(function(totalCommits){
+               items.totalCommits = totalCommits;
+             });
+
+             engagementService.totalComments({category: 'post',categoryId: $stateParams.post}).then(function(totalComments){
+               items.totalComments = totalComments;
+             });
+
+           })(id, data.items[id]);
+          }
 					$scope.post = results;
 				});
 			}
@@ -74,17 +96,18 @@ angular.module('module.view.post', [])
         }
 
 				$scope.toggleCommit = function(postId, userId){
-          var posts = $scope.news.items;
-          $log.log({postId: postId, posts: posts, userId: $localStorage.account.userId});
-          if(postId in posts){
-            var post = $scope.news.items[postId];
-            var actionable = post.state.actionable;
+            var post = $stateParams.post;
+            var actionable = $stateParams.actionable.actionable;
             if(actionable){
-              post.committed = !post.committed;
-              var state = (post.committed)?'commit':'decommit';
+              post.liked = !post.liked;
+              var state = (post.liked)?'like':'unlike';
+              if(!post.liked){
+                ++post.totalLikes;
+              }else if(post.totalLikes > 0){
+                --post.totalLikes;
+              }
               return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
             }
-          }
             return false;
         };
 
@@ -111,15 +134,15 @@ angular.module('module.view.post', [])
 
        // Write the new post's data simultaneously in the posts list and the user's post list.
          var updates = {};
-         updates[['engagementComments',$stateParams.post].join('/')] = obj;
-         updates[['accounts', userId , 'posts' , $stateParams.post , userId].join('/')] = obj;
+         updates[['engagementComments', 'post', $stateParams.post].join('/')] = obj;
+         updates[['accounts', userId , 'engagementComments' , $stateParams.post , userId].join('/')] = obj;
 
          return firebase.database().ref().push(updates);
         };
 
 				$scope.toggleLike = function(postId, userId){
-            var post = $scope.post.createdBy[postId];
-            var actionable = post.state.actionable;
+            var post = $stateParams.post;
+            var actionable = $stateParams.actionable.actionable;
             if(actionable){
               post.liked = !post.liked;
               var state = (post.liked)?'like':'unlike';
