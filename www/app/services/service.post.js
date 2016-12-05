@@ -1,16 +1,17 @@
 angular.module('service.post', [])
     .service('postService',['$localStorage', '$q', function ($localStorage, $q) {
 
-        this.get = function (postId) {
-            var posts = (postId) ? firebase.database().ref('posts/' + postId) : firebase.database().ref('posts');
-            return posts.once('value').then(function (snapshot) {
-                  var currentObj = snapshot.val();
-                  if (currentObj) {
-                      return currentObj;
-                  }
-                  return undefined;
-              });
-        };
+      this.get = function (postId) {
+          var posts = firebase.database().ref('posts');
+          posts.orderByKey().limitToFirst(10).on("child_added", function(snapshot) {
+                var currentObj = snapshot.val();
+                if (currentObj) {
+                    return currentObj;
+                }
+                return undefined;
+            });
+      };
+
 
         this.createComment = function (data) {
             //create a location in the table

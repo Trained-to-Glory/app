@@ -10,10 +10,11 @@
     </ion-floating-menu>
 
     <ion-content class="has-tabs-top" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-      <div ng-repeat = "plan in view.itemsArr | limitTo: limit | orderBy: 'created': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">
+
+      <div ng-repeat = "plan in profile.plans | limitTo: limit | orderBy: 'created': true" style="margin-top: 67px;box-shadow: none;margin-left: 0; margin-right: 0;">
       <div class="list card image" style="box-shadow: none;">
             <div class="item item-image">
-                <img image-lazy-src="{{plan.photo}}" image-lazy-distance-from-top-to-load="200" ng-if = "{{plan.photo}}">
+                <img ng-src="{{plan.photo}}" fallback-src = "img/grayBackground.jpg">
                 <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">
                   <ion-list>
                     <ion-item>

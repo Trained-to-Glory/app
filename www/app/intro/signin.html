@@ -10,15 +10,41 @@
 <!-- * bg-image / background image -->
 <!-- class bg-image is in the file general.scss -->
   <!-- * bg-color / background-color -->
-      <ion-content>
-                <div class="bg-image" style="background-image:url('img/goals-image-1.jpeg');"</div>
+  <div class="bg-image" style="background-image:url('img/thinking-2.jpg');">
+      <ion-content style="background: transparent !important;" class="auth profile has-header bt-grey">
           <!-- * logo / logo company -->
           <div class="logo">
               <img ng-src="img/TTG-Symbol-2015-02.png" alt="logo" style="height: 160px;">
           </div>
-          <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
-              <div class="list list-inset" style="background-color:transparent !important;padding-top: 26vh;margin-right: 0;">
-                <i class="icon ion-ios-email placeholder-icon" style="font-size: 32px;position: fixed;color: white;display: inline-flex;left: 6%;margin-top: 17px;"></i>
+          <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)" style="position: relative">
+              <div class="list list-inset" style="background-color:transparent !important;padding-top: 23vh;margin-right: 0;">
+                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 25px;">
+                  <label class="item item-input" style="border: none;background-color:transparent !important;margin-top:2px; text-align:center;width:100%;">
+                    <i class="icon ion-ios-email placeholder-icon" style="font-size: 32px;color: white;"></i>
+                    <input class = "validate signin" style="color: white" type="text" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
+                  </label>
+                </div>
+
+                <div class = "row" style="width: 100%;border-bottom: 1px solid white;margin:auto;margin-bottom: 25px;">
+                  <label class="item item-input" style="border: none;background-color:transparent !important;margin-top:2px; text-align:center;width:100%;">
+                    <i class="icon ion-ios-locked placeholder-icon" style="font-size: 32px;color: white;"></i>
+                    <input class = "validate signin" style="color: white" type="password" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
+                  </label>
+                </div>
+
+                <div class = "row">
+                  <button class = "col button-clear" style="font-size: 16px; font-weight: 400;text-align: right;color: white;margin-bottom:70px;" ng-click="openForgot()">Forgot</button>
+                </div>
+                  <button class="button button-block button-calm" type="submit" style="display: block;position: relative;margin: 0 auto;width: 95%;border-radius: 0px;background-color: white;color: black;">SIGN IN</button>
+                  <button class="button button-block button-calm" type="submit" style="display: block;position: relative;margin: 0 auto;width: 95%;border-radius: 0px;background-color: transparent;margin-top: 20px;"  ui-sref="authentication">SIGN UP</button>
+              </div>
+          </form>
+      </ion-content>
+    </div>
+</ion-view>
+
+
+                <!-- <i class="icon ion-ios-email placeholder-icon" style="font-size: 32px;position: fixed;color: white;display: inline-flex;left: 6%;margin-top: 17px;"></i>
                 <div class = "item" style="border-bottom: 1px solid white;padding-left:0;padding-bottom: 0;border-top: none;border-left: none;border-right: none;margin:auto;margin-bottom: 10px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;">
                     <input type="text"  class="validate signin" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Email" ng-model="user.email" ng-minlength="5" ng-maxlength="30" required>
                 </div>
@@ -26,16 +52,4 @@
                 <i class="icon ion-ios-locked placeholder-icon" style="font-size: 32px;position: fixed;display: inline-flex;left: 6%;color: white"></i>
                 <div class = "item"  style="padding-left:0;padding-bottom: 0;border: none;margin:auto;margin-bottom: 16px;background-color: transparent !important;width: 85%;padding-right: 0;margin-right: 0;padding-top: 0;">
                     <input class="validate signin" type="password" style="color: white !important;width: 100%;background-color: transparent;" placeholder="Password" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
-                </div>
-
-                <div class = "row">
-                  <button class = "col button-clear" style="font-size: 16px; font-weight: 400;text-align: right;color: white;" ng-click="openForgot()">Forgot</button>
-                </div>
-                  <div style="margin-right: 8px;">
-                  <button class="button button-block button-calm" type="submit" style="border-radius: 0px;margin-top: 115px;background-color: white;color: black">SIGN IN</button>
-                  <button class="button button-block button-calm" type="submit" style="border-radius: 0px;background-color: transparent;"  ui-sref="authentication">SIGN UP</button>
-                </div>
-              </div>
-          </form>
-      </ion-content>
-</ion-view>
+                </div> -->

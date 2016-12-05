@@ -34,11 +34,8 @@
     <ion-content class="has-header bt-grey" scroll="true">
     <div style="height:100%; overflow:scroll" class="bg-lightgrey">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">
-        <div class="item profile item-image bg-image" style="max-height: 400px;background-image: url({{ones.userPhoto}})">
+        <div class="item profile item-image bg-image" style="max-height: 400px;background-image: url({{ones.userPhoto}})" fallback-src="img/profile-picture.png">
           <div class = "row" style="position: inherit;bottom: 9px;">
-          <!-- <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;left: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ui-sref="settings">
-            <i class="icons ion-ios-gear" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>
-          </a> -->
           <ion-list>
             <ion-item ng-if= "!ones.fullName" style="border:none;padding-bottom: 5px;background-color: transparent !important;left: 0;font-size: 20px;color:white; font-weight: 700;letter-spacing: 1.2px;">
               {{ones.firstName + " " + ones.lastName }}
@@ -50,12 +47,15 @@
               {{ones.userName }}
             </ion-item>
           </ion-list>
-          <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;right: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ng-click="uploadUserPhoto()">
-            <i class="icons ion-ios-camera" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>
-          </a>
           </div>
       </div>
     </div>
+
+      <!-- <div class = "button button-clear icon ion-ios-gear profile-settings" ui-sref="settings" style="width: 100%">Settings</div> -->
+      <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !follow, 'button-balanced ion-ios-undo-outline':follow }" ng-click="follow = !follow" style="display: block;position: relative;margin: 0 auto;width: 40%;border-radius: 50px;">
+          <span ng-if="!follow"> Friend</span>
+          <span ng-if="follow"> Friend</span>
+      </button>
       <div ng-if = "ones.userDescription" style="text-align: center; margin-top: 20px;max-height: 100px;margin-bottom: 5px;margin-left: 30px;margin-right: 30px;line-height: 25px;">{{ ones.userDescription }}</div>
 
 

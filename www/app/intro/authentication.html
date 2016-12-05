@@ -10,14 +10,14 @@
 
   <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: transparent !important;">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
-      <i class="icon ion-ios-arrow-back" style="color: white;"></i>
+      <i class="icon ion-ios-arrow-back" style="color: black;"></i>
       <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
     </button>
-    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);color: white;">Create Account</div>
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Create Account</div>
   </ion-header-bar>
     <!-- * bg-image / background image -->
     <!-- class bg-image is in the file general.scss -->
-    <div class="bg-image" style="background-image:url('img/bg-photo.jpg')">
+    <div class="bg-image" style="background-image:url('img/thinking-2.jpg')">
         <!-- * bg-color / background-color -->
         <div class="bg-color login-flow">
             <ion-content style="background: transparent !important;margin-top: 40px" class="auth profile has-header bt-grey">
@@ -54,7 +54,7 @@
 
                         <input class="button button-block button-calm" ng-if="user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
                         <input class="button button-block button-calm" ng-if="!user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
-                        <div ng-if="!user.person || user.person" style="font-weight:400;font-size:12px;color: white">By clicking sign up you are indicating have read the Privacy Policy and agree to the Terms of Use found at www.trainedtoglory.com.</div>
+                        <div ng-if="!user.person || user.person" style="font-weight:400;font-size:12px;color: white;text-align:center;">By clicking sign up you are indicating have read the Privacy Policy and agree to the Terms of Use found at www.trainedtoglory.com.</div>
                     </div>
                 </form>
             </ion-content>

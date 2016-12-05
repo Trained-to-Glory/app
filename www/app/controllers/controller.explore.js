@@ -1,13 +1,107 @@
 angular.module('module.view.explore', ['angular.filter'])
 	.controller('exploreCtrl', ['$scope','$rootScope','$localStorage','$state','postService','usersService','engagementService','$ionicSideMenuDelegate','$ionicPopover',
 		function($scope,$rootScope,$localStorage,$state,postService,usersService,engagementService,$ionicSideMenuDelegate,$ionicPopover) {
-        $scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
-                    scope: $scope
-        });
+			$scope.news = [];
+			$scope.lastId;
+			$scope.noMoreItemsAvailable = false;
+			$scope.loading = true;
+			window.loading = $scope.loading;
+
+			$scope.doRefresh = function (){
+				var posts = firebase.database().ref(['posts'].join('/'));
+				posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+						arr.shift();
+						var news = {
+							itemsArr: arr
+						}
+						console.log(news.itemsArr);
+						console.log($scope.news);
+						$scope.news = news.itemsArr.concat($scope.news);
+						console.log({'$scope.news': $scope.news});
+						$scope.lastId = $scope.news[$scope.news.length - 1].key;
+						console.log($scope.news[$scope.news.length - $scope.news.length].key);
+						console.log($scope.news);
+
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$apply();
+				});
+			};
+
+			 $scope.loadMore = function(){
+				 $scope.loading = false;
+				 var posts = firebase.database().ref(['posts'].join('/'));
+				 if ($scope.lastId == undefined) {
+					 posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+  					 var currentObj = snapshot.val();
+  					 var array = $.map(currentObj, function(value, index) {
+  							 return [value];
+  					 });
+
+  					 var arr = [];
+  						for(var key in currentObj){
+  							 currentObj[key].key = key;
+  							 arr.push(currentObj[key]);
+  						 }
+
+  						 var news = {
+  							 itemsArr: arr
+  						 }
+
+  						 $scope.news = $scope.news.concat(news.itemsArr);
+  						 $scope.lastId = $scope.news[$scope.news.length - 1].key;
+							 console.log($scope.news[$scope.news.length - $scope.news.length].key);
+							 console.log($scope.news);
+
+  						 if ( array.length != 20 ) {
+  	 				     	$scope.noMoreItemsAvailable = true;
+  	 				   }
+  	 				 $scope.$broadcast('scroll.infiniteScrollComplete');
+						 $scope.$apply();
+  				 });
+				 }else{
+					 posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+						 var currentObj = snapshot.val();
+						 var array = $.map(currentObj, function(value, index) {
+								 return [value];
+						 });
+						 var arr = [];
+							for(var key in currentObj){
+								 currentObj[key].key = key;
+								 arr.push(currentObj[key]);
+							 }
+							 arr.shift();
+							 var news = {
+								 itemsArr: arr
+							 }
+
+							 $scope.news = $scope.news.concat(news.itemsArr);
+							 $scope.lastId = $scope.news[$scope.news.length - 1].key;
+							 console.log($scope.news[$scope.news.length - $scope.news.length].key);
+							 console.log($scope.news);
+
+							 if ( array.length != 20 ) {
+		 				     	$scope.noMoreItemsAvailable = true;
+		 				   }
+		 				 $scope.$broadcast('scroll.infiniteScrollComplete');
+						 $scope.$apply();
+					 });
+				 }
+			 };
+			window.loadMore = $scope.loadMore();
 
 				usersService.getAllUsers().then(function(results){
 					delete results[$localStorage.account.userId];
 		      $scope.users = results;
+					$scope.$apply();
 		    });
 
 				$scope.view = { type: 1 };
@@ -18,7 +112,6 @@ angular.module('module.view.explore', ['angular.filter'])
 				console.log($scope.view);
 		}
 
-		console.log($scope.view);
 
 
 		$scope.gotoBrowse = function () {
@@ -105,41 +198,7 @@ angular.module('module.view.explore', ['angular.filter'])
 
 				$scope.limit = 8;
 
-        $scope.loadMore = function(){
-          if($scope.news && $scope.news.itemsArr){
-            var max = $scope.news.itemsArr.length;
-            if($scope.limit <  max){
-              $scope.moreToScroll = true;
-              if($scope.limit - max < 10 && $scope.limit - max > 0){
-                $scope.limit += Math.abs($scope.limit - max);
-                $scope.moreToScroll = false;
-                return;
-              }
-              $scope.limit += 10;
-            }else{
-              $scope.moreToScroll = false;
-            }
-          }
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
 
-
-				postService.getNews().then(function(results) {
-					//create a local object so we can create the datastructure we want
-					//so we can use it to show/hide, toggle ui items
-
-					var arr = [];
-          for(var key in results){
-            results[key].key = key;
-            arr.push(results[key]);
-          }
-
-					var news = {
-							itemsArr: arr
-					};
-					//make it available to the directive to officially show/hide, toggle
-					$scope.news = news;
-				});
 
 	}]);
 

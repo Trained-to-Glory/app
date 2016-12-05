@@ -19,7 +19,10 @@ angular.module('module.view.contacts', [])
                     }
                 }
 
+		$scope.loading = true;
+
 			usersService.getAllUsers($localStorage.account.userId).then(function(results){
+				$scope.loading = false;
 				var arr = [];
 				for(var key in results){
 					results[key].key = key;
@@ -41,6 +44,8 @@ angular.module('module.view.contacts', [])
 				})(id,contacts.items);
 				}
 				$scope.scrollPeople = contacts.itemsArr;
+				$scope.$apply();
+
 			});
 
 				$scope.togglePartner = function(partnerId){
@@ -75,18 +80,20 @@ angular.module('module.view.contacts', [])
 
         };
 
+				$scope.waiting = true;
 				interestService.getInterestUsers($stateParams.activity).then(function(results){
+							$scope.waiting = false;
 							  $scope.myLocation = $localStorage.account.near;
 								delete results[$localStorage.account.userId];
 								$scope.users = results;
-								console.log($scope.users);
+								$scope.$apply();
 						});
 
 				interestService.getLeaderInterestUsers($stateParams.activity).then(function(results){
 							  $scope.myLocation = $localStorage.account.near;
 								delete results[$localStorage.account.userId];
 								$scope.people = results;
-								console.log($scope.people);
+								$scope.$apply();
 						});
 
 				$scope.orderByLocation2 = function(input, location, order) {
@@ -144,54 +151,6 @@ angular.module('module.view.contacts', [])
 				 }
 				 $scope.$broadcast('scroll.infiniteScrollComplete');
 			 };
-
-			 $scope.logout = function() {
-				if (firebase.auth()) {
-					firebase.auth().signOut().then(function() {
-						//Clear the saved credentials.
-						$localStorage.$reset();
-					 $scope.closePopover();
-						//Proceed to login screen.
-						$state.go('authentication');
-					}, function(error) {
-						//Show error message.
-						Utils.message(Popup.errorIcon, Popup.errorLogout);
-					});
-				}
-			};
-
-			$scope.addContact = function() {
-			    $cordovaContacts.save($scope.contact).then(function(result) {
-			        console.log('Contact Saved!');
-			    }, function(err) {
-			        console.log('An error has occured while saving contact data!');
-			    });
-			};
-
-			$scope.getAllContacts = function() {
-			    $cordovaContacts.find({filter : '', fields:  [ 'displayName']}).then(function(allContacts) { //omitting parameter to .find() causes all contacts to be returned
-			        $scope.contacts = allContacts;
-			        console.log(JSON.stringify(allContacts));
-			    });
-			};
-
-			$scope.removeContact = function() {
-
-			    $scope.removeContact = {};   // We will use it to save a contact
-			    $scope.removeContact.displayName = 'Gajotres'; // Contact Display Name
-
-			    $cordovaContacts.remove($scope.removeContact).then(function(result) {
-			        console.log('Contact Deleted!');
-			        console.log(JSON.stringify(result));
-			    }, function(error) {
-			        console.log('An error has occured while deleting contact data!');
-			        console.log(JSON.stringify(error));
-			    });
-			}
-
-			$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-					scope: $scope
-			});
 
 }]).filter('orderByLocation', function() {
 

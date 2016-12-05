@@ -33,6 +33,18 @@ angular.module('module.view.settings', [])
 
 								$scope.profile = $localStorage.account;
 
+								$scope.share = function (post) {
+									$scope.closePopover();
+				            document.addEventListener("deviceready", function () {
+				                $cordovaSocialSharing.share('Search me on the Glory app', $scope.profile.userName)
+				                    .then(function (result) {
+				                        appService.showAlert('Account Shared', result, 'Ok', 'button-balanced', null);
+				                    }, function (err) {
+				                        appService.showAlert('Error Occured', err, 'Ok', 'button-assertive', null);
+				                    });
+				            }, false);
+				        }
+
 								$scope.interests = function (){
 									var profile = $scope.profile;
 									if(profile.status == 'person' ){

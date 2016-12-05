@@ -8,32 +8,31 @@
     <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Connect</div>
   </ion-header-bar>
 
-    <ion-content class="has-header" style="top: 44px;" lazy-scroll>
+    <ion-content class="has-header" style="top: 44px;">
       <div class="list card" style="background: transparent; box-shadow: none;">
-          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in orderByLocation1(users,myLocation)" ui-sref="friend({contact: user.userId})">
-              <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">
-              <h2 class="lead" style="font-weight: 400">{{user.userName}}</h2>
+          <div class="item item-avatar item-text-wrap" ng-repeat="user in orderByLocation1(users,myLocation)" ui-sref="friend({contact: user.userId})" style="border-color: #fafafc;">
+              <img ng-src="{{user.userPhoto}}" fallback-src="img/profile-picture.png">
+              <h2 class = "lead" style="font-weight: 400 !important;">{{user.userName}}</h2>
             </div>
       </div>
 
       <div class="list card" style="background: transparent; box-shadow: none;">
-          <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="person in orderByLocation1(people,myLocation)" ui-sref="friend({contact: person.userId})">
-              <img image-lazy-src="{{person.userPhoto}}" image-lazy-distance-from-top-to-load="50">
-              <h2 class="lead" style="font-weight: 400">{{person.userName}}</h2>
+          <div class="item item-avatar item-text-wrap" ng-repeat="person in orderByLocation1(people,myLocation)" ui-sref="friend({contact: person.userId})" style="border-color: #fafafc;">
+              <img ng-src="{{person.userPhoto}}" fallback-src="img/profile-picture.png">
+              <h2 class = "lead" style="font-weight: 400 !important;">{{person.userName}}</h2>
             </div>
       </div>
 
       <div ng-if = "user == undefined">
+        <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
+          <ion-spinner icon="spiral"></ion-spinner>
+        </div>
         <div style="text-align: center;top: 0;position: fixed;">There are no people in your area that selected that interest. Here are some people that you share interests with.</div>
-        <div class="list card" style="background: transparent; box-shadow: none; margin-top: 30px;">
-            <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in scrollPeople | limitTo: 10" ui-sref="friend({contact: user.userId})">
-                <img ng-src="{{user.userPhoto}}">
-                <h2 style="font-weight: 400">{{user.userName}}</h2>
-                <div class="button button-small icon " style = "position: fixed;right: 5px;margin-top: -20px;" ng-class="{'button-balanced button-outline ion-ios-personadd-outline': user.partnered, 'button-balanced ion-ios-undo-outline':!user.partnered }" ng-click="togglePartner(user.userId)">
-                    <span ng-if="!user.partnered"> Friend</span>
-                    <span ng-if="user.partnered"> Friend</span>
-                </div>
-              </div>
+        <div class="item item-avatar item-button-right followers" ng-repeat="user in scrollPeople | limitTo: 10" ui-sref="friend({contact: user.userId})">
+            <img ng-src="{{user.userPhoto}}" fallback-src="img/profile-picture.png"/>
+            <h2 class="font-thin">{{user.userName}}</h2>
+            <button class="button button-small button-balanced icon ion-ios-undo-outline" ng-if="!user.partnered"> Friend</button>
+            <button class="button button-small button-balanced button-outline icon ion-ios-personadd-outline" ng-if="user.partnered"> Friend</button>
         </div>
       </div>
     </ion-content>

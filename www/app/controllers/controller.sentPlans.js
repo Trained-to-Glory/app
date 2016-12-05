@@ -20,8 +20,6 @@ angular.module('module.view.sentPlans', [])
                 }
 
 
-
-
         $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
                     scope: $scope
                 });
@@ -29,23 +27,6 @@ angular.module('module.view.sentPlans', [])
 								$scope.delete = function (id) {
 				            return postService.deletePlans(id);
 				        };
-
-								postService.getNews().then(function(results) {
-									//create a local object so we can create the datastructure we want
-									//so we can use it to show/hide, toggle ui items
-									var arr = [];
-				          for(var key in results){
-				            results[key].key = key;
-				            arr.push(results[key]);
-				          }
-
-									var news = {
-											itemsArr: arr
-									};
-									//make it available to the directive to officially show/hide, toggle
-									$scope.news = news;
-								});
-
 
 								$scope.plansPopover = $ionicPopover.fromTemplate(plansTemplate, {
 										scope: $scope
@@ -127,7 +108,9 @@ angular.module('module.view.sentPlans', [])
 										$scope.scrollPeople = contacts.itemsArr;
 									});
 
+								$scope.loading = true;
 								usersService.getUserPlans($localStorage.account.userId).then(function(results) {
+									$scope.loading = false;
 				          //create a local object so we can create the datastructure we want
 				          var arr = [];
 				          for(var key in results){
@@ -158,6 +141,7 @@ angular.module('module.view.sentPlans', [])
 				          }
 				          //make it available to the directive to officially show/hide, toggle
 				          $scope.view = view;
+									$scope.profile.plans = view.itemsArr;
 									$scope.progressbar = ngProgressFactory.createInstance();
 									 $scope.progressbar.setHeight('5px');
 									 $scope.progressbar.setColor('green');
@@ -165,6 +149,7 @@ angular.module('module.view.sentPlans', [])
 
 									var newParent = document.querySelector('.progress-bar');
 									$scope.progressbar.setParent(newParent);
+									$scope.$apply();
 				        });
 
 								$scope.see = { type: 1 };
@@ -197,125 +182,6 @@ angular.module('module.view.sentPlans', [])
 									$scope.$broadcast('scroll.infiniteScrollComplete');
 								};
 
-								$scope.scrollEvent = function() {
-				            var scrollamount = $ionicScrollDelegate.$getByHandle('scrollHandle').getScrollPosition().top;
-				            //$ionicScrollDelegate.scrollBy(0,20, true);
-				            if (scrollamount > 0) { // Would hide nav-bar immediately when scrolled and show it only when all the way at top. You can fiddle with it to find the best solution for you
-				              $ionicNavBarDelegate.showBar(false);
-				            } else {
-				              $ionicNavBarDelegate.showBar(true);
-				            }
-				          }
-
-								$scope.newsPopover = $ionicPopover.fromTemplate(newsTemplate, {
-										scope: $scope
-								});
-
-								$scope.requestPopover = $ionicPopover.fromTemplate(requestTemplate, {
-									scope: $scope
-								})
-
-								$scope.openPopover = function($event) {
-			             $scope.fullscreenPopover.show($event);
-			          };
-
-			          $scope.closePopover = function($event) {
-			             $scope.fullscreenPopover.hide();
-			          };
-
-								$scope.closeRequestPopover = function($event){
-									$scope.requestPopover.hide()
-								}
-
-								$scope.closePlan = function($event) {
-			             $scope.plansPopover.hide();
-			          };
-
-			          // Execute action on hide popover
-			          $scope.$on('popover.hidden', function() {
-			             // Execute action
-			          });
-
-			          // Execute action on remove popover
-			          $scope.$on('popover.removed', function() {
-			             // Execute action
-			          });
-
-								$scope.browse = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.news');
-			          };
-
-			          $scope.explore = function () {
-			            $scope.closePopover();
-			            $state.go('tabs.explore');
-			          };
-
-			          $scope.match = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.match');
-
-			          };
-
-			          $scope.coach = function () {
-			             $scope.closePopover();
-			              $state.go('tabs.coach');
-			          };
-
-			          $scope.plans = function () {
-			             $scope.closePopover();
-			              $state.go('tabs.sentPlans');
-			          };
-
-			          $scope.reminder = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.reminders');
-			          };
-
-			          $scope.partners = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.partners');
-			          };
-
-			          $scope.settings = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.settings');
-			          };
-
-			          $scope.search = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.search');
-			          };
-
-			          $scope.calendar = function () {
-			            $scope.closePopover();
-			              $state.go('tabs.reminders');
-			          };
-
-			          $scope.account = function (){
-			            $scope.closePopover();
-			            $state.go('tabs.account');
-			          };
-
-			          $scope.notifications = function (){
-			            $scope.closePopover();
-			            $state.go('tabs.communicate');
-			          };
-
-			          $scope.logout = function() {
-			  				 if (firebase.auth()) {
-			  					 firebase.auth().signOut().then(function() {
-			  						 //Clear the saved credentials.
-			  						 $localStorage.$reset();
-			              $scope.closePopover();
-			  						 //Proceed to login screen.
-			  						 $state.go('authentication');
-			  					 }, function(error) {
-			  						 //Show error message.
-			  						 Utils.message(Popup.errorIcon, Popup.errorLogout);
-			  					 });
-			  				 }
-			  			 };
 
 							 $scope.closePopover = function($event) {
 		              $scope.newsPopover.hide();

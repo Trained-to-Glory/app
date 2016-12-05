@@ -1,4 +1,4 @@
-angular.module('full_starter.directives', ['directive.checklist','directive.medialoader'])
+angular.module('full_starter.directives', ['directive.checklist'])
 
     .directive('sideMenu', [function () {
         return {

@@ -5,19 +5,13 @@
 angular.module('directive.medialoader', [])
   .directive('mediaLoader', function () {
     return {
-    	restrict: 'EA',
-    	scope: true,
+      restrict: 'A',
+      scope: { hires: '@' },
     	link: function(scope, $element, $attrs) {
-    		var imageBack = $attrs.backgroundimg;
-    		var img = new Image();
-    			img.onload = function() {
-    				scope.thisMainDisplayImg = imageBack;
-    			};
-
-      		img.onerror = function() {}
-
-      		img.src = imageBack;
-      	}
+        element.one('load', function() {
+            element.attr('src', scope.hires);
+          });
+        }
       };
     });
 })();

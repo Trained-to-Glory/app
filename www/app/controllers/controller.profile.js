@@ -159,13 +159,15 @@ angular.module('module.view.profile', [])
 				itemsArr: photos
 		};
 		 $scope.userPosts = userPost;
+		$localStorage.account.posts = userPost.itemsArr;
 	});
+
 
 	usersService.getUserTotalPartners($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
-
 		 $scope.userPartners = results;
+		 $localStorage.account.totalPartners = results;
 	});
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
@@ -184,25 +186,7 @@ angular.module('module.view.profile', [])
 			itemsArr: photos
 		};
 		 $scope.userCommits = userCommits;
-	});
-
-	postService.getNews().then(function(results) {
-		//create a local object so we can create the datastructure we want
-		//so we can use it to show/hide, toggle ui items
-		var arr = [];
-		var photos = [];
-		for(var key in results){
-			results[key].key = key;
-			arr.push(results[key]);
-			if (results[key].photo != ""){
-				photos.push(results[key]);
-			}
-		}
-		var news = {
-				itemsArr: photos
-		};
-		//make it available to the directive to officially show/hide, toggle
-		$scope.news = news;
+		 $localStorage.account.profileCommits = userCommits.itemsArr;
 	});
 
 
@@ -222,19 +206,23 @@ angular.module('module.view.profile', [])
 				itemsArr: photos
 		};
 		 $scope.userNews = userNews;
+		 $localStorage.account.userNews = userNews;
 	});
 
 	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalCommits = results;
+		 $localStorage.account.totalCommits = results;
 	});
 
 	usersService.getUserTotalPost($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalPost = results;
+		 $localStorage.account.totalPost = results;
 	});
+
 
 	usersService.getPartners($localStorage.account.userId).then(function(results){
 		var arr = [];
@@ -259,6 +247,9 @@ angular.module('module.view.profile', [])
 
 		$scope.contacts = contacts;
 	});
+
+	console.log($scope.profile.posts);
+
 
 		$scope.goBack = function (ui_sref) {
 	                    var currentView = $ionicHistory.currentView();
@@ -348,97 +339,5 @@ angular.module('module.view.profile', [])
 							}
 					});
 			};
-
-		$scope.gotoMatch = function () {
-                    $state.go('tabs.match');
-
-        };
-
-       $scope.gotoBrowse = function () {
-                    $state.go('tabs.news');
-
-        };
-
-        $scope.gotoCoaches = function () {
-                    $state.go('tabs.coach');
-
-        };
-
-				$scope.browse = function () {
-					$scope.closePopover();
-						$state.go('tabs.news');
-				};
-
-				$scope.explore = function () {
-					$scope.closePopover();
-					$state.go('tabs.explore');
-				};
-
-				$scope.match = function () {
-					$scope.closePopover();
-						$state.go('tabs.match');
-
-				};
-
-				$scope.coach = function () {
-					 $scope.closePopover();
-						$state.go('tabs.coach');
-				};
-
-				$scope.plans = function () {
-					 $scope.closePopover();
-						$state.go('tabs.sentPlans');
-				};
-
-				$scope.reminder = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.partners = function () {
-					$scope.closePopover();
-						$state.go('tabs.partners');
-				};
-
-				$scope.settings = function () {
-					$scope.closePopover();
-						$state.go('tabs.settings');
-				};
-
-				$scope.search = function () {
-					$scope.closePopover();
-						$state.go('tabs.search');
-				};
-
-				$scope.calendar = function () {
-					$scope.closePopover();
-						$state.go('tabs.reminders');
-				};
-
-				$scope.account = function (){
-					$scope.closePopover();
-					$state.go('tabs.account');
-				};
-
-				$scope.notifications = function (){
-					$scope.closePopover();
-					$state.go('tabs.communicate');
-				};
-
-				$scope.logout = function() {
-				if (firebase.auth()) {
-					firebase.auth().signOut().then(function() {
-						//Clear the saved credentials.
-						$localStorage.$reset();
-						$scope.closePopover();
-						//Proceed to login screen.
-						$state.go('authentication');
-					}, function(error) {
-						//Show error message.
-						Utils.message(Popup.errorIcon, Popup.errorLogout);
-					});
-				}
-			};
-
 
 }]);

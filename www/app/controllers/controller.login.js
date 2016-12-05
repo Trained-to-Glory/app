@@ -18,9 +18,9 @@ angular.module('module.view.login', [])
     //Check if form is filled up.
     if (angular.isDefined(user)) {
       Utils.show();
-      firebase.database().ref('accounts').orderByChild('email').equalTo(user.email).once('value').then(function(accounts) {
+      firebase.database().ref('accounts').orderByChild('userName').equalTo(user.userName).once('value').then(function(accounts) {
         if (accounts.exists()) {
-          Utils.message(Popup.errorIcon, Popup.emailAlreadyExists);
+          Utils.message(Popup.errorIcon, Popup.userNameAlreadyExists);
         } else {
           //Create Firebase account.
           firebase.auth().createUserWithEmailAndPassword(user.email, user.password)

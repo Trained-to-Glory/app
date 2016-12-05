@@ -69,7 +69,7 @@ angular.module('module.view.post', [])
         $scope.share = function (post) {
 					$scope.closePopover();
             document.addEventListener("deviceready", function () {
-                $cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date, post.time,post.image)
+                $cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date,post.photo)
                     .then(function (result) {
                         appService.showAlert('Post Shared', result, 'Ok', 'button-balanced', null);
                     }, function (err) {

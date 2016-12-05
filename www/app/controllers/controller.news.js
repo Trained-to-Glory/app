@@ -1,9 +1,37 @@
 angular.module('module.view.news', [])
-    .controller('newsCtrl', ['$scope', '$rootScope','$http', '$timeout','$ionicHistory','$ionicNavBarDelegate','$ionicScrollDelegate','interestService','usersService', '$state', '$cordovaCamera', '$localStorage', '$ionicActionSheet', '$ionicSideMenuDelegate', '$ionicPopover', '$log', 'engagementService', 'postService', 'appService',
-       function ($scope, $rootScope, $http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, engagementService, postService, appService) {
+    .controller('newsCtrl', ['$scope', '$sce','$rootScope','$http', '$firebaseArray', '$timeout','$ionicHistory','$ionicNavBarDelegate','$ionicScrollDelegate','interestService','usersService', '$state', '$cordovaCamera', '$localStorage', '$ionicActionSheet', '$ionicSideMenuDelegate', '$ionicPopover', '$log', '$firebaseArray','engagementService', 'postService', 'appService',
+       function ($scope, $rootScope, $sce, $firebaseArray, $http,$timeout,$ionicHistory,$ionicNavBarDelegate,$ionicScrollDelegate,interestService,usersService, $state, $cordovaCamera, $localStorage, $ionicActionSheet, $ionicSideMenuDelegate, $ionicPopover, $log, $firebaseArray, engagementService, postService, appService) {
       $scope.$on('$ionicView.enter', function() {
-        usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
+        //Check if there's an authenticated user, if there is non, redirect to login.
+        if(firebase.auth().currentUser) {
+              $sce.loggedIn = true;
+            } else {
+              $sce.loggedIn = false;
+              $state.go('login');
+            }
+            if(!$localStorage.isGuest) {
+              //Authentication details.
+              //Account details.
+              //Set the variables to be shown on home.html
+              var email = (firebase.auth().currentUser);
+              //Account details.
+              //console.log("Account: " + JSON.stringify($localStorage.account));
+              $sce.email = email;
+              $sce.userId = (firebase.auth().currentUser).uid;
+              $sce.provider = (firebase.auth().currentUser).provider;
+            } else {
+              //console.log("Firebase Auth: " + JSON.stringify(firebase.auth().currentUser));
+              //Logged in user is previously logged in as guest. Set variables to Guest variables.
+              $sce.email = "Guest";
+              $sce.provider = "Firebase";
+              $sce.loggedIn = true;
+            }
+
+        $scope.loading = true;
+           usersService.getPartnerPosts($sce.userId).then(function(results) {
           //create a local object so we can create the datastructure we want
+          $scope.loading = false;
+
           var arr = [];
           for(var key in results){
             results[key].key = key;
@@ -14,13 +42,14 @@ angular.module('module.view.news', [])
               items: results,
               itemsArr: arr
           };
+
           for(var id in partnerPost.items){
            //check to see if there is a like on this post
            (function(id, items){
-             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+             engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
               items.liked = liked;
              });
-             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+             engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
                items.committed = committed;
              });
              engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
@@ -37,20 +66,28 @@ angular.module('module.view.news', [])
            })(id, partnerPost.items[id]);
           }
           //make it available to the directive to officially show/hide, toggle
-          $scope.partnerPostArr = partnerPost.itemsArr;
+          $sce.partnerPostArr = partnerPost.itemsArr;
           //merge view itemsArr into partnerPost for disaply purposes
-          $scope.totalPost = partnerPost.itemsArr.concat($scope.view.itemsArr);
-          $scope.partnerPost = partnerPost;
+          $sce.totalPost = partnerPost.itemsArr.concat($scope.view.itemsArr);
+
+          console.log($sce.totalPost[$sce.totalPost.length - 1].key);
+          $sce.partnerPost = partnerPost;
+          $scope.$apply();
         });
 
 
-                usersService.getUserPost($localStorage.account.userId).then(function(results) {
+
+        $scope.profile = $localStorage.account;
+                usersService.getUserPost($sce.userId).then(function(results) {
                   //create a local object so we can create the datastructure we want
                   var arr = [];
                   for(var key in results){
                     results[key].key = key;
                     arr.push(results[key]);
                   }
+
+                  console.log(arr);
+                  console.log(arr[arr.length - 1].key);
                   var view = {
                       type: 'item',
                       items: results,
@@ -59,10 +96,10 @@ angular.module('module.view.news', [])
                   for(var id in view.items){
                    //check to see if there is a like on this post
                    (function(id, items){
-                     engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+                     engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
                       items.liked = liked;
                      });
-                     engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+                     engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
                        items.committed = committed;
                      });
                      engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
@@ -84,33 +121,11 @@ angular.module('module.view.news', [])
              				});
                    })(id, view.items[id]);
                   }
-                  //make it available to the directive to officially show/hide, toggle
                   $scope.viewArr = view.itemsArr;
                   $scope.view = view;
+                  $scope.$apply();
+                  //make it available to the directive to officially show/hide, toggle
                 });
-    //Check if there's an authenticated user, if there is non, redirect to login.
-    if(firebase.auth().currentUser) {
-          $scope.loggedIn = true;
-        } else {
-          $scope.loggedIn = false;
-          $state.go('login');
-        }
-        if(!$localStorage.isGuest) {
-          //Authentication details.
-          //Account details.
-          //Set the variables to be shown on home.html
-          //console.log("Firebase Auth: " + JSON.stringify(firebase.auth().currentUser));
-          //Account details.
-          //console.log("Account: " + JSON.stringify($localStorage.account));
-          $scope.email = $localStorage.account.email;
-          $scope.provider = $localStorage.account.provider;
-        } else {
-          //console.log("Firebase Auth: " + JSON.stringify(firebase.auth().currentUser));
-          //Logged in user is previously logged in as guest. Set variables to Guest variables.
-          $scope.email = "Guest";
-          $scope.provider = "Firebase";
-          $scope.loggedIn = true;
-        }
 
         $scope.connectImages = [{
           src: 'img/connect/bright-animal.jpeg',
@@ -247,7 +262,7 @@ angular.module('module.view.news', [])
               }else if(post.totalLikes > 0){
                 --post.totalLikes;
               }
-              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+              return engagementService[state]({category:'post', categoryId:postId, userId: $sce.userId});
             }
           }
             return false;
@@ -266,7 +281,7 @@ angular.module('module.view.news', [])
               }else if(post.totalLikes > 0){
                 --post.totalLikes;
               }
-              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+              return engagementService[state]({category:'post', categoryId:postId, userId: $sce.userId});
             }
           }
             return false;
@@ -285,7 +300,7 @@ angular.module('module.view.news', [])
               }else if(post.totalCommits > 0){
                 --post.totalCommits;
               }
-              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+              return engagementService[state]({category:'post', categoryId:postId, userId: $sce.userId});
             }
           }
             return false;
@@ -304,33 +319,12 @@ angular.module('module.view.news', [])
               }else if(post.totalCommits > 0){
                 --post.totalCommits;
               }
-              return engagementService[state]({category:'post', categoryId:postId, userId: $localStorage.account.userId});
+              return engagementService[state]({category:'post', categoryId:postId, userId: $sce.userId});
             }
           }
             return false;
         };
 
-          $scope.openPopover = function($event) {
-             $scope.fullscreenPopover.show($event);
-          };
-
-          $scope.closePopover = function($event) {
-             $scope.newsPopover.hide();
-          };
-
-          $scope.closeView = function($event) {
-             $scope.newsPopover.hide();
-          };
-
-          // Execute action on hide popover
-          $scope.$on('popover.hidden', function() {
-             // Execute action
-          });
-
-          // Execute action on remove popover
-          $scope.$on('fullscreenPopover.hide', function() {
-             // Execute action
-          });
 
         $ionicSideMenuDelegate.canDragContent(false);
 
@@ -346,8 +340,6 @@ angular.module('module.view.news', [])
             $scope.closeView();
             $state.go('tabs.event');
         };
-
-        $scope.profile = $localStorage.account;
 
         $scope.limit = 10;
         $scope.limitPartner = 10;
@@ -426,4 +418,4 @@ angular.module('module.view.news', [])
          }
 
      })
-   }])
+   }]);

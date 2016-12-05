@@ -48,6 +48,7 @@ angular.module('service.users', [])
          });
    };
 
+
    this.getPartnerPosts = function (userId) {
        var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners', userId].join('/'));
        return myPartnersPromise.once('value').then(function (snapshot) {

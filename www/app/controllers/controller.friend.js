@@ -100,6 +100,7 @@ angular.module('module.view.friend', [])
 			 }
 			$scope.ones = ones.items;
 			console.log($scope.ones);
+			$scope.$apply();
 				//check to see if there is a like on this post
 		});
 
@@ -116,6 +117,7 @@ angular.module('module.view.friend', [])
 					itemsArr: arr
 			};
 			 $scope.userPosts = userPost;
+			 $scope.$apply();
 		});
 
 		$scope.view = { type: 1 };
@@ -125,6 +127,7 @@ angular.module('module.view.friend', [])
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
 			 $scope.userPartners = results;
+			 $scope.$apply();
 		});
 
 		usersService.getUserCommits($stateParams.contact).then(function(results) {
@@ -140,36 +143,21 @@ angular.module('module.view.friend', [])
 					itemsArr: arr
 			};
 			 $scope.userCommits = userCommits;
+			 $scope.$apply();
 		});
 
 		usersService.getUserTotalCommits($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
 			 $scope.userTotalCommits = results;
+			 $scope.$apply();
 		});
 
 		usersService.getUserTotalPost($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
 			 $scope.userTotalPost = results;
-		});
-
-		$scope.openPopover = function($event) {
-			 $scope.fullscreenPopover.show($event);
-		};
-
-		$scope.closePopover = function($event) {
-			 $scope.fullscreenPopover.hide();
-		};
-
-		// Execute action on hide popover
-		$scope.$on('popover.hidden', function() {
-			 // Execute action
-		});
-
-		// Execute action on remove popover
-		$scope.$on('popover.removed', function() {
-			 // Execute action
+			 $scope.$apply();
 		});
 
 		usersService.getPartners($stateParams.contact).then(function(results){
@@ -191,6 +179,7 @@ angular.module('module.view.friend', [])
 			})(id,contacts.items);
 			}
 			$scope.contacts = contacts;
+			$scope.$apply();
 		});
 
 
@@ -221,93 +210,6 @@ angular.module('module.view.friend', [])
 		$scope.profile = $stateParams.contact;
 		$scope.view = { type: 1 };
 
-		$scope.gotoAccounts = function () {
-            $state.go('tabs.account');
-        };
-
-     $scope.gotoBrowse = function () {
-          	$state.go('tabs.news');
-      };
-
-      $scope.gotoCoaches = function () {
-            $state.go('tabs.coach');
-      };
-
-			$scope.browse = function () {
-				$scope.closePopover();
-					$state.go('tabs.news');
-			};
-
-			$scope.explore = function () {
-				$scope.closePopover();
-				$state.go('tabs.explore');
-			};
-
-			$scope.match = function () {
-				$scope.closePopover();
-					$state.go('tabs.match');
-
-			};
-
-			$scope.coach = function () {
-				 $scope.closePopover();
-					$state.go('tabs.coach');
-			};
-
-			$scope.plans = function () {
-				 $scope.closePopover();
-					$state.go('tabs.sentPlans');
-			};
-
-			$scope.reminder = function () {
-				$scope.closePopover();
-					$state.go('tabs.reminders');
-			};
-
-			$scope.partners = function () {
-				$scope.closePopover();
-					$state.go('tabs.partners');
-			};
-
-			$scope.settings = function () {
-				$scope.closePopover();
-					$state.go('tabs.settings');
-			};
-
-			$scope.search = function () {
-				$scope.closePopover();
-					$state.go('tabs.search');
-			};
-
-			$scope.calendar = function () {
-				$scope.closePopover();
-					$state.go('tabs.reminders');
-			};
-
-			$scope.account = function (){
-				$scope.closePopover();
-				$state.go('tabs.account');
-			};
-
-			$scope.notifications = function (){
-				$scope.closePopover();
-				$state.go('tabs.communicate');
-			};
-
-			$scope.logout = function() {
-			if (firebase.auth()) {
-				firebase.auth().signOut().then(function() {
-					//Clear the saved credentials.
-					$localStorage.$reset();
-					$scope.closePopover();
-					//Proceed to login screen.
-					$state.go('authentication');
-				}, function(error) {
-					//Show error message.
-					Utils.message(Popup.errorIcon, Popup.errorLogout);
-				});
-			}
-		};
 
 }]);
 var popoverTemplate =

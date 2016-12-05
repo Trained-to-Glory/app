@@ -50,21 +50,6 @@ angular.module('module.view.match', [])
 
 				$scope.view = { type: 1 };
 
-				$scope.logout = function() {
-				if (firebase.auth()) {
-					firebase.auth().signOut().then(function() {
-						//Clear the saved credentials.
-						$localStorage.$reset();
-						$scope.closePopover();
-						//Proceed to login screen.
-						$state.go('authentication');
-					}, function(error) {
-						//Show error message.
-						Utils.message(Popup.errorIcon, Popup.errorLogout);
-					});
-				}
-			};
-
 			$scope.onSwipeLeft1 = function () {
 				$scope.view = { type: 2 };
 			}
@@ -76,7 +61,6 @@ angular.module('module.view.match', [])
 					$scope.view == { type: 1}
 				}
 			}
-
 			$scope.connectImages = [{
         src: 'img/connect/bright-animal.jpeg',
 				label: 'Animals',
@@ -245,24 +229,7 @@ angular.module('module.view.match', [])
 							});
 						}
 						$scope.interestId = interests;
-					});
-
-
-
-					$scope.repeatData = $scope.connectImages.map(function(value, index) {
-							return {
-									src: value.src,
-									label: value.label,
-									id: $scope.abs
-							};
-					});
-
-					$scope.leaderRepeatData = $scope.leaderImages.map(function(value, index) {
-							return {
-									src: value.src,
-									label: value.label,
-									id: $scope.abs
-							};
+						$scope.$apply();
 					});
 
 

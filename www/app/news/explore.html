@@ -5,7 +5,8 @@
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>
     </ion-nav-buttons>
 
-    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()" lazy-scroll>
+    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+      <ion-refresher on-refresh="doRefresh()" icon="spiral"></ion-refresher>
       <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
         <label class="item item-input" ng-click="view.type = 2">
           <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);"></i>
@@ -18,30 +19,34 @@
       <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">
         <div class="list card" style="background: transparent; box-shadow: none;">
             <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzyBy: 'userName': lookUp " ui-sref="friend({contact: user.userId})">
-                <img image-lazy-src="{{user.userPhoto}}" image-lazy-distance-from-top-to-load="50">
+                <img ng-src="{{user.userPhoto}}" fallback-src="img/profile-picture.png">
                 <h2 class="lead" style="font-weight: 400 !important">{{user.userName}}</h2>
               </div>
         </div>
       </div>
 
+      <div ng-show="loading == true" style="text-align:center;margin-top:80px;">
+        <ion-spinner icon="spiral"></ion-spinner>
+      </div>
+
       <div ng-if="view.type === 1" style="top: 120px;margin-top: 80px;">
         <div style="height:100%;margin-top: 50px;" >
-            <div class="row row-no-padding category-2-outer" ng-repeat="value in news.itemsArr | limitTo: limit" ng-if="$index % 2 == 0 && news.itemsArr[$index].photo">
+            <div class="row row-no-padding category-2-outer" ng-repeat="value in news" ng-if="$index % 2 == 0 && news[$index].photo">
               <div class="col" style="padding: 5px !important">
-                <a ui-sref="post-detail({post:news.itemsArr[$index].key})">
+                <a ui-sref="post-detail({post:news[$index].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style="background-color: transparent;z-index:5">
+                      <div class = "multi-bg-outer" style="background-image: url({{news[$index].photo}}); background-color: transparent;z-index:5">
                       </div>
                     </div>
                   </div>
                 </a>
               </div>
               <div class="col" style="padding: 5px !important ">
-                <a ui-sref="post-detail({post:news.itemsArr[$index+1].key})">
+                <a ui-sref="post-detail({post:news[$index+1].key})">
                   <div class="category-2-item-wrapper">
                     <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" image-lazy-src ="{{news.itemsArr[$index+1].photo}}" image-lazy-distance-from-top-to-load="-100" image-lazy-background-image="true" style=" background-color: transparent;z-index:5">
+                      <div class = "multi-bg-outer" style="background-image: url({{news[$index+1].photo}}); background-color: transparent;z-index:5">
                       </div>
                     </div>
                   </div>
@@ -50,6 +55,6 @@
             </div>
         </div>
       </div>
-        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="!noMoreItemsAvailable" icon="spiral" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

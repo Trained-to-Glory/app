@@ -10,28 +10,30 @@
     </ion-floating-menu>
 
     <ion-content class="has-tabs-top">
-
-      <div class="list card" ng-repeat="posts in totalPost  | orderBy: 'created': true" on-swipe-left="onSwipeLeft()" style="box-shadow: none;margin-left:0;margin-right:0;">
-        <div class="item item-image" ui-sref="post-detail({post:posts.key, actionable: posts.state})" backgroundimg="{{posts.photo}}" style="max-height: 500px;" media-loader>
-           <img src="img/art.jpg" ng-src="{{thisMainDisplayImg}}">
-         </div>
-        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
-          <img  ng-src="{{posts.avatar}}">
-          <h2 style="color:black !important; letter-spacing: 1.5px;font-size: 12px;font-weight: 400;">{{posts.owner}}</h2>
-          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>
-          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>
-          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>
-        </div>
-        <a class="item" ng-if = "posts.postType === 'Event'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;border: none;" ng-click="toggleCommit(posts.key,userId)">
-          {{posts.totalCommits}} Commit
-        </a>
-        <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
-          {{posts.totalLikes}} Likes
-        </a>
-        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
-          {{posts.totalComments}} Comments
-        </a>
+      <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
+        <ion-spinner icon="spiral"></ion-spinner>
       </div>
+      <div class="list card" ng-repeat="posts in totalPost | orderBy: 'created': true " on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">
+          <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">
+              <img ng-src="{{posts.photo}}" fallback-src = "img/grayBackground.jpg" />
+            </div>
+          <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
+            <img ng-src="{{posts.avatar}}" style="background-color: transparent" fallback-src="img/profile-picture.png" />
+            <h2 class = "lead" style="font-weight: 400 !important;">{{posts.owner}}</h2>
+            <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>
+            <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.postType}}</p>
+            <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>
+          </div>
+          <a class="item" ng-if = "posts.postType === 'Event'" style = "display: inline-flex;font-size:14px;letter-spacing: 1px;border: none;" ng-click="toggleCommit(posts.key,userId)">
+            {{posts.totalCommits}} Commit
+          </a>
+          <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
+            {{posts.totalLikes}} Likes
+          </a>
+          <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
+            {{commmentsNumber}} Comments
+          </a>
+        </div>
         <!-- <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll> -->
     </ion-content>
 </ion-view>

@@ -20,7 +20,8 @@
     "platform.js": "platform#^1.3.1",
     "angular-mocks": "^1.5.8",
     "ionic-image-lazy-load": "ion-image-lazy-load#*",
-    "ionic-cache-src": "^0.7.3"
+    "ionic-cache-src": "^0.7.3",
+    "angular-svg-round-progressbar": "^0.4.8"
   },
   "dependencies": {
     "lodash": "^4.13.1",
@@ -28,6 +29,7 @@
     "angularfire": "^2.0.1",
     "angular-filter": "^0.5.11",
     "angular-payments": "2472bc9befa25678",
-    "ionic-ion-header-shrink": "*"
+    "ionic-ion-header-shrink": "*",
+    "ionic-img-cache": "^1.1.1"
   }
 }

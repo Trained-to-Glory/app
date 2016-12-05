@@ -1,5 +1,5 @@
 
-angular.module('full_starter', ['ionic','angular.filter', 'ionicLazyLoad','ngProgress','ion-floating-menu','views.glory', 'jett.ionic.scroll.sista','ngStorage','ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
+angular.module('full_starter', ['ionic','firebase','angular.filter', 'ngProgress','ion-floating-menu','dcbImgFallback','views.glory', 'jett.ionic.scroll.sista','ngStorage', 'ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
 
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.
@@ -9,7 +9,7 @@ angular.module('full_starter', ['ionic','angular.filter', 'ionicLazyLoad','ngPro
     successIcon: "ion-happy-outline",
     errorIcon: "ion-sad-outline",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
-    emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email and try again.",
+    userNameAlreadyExists: "Sorry, but an account with that username already exists. Please register with a different username.",
     accountAlreadyExists: "Sorry, but an account with the same credential already exists. Please check your account and try again.",
     emailNotFound: "Sorry, but we couldn\'t find an account with that email address. Please check your email and try again.",
     userNotFound: "Sorry, but we couldn\'t find a user with that account. Please check your account and try again.",
