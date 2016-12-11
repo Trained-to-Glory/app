@@ -16,10 +16,10 @@
     <ion-content class="has-header" style="top: 0;" padding="false">
       <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;">
         <div class="item item-image" style="max-height: 500px;">
-            <img ng-src="{{post.photo}}">
+            <img ng-src="{{post.photo}}" fallback-src = "img/grayBackground.jpg">
           </div>
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
-          <img ng-src="{{post.avatar}}" style="background-color: transparent">
+          <img ng-src="{{post.avatar}}" style="background-color: transparent" fallback-src="img/profile-picture.png">
           <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
           <h2 class = "lead" style="font-weight: 400 !important;">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
@@ -40,13 +40,19 @@
 
       <div class="item comments" style="margin-bottom: 21vh;border-top: 1px solid rgba(128, 128, 128, 0.43);margin-top: -18px;border-bottom: none;">
           <div class="item item-avatar" ng-repeat="comment in comments | limitTo:5" ng-if="comment.comment" style="border: none;font-weight: 300;">
-              <img ng-src="{{comment.userPhoto}}"/>
+              <img ng-src="{{comment.userPhoto}}" fallback-src="img/profile-picture.png"/>
               <h2 class="text-small">{{comment.userName}}</h2>
-              <p class="text-smaller">{{comment.comment}}</p>
+              <p class="text-smaller" style = "font-size: 14px !important;">{{comment.comment}}</p>
           </div>
           <p ng-if="commmentsNumber > 5" class="text-smaller" style="margin-left: 20px;"><a ui-sref="comments({post: postId })" style="color:black">View more</a></p>
           <p ng-if="commmentsNumber == 0" ui-sref="comments({post: postId })" >No comments. be the first to <a ui-sref="comments({post: postId })">leave a comment</a></p>
       </div>
-        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
     </ion-content>
+    <ion-footer-bar class="bar-light item-input-inset" style="border-top:1px solid #ccc;" ng-form="chatForm" novalidate>
+        <label class="item-input-wrapper no-bg">
+        <textarea id="textChat" ng-model="formData.comment" placeholder="Comment" required minlength="1" maxlength="1500" style="width:100%;resize: none;" msd-elastic></textarea>
+    </label>
+      <button class="button button-clear button-icon ion-android-send" ng-click="createComment(formData.comment)"></button>
+    </button>
+    </ion-footer-bar>
 </ion-view>

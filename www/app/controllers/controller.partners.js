@@ -96,8 +96,7 @@ angular.module('module.view.partners', [])
 
 			$scope.togglePartner = function(partnerId){
 					var partner = $scope.people;
-					console.log('hit');
-				   if(!partner){
+ 				   if(!partner){
 						 return false;
 					 }
 					partner.partnered = !partner.partnered;

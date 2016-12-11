@@ -5,7 +5,36 @@ angular.module('module.view.explore', ['angular.filter'])
 			$scope.lastId;
 			$scope.noMoreItemsAvailable = false;
 			$scope.loading = true;
-			window.loading = $scope.loading;
+
+			// var posts = firebase.database().ref(['posts'].join('/'));
+			// if ($scope.lastId == undefined) {
+			// 	posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+			// 		$scope.loading = false;
+			// 		var currentObj = snapshot.val();
+			// 		var array = $.map(currentObj, function(value, index) {
+			// 				return [value];
+			// 		});
+			//
+			// 		var arr = [];
+			// 		 for(var key in currentObj){
+			// 				currentObj[key].key = key;
+			// 				arr.push(currentObj[key]);
+			// 			}
+			//
+			// 			var news = {
+			// 				itemsArr: arr
+			// 			}
+			//
+			// 			$scope.news = $scope.news.concat(news.itemsArr);
+			// 			$scope.lastId = $scope.news[$scope.news.length - 1].key;
+			//
+			// 			if ( array.length != 20 ) {
+			// 				 $scope.noMoreItemsAvailable = true;
+			// 			}
+			// 		$scope.$broadcast('scroll.infiniteScrollComplete');
+			// 		$scope.$apply();
+			// 	});
+			// };
 
 			$scope.doRefresh = function (){
 				var posts = firebase.database().ref(['posts'].join('/'));
@@ -23,80 +52,73 @@ angular.module('module.view.explore', ['angular.filter'])
 						var news = {
 							itemsArr: arr
 						}
-						console.log(news.itemsArr);
-						console.log($scope.news);
+
 						$scope.news = news.itemsArr.concat($scope.news);
-						console.log({'$scope.news': $scope.news});
 						$scope.lastId = $scope.news[$scope.news.length - 1].key;
-						console.log($scope.news[$scope.news.length - $scope.news.length].key);
-						console.log($scope.news);
 
 					$scope.$broadcast('scroll.refreshComplete');
 					$scope.$apply();
 				});
 			};
 
-			 $scope.loadMore = function(){
-				 $scope.loading = false;
-				 var posts = firebase.database().ref(['posts'].join('/'));
-				 if ($scope.lastId == undefined) {
-					 posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
-  					 var currentObj = snapshot.val();
-  					 var array = $.map(currentObj, function(value, index) {
-  							 return [value];
-  					 });
+			$scope.loadMore = function(){
+				var posts = firebase.database().ref(['posts'].join('/'));
+				if ($scope.lastId == undefined) {
+					posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+						$scope.loading = false;
+						var currentObj = snapshot.val();
+						var array = $.map(currentObj, function(value, index) {
+								return [value];
+						});
 
-  					 var arr = [];
-  						for(var key in currentObj){
-  							 currentObj[key].key = key;
-  							 arr.push(currentObj[key]);
-  						 }
+						var arr = [];
+						 for(var key in currentObj){
+								currentObj[key].key = key;
+								arr.push(currentObj[key]);
+							}
 
-  						 var news = {
-  							 itemsArr: arr
-  						 }
+							var news = {
+								itemsArr: arr
+							}
 
-  						 $scope.news = $scope.news.concat(news.itemsArr);
-  						 $scope.lastId = $scope.news[$scope.news.length - 1].key;
-							 console.log($scope.news[$scope.news.length - $scope.news.length].key);
-							 console.log($scope.news);
+							$scope.news = $scope.news.concat(news.itemsArr);
+							$scope.lastId = $scope.news[$scope.news.length - 1].key;
 
-  						 if ( array.length != 20 ) {
-  	 				     	$scope.noMoreItemsAvailable = true;
-  	 				   }
-  	 				 $scope.$broadcast('scroll.infiniteScrollComplete');
-						 $scope.$apply();
-  				 });
-				 }else{
-					 posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
-						 var currentObj = snapshot.val();
-						 var array = $.map(currentObj, function(value, index) {
-								 return [value];
-						 });
-						 var arr = [];
-							for(var key in currentObj){
-								 currentObj[key].key = key;
-								 arr.push(currentObj[key]);
-							 }
-							 arr.shift();
-							 var news = {
-								 itemsArr: arr
-							 }
+							if ( array.length != 20 ) {
+								 $scope.noMoreItemsAvailable = true;
+							}
+						$scope.$broadcast('scroll.infiniteScrollComplete');
+						$scope.$apply();
+					});
+				}else{
+					posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+						$scope.loading = false;
+						var currentObj = snapshot.val();
+						var array = $.map(currentObj, function(value, index) {
+								return [value];
+						});
+						var arr = [];
+						 for(var key in currentObj){
+								currentObj[key].key = key;
+								arr.push(currentObj[key]);
+							}
+							arr.shift();
+							var news = {
+								itemsArr: arr
+							}
 
-							 $scope.news = $scope.news.concat(news.itemsArr);
-							 $scope.lastId = $scope.news[$scope.news.length - 1].key;
-							 console.log($scope.news[$scope.news.length - $scope.news.length].key);
-							 console.log($scope.news);
+							$scope.news = $scope.news.concat(news.itemsArr);
+							$scope.lastId = $scope.news[$scope.news.length - 1].key;
 
-							 if ( array.length != 20 ) {
-		 				     	$scope.noMoreItemsAvailable = true;
-		 				   }
-		 				 $scope.$broadcast('scroll.infiniteScrollComplete');
-						 $scope.$apply();
-					 });
-				 }
-			 };
-			window.loadMore = $scope.loadMore();
+							if ( array.length != 20 ) {
+								 $scope.noMoreItemsAvailable = true;
+							}
+						$scope.$broadcast('scroll.infiniteScrollComplete');
+						$scope.$apply();
+					});
+				}
+			};
+
 
 				usersService.getAllUsers().then(function(results){
 					delete results[$localStorage.account.userId];
@@ -109,7 +131,6 @@ angular.module('module.view.explore', ['angular.filter'])
 		$scope.clearSearch = function() {
 		    $scope.lookUp = null;
 				$scope.view = { type: 1}
-				console.log($scope.view);
 		}
 
 

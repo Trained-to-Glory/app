@@ -30,34 +30,7 @@ angular.module('module.view.comments', [])
 							items: results
 					};
 				});
-				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-            scope: $scope
-        })
 
-				$scope.limit = 10;
-
-        $scope.loadMore = function(){
-          if($scope.comments){
-            var max = $scope.comments.length;
-            if($scope.limit <  max){
-              $scope.moreToScroll = true;
-              if($scope.limit - max < 10 && $scope.limit - max > 0){
-                $scope.limit += Math.abs($scope.limit - max);
-                $scope.moreToScroll = false;
-                return;
-              }
-              $scope.limit += 10;
-            }else{
-              $scope.moreToScroll = false;
-            }
-          }
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
-
-        $scope.news = {
-                    type: 'image',
-                    items: postService.getNews()
-                }
 
         if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
             $stateParams.post === null ? $scope.post = postService.getRandomObject($scope.news.items) : $scope.post = $stateParams.post;

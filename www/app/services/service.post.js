@@ -12,6 +12,28 @@ angular.module('service.post', [])
             });
       };
 
+      this.getOnePosts = function (postId) {
+            var posts = firebase.database().ref('posts/' + postId);
+            return posts.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
+        this.getOnePlan = function (postId) {
+              var plan = firebase.database().ref('plans/' + postId);
+              return plan.once('value').then(function (snapshot) {
+                    var currentObj = snapshot.val();
+                    if (currentObj) {
+                        return currentObj;
+                    }
+                    return undefined;
+                });
+          };
+
 
         this.createComment = function (data) {
             //create a location in the table
@@ -216,6 +238,7 @@ angular.module('service.post', [])
                   "photo": data.photo || '',
                   "goal": data.goal || '',
                   "checklist": data.checklist || '',
+                  "private": data.private || '',
                   "title": data.title || '',
                   "point": data.point || '',
                   "forward": data.forward || '',
@@ -260,6 +283,7 @@ angular.module('service.post', [])
                 if (currentObj) {
                     var obj = {
                         "photo": data.photo ? data.photo : currentObj.photo,
+                        "private": data.private ? data.private : currentObj.private,
                         "goal": data.goal ? data.goal : currentObj.goal,
                         "checklist": data.checklist ? data.checklist : currentObj.checklist,
                         "point": data.point ? data.point : currentObj.point,

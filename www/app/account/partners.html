@@ -13,7 +13,7 @@
       <div class="item item-avatar item-button-right followers" ng-repeat="person in people" ng-if="person.partnered === false" style="border: none; border-style: none">
           <img ng-src="{{person.userPhoto}}">
           <h2 style="font-weight: 400">{{person.userName}}</h2>
-          <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': person.partnered, 'button-balanced ion-ios-undo-outline':!person.partnered }" ng-click="togglePartner(person.userId)">
+          <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !person.partnered, 'button-balanced ion-ios-undo-outline':person.partnered }" ng-click="togglePartner(person.userId)">
               <span ng-if="!person.partnered"> Friend</span>
               <span ng-if="person.partnered"> Friend</span>
           </button>

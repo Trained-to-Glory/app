@@ -354,48 +354,27 @@ angular.module('service.interest', [])
     };
 
     this.getInterestUsers = function(id){
-      var refId = ['engagedActivities','interest', id].join('/');
-      var db = firebase.database().ref(refId);
-      return db.once('value').then(function (snapshot) {
-          var selectedUsers = snapshot.val();
-          if (selectedUsers) {
-            var db = firebase.database().ref('accounts');
-            return db.once('value').then(function(snapshot){
-              var allUsers = snapshot.val();
-              if(allUsers){
-                for(var user in selectedUsers){
-                  var interestedUsers = {};
-                  interestedUsers[user] = allUsers[user];
-                }
-                return interestedUsers;
-              }
-            });
+      var intresets = firebase.database().ref(['engagedActivities','interest', id].join('/'));
+      return intresets.once('value').then(function (snapshot) {
+          var currentObj = snapshot.val();
+          if (currentObj) {
+              return currentObj;
           }
           return undefined;
       });
     };
 
     this.getLeaderInterestUsers = function(id){
-      var refId = ['engagedActivities','leaderInterest','interest', id].join('/');
-      var db = firebase.database().ref(refId);
-      return db.once('value').then(function (snapshot) {
-          var selectedUsers = snapshot.val();
-          if (selectedUsers) {
-            var db = firebase.database().ref('accounts');
-            return db.once('value').then(function(snapshot){
-              var allUsers = snapshot.val();
-              if(allUsers){
-                for(var user in selectedUsers){
-                  var interestedUsers = {};
-                  interestedUsers[user] = allUsers[user];
-                }
-                return interestedUsers;
-              }
-            });
+      var intresets = firebase.database().ref(['engagedActivities','leaderInterest', id].join('/'));
+      return intresets.once('value').then(function (snapshot) {
+          var currentObj = snapshot.val();
+          if (currentObj) {
+              return currentObj;
           }
           return undefined;
       });
     };
+
 
     this.getTrainers = function(id){
       var intresetTrainer = (id) ? firebase.database().ref('trainersInterest/' + id) : firebase.database().ref('trainersInterest/');

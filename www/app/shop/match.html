@@ -13,7 +13,7 @@
         <div ng-if="view.type === 1" on-swipe-left="onSwipeLeft1()" on-swipe-right="onSwipeRight2()" style="position: relative;top:53px;">
           <div class="row row-no-padding category-2-outer" style="padding:0;" ng-repeat = "ab in connectImages track by $index" >
             <div class="col">
-              <a ui-sref="contacts({activity:ab.id})">
+              <a ui-sref="contacts({activity:ab.id, type: 'Connect'})">
                 <div class="category-2-item-wrapper">
                   <div class="category-2-item-content">
                     <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{ab.src}});">
@@ -37,7 +37,7 @@
       <div ng-if="view.type === 2" on-swipe-left="onSwipeLeft2()" on-swipe-right="onSwipeRight1()" style="position: relative;top:53px;">
         <div class="row row-no-padding category-2-outer" style="padding:0" ng-repeat = "trainer in leaderImages track by $index">
           <div class="col">
-            <a ui-sref="contacts({activity:trainer.id})">
+            <a ui-sref="contactLeader({activity:trainer.id, type: 'Leaders'})">
               <div class="category-2-item-wrapper">
                 <div class="category-2-item-content">
                   <div class = "multi-bg-outer" multi-bg="[bg_img]" interval="3000" helper-class="category-with-image" style="background-image: url({{trainer.src}});">

@@ -4027,7 +4027,7 @@ a.subdued {
     .bar .title.title-left {
       text-align: left;
       font-weight: 400 !important;
-      color: #3f3f3f;
+      color: gray;
     	font-weight:300;
     	margin:0;
       margin-left: 20px;
@@ -10084,9 +10084,6 @@ p {
 .card.image .item.item-image {
   background: #26ba9a;
   background-blend-mode: darken; }
-  .card.image .item.item-image img {
-    -webkit-filter: brightness(70%) grayscale(20%);
-    filter: brightness(70%) grayscale(20%); }
   .card.image .item.item-image .interact {
     position: absolute;
     top: 10px;

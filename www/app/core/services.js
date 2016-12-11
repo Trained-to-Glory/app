@@ -91,6 +91,6 @@
                             correctOrientation: true
                         };
                     }
-                }
+                };
             }]);
 })();

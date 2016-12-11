@@ -10,7 +10,7 @@
 
   <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: transparent !important;">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
-      <i class="icon ion-ios-arrow-back" style="color: black;"></i>
+      <i class="icon ion-ios-arrow-back" style="color: gray;"></i>
       <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
     </button>
     <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Create Account</div>
@@ -49,8 +49,8 @@
                       </div>
 
                       <h1 class="font-thin" style="color: white; font-size: 14px; font-weight: 400 !important;margin-left: 20px;margin-top: 24px">Would you like to be considered a leader?</h1>
-                       <ion-radio ng-model="user.leader" ng-value="'yes'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
-                       <ion-radio ng-model="user.person" ng-value="'no'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
+                       <ion-radio ng-model="user.leader" ng-value="'leader'" style="background-color: transparent !important;margin-left: 5px;font-weight: 400;border: none">Yes</ion-radio>
+                       <ion-radio ng-model="user.person" ng-value="'person'" style="background-color: transparent !important;margin-left: 6px;font-weight: 400;border: none">No</ion-radio>
 
                         <input class="button button-block button-calm" ng-if="user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>
                         <input class="button button-block button-calm" ng-if="!user.person" type="submit" value="SIGN UP" ng-disabled="loginForm.$invalid" style="border-radius: 0px;background-color: white;color: black"></input>

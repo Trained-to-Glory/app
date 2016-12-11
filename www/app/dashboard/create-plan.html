@@ -8,10 +8,11 @@
         </div>
     </ion-header-bar>
 
-  <ion-content class="has-header">
-    <div class="event-form">
-      <div class="list edit padding-horizontal padding-vertical" style="padding:0">
-        <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "pictureLook.type === 1">
+  <ion-content class="has-header" style="top: 44px !important;">
+    <div class="event-form" style="height: 283px">
+      <div class="list edit padding-horizontal padding-vertical" style="padding:0;height: 283px">
+        <div style="height: 283px">
+        <label class="item item-input event__input" style = "height: 283px;margin-bottom: 0;" ng-click="uploadEventPhoto()" ng-if = "pictureLook.type === 1">
           <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0">
                 <div class="item item-image" ng-if = "pictureLook.type === 1">
                   <img class="plan_picture" ng-src = "img/goal-photo.jpg" style = "filter: brightness(96%) grayscale(10%);; -webkit-filter: brightness(96%) grayscale(10%);" name = "photo" ng-model="photo">
@@ -21,6 +22,7 @@
               <i class="icon ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i>
             </a>
         </label>
+      </div>
 
         <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin-top: 0;margin: 0;padding: 0;" ng-click="uploadEventPhoto()" ng-if="pictureLook.type === 2">
           <div class="item item-image" style="max-height: 500px;">
@@ -28,7 +30,17 @@
             </div>
         </div>
 
-          <label class="item item-input event__input" style="margin-top: -66px;margin-bottom:15px;padding-top: 20px;">
+        <div class="item item-input event__input item-toggle" style="margin-bottom:15px;font-weight: 300;padding-top: 20px;border-bottom: none;margin-left: 5px;">
+           Make Goal Private
+           <label class="toggle toggle-assertive">
+             <input type="checkbox" name="private" ng-model = "post.private">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+           </label>
+        </div>
+
+          <label class="item item-input event__input" style="margin-bottom: 0">
             <input type="text" name="title" style="margin-left:5px;font-weight:300" placeholder="">{{post.title}}
             <span class="input-label" style="margin-left:5px">Title</span>
           </label>

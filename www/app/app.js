@@ -1,5 +1,5 @@
 
-angular.module('full_starter', ['ionic','firebase','angular.filter', 'ngProgress','ion-floating-menu','dcbImgFallback','views.glory', 'jett.ionic.scroll.sista','ngStorage', 'ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
+angular.module('full_starter', ['ionic','firebase','angular.filter', 'ion-floating-menu','dcbImgFallback','views.glory','ngStorage', 'ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
 
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.
@@ -9,6 +9,7 @@ angular.module('full_starter', ['ionic','firebase','angular.filter', 'ngProgress
     successIcon: "ion-happy-outline",
     errorIcon: "ion-sad-outline",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
+    emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email address.",
     userNameAlreadyExists: "Sorry, but an account with that username already exists. Please register with a different username.",
     accountAlreadyExists: "Sorry, but an account with the same credential already exists. Please check your account and try again.",
     emailNotFound: "Sorry, but we couldn\'t find an account with that email address. Please check your email and try again.",
@@ -26,16 +27,15 @@ angular.module('full_starter', ['ionic','firebase','angular.filter', 'ngProgress
     sessionExpired: "Sorry, but the login session has expired. Please try logging in again.",
     errorLogin: "Sorry, but we encountered an error logging you in. Please try again later.",
     welcomeBack: "Welcome back! It seems like you should still be logged in. Logging you in now.",
-    manyRequests: "Sorry, but we\'re still proccessing your previous login. Please try again later."
+    manyRequests: "Sorry, but we\'re still proccessing your previous login. Please try again later.",
+
   })
 
 
   .run(['$ionicPlatform', function ($ionicPlatform) {
-
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
       }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required

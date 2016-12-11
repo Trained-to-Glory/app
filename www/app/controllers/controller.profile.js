@@ -3,10 +3,32 @@ angular.module('module.view.profile', [])
 		function($scope,$rootScope,$timeout,$cordovaCamera,$log,$ionicPopover,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,appService,$ionicActionSheet,engagementService,usersService,$state,postService,$ionicSideMenuDelegate,$localStorage) {
 		$rootScope.slideHeader = false;
    	$rootScope.slideHeaderPrevious = 0;
+		$scope.noMoreItemsAvailable = false;
 
 	$scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
+
+	var myPostsPromise = firebase.database().ref(['accounts', $localStorage.account.userId , 'userPartners', 'partners', $localStorage.account.userId].join('/'));
+	 myPostsPromise.once('value').then(function (snapshot) {
+				var obj = {};
+				var myPosts = snapshot.val();
+				if (myPosts) {
+					 var postsPromise = firebase.database().ref(['posts'].join('/'));
+					 postsPromise.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+						 var posts = snapshot.val();
+						 if(posts){
+							 for(var key in	myPosts){
+								 obj[key] = posts[key];
+							 }
+							 return obj;
+						 }
+						 return obj;
+					 });
+				}
+				return obj;
+		});
+
 
 
 	$scope.onSwipeRight = function () {
@@ -14,16 +36,6 @@ angular.module('module.view.profile', [])
 	}
 
 	$scope.view = { type: 1 };
-
-	$scope.togglePartner = function(partnerId){
-			var partner = $scope.contacts;
-			 if(!partner){
-				 return false;
-			 }
-			partner.partnered = !partner.partnered;
-			var state = (partner.partnered)?'partner':'unpartner';
-			return engagementService[state]({category:'partners', categoryId:partnerId, userId: $localStorage.account.userId});
-	};
 
 		$scope.openPopover = function($event) {
 			 $scope.fullscreenPopover.show($event);
@@ -85,6 +97,7 @@ angular.module('module.view.profile', [])
 			})(id,contacts.items);
 			}
 			$scope.people = contacts.items;
+			console.log();
 		});
 
 		$scope.loadMoreUserCommits = function(){
@@ -141,33 +154,120 @@ angular.module('module.view.profile', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		};
 
+		$scope.loading = true;
 
+		if ($scope.lastpostId == undefined) {
+		var userPosts = firebase.database().ref(['accounts', $localStorage.account.userId, 'posts'].join('/'));
+			userPosts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+				$scope.loading = false;
+				var currentObj = snapshot.val();
+				var array = $.map(currentObj, function(value, index) {
+						return [value];
+				});
 
-	usersService.getUserPost($localStorage.account.userId).then(function(results) {
-		//create a local object so we can create the datastructure we want
-		//so we can use it to show/hide, toggle ui items
-		var arr = [];
-		var photos = [];
-		for(var key in results){
-			results[key].key = key;
-			arr.push(results[key]);
-			if (results[key].photo != ""){
-				photos.push(results[key]);
-			}
-		}
-		var userPost = {
-				itemsArr: photos
+				var arr = [];
+				var photos = [];
+
+				 for(var key in currentObj){
+						currentObj[key].key = key;
+						arr.push(currentObj[key]);
+						if (currentObj[key].photo != ""){
+							photos.push(currentObj[key]);
+						}
+					}
+
+					var userPost = {
+							itemsArr: photos
+					};
+
+					$scope.userPosts = userPost;
+
+					if ( array.length != 20 ) {
+						 $scope.noMoreItemsAvailable = true;
+					}
+				$scope.$apply();
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+
+			});
 		};
-		 $scope.userPosts = userPost;
-		$localStorage.account.posts = userPost.itemsArr;
-	});
+
+		$scope.loadMore = function(){
+			$scope.loading = false;
+			var userPosts = firebase.database().ref(['accounts', $localStorage.account.userId, 'posts'].join('/'));
+			if ($scope.lastId == undefined) {
+				userPosts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+
+					var arr = [];
+					var photos = [];
+
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+							if (currentObj[key].photo != ""){
+								photos.push(currentObj[key]);
+							}
+						}
+
+						var userPost = {
+							itemsArr: photos
+						}
+
+						$scope.userPosts = [];
+						console.log(userPost.itemsArr);
+
+						$scope.userPosts = $scope.userPosts.concat(userPost.itemsArr);
+						$scope.lastId = $scope.userPosts[$scope.userPosts.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}else{
+				userPosts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+					var arr = [];
+					var photos = [];
+
+					for(var key in currentObj){
+						 currentObj[key].key = key;
+						 arr.push(currentObj[key]);
+						 if (currentObj[key].photo != ""){
+							 photos.push(currentObj[key]);
+						 }
+					 }
+
+						arr.shift();
+						var userPosts = {
+							itemsArr: photos
+						}
+
+						$scope.userPosts = $scope.userPosts.concat(userPost.itemsArr);
+						$scope.lastId = $scope.userPosts[$scope.userPosts.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}
+		};
 
 
 	usersService.getUserTotalPartners($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
+
 		 $scope.userPartners = results;
-		 $localStorage.account.totalPartners = results;
 	});
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
@@ -186,8 +286,8 @@ angular.module('module.view.profile', [])
 			itemsArr: photos
 		};
 		 $scope.userCommits = userCommits;
-		 $localStorage.account.profileCommits = userCommits.itemsArr;
 	});
+
 
 
 	usersService.getPartnerPosts($localStorage.account.userId).then(function(results) {
@@ -206,23 +306,19 @@ angular.module('module.view.profile', [])
 				itemsArr: photos
 		};
 		 $scope.userNews = userNews;
-		 $localStorage.account.userNews = userNews;
 	});
 
 	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalCommits = results;
-		 $localStorage.account.totalCommits = results;
 	});
 
 	usersService.getUserTotalPost($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalPost = results;
-		 $localStorage.account.totalPost = results;
 	});
-
 
 	usersService.getPartners($localStorage.account.userId).then(function(results){
 		var arr = [];
@@ -239,17 +335,15 @@ angular.module('module.view.profile', [])
 		for(var id in contacts.items){
 		 //check to see if there is a like on this post
 		 (function(id, items){
-			 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+			 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:id }).then(function(partnered){
  				items.partnered = partnered;
  			});
 		})(id, contacts.items[id]);
 		}
 
 		$scope.contacts = contacts;
+		console.log(contacts);
 	});
-
-	console.log($scope.profile.posts);
-
 
 		$scope.goBack = function (ui_sref) {
 	                    var currentView = $ionicHistory.currentView();
@@ -269,16 +363,8 @@ angular.module('module.view.profile', [])
 	                    }
         }
 
-        $scope.news = {
-            type: 'image',
-            items: postService.getNews()
-        }
-
-				$scope.menuPopover = $ionicPopover.fromTemplate(menuTemplate, {
-						scope: $scope
-				});
-
 		$scope.profile = $localStorage.account;
+
 		$scope.uploadUserPhoto = function () {
 					$ionicActionSheet.show({
 						titleText: 'Profile Picture',
@@ -339,5 +425,97 @@ angular.module('module.view.profile', [])
 							}
 					});
 			};
+
+		$scope.gotoMatch = function () {
+                    $state.go('tabs.match');
+
+        };
+
+       $scope.gotoBrowse = function () {
+                    $state.go('tabs.news');
+
+        };
+
+        $scope.gotoCoaches = function () {
+                    $state.go('tabs.coach');
+
+        };
+
+				$scope.browse = function () {
+					$scope.closePopover();
+						$state.go('tabs.news');
+				};
+
+				$scope.explore = function () {
+					$scope.closePopover();
+					$state.go('tabs.explore');
+				};
+
+				$scope.match = function () {
+					$scope.closePopover();
+						$state.go('tabs.match');
+
+				};
+
+				$scope.coach = function () {
+					 $scope.closePopover();
+						$state.go('tabs.coach');
+				};
+
+				$scope.plans = function () {
+					 $scope.closePopover();
+						$state.go('tabs.sentPlans');
+				};
+
+				$scope.reminder = function () {
+					$scope.closePopover();
+						$state.go('tabs.reminders');
+				};
+
+				$scope.partners = function () {
+					$scope.closePopover();
+						$state.go('tabs.partners');
+				};
+
+				$scope.settings = function () {
+					$scope.closePopover();
+						$state.go('tabs.settings');
+				};
+
+				$scope.search = function () {
+					$scope.closePopover();
+						$state.go('tabs.search');
+				};
+
+				$scope.calendar = function () {
+					$scope.closePopover();
+						$state.go('tabs.reminders');
+				};
+
+				$scope.account = function (){
+					$scope.closePopover();
+					$state.go('tabs.account');
+				};
+
+				$scope.notifications = function (){
+					$scope.closePopover();
+					$state.go('tabs.communicate');
+				};
+
+				$scope.logout = function() {
+				if (firebase.auth()) {
+					firebase.auth().signOut().then(function() {
+						//Clear the saved credentials.
+						$localStorage.$reset();
+						$scope.closePopover();
+						//Proceed to login screen.
+						$state.go('authentication');
+					}, function(error) {
+						//Show error message.
+						Utils.message(Popup.errorIcon, Popup.errorLogout);
+					});
+				}
+			};
+
 
 }]);

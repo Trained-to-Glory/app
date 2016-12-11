@@ -28,174 +28,451 @@ angular.module('module.view.news', [])
             }
 
         $scope.loading = true;
-           usersService.getPartnerPosts($sce.userId).then(function(results) {
-          //create a local object so we can create the datastructure we want
-          $scope.loading = false;
-
-          var arr = [];
-          for(var key in results){
-            results[key].key = key;
-            arr.push(results[key]);
-          }
-          var partnerPost = {
-              type: 'item',
-              items: results,
-              itemsArr: arr
-          };
-
-          for(var id in partnerPost.items){
-           //check to see if there is a like on this post
-           (function(id, items){
-             engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
-              items.liked = liked;
-             });
-             engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
-               items.committed = committed;
-             });
-             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-               items.totalLikes = totalLikes;
-             });
-             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-               items.totalCommits = totalCommits;
-             });
-
-             engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
-               items.totalComments = totalComments;
-             });
-
-           })(id, partnerPost.items[id]);
-          }
-          //make it available to the directive to officially show/hide, toggle
-          $sce.partnerPostArr = partnerPost.itemsArr;
-          //merge view itemsArr into partnerPost for disaply purposes
-          $sce.totalPost = partnerPost.itemsArr.concat($scope.view.itemsArr);
-
-          console.log($sce.totalPost[$sce.totalPost.length - 1].key);
-          $sce.partnerPost = partnerPost;
-          $scope.$apply();
-        });
-
-
 
         $scope.profile = $localStorage.account;
-                usersService.getUserPost($sce.userId).then(function(results) {
-                  //create a local object so we can create the datastructure we want
-                  var arr = [];
-                  for(var key in results){
-                    results[key].key = key;
-                    arr.push(results[key]);
-                  }
+        $scope.lastId;
+        $scope.noMoreItemsAvailable = false;
+        $scope.totalPost = [];
+        $scope.totalPost.connect = [];
+        $scope.totalPost.leader = [];
+        $scope.totalPost.together = [];
+        $scope.totalPost.unite = [];
 
-                  console.log(arr);
-                  console.log(arr[arr.length - 1].key);
-                  var view = {
-                      type: 'item',
-                      items: results,
-                      itemsArr: arr
-                  };
-                  for(var id in view.items){
-                   //check to see if there is a like on this post
-                   (function(id, items){
-                     engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
-                      items.liked = liked;
-                     });
-                     engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
-                       items.committed = committed;
-                     });
-                     engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-                       items.totalLikes = totalLikes;
-                     });
-                     engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-                       items.totalCommits = totalCommits;
-                     });
-                     postService.getComments(id).then(function(results) {
-             					$scope.comments = [];
-             					for(var key in results){
-             						results[key].key = key;
-             						$scope.comments.push(results[key]);
-             					}
-             					var comments = {
-             							items: results
-             					};
-             					$scope.commmentsNumber = $scope.comments.length;
-             				});
-                   })(id, view.items[id]);
-                  }
-                  $scope.viewArr = view.itemsArr;
-                  $scope.view = view;
-                  $scope.$apply();
-                  //make it available to the directive to officially show/hide, toggle
-                });
+        $scope.totalPost.coach = [];
+        $scope.totalPost.mentor = [];
 
-        $scope.connectImages = [{
-          src: 'img/connect/bright-animal.jpeg',
-  				label: 'Animals',
-  				id: '-KXc-PKqyc7JRXpB98vc'
-  			},{
-          src: 'img/connect/bright-architecture.jpeg',
-  				label: 'Architecture',
-  				id: '-KXc-PKubG8nUAF4rbDW'
-  			},{
-          src: 'img/connect/bright-art.jpeg',
-  				label: 'Art',
-  				id: '-KXc-PKubG8nUAF4rbDX'
-  			},{
-  				src: 'img/connect/rari-car.jpg',
-  				label: 'Cars',
-  				id: '-KXc-PKvsIOIXTjTComa'
-  			},{
-          src: 'img/connect/design-match.jpg',
-  				label: 'Design',
-  				id: '-KXc-PKvsIOIXTjTComb'
-  			},{
-  				src: 'img/connect/diy-match.jpeg',
-  				label: 'DIY',
-  				id: '-KXc-PKvsIOIXTjTComc'
-  			},{
-  				src: 'img/connect/education-match.jpeg',
-  				label: 'Education',
-  				id: '-KXc-PKvsIOIXTjTComd'
-  			},{
-  				src: 'img/connect/events-match.jpg',
-  				label: 'Events',
-  				id: '-KXc-PKvsIOIXTjTCome'
-  			},{
-  				src: 'img/connect/fashion-match.jpeg',
-  				label: 'Fashion',
-  				id: '-KXc-PKyp2pTaXsaG6Ff'
-  			},{
-  				src: 'img/connect/food-match.jpg',
-  				label: 'Food & Drink',
-  				id: '-KXc-PKzxbTiOJzK6j72'
-  			},{
-  				src: 'img/connect/games-match.jpg',
-  				label: 'Games',
-  				id: '-KXc-PL0mQ1oYXeDiEyq'
-  			},{
-  				src: 'img/connect/gardening-match.jpeg',
-  				label: 'Gardening',
-  				id: '-KXc-PL0mQ1oYXeDiEyr'
-  			},{
-  				src: 'img/connect/hair-match.jpeg',
-  				label: 'Hair & Beauty',
-  				id: '-KXc-PL0mQ1oYXeDiEys'
-  			},{
-  				src: 'img/connect/health-match.jpg',
-  				label: 'Health & Sports',
-  				id: '-KXc-PL1IJeRKtEt1R70'
-  			},{
-  				src: 'img/connect/music-match.jpeg',
-  				label: 'Music',
-  				id: '-KXc-PL1IJeRKtEt1R71'
-  			},{
-  				src: 'img/connect/new-outdoors.jpg',
-  				label: 'Outdoors',
-  				id: '-KXc-PL3SLOgnBvXlR5i'
-  			},{
-  				src: 'img/connect/new-tech.jpeg',
+
+        if ($scope.lastId == undefined) {
+        var posts = firebase.database().ref(['posts'].join('/'));
+          posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+            $scope.totalPost.photos = [];
+            var currentObj = snapshot.val();
+            var array = $.map(currentObj, function(value, index) {
+                return [value];
+            });
+
+            var arr = [];
+             for(var key in currentObj){
+                currentObj[key].key = key;
+                arr.push(currentObj[key]);
+              }
+
+              var news = {
+                itemsArr: arr,
+                items: currentObj
+              }
+
+              for(var id in news.items){
+               //check to see if there is a like on this post
+               (function(id, items){
+                 engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
+                  items.liked = liked;
+                 });
+                 engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
+                   items.committed = committed;
+                 });
+                 engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+                   items.totalLikes = totalLikes;
+                 });
+                 engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+                   items.totalCommits = totalCommits;
+                 });
+
+                 engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
+                   items.totalComments = totalComments;
+                 });
+               })(id, news.items[id]);
+              }
+
+              $scope.totalPost.photos = $scope.totalPost.photos.concat(news.itemsArr);
+              $scope.totalPostItems = news.items;
+              console.log($scope.totalPost.photos);
+              $scope.lastId = $scope.totalPost.photos[$scope.totalPost.photos.length - 1].key;
+
+              if ( array.length != 20 ) {
+                 $scope.noMoreItemsAvailable = true;
+              }
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            $scope.$apply();
+          });
+        };
+
+        $scope.doRefresh = function (){
+          var posts = firebase.database().ref(['posts'].join('/'));
+          posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+            $scope.totalPost.photos = [];
+            var currentObj = snapshot.val();
+            var array = $.map(currentObj, function(value, index) {
+                return [value];
+            });
+            var arr = [];
+             for(var key in currentObj){
+                currentObj[key].key = key;
+                arr.push(currentObj[key]);
+              }
+              arr.shift();
+              var news = {
+                itemsArr: arr,
+                items: currentObj
+              }
+
+              for(var id in news.items){
+               //check to see if there is a like on this post
+               (function(id, items){
+                 engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
+                  items.liked = liked;
+                 });
+                 engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
+                   items.committed = committed;
+                 });
+                 engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+                   items.totalLikes = totalLikes;
+                 });
+                 engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+                   items.totalCommits = totalCommits;
+                 });
+
+                 engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
+                   items.totalComments = totalComments;
+                 });
+
+               })(id, news.items[id]);
+              }
+
+              $scope.totalPost.photos = news.itemsArr.concat($scope.totalPost.photos);
+              $scope.totalPostItems = news.items;
+              $scope.lastId = $scope.totalPost.photos[$scope.totalPost.photos.length - 1].key;
+
+            $scope.$broadcast('scroll.refreshComplete');
+            $scope.$apply();
+          });
+        };
+
+        $scope.loadMore = function(){
+          var posts = firebase.database().ref(['posts'].join('/'));
+          if ($scope.lastId == undefined) {
+            posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+              $scope.loading = false;
+              $scope.totalPost.photos = [];
+              var currentObj = snapshot.val();
+              var array = $.map(currentObj, function(value, index) {
+                  return [value];
+              });
+
+              var arr = [];
+               for(var key in currentObj){
+                  currentObj[key].key = key;
+                  arr.push(currentObj[key]);
+                }
+
+                var news = {
+                  itemsArr: arr,
+                  items: currentObj
+                }
+
+                for(var id in news.items){
+                 //check to see if there is a like on this post
+                 (function(id, items){
+                   engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
+                    items.liked = liked;
+                   });
+                   engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
+                     items.committed = committed;
+                   });
+                   engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+                     items.totalLikes = totalLikes;
+                   });
+                   engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+                     items.totalCommits = totalCommits;
+                   });
+
+                   engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
+                     items.totalComments = totalComments;
+                   });
+
+                 })(id, news.items[id]);
+                }
+
+                $scope.totalPost.photos = $scope.totalPost.photos.concat(news.itemsArr);
+                $scope.totalPostItems = news.items;
+                $scope.lastId = $scope.totalPost.photos[$scope.totalPost.photos.length - 1].key;
+
+                if ( array.length != 20 ) {
+                   $scope.noMoreItemsAvailable = true;
+                }
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+              $scope.$apply();
+            });
+          }else{
+            posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+              var currentObj = snapshot.val();
+              $scope.totalPost.photos = [];
+              var array = $.map(currentObj, function(value, index) {
+                  return [value];
+              });
+              var arr = [];
+               for(var key in currentObj){
+                  currentObj[key].key = key;
+                  arr.push(currentObj[key]);
+                }
+                arr.shift();
+                var news = {
+                  itemsArr: arr,
+                  items: currentObj
+                }
+
+                for(var id in news.items){
+                 //check to see if there is a like on this post
+                 (function(id, items){
+                   engagementService.liked({category:'post', categoryId:id, userId: $sce.userId}).then(function(liked){
+                    items.liked = liked;
+                   });
+                   engagementService.committed({category:'post',categoryId:id, userId: $sce.userId}).then(function(committed){
+                     items.committed = committed;
+                   });
+                   engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+                     items.totalLikes = totalLikes;
+                   });
+                   engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+                     items.totalCommits = totalCommits;
+                   });
+
+                   engagementService.totalComments({category: 'post',categoryId: id}).then(function(totalComments){
+                     items.totalComments = totalComments;
+                   });
+
+                 })(id, news.items[id]);
+                }
+
+                $scope.totalPost.photos = $scope.totalPost.photos.concat(news.itemsArr);
+                $scope.totalPostItems = news.items;
+                $scope.lastId = $scope.totalPost.photos[$scope.totalPost.photos.length - 1].key;
+
+                if ( array.length != 20 ) {
+                   $scope.noMoreItemsAvailable = true;
+                }
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+              $scope.$apply();
+            });
+          }
+        };
+
+        var plans = firebase.database().ref(['plans'].join('/'));
+          plans.orderByKey().limitToLast(100).once("value", function(snapshot) {
+            $scope.loading = false;
+            var currentObj = snapshot.val();
+            var array = $.map(currentObj, function(value, index) {
+                return [value];
+            });
+
+            $scope.totalPost.plans = [];
+            $scope.totalPost.goals = [];
+            $scope.totalPost.focus = [];
+            $scope.totalPost.finish = [];
+
+            var arr = [];
+             for(var key in currentObj){
+                currentObj[key].key = key;
+                arr.push(currentObj[key]);
+                if (currentObj[key].photo != ""){
+     							photos.push(currentObj[key]);
+     						}
+              }
+
+              var plansArr = {
+                itemsArr: arr
+              }
+
+              $scope.totalPost.plans = $scope.totalPost.plans.concat(plansArr.itemsArr);
+
+              $scope.totalPost.goals = $scope.totalPost.plans.slice(0, 5);
+              $scope.totalPost.focus = $scope.totalPost.plans.slice(6, 12);
+              $scope.totalPost.finish = $scope.totalPost.plans.slice(12, 18);
+
+              $scope.finishLength = $scope.totalPost.finish.length;
+              $scope.focusLength = $scope.totalPost.focus.length;
+              $scope.goalsLength = $scope.totalPost.goals.length;
+
+              $scope.finishPhoto = $scope.totalPost.finish.photo;
+              $scope.focusPhoto = $scope.totalPost.focus.photo;
+              $scope.goalsPhoto = $scope.totalPost.goals.photo;
+
+              $scope.lastId = $scope.totalPost.plans[$scope.totalPost.plans.length - 1].key;
+
+            $scope.$apply();
+          });
+
+            $scope.connectImages = [{
+              src: 'img/browse/dog-browse.jpg',
+      				label: 'Animals',
+              id: '-KXc-PKqyc7JRXpB98vc',
+              description: 'Some words'
+      			},{
+              src: 'img/browse/architecture-browse.jpeg',
+      				label: 'Architecture',
+              id: '-KXc-PKubG8nUAF4rbDW',
+              description: 'Some words'
+      			},{
+              src: 'img/browse/art-browse.jpg',
+      				label: 'Art',
+              id: '-KXc-PKubG8nUAF4rbDX',
+              description: 'Some words'
+            },{
+              src: 'img/browse/open-car-browse.jpeg',
+              label: 'Cars',
+              id: '-KXc-PKvsIOIXTjTComa'
+            },{
+              src: 'img/browse/design-browse.jpg',
+              label: 'Design',
+              id: '-KXc-PKvsIOIXTjTComb'
+          }];
+          $scope.totalPost.connect = $scope.totalPost.connect.concat($scope.connectImages);
+
+          $scope.togetherImages = [{
+            src: 'img/browse/diy-browse-connect.jpeg',
+            label: 'DIY',
+            id: '-KXc-PKvsIOIXTjTComc',
+            description: 'Some words'
+          },{
+            src: 'img/browse/education-browse-connect.jpeg',
+            label: 'Education',
+            id: '-KXc-PKvsIOIXTjTComd',
+            description: 'Some words'
+          },{
+            src: 'img/browse/events-browse-connect.jpg',
+            label: 'Events',
+            id: '-KXc-PKvsIOIXTjTCome',
+            description: 'Some words'
+          },{
+            src: 'img/browse/fashion-browse-connect.jpeg',
+            label: 'Fashion',
+            id: '-KXc-PKyp2pTaXsaG6Ff'
+          },{
+            src: 'img/browse/food-browse-connect.jpeg',
+            label: 'Food & Drink',
+            id: '-KXc-PKzxbTiOJzK6j72'
+        }];
+
+        $scope.totalPost.together = $scope.totalPost.together.concat($scope.togetherImages);
+
+        $scope.uniteImages = [{
+          src: 'img/browse/games-browse-connect.jpeg',
+          label: 'Games',
+          id: '-KXc-PL0mQ1oYXeDiEyq',
+          description: 'Some words'
+        },{
+          src: 'img/browse/gardening-browse-connect.jpeg',
+          label: 'Gardening',
+          id: '-KXc-PL0mQ1oYXeDiEyr',
+          description: 'Some words'
+        },{
+          src: 'img/browse/health-browse-connect.jpg',
+          label: 'Health & Sports',
+          id: '-KXc-PL1IJeRKtEt1R70',
+          description: 'Some words'
+        },{
+          src: 'img/browse/music-browse-connect.jpg',
+          label: 'Music',
+          id: '-KXc-PL1IJeRKtEt1R71'
+        },{
+          src: 'img/browse/tech-browse-connect.png',
   				label: 'Technology',
   				id: '-KXc-PL3SLOgnBvXlR5j'
       }];
+
+      $scope.totalPost.unite = $scope.totalPost.unite.concat($scope.uniteImages);
+
+      $scope.leaderImages = [{
+  			src: 'img/browseLeader/animal-browse-lead.jpeg',
+  			label: 'Animals',
+  			id: '-KXc-PL6yz4ugqb4XxuH',
+        description: 'Some words'
+  		},{
+  			src: 'img/browseLeader/architecture-lead-browse.jpeg',
+  			label: 'Architecture',
+  			id: '-KXc-PL6yz4ugqb4XxuI',
+        description: 'Some words'
+  		},{
+  			src: 'img/browseLeader/art-lead-browse.jpg',
+  			label: 'Art',
+  			id: '-KXc-PL6yz4ugqb4XxuJ',
+        description: 'Some words'
+  		},{
+  			src: 'img/browseLeader/car-lead-browse.jpeg',
+  			label: 'Cars',
+  			id: '-KXc-PL6yz4ugqb4XxuK',
+        description: 'Some words'
+  		},{
+  			src: 'img/browseLeader/design-lead-browse.jpg',
+  			label: 'Design',
+  			id: '-KXc-PL6yz4ugqb4XxuL',
+        description: 'Some words'
+  		},{
+  			src: 'img/leader/diy-lead.jpeg',
+  			label: 'DIY',
+  			id: '-KXc-PL73JPkLGBGOhT0',
+        description: 'Some words'
+  	}];
+
+    $scope.totalPost.leader = $scope.totalPost.leader.concat($scope.leaderImages);
+
+    $scope.coachImages = [{
+      src: 'img/browseLeader/education-browse-lead.jpg',
+      label: 'Education',
+      id: '-KXc-PL9UBFedjtGjwym',
+      description: 'Some words'
+    },{
+      src: 'img/browseLeader/events-browse-lead.jpg',
+      label: 'Events',
+      id: '-KXc-PL9UBFedjtGjwyn',
+      description: 'Some words'
+    },{
+      src: 'img/browseLeader/fashion-browse-lead.jpg',
+      label: 'Fashion',
+      id: '-KXc-PL9UBFedjtGjwyo',
+      description: 'Some words'
+    },{
+      src: 'img/browseLeader/food-browse-lead.jpg',
+      label: 'Food & Drink',
+      id: '-KXc-PL9UBFedjtGjwyp',
+      description: 'Some words'
+    },{
+      src: 'img/browseLeader/game-browse-lead.jpg',
+      label: 'Games',
+      id: '-KXc-PLA0DrJOIW_0BOY',
+      description: 'Some words'
+  }];
+
+  $scope.totalPost.coach = $scope.totalPost.coach.concat($scope.coachImages);
+
+  $scope.mentorImages = [{
+    src: 'img/browseLeader/garden-browse-lead.jpg',
+    label: 'Gardening',
+    id: '-KXc-PLBtt6_xc6WZesE',
+    description: 'Some words'
+  },{
+    src: 'img/browseLeader/health-browse-lead.jpg',
+    label: 'Health & Sports',
+    id: '-KXc-PLBtt6_xc6WZesG',
+    description: 'Some words'
+  },{
+    src: 'img/browseLeader/music-browse-lead.jpg',
+    label: 'Music',
+    id: '-KXc-PLCBDqeU-66GvDx',
+    description: 'Some words'
+  },{
+    src: 'img/browseLeader/outdoors-browse-lead.jpg',
+    label: 'Outdoors',
+    id: '-KXc-PLCBDqeU-66GvDy',
+    description: 'Some words'
+  },{
+    src: 'img/browseLeader/tech-browse-lead.jpeg',
+    label: 'Technology',
+    id: '-KXc-PLCBDqeU-66GvDz',
+    description: 'Some words'
+}];
+
+$scope.totalPost.mentor = $scope.totalPost.mentor.concat($scope.mentorImages);
 
         $scope.goBack = function (ui_sref) {
             var currentView = $ionicHistory.currentView();
@@ -213,46 +490,22 @@ angular.module('module.view.news', [])
             } else {
                 $state.go(ui_sref);
             }
-        }
+        };
+
 
         $scope.createEvent = function () {
-          $scope.closeView();
             $state.go('tabs.event');
         };
 
         $scope.createPost = function () {
-            $scope.closeView();
             $state.go('tabs.regular');
         };
 
-        $scope.gotoExplore = function () {
-            $state.go('tabs.explore');
-
-        };
-
-        $scope.gotoMatch = function () {
-            $state.go('tabs.match');
-            $scope.$on("$ionicView.leave", function(event, data){
-              $scope.menuTemplate.hide();
-               // handle event
-            });
-        };
-
-        $scope.gotoAccount = function () {
-            $state.go('tabs.account');
-
-        };
-
-        $scope.gotoCoaches = function () {
-            $state.go('tabs.coach');
-        };
-
-
 
         $scope.toggleLike = function(postId, userId){
-          var posts = $scope.view.items;
+          var posts = $scope.totalPostItems;
           if(postId in posts){
-            var post = $scope.view.items[postId];
+            var post = $scope.totalPostItems[postId];
             var actionable = post.state.actionable;
             if(actionable){
               post.liked = !post.liked;
@@ -307,9 +560,9 @@ angular.module('module.view.news', [])
         };
 
         $scope.toggleCommit = function(postId, userId){
-          var posts = $scope.partnerPost.items;
+          var posts = $scope.totalPostItems;
           if(postId in posts){
-            var post = $scope.partnerPost.items[postId];
+            var post = $scope.totalPostItems[postId];
             var actionable = post.state.actionable;
             if(actionable){
               post.committed = !post.committed;
@@ -326,94 +579,21 @@ angular.module('module.view.news', [])
         };
 
 
-        $ionicSideMenuDelegate.canDragContent(false);
-
-        $scope.delete = function (id) {
-            return postService.delete(id);
-        };
-
-        $scope.update = function (data) {
-            return postService.update(data);
-        };
-
-        $scope.event = function () {
-            $scope.closeView();
-            $state.go('tabs.event');
-        };
-
-        $scope.limit = 10;
-        $scope.limitPartner = 10;
-
-        $scope.loadMore = function(){
-          if($scope.totalPost){
-            var max = $scope.totalPost.length;
-            if($scope.limit <  max){
-              $scope.moreToScroll = true;
-              if($scope.limit - max < 10 && $scope.limit - max > 0){
-                $scope.limit += Math.abs($scope.limit - max);
-                $scope.moreToScroll = true;
-                return;
-              }
-              $scope.limit += 10;
-            }else{
-              $scope.moreToScroll = false;
-            }
-          }
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
-
-        $scope.loadMorePartnerPost = function(){
-          if($scope.totalPost && $scope.partnerPost.itemsArr){
-            var max = $scope.partnerPost.itemsArr.length;
-            if($scope.limitPartner <  max){
-              $scope.moreToScroll = true;
-              if($scope.limitPartner - max < 10 && $scope.limitPartner - max > 0){
-                $scope.limitPartner += Math.abs($scope.limitPartner - max);
-                $scope.moreToScroll = false;
-                return;
-              }
-              $scope.limitPartner += 10;
-            }else{
-              $scope.moreToScroll = false;
-            }
-          }
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
-
         $scope.view = { type: 1 };
 
         $scope.onSwipeLeft = function () {
           $state.go('tabs.explore');
         }
 
-        $scope.getPhoto = function(){
-    			return interestService.getStablePost();
-    		};
-
-    		$scope.getPhoto().then(function(results) {
-    			var interests = [];
-    			for (key in results){
-    				interests.push({
-    					id: key,
-    					label: results[key].displayName
-    				});
-    			}
-    			$scope.photo = interests;
-    		});
-
-
          $scope.createEvent = function () {
-           $scope.closePopover();
            $state.go('event');
          }
 
          $scope.createPost = function () {
-           $scope.closePopover();
            $state.go('regular');
          }
 
          $scope.createGoal = function () {
-           $scope.closePopover();
            $state.go('create-plan');
          }
 

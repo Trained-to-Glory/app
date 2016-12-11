@@ -52,9 +52,9 @@
     </div>
 
       <!-- <div class = "button button-clear icon ion-ios-gear profile-settings" ui-sref="settings" style="width: 100%">Settings</div> -->
-      <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !follow, 'button-balanced ion-ios-undo-outline':follow }" ng-click="follow = !follow" style="display: block;position: relative;margin: 0 auto;width: 40%;border-radius: 50px;">
-          <span ng-if="!follow"> Friend</span>
-          <span ng-if="follow"> Friend</span>
+      <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !ones.partnered, 'button-balanced ion-ios-undo-outline':ones.partnered }" ng-click="togglePartner(profile.userId)" style="display: block;position: relative;margin: 0 auto;width: 40%;border-radius: 50px;margin-bottom: 20px;">
+          <span ng-if="!ones.partnered"> Friend</span>
+          <span ng-if="ones.partnered"> Friend</span>
       </button>
       <div ng-if = "ones.userDescription" style="text-align: center; margin-top: 20px;max-height: 100px;margin-bottom: 5px;margin-left: 30px;margin-right: 30px;line-height: 25px;">{{ ones.userDescription }}</div>
 

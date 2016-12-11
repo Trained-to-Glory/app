@@ -1,4 +1,4 @@
-<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false" hide-nav-bar="true">
+<ion-view view-title="Home" class="font-thin" style="background:#fafafc;margin-left: 0 !important" hide-nav-bar="true">
   <ion-nav-buttons side="right">
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;z-index: 999;" ui-sref="settings"></button>
     </ion-nav-buttons>
@@ -10,10 +10,12 @@
     </ion-floating-menu>
 
     <ion-content class="has-tabs-top">
+      <ion-refresher on-refresh="doRefresh()" icon="spiral"></ion-refresher>
       <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
         <ion-spinner icon="spiral"></ion-spinner>
       </div>
-      <div class="list card" ng-repeat="posts in totalPost | orderBy: 'created': true " on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">
+      <div ng-repeat="posts in (totalPost.photos | orderBy: 'created': true) track by $index ">
+      <div class="list card"  on-swipe-left="onSwipeLeft()" ng-if="posts.state.visible" style="box-shadow: none;margin-left:0;margin-right:0;">
           <div class="item item-image" ui-sref="post-detail({post:posts.key})" style="max-height: 500px;">
               <img ng-src="{{posts.photo}}" fallback-src = "img/grayBackground.jpg" />
             </div>
@@ -34,6 +36,128 @@
             {{commmentsNumber}} Comments
           </a>
         </div>
+        <!--connect-->
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 1" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 1" class = "item item-divider">Connect</div>
+        <ion-scroll direction="x" ng-if = "$index == 1" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div ui-sref="contacts({activity:connections.id, type: 'Connect'})" class="col item-image card" ng-repeat = "connections in totalPost.connect" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 4" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 4" class = "item item-divider">Connect</div>
+        <ion-scroll direction="x" ng-if = "$index == 4" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div ui-sref="contacts({activity:connections.id, type: 'Connect'})" class="col item-image card" ng-repeat = "connections in totalPost.together" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 7" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 7" class = "item item-divider">Connect</div>
+        <ion-scroll direction="x" ng-if = "$index == 7" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div ui-sref="contacts({activity:connections.id, type: 'Connect'})" class="col item-image card" ng-repeat = "connections in totalPost.unite" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+        <!--events-->
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 2 && posts.postType == 'Event'" ng-hide = "goalsLength == 0"  class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 2 && posts.postType == 'Event'" class = "item item-divider" ng-hide = "goalsLength == 0">Events</div>
+        <ion-scroll direction="x" ng-if = "$index == 2 && posts.postType == 'Event'" style="margin-bottom: 60px;" ng-hide = "goalsLength == 0">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div class="col item-image card" ng-repeat = "plans in totalPost.photos | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;max-height: 500px;">
+              <div  class = "multi-bg-outer-goals" ui-sref="post-detail({post:posts.key})" style="background-image: url({{plans.photo}});" fallback-src = "img/grayBackground.jpg" /></div>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{plans.owner}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{plans.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+        <!--public goals-->
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 2 && goalsPhoto" ng-hide = "goalsLength == 0"  class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 2 && goalsPhoto" class = "item item-divider" ng-hide = "goalsLength == 0">Goals</div>
+        <ion-scroll direction="x" ng-if = "$index == 2 && goalsPhoto" style="margin-bottom: 60px;" ng-hide = "goalsLength == 0">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div class="col item-image card" ng-repeat = "plans in totalPost.goals | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;max-height: 500px;">
+              <div  class = "multi-bg-outer-goals" ui-sref="plan-detail({plan:plans.key})" style="background-image: url({{plans.photo}});" fallback-src = "img/grayBackground.jpg" /></div>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{plans.owner}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{plans.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-hide = "focusLength == 0" ng-if = "$index == 5 && focusPhoto" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 5 && focusPhoto" class = "item item-divider" ng-hide = "focusLength == 0">Goals</div>
+        <ion-scroll direction="x" ng-if = "$index == 5 && focusPhoto" style="margin-bottom: 60px;" ng-hide = "focusLength == 0">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div class="col item-image card" ng-repeat = "plans in totalPost.focus | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;max-height: 500px;">
+              <div  class = "multi-bg-outer-goals" ui-sref="plan-detail({plan:plans.key})" style="background-image: url({{plans.photo}});" fallback-src = "img/grayBackground.jpg" /></div>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{plans.owner}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{plans.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 8 && finishPhoto" ng-hide = "finishLength == 0" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 8 && finishPhoto" class = "item item-divider" ng-hide = "finishLength == 0">Goals</div>
+        <ion-scroll direction="x" ng-if = "$index == 8 && finishPhoto" style="margin-bottom: 60px;" ng-hide = "finishLength == 0">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0">
+            <div class="col item-image card" ng-repeat = "plans in totalPost.finish | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;max-height: 500px;">
+              <div  class = "multi-bg-outer-goals" ui-sref="plan-detail({plan:plans.key})" style="background-image: url({{plans.photo}});" fallback-src = "img/grayBackground.jpg" /></div>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{plans.owner}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{plans.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+        <!--Leaders -->
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 3" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 3" class = "item item-divider">Leaders</div>
+        <ion-scroll direction="x" ng-if = "$index == 3" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0;">
+            <div ui-sref="contactLeader({activity:connections.id, type: 'Leaders'})" class="col item-image card" ng-repeat = "connections in totalPost.leader | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 6" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 6" class = "item item-divider">Leaders</div>
+        <ion-scroll direction="x" ng-if = "$index == 6" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0;">
+            <div ui-sref="contactLeader({activity:connections.id, type: 'Leaders'})" class="col item-image card" ng-repeat = "connections in totalPost.coach | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+
+        <div style="border: none;font-weight: 400;margin-top: 40px;font-size: 20px;color: #F10707 !important;" ng-if = "$index == 9" class = "item item-divider">Some text</div>
+        <div style="border: none;" ng-if = "$index == 9" class = "item item-divider">Leaders</div>
+        <ion-scroll direction="x" ng-if = "$index == 9" style="margin-bottom: 60px;">
+          <div class="row" style="width: 263vh;height: 325px;padding-top: 0;">
+            <div ui-sref="contactLeader({activity:connections.id, type: 'Leaders'})" class="col item-image card" ng-repeat = "connections in totalPost.mentor | limitTo: 5" style="padding: 0;margin-left: 2px;margin-right: 2px;">
+              <img ng-src="{{connections.src}}" fallback-src = "img/grayBackground.jpg" style="height: 72%;max-height: 187px;"/>
+                <p style="font-weight: 400 !important;margin-top: 5px;text-align: left;margin-left: 5px;color: black !important;">{{connections.label}}</p>
+                <p style="color:black !important;text-align: left;letter-spacing: 1.5px;font-size: 12px;margin-left: 5px;" class="font-thin">{{connections.description}}</p>
+            </div>
+          </div>
+        </ion-scroll>
+      </div>
+
         <!-- <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1px"></ion-infinite-scroll> -->
     </ion-content>
 </ion-view>

@@ -24,7 +24,7 @@ angular.module('module.view.post', [])
 			}
 
 			if($stateParams.post){
-				postService.get($stateParams.post).then(function(results) {
+				postService.getOnePosts($stateParams.post).then(function(results) {
 					var arr = [];
 					for(var key in results){
 						results[key].key = key;
@@ -59,8 +59,27 @@ angular.module('module.view.post', [])
            })(id, data.items[id]);
           }
 					$scope.post = results;
+					console.log(results);
 				});
 			}
+
+			if($stateParams.plan){
+				postService.getOnePlan($stateParams.plan).then(function(results) {
+					var arr = [];
+					for(var key in results){
+						results[key].key = key;
+						arr.push(results[key]);
+					}
+					var data = {
+						items: results,
+						itemsArr: arr
+					}
+					$scope.plan = results;
+					console.log(results);
+				});
+			}
+
+		console.log($stateParams.plan);
 
 		if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
       	$stateParams.post === null ? $scope.post = postService.get() : $scope.post = $stateParams.post;
@@ -90,6 +109,18 @@ angular.module('module.view.post', [])
                }
              });
         };
+
+				$scope.formData = {};
+				//type, category, categoryId, itemId, userId, comment,
+				$scope.createComment = function (comment) {
+						//create a location in the table
+						postService.createComment({comment: comment, postId: $stateParams.post})
+						.then(function(results){
+							$scope.comments.push(results);
+							$scope.formData.comment = '';
+							$scope.$apply();
+						});
+				};
 
         $scope.gotoFriend = function(){
         	$state.go('tabs.friend');

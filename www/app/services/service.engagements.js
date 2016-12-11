@@ -92,10 +92,9 @@ angular.module('service.engagements', [])
                    var len = exists instanceof Array ? exists.length : 0;
                    var final = {};
                    var obj = {
-                      // "userPhoto": $localStorage.account.userPhoto,
-                      // "userName": $localStorage.account.userName,
+                      "userPhoto": $localStorage.account.userPhoto,
+                      "userName": $localStorage.account.userName,
                        "created": firebase.database.ServerValue.TIMESTAMP,
-                       "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
                            "actionable": typeof(actionable) !== 'undefined'? (actionable) : true,
                            "visible": typeof(visible) !== 'undefined'? (visible) : true,
@@ -182,10 +181,9 @@ angular.module('service.engagements', [])
                    }
                    var final = {};
                    final[itemId] = {
-                      //  "userPhoto": $localStorage.account.userPhoto,
-                      //  "userName": $localStorage.account.userName,
+                      "userPhoto": $localStorage.account.userPhoto,
+                      "userName": $localStorage.account.userName,
                        "created": prev.created,
-                       "lastModified": firebase.database.ServerValue.TIMESTAMP,
                        "state": {
                            "actionable": typeof(actionable)!== 'undefined' ? actionable : prev.state.actionable,
                            "visible": typeof(visible) !== 'undefined'? visible : prev.state.visible,
@@ -294,6 +292,50 @@ angular.module('service.engagements', [])
             });
         };
 
+        this.completeSelected = function (data) {
+            var type = 'engagementGoals';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, true);
+        };
+
+        this.completeUnselected = function (data) {
+            var type = 'engagementGoals';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
+        };
+
+        this.completed = function (data) {
+            var type = 'engagementGoals';
+            var data = get(type, data.category, data.categoryId, data.itemId);
+            //check if engagement item is already in hash
+            return data.then(function(result){
+                return (result && result.state)?result.state.active: false;
+            });
+        };
+
+        this.numberCompleted = function(data){
+          var type = 'engagementGoals';
+          var data = get(type, data.category, data.categoryId);
+          //check if engagement item is already in hash
+          return data.then(function(result){
+              return result;
+          });
+        };
+
+        this.totalCompleted = function(data){
+          return this.numberCompleted(data).then(function(result){
+            var count = 0;
+            if(result){
+              for(var key in result){
+                ++count;
+              }
+            }
+            return count;
+          },function(){
+            return 0;
+          });
+        };
+
         this.likes = function(data){
           var type = 'engagementLikes';
           var data = get(type, data.category, data.categoryId);
@@ -315,6 +357,12 @@ angular.module('service.engagements', [])
           },function(){
             return 0;
           });
+        };
+
+        this.unlike = function (data) {
+            var type = 'engagementLikes';
+            //check if engagement item is already in hash
+            return updateEngagement(type, data.category, data.categoryId, data.userId, false);
         };
 
         this.like = function (data) {
@@ -370,7 +418,7 @@ angular.module('service.engagements', [])
 
         this.partners = function(data){
           var type = 'userPartners';
-          var data = get(type, data.category, data.categoryId);
+          var data = get(type, data.category, data.categoryId, data.userId);
           //check if engagement item is already in hash
           return data.then(function(result){
               return result;

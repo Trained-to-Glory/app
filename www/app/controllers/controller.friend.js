@@ -89,16 +89,17 @@ angular.module('module.view.friend', [])
 			var ones = {
 					items: results
 			};
-			delete results[$localStorage.account.userId];
 			 for(var id in ones.items){
 			  //check to see if there is a like on this post
 		  	(function(id, items){
-			 	 engagementService.partnered({category:'partners',categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+			 	 engagementService.partnered({category:'partners',categoryId:id, userId: $stateParams.contact}).then(function(partnered){
 					 items.committed = partnered;
+					 console.log(partnered);
 			 	 });
 			  })(id, ones.items[id]);
 			 }
 			$scope.ones = ones.items;
+			console.log(ones.items.partnered);
 			console.log($scope.ones);
 			$scope.$apply();
 				//check to see if there is a like on this post
@@ -170,16 +171,18 @@ angular.module('module.view.friend', [])
 					items: results,
 					itemsArr: arr
 			};
+
 			for(var id in contacts.items){
 			 //check to see if there is a like on this post
-			 (function(id){
-				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
-					contacts.items[id].partnered = partnered;
-				});
-			})(id,contacts.items);
+			 (function(id, items){
+				 engagementService.partnered({category:'partners', categoryId:$stateParams.contact, userId:id }).then(function(partnered){
+	 				items.partnered = partnered;
+	 			});
+			})(id, contacts.items[id]);
 			}
+
 			$scope.contacts = contacts;
-			$scope.$apply();
+			console.log(contacts);
 		});
 
 

@@ -15553,8 +15553,8 @@ a.subdued {
     line-height: 44px; }
     .bar .title.title-left {
       text-align: left;
-      font-weight: 300;
-      color: #3f3f3f;
+      font-weight: 400 !important;
+      color: gray;
     	font-weight:300;
     	margin:0;
       margin-left: 20px;
@@ -21611,9 +21611,6 @@ p {
 .card.image .item.item-image {
   background: #26ba9a;
   background-blend-mode: darken; }
-  .card.image .item.item-image img {
-    -webkit-filter: brightness(70%) grayscale(20%);
-    filter: brightness(70%) grayscale(20%); }
   .card.image .item.item-image .interact {
     position: absolute;
     top: 10px;
@@ -22889,7 +22886,7 @@ ui-multi-range {
 }
 
 .ng-invalid {
-    color: red;
+    color: black;
 }
 
 .item.item-reminders
@@ -23449,6 +23446,39 @@ h2.lead
     overflow: hidden;
 }
 
+.multi-bg-outer-goals {
+    /* position: relative; */
+    /* background-color: rgba(199, 199, 199, 0.7); */
+    height: 72%;
+    -webkit-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* z-index: -2; */
+}
+
+.toggle.toggle-assertive input:checked + .track {
+  border-color: #00635a !important;
+    background-color: #00635a !important;
+}
+.loading-container .loading {
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ddd !important;
+/*  background-color: rgba(0, 0, 0, 0.7); */
+  color: #fff;
+  text-align: center;
+  text-overflow: ellipsis;
+  font-size: 15px; }
+  .loading h1, .loading h2, .loading h3, .loading h4, .loading h5, .loading h6 {
+    color: #fff; }
+
+.ion-ios-checkmark-empty {
+  font-size: 24px;
+}
+
 #floating-menu li span.label {
   color: black !important;
 }
@@ -23587,7 +23617,7 @@ h2.lead
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(102, 102, 102, 0.43);
+    background-color: transparent;
     z-index: -1;
     opacity: 0.6;
 }
@@ -23756,10 +23786,6 @@ h2.lead
   	font-size:16px;
   	}
 
-    .scroll {
-      height: 100%;
-    }
-
     .search-people::-webkit-input-placeholder {
     color: gray !important;
     }
@@ -23802,26 +23828,8 @@ h2.lead
     	font-size:16px;
     	}
 
+
       .image-loader-container {
-        margin: 9px;
-        max-width: 81px;
-        max-height: 81px;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        position: absolute;
-        background-color: #e5e5e5;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-content: stretch;
-        align-items: center;
-      }
-
-      /*.image-loader-container {
         margin: 9px;
         max-width:414px;
         max-height: 500px;
@@ -23836,7 +23844,7 @@ h2.lead
         justify-content: center;
         align-content: stretch;
         align-items: center;
-      }*/
+      }
 
 .text-color.sentPlans {
     color: green !important;
@@ -24600,7 +24608,6 @@ border-style: solid;
 }
 .logo {
     text-align: center;
-    padding-top: 80px;
     margin-bottom: 30px;
 }
 .bar-goals {
@@ -24719,8 +24726,8 @@ color: white;
 }
 
 .bg-color.login-flow {
-    background: linear-gradient(rgba(135, 103, 211, 0.8), rgba(21, 21, 21, 0.8));
-    background: -webkit-linear-gradient(rgba(150, 147, 147, 0.65), rgba(0, 0, 0, 0.39));
+    background: linear-gradient(rgba(150, 147, 147, 0.26), rgba(0, 0, 0, 0));
+    background: -webkit-linear-gradient(rgba(150, 147, 147, 0.26), rgba(0, 0, 0, 0));
     height: 100%;
     width: 100%;
 }
@@ -25099,30 +25106,4 @@ ion-spinner.spinner-on-load {
     transform: translateY(-490px); -webkit-transform: translateY(-490px);
     transition-delay: 180ms; -webkit-transition-delay: 180ms;
     background-color: #F10707 !important;
-}
-;/* Styling for the ngProgress itself */
-#ngProgress {
-    margin: 0;
-    padding: 0;
-    z-index: 99998;
-    background-color: green;
-    color: green;
-    height: 2px;
-    opacity: 0;
-
-    /* Add CSS3 styles for transition smoothing */
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-}
-
-/* Styling for the ngProgress-container */
-#ngProgress-container {
-    margin: 0;
-    padding: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99999;
 }

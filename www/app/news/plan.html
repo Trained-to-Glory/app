@@ -1,0 +1,33 @@
+<ion-view hide-nav-bar = "true">
+
+  <ion-nav-bar>
+    <ion-nav-back-button style="display: block">
+    </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
+    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
+      <i class="icon ion-ios-arrow-back"></i>
+      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
+    </button>
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Goal</div>
+  </ion-header-bar>
+
+    <ion-content class="has-header" style="top: 0;" padding="false">
+      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;">
+        <div class="item item-image" style="max-height: 500px;">
+            <img ng-src="{{plan.photo}}" >
+          </div>
+        <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
+          <img ng-src="{{plan.avatar}}" style="background-color: transparent" fallback-src="img/profile-picture.png">
+          <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
+          <h2 class = "lead" style="font-weight: 400 !important;">{{plan.owner}}</h2>
+          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{plan.description}}</p>
+          <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{plan.location}}</p>
+          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{plan.postType}}</p>
+          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{plan.created}}" class="font-thin"></p>
+        </div>
+      </div>
+
+    </ion-content>
+</ion-view>

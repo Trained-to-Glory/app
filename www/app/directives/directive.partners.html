@@ -1,0 +1,9 @@
+<div class="item item-avatar item-button-right followers" style = "border: none">
+  <img ng-src="{{value.userPhoto}}" fallback-src="img/profile-picture.png" ui-sref="friend({contact:value.userId})" >
+  <h2 class = "lead" style="font-weight: 400 !important;" ui-sref="friend({contact:value.userId})" >{{value.userName}}</h2>
+  <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !value.partnered, 'button-balanced ion-ios-undo-outline':value.partnered }"
+    ng-click="togglePartner(value.userId)">
+      <span ng-if="!value.partnered"> Friend</span>
+      <span ng-if="value.partnered"> Friend</span>
+  </button>
+</div>

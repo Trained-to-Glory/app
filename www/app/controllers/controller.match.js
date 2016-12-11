@@ -17,15 +17,15 @@ angular.module('module.view.match', [])
 						var long = position.coords.longitude;
 						// $localStorage.account.lat = lat;
 						// $localStorage.account.long = long;
-					return	$localStorage.account.near = {lat: lat, long: long};
+					return	$localStorage.account.location = {lat: lat, long: long};
 					},function(err){
 					});
 	  });
 
 		var ref = firebase.database().ref('accounts');
 		ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
-			firebase.database().ref('/accounts/' + snapshot.key ).update({
-				location: $localStorage.account.near
+			firebase.database().ref('/accounts/' + snapshot.key).update({
+				location: $localStorage.account.location
 			});
 		});
 

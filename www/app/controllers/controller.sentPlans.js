@@ -1,6 +1,11 @@
 angular.module('module.view.sentPlans', [])
-	.controller('sentPlansCtrl', ['$scope','$rootScope','$state','$timeout', 'ngProgressFactory','$localStorage','$stateParams','$ionicScrollDelegate','$ionicNavBarDelegate','$log','usersService', '$ionicPopover','appService','postService', 'engagementService','$ionicScrollDelegate',
-		function($scope,$rootScope,$state,$timeout, ngProgressFactory,$localStorage,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+	.controller('sentPlansCtrl', ['$scope','$rootScope','$state','$timeout', 'Popup', 'Utils','$localStorage','$stateParams','$ionicScrollDelegate','$ionicNavBarDelegate','$log','usersService', '$ionicPopover','appService','postService', 'engagementService','$ionicScrollDelegate',
+		function($scope,$rootScope,$state,$timeout, Popup,Utils,$localStorage,$stateParams,$ionicScrollDelegate,$ionicNavBarDelegate,$log,usersService, $ionicPopover,appService,postService, engagementService,$ionicScrollDelegate) {
+			$scope.lastId;
+			$scope.noMoreItemsAvailable = false;
+			$scope.views = [];
+
+
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -19,18 +24,9 @@ angular.module('module.view.sentPlans', [])
                     }
                 }
 
-
-        $scope.contactPopover = $ionicPopover.fromTemplate(contactTemplate, {
-                    scope: $scope
-                });
-
 								$scope.delete = function (id) {
 				            return postService.deletePlans(id);
 				        };
-
-								$scope.plansPopover = $ionicPopover.fromTemplate(plansTemplate, {
-										scope: $scope
-								});
 
 								$scope.createPlan = function () {
 										$scope.closePlan();
@@ -67,22 +63,19 @@ angular.module('module.view.sentPlans', [])
 				            return false;
 				        };
 
-								$scope.isChecked = false;
-									$scope.selected = [];
-									$scope.totalChecked = 0;
-									$scope.checkedOrNot = function (item, index, totalChecklist) {
-											if (item.isChecked) {
-													$scope.selected.push(item);
-													$scope.totalChecked++;
-													engagementService.engagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
-											} else {
-													var _index = $scope.selected.indexOf(item);
-													$scope.selected.splice(_index, 1);
-													$scope.totalChecked--;
-													engagementService.disEngagedActivities({category:'plans', categoryId:item.id, userId:$localStorage.account.userId});
-											}
-											$scope.progress($scope.totalChecked, totalChecklist);
-									};
+									$scope.isfakeChecked = false;
+										$scope.fakeSelected = [];
+										$scope.totalfakeChecked = 0;
+										$scope.fakedCheckedOrNot = function (item, index, fakeChecklist) {
+												if (item.isfakeChecked) {
+														$scope.fakeSelected.push(item);
+														$scope.totalfakeChecked++;
+												} else {
+														var _index = $scope.selected.indexOf(item);
+														$scope.fakeSelected.splice(_index, 1);
+														$scope.totalfakeChecked--;
+												}
+										};
 
 									usersService.getAllUsers($localStorage.account.userId).then(function(results){
 										var arr = [];
@@ -109,96 +102,256 @@ angular.module('module.view.sentPlans', [])
 									});
 
 								$scope.loading = true;
-								usersService.getUserPlans($localStorage.account.userId).then(function(results) {
-									$scope.loading = false;
-				          //create a local object so we can create the datastructure we want
-				          var arr = [];
-				          for(var key in results){
-				            results[key].key = key;
-				            arr.push(results[key]);
-				          }
-				          var view = {
-				              type: 'item',
-				              items: results,
-				              itemsArr: arr
-				          };
-				          for(var id in view.items){
-				           //check to see if there is a like on this post
-				           (function(id, items){
-				             engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
-				              items.liked = liked;
-				             });
-				             engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
-				               items.committed = committed;
-				             });
-				             engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
-				               items.totalLikes = totalLikes;
-				             });
-				             engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
-				               items.totalCommits = totalCommits;
-				             });
-				           })(id, view.items[id]);
-				          }
-				          //make it available to the directive to officially show/hide, toggle
-				          $scope.view = view;
-									$scope.profile.plans = view.itemsArr;
-									$scope.progressbar = ngProgressFactory.createInstance();
-									 $scope.progressbar.setHeight('5px');
-									 $scope.progressbar.setColor('green');
-									 $scope.progressbar.set(0);
 
-									var newParent = document.querySelector('.progress-bar');
-									$scope.progressbar.setParent(newParent);
-									$scope.$apply();
-				        });
+								var plans = firebase.database().ref(['accounts', $localStorage.account.userId , 'plans'].join('/'));
+								if ($scope.lastId == undefined) {
+									plans.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+										$scope.loading = false;
+										var currentObj = snapshot.val();
+										var array = $.map(currentObj, function(value, index) {
+												return [value];
+										});
 
-								$scope.see = { type: 1 };
+										var arr = [];
+										 for(var key in currentObj){
+												currentObj[key].key = key;
+												arr.push(currentObj[key]);
+											}
 
-								$scope.progress = function(progress, total){
-									var percent = total > 0 ? (progress/total) * 100: 0;
-									$scope.progressbar.set(percent);
-									if (percent === 100) {
-										$scope.progressbar.complete();
-										$scope.doneBar = { type: 1 };
-									}
+											var view = {
+												itemsArr: arr,
+												items: currentObj
+											}
+
+											for(var id in view.items){
+											 //check to see if there is a like on this post
+											 (function(id, items){
+												 engagementService.completed({category:'plan', categoryId:id, userId: $localStorage.account.userId}).then(function(completed){
+													items.completed = completed;
+												 });
+												 engagementService.totalCompleted({category:'plan', categoryId: id}).then(function(totalCompleted){
+													 items.totalCompleted = totalCompleted;
+												 });
+											 })(id, view.items[id]);
+											}
+
+											$scope.view = view.itemsArr;
+											$scope.viewLength = view.itemsArr.length;
+											$scope.lastId = $scope.view[$scope.view.length - 1].key;
+											console.log(view.items);
+
+											if ( array.length != 20 ) {
+												 $scope.noMoreItemsAvailable = true;
+											}
+										$scope.$broadcast('scroll.infiniteScrollComplete');
+										$scope.$apply();
+									});
 								};
-								$scope.limit = 10;
+
+								$scope.isChecked = false;
+									$scope.selected = [];
+									$scope.totalChecked = 0;
+									$scope.selectedCount;
+									$scope.checkedOrNot = function (item, index, totalChecklist, pushKey) {
+										console.log(arguments);
+										var arr = [];
+										for(var key in item){
+											 item[key].key = key;
+											 arr.push(item[key]);
+										 }
+
+											if (item.isChecked) {
+													$scope.selected.push(item);
+													$scope.totalChecked++;
+
+													var planCount = firebase.database().ref(['accounts', $localStorage.account.userId , 'plans' , pushKey, 'checklist'].join('/'));
+														planCount.on("value", function(snapshot) {
+															var currentObj = snapshot.val();
+															$scope.selectedCount = currentObj.length;
+														});
+
+													engagementService.completeSelected({category:'plans', categoryId:pushKey, userId:index});
+											} else {
+													var _index = $scope.selected.indexOf(item);
+													$scope.selected.splice(_index, 1);
+													$scope.totalChecked--;
+													engagementService.completeUnselected({category:'plans', categoryId:pushKey, userId:index});
+											}
+											$scope.complete = $scope.totalChecked - 1;
+											if ($scope.totalChecked == $scope.selectedCount) {
+												Utils.message(Popup.successIcon, Popup.success);
+												$scope.complete = true;
+												console.log('here');
+											} else {
+												$scope.complete = false;
+												console.log('false');
+											}
+									};
 
 								$scope.loadMore = function(){
-									if($scope.view && $scope.view.itemsArr){
-										var max = $scope.view.itemsArr.length;
-										if($scope.limit <  max){
-											$scope.moreToScroll = true;
-											if($scope.limit - max < 10 && $scope.limit - max > 0){
-												$scope.limit += Math.abs($scope.limit - max);
-												$scope.moreToScroll = false;
-												return;
-											}
-											$scope.limit += 10;
-										}else{
-											$scope.moreToScroll = false;
-										}
+									$scope.loading = false;
+									var plans = firebase.database().ref(['accounts', $localStorage.account.userId , 'plans'].join('/'));
+									if ($scope.lastId == undefined) {
+										plans.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+											var currentObj = snapshot.val();
+											var array = $.map(currentObj, function(value, index) {
+													return [value];
+											});
+
+											var arr = [];
+											 for(var key in currentObj){
+													currentObj[key].key = key;
+													arr.push(currentObj[key]);
+												}
+
+												var view = {
+													itemsArr: arr,
+													items: currentObj
+												}
+
+												for(var id in view.items){
+												 //check to see if there is a like on this post
+												 (function(id, items){
+													 engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+														items.liked = liked;
+													 });
+													 engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+														 items.committed = committed;
+													 });
+													 engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+														 items.totalLikes = totalLikes;
+													 });
+													 engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+														 items.totalCommits = totalCommits;
+													 });
+												 })(id, view.items[id]);
+												}
+
+												console.log(view.itemsArr);
+												console.log($scope.views);
+
+												$scope.views = $scope.views.concat(view.itemsArr);
+												$scope.lastId = $scope.views[$scope.views.length - 1].key;
+
+												if ( array.length != 20 ) {
+													 $scope.noMoreItemsAvailable = true;
+												}
+											$scope.$broadcast('scroll.infiniteScrollComplete');
+											$scope.$apply();
+										});
+									}else{
+										plans.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+											var currentObj = snapshot.val();
+											var array = $.map(currentObj, function(value, index) {
+													return [value];
+											});
+											var arr = [];
+											 for(var key in currentObj){
+													currentObj[key].key = key;
+													arr.push(currentObj[key]);
+												}
+												arr.shift();
+												var view = {
+													itemsArr: arr,
+													items: currentObj
+												}
+
+												for(var id in view.items){
+												 //check to see if there is a like on this post
+												 (function(id, items){
+													 engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+														items.liked = liked;
+													 });
+													 engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+														 items.committed = committed;
+													 });
+													 engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+														 items.totalLikes = totalLikes;
+													 });
+													 engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+														 items.totalCommits = totalCommits;
+													 });
+												 })(id, view.items[id]);
+												}
+
+												$scope.view = $scope.view.concat(view.itemsArr);
+												$scope.lastId = $scope.view[$scope.view.length - 1].key;
+
+												if ( array.length != 20 ) {
+													 $scope.noMoreItemsAvailable = true;
+												}
+											$scope.$broadcast('scroll.infiniteScrollComplete');
+											$scope.$apply();
+										});
 									}
-									$scope.$broadcast('scroll.infiniteScrollComplete');
 								};
 
+								$scope.fakeGoals = [{
+					        words: 'Share with your friends'
+								},{
+					        words: 'Create your first post'
+								},{
+									words: 'Connect through your interests'
+					    }];
 
-							 $scope.closePopover = function($event) {
-		              $scope.newsPopover.hide();
-		           };
+
+								$scope.doRefresh = function (){
+									var plans = firebase.database().ref(['accounts', $localStorage.account.userId , 'plans'].join('/'));
+									plans.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+										var currentObj = snapshot.val();
+										var array = $.map(currentObj, function(value, index) {
+												return [value];
+										});
+										var arr = [];
+										 for(var key in currentObj){
+												currentObj[key].key = key;
+												arr.push(currentObj[key]);
+											}
+											arr.shift();
+											var view = {
+												itemsArr: arr,
+												items: currentObj
+											}
+
+											for(var id in view.items){
+											 //check to see if there is a like on this post
+											 (function(id, items){
+												 engagementService.liked({category:'post', categoryId:id, userId: $localStorage.account.userId}).then(function(liked){
+													items.liked = liked;
+												 });
+												 engagementService.committed({category:'post',categoryId:id, userId: $localStorage.account.userId}).then(function(committed){
+													 items.committed = committed;
+												 });
+												 engagementService.totalLikes({category:'post', categoryId: id}).then(function(totalLikes){
+													 items.totalLikes = totalLikes;
+												 });
+												 engagementService.totalCommits({category:'post', categoryId: id}).then(function(totalCommits){
+													 items.totalCommits = totalCommits;
+												 });
+											 })(id, view.items[id]);
+											}
+
+
+											$scope.view = view.itemsArr.concat($scope.view);
+											$scope.lastId = $scope.view[$scope.view.length - 1].key;
+
+										$scope.$broadcast('scroll.refreshComplete');
+										$scope.$apply();
+									});
+								};
+								$scope.see = { type: 1 };
+
+
 
 							 $scope.createEvent = function () {
-			           $scope.closePopover();
 			           $state.go('event');
 			         }
 
 			         $scope.createPost = function () {
-			           $scope.closePopover();
 			           $state.go('regular');
 			         }
 
 			         $scope.createGoal = function () {
-			           $scope.closePopover();
 			           $state.go('create-plan');
 			         }
 

@@ -5,7 +5,8 @@ module.exports = function(grunt) {
     var config = {
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
-        js_files: ['www/lib/angular/angular.js',
+        js_files: [
+        'www/lib/angular/angular.js',
         'www/lib/jquery/dist/jquery.js',
         'www/lib/ionic/js/ionic.bundle.js',
         'www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
@@ -17,21 +18,19 @@ module.exports = function(grunt) {
        'www/lib/ng-lodash/build/ng-lodash.js',
        'www/lib/ion-floating-menu/dist/ion-floating-menu.js',
        'www/lib/ngstorage/ngStorage.js',
-       'www/lib/ionic-scroll-sista/dist/ionic.scroll.sista.js',
-       'www/lib/ngprogress/build/ngprogress.js',
-       'www/lib/angular-img-fallback/angular.dcb-img-fallback.js',
-       'www/lib/firebase-util/dist/firebase-util.js',
-       'www/lib/ngCordova/dist/ng-cordova.js',
-       'www/app/*.js',
-       'www/app/services/service.interest.js',
-        'www/app/services/service.post.js',
-        //users is the broken file
-        'www/app/services/service.users.js',
-       'www/app/services/service.appointments.js',
-        'www/app/services/service.engagements.js',
-       'www/app/controllers/*.js',
-       'www/app/core/*.js',
-       'www/app/directives/*.js',
+       'www/lib/angular-img-fallback/angular.dcb-img-fallback.min.js',
+        'www/lib/ngCordova/dist/ng-cordova.js',
+        'www/app/services/service.interest.js',
+         'www/app/services/service.post.js',
+      //   //users is the broken file
+         'www/app/services/service.users.js',
+        'www/app/services/service.appointments.js',
+         'www/app/services/service.engagements.js',
+         'www/app/controllers/*.js',
+         'www/app/core/*.js',
+         'www/app/directives/directive.checklist.js',
+         'www/app/directives/directive.partners.js',
+         'www/app/*.js'
       //  'www/app/services/*.js',
        //Second Half
        //'www/app/**/*.js',
@@ -42,8 +41,7 @@ module.exports = function(grunt) {
         'www/css/design.css',
         'www/css/match.css',
         'www/css/feed.css',
-        'www/lib/ion-floating-menu/dist/ion-floating-menu.css',
-        'www/lib/ngprogress/ngProgress.css'],
+        'www/lib/ion-floating-menu/dist/ion-floating-menu.css'],
         concat: {
           options: {
             separator: ';',
@@ -74,7 +72,7 @@ module.exports = function(grunt) {
                   transform: function (filePath) {
                       filePath = filePath.replace('/www/', '');
                       var isCss = filePath.indexOf('.css') > -1;
-                      return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
+                      return isCss ? '<link href="dist/trained-to-glory-app.min.css" rel="stylesheet"/>': '<script src="dist/trained-to-glory-app.min.js"></script>';
                   }
 
                 }
@@ -87,7 +85,7 @@ module.exports = function(grunt) {
                    transform: function (filePath) {
                        filePath = filePath.replace('/www/', '');
                        var isCss = filePath.indexOf('.css') > -1;
-                       return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
+                       return isCss ? '<link href="dist/trained-to-glory-app.min.css" rel="stylesheet"/>': '<script src="dist/trained-to-glory-app.min.js"></script>';
                    },
                      ignorePath:[
                          'www/'
@@ -124,7 +122,7 @@ module.exports = function(grunt) {
               options: {
                 '-W015': true
               },
-              src: 'www/app/services/service.users.js',
+              src: 'www/app/directives/directive.partners.js',
               filter: 'isFile'
             }
           }

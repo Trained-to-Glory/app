@@ -20,7 +20,7 @@ angular.module('module.view.login', [])
       Utils.show();
       firebase.database().ref('accounts').orderByChild('userName').equalTo(user.userName).once('value').then(function(accounts) {
         if (accounts.exists()) {
-          Utils.message(Popup.errorIcon, Popup.userNameAlreadyExists);
+          Utils.message(Popup.errorIcon,Popup.emailAlreadyExists, Popup.userNameAlreadyExists);
         } else {
           //Create Firebase account.
           firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -31,6 +31,7 @@ angular.module('module.view.login', [])
                  fullName: user.fullName,
                  userPhoto: ttgLogo,
                  backUpPhoto: ttgLogo,
+                 email: user.email,
                  status: user.person || user.leader,
                  userName: user.userName,
                  userId: firebase.auth().currentUser.uid,

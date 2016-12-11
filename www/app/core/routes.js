@@ -2,6 +2,7 @@ angular.module('full_starter.routes', [])
   .constant('Popup', {
     delay: 3000, //How long the popup message should show before disappearing (in milliseconds -> 3000 = 3 seconds).
     successIcon: "ion-happy-outline",
+    success: "Great job, keep up the great work.",
     errorIcon: "ion-sad-outline",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
     emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email and try again.",
@@ -29,6 +30,9 @@ angular.module('full_starter.routes', [])
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("left");
     $ionicConfigProvider.tabs.position("top");
+    if (!ionic.Platform.isIOS()) {
+    $ionicConfigProvider.scrolling.jsScrolling(false);
+  }
 
     calendarConfig.titleFormats.week = 'MMMM';
     calendarConfig.dateFormatter = 'moment';
@@ -131,6 +135,13 @@ angular.module('full_starter.routes', [])
         controller: 'postCtrl'
       })
 
+      .state('plan-detail', {
+        url: '/plan-detail',
+        params: { plan: null, actionable: null },
+        templateUrl: 'app/news/plan.html',
+        controller: 'postCtrl'
+      })
+
       .state('comments', {
         url: '/comments',
         params: { post: null },
@@ -159,8 +170,15 @@ angular.module('full_starter.routes', [])
 
       .state('contacts', {
         url: '/contacts',
-        params: {activity: null},
+        params: {activity: null, type: null},
         templateUrl: 'app/dashboard/contacts.html',
+        controller: 'contactsCtrl'
+      })
+
+      .state('contactLeader', {
+        url: '/contactLeader',
+        params: {activity: null, type: null},
+        templateUrl: 'app/dashboard/contactLeader.html',
         controller: 'contactsCtrl'
       })
 

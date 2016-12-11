@@ -8,9 +8,10 @@
         </div>
     </ion-header-bar>
 
-  <ion-content class="has-header">
-    <div class="event-form">
-        <div class="list edit padding-horizontal padding-vertical" style="padding:0">
+  <ion-content class="has-header" style="top: 44px !important;">
+    <div class="event-form" style="height: 283px">
+      <div class="list edit padding-horizontal padding-vertical" style="padding:0;height: 283px">
+        <div style="height: 283px">
           <label class="item item-input event__input" ng-click="uploadEventPhoto()" ng-if = "view.type === 1">
             <div class="card image" style="background:transparent !important; box-shadow:none;margin: 0">
                   <div class="item item-image" ng-if = "view.type === 1">
@@ -21,6 +22,8 @@
                 <i class="icon ion-ios-camera" style="color: black;font-size: 24px;margin-top:1px"></i>
               </a>
           </label>
+        </div>
+      </div>
 
           <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin-top: 0;margin: 0;padding: 0;" ng-click="uploadEventPhoto()" ng-if="view.type === 2">
             <div class="item item-image" style="max-height: 500px;">

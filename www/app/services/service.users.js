@@ -51,18 +51,22 @@ angular.module('service.users', [])
 
    this.getPartnerPosts = function (userId) {
        var myPartnersPromise = firebase.database().ref(['accounts', userId , 'userPartners', 'partners', userId].join('/'));
-       return myPartnersPromise.once('value').then(function (snapshot) {
+          return myPartnersPromise.orderByKey().limitToFirst(20).once("value").then(function(snapshot) {
              var obj = {};
              var myPartners = snapshot.val();
+             console.log(myPartners);
              if (myPartners) {
                 var accountsPromise = firebase.database().ref(['accounts'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
                   var accounts = snapshot.val();
+                  console.log(accounts);
                   var key;
                   if(accounts){
                     for(key in myPartners){
                       obj[key] = accounts[key].posts;
+                      //Goes back to the account table and adds posts table to the id that matches
                     }
+                    console.log(obj[key]);
                     return obj[key];
                   }
                   return obj[key];
@@ -135,9 +139,10 @@ angular.module('service.users', [])
              var obj = {};
              var myPosts = snapshot.val();
              if (myPosts) {
-                var postsPromise = firebase.database().ref('posts');
-                return postsPromise.once('value').then(function(snapshot){
+                var postsPromise = firebase.database().ref(['posts'].join('/'));
+                posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
                   var posts = snapshot.val();
+                  console.log(posts);
                   if(posts){
                     for(var key in myPosts){
                       obj[key] = posts[key];

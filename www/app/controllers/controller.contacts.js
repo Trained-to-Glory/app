@@ -80,21 +80,71 @@ angular.module('module.view.contacts', [])
 
         };
 
+				$scope.connectType = $stateParams.type;
+				console.log($scope.connectType);
 				$scope.waiting = true;
+
+				if($stateParams.type == 'Connect'){
 				interestService.getInterestUsers($stateParams.activity).then(function(results){
 							$scope.waiting = false;
 							  $scope.myLocation = $localStorage.account.near;
 								delete results[$localStorage.account.userId];
 								$scope.users = results;
+								console.log(results);
+								var array = $.map(results, function(value, index) {
+	                  return [value];
+	              });
+
+								var users = {
+										items: results
+								};
+
+								for(var id in users.items){
+								 //check to see if there is a like on this post
+								 (function(id){
+									 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+										users.items[id].partnered = partnered;
+									});
+								})(id,users.items);
+								}
+
+								$scope.usersArr = array;
+								console.log(array);
+								$scope.usersLength = array.length;
 								$scope.$apply();
 						});
+				};
 
+				$scope.faster = true;
+				if($stateParams.type == 'Leaders'){
 				interestService.getLeaderInterestUsers($stateParams.activity).then(function(results){
+					$scope.faster = false;
 							  $scope.myLocation = $localStorage.account.near;
 								delete results[$localStorage.account.userId];
 								$scope.people = results;
+
+								var array = $.map(results, function(value, index) {
+	                  return [value];
+	              });
+
+								var people = {
+										items: results
+								};
+
+								for(var id in people.items){
+								 //check to see if there is a like on this post
+								 (function(id){
+									 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
+										people.items[id].partnered = partnered;
+									});
+								})(id,people.items);
+								}
+
+								$scope.peopleLength = array.length;
+								console.log(array);
 								$scope.$apply();
 						});
+			};
 
 				$scope.orderByLocation2 = function(input, location, order) {
 	 	 		if(!(input && input.location)){
