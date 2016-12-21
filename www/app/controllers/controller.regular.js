@@ -50,8 +50,6 @@ angular.module('module.view.regular', [])
                                   $scope.photo = "data:image/jpeg;base64," + imageData;
 																	$scope.view = { type: 2 };
                             			var key = postService.create($scope.photo);
-                              }, function (err) {
-                                  appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });
                           }, false);
 
@@ -62,8 +60,6 @@ angular.module('module.view.regular', [])
                                 $scope.photo = "data:image/jpeg;base64," + imageData;
 																$scope.view = { type: 2 };
                                 var key = postService.create($scope.photo);
-                              }, function (err) {
-                                  appService.showAlert('Error', err, 'Close', 'button-assertive', null);
                               });
                           }, false);
                           break;

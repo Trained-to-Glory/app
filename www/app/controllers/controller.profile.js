@@ -55,26 +55,6 @@ angular.module('module.view.profile', [])
 			 // Execute action
 		});
 
-		$scope.limit = 10;
-
-		$scope.loadMore = function(){
-			if($scope.userPosts && $scope.userPosts.itemsArr){
-				var max = $scope.userPosts.itemsArr.length;
-				if($scope.limit <  max){
-					$scope.moreToScroll = true;
-					if($scope.limit - max < 10 && $scope.limit - max > 0){
-						$scope.limit += Math.abs($scope.limit - max);
-						$scope.moreToScroll = false;
-						return;
-					}
-					$scope.limit += 10;
-				}else{
-					$scope.moreToScroll = false;
-				}
-			}
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		};
-
 		usersService.getAllUsers($localStorage.account.userId).then(function(results){
 			var arr = [];
 			for(var key in results){
@@ -97,62 +77,10 @@ angular.module('module.view.profile', [])
 			})(id,contacts.items);
 			}
 			$scope.people = contacts.items;
-			console.log();
+			$scope.$apply();
 		});
 
-		$scope.loadMoreUserCommits = function(){
-			if($scope.userCommits && $scope.userCommits.itemsArr){
-				var max = $scope.userCommits.itemsArr.length;
-				if($scope.limit <  max){
-					$scope.moreToScroll = true;
-					if($scope.limit - max < 10 && $scope.limit - max > 0){
-						$scope.limit += Math.abs($scope.limit - max);
-						$scope.moreToScroll = false;
-						return;
-					}
-					$scope.limit += 10;
-				}else{
-					$scope.moreToScroll = false;
-				}
-			}
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		};
 
-		$scope.loadMorePartnerPost = function(){
-			if($scope.userNews && $scope.userNews.itemsArr){
-				var max = $scope.userNews.itemsArr.length;
-				if($scope.limit <  max){
-					$scope.moreToScroll = true;
-					if($scope.limit - max < 10 && $scope.limit - max > 0){
-						$scope.limit += Math.abs($scope.limit - max);
-						$scope.moreToScroll = false;
-						return;
-					}
-					$scope.limit += 10;
-				}else{
-					$scope.moreToScroll = false;
-				}
-			}
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		};
-
-		$scope.loadMoreContacts = function(){
-			if($scope.contacts && $scope.contacts.itemsArr){
-				var max = $scope.contacts.itemsArr.length;
-				if($scope.limit <  max){
-					$scope.moreToScroll = true;
-					if($scope.limit - max < 10 && $scope.limit - max > 0){
-						$scope.limit += Math.abs($scope.limit - max);
-						$scope.moreToScroll = false;
-						return;
-					}
-					$scope.limit += 10;
-				}else{
-					$scope.moreToScroll = false;
-				}
-			}
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		};
 
 		$scope.loading = true;
 
@@ -268,6 +196,7 @@ angular.module('module.view.profile', [])
 		//so we can use it to show/hide, toggle ui items
 
 		 $scope.userPartners = results;
+		 $scope.$apply();
 	});
 
 	usersService.getUserCommits($localStorage.account.userId).then(function(results) {
@@ -286,6 +215,7 @@ angular.module('module.view.profile', [])
 			itemsArr: photos
 		};
 		 $scope.userCommits = userCommits;
+		 $scope.$apply();
 	});
 
 
@@ -306,18 +236,21 @@ angular.module('module.view.profile', [])
 				itemsArr: photos
 		};
 		 $scope.userNews = userNews;
+		 $scope.$apply();
 	});
 
 	usersService.getUserTotalCommits($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalCommits = results;
+		 $scope.$apply();
 	});
 
 	usersService.getUserTotalPost($localStorage.account.userId).then(function(results) {
 		//create a local object so we can create the datastructure we want
 		//so we can use it to show/hide, toggle ui items
 		 $scope.userTotalPost = results;
+		 $scope.$apply();
 	});
 
 	usersService.getPartners($localStorage.account.userId).then(function(results){
@@ -333,16 +266,15 @@ angular.module('module.view.profile', [])
 		delete results[$localStorage.account.userId];
 
 		for(var id in contacts.items){
-		 //check to see if there is a like on this post
-		 (function(id, items){
-			 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:id }).then(function(partnered){
- 				items.partnered = partnered;
- 			});
-		})(id, contacts.items[id]);
-		}
-
-		$scope.contacts = contacts;
+			 (function(id, items){
+				 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:id }).then(function(partnered){
+	 				items.partnered = partnered;
+	 			});
+			})(id, contacts.items[id]);
+		};
 		console.log(contacts);
+		$scope.contacts = contacts;
+		$scope.$apply();
 	});
 
 		$scope.goBack = function (ui_sref) {
@@ -364,6 +296,7 @@ angular.module('module.view.profile', [])
         }
 
 		$scope.profile = $localStorage.account;
+		console.log($scope.profile);
 
 		$scope.uploadUserPhoto = function () {
 					$ionicActionSheet.show({
@@ -395,11 +328,8 @@ angular.module('module.view.profile', [])
 																	});
 																	$localStorage.account.userPhoto = "data:image/jpeg;base64," + imageData;
 																	$scope.profile.userPhoto = $localStorage.account.userPhoto;
-															}, function (err) {
-																	appService.showAlert('Error', err, 'Close', 'button-assertive', null);
 															});
 													}, false);
-
 													break;
 											case 1: // Select From Gallery
 													document.addEventListener("deviceready", function () {
@@ -415,8 +345,6 @@ angular.module('module.view.profile', [])
 																		return;
 																	});
 																});
-															}, function (err) {
-																	appService.showAlert('Error', err, 'Close', 'button-assertive', null);
 															});
 													}, false);
 													break;

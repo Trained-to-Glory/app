@@ -1,4 +1,4 @@
-<ion-view title="Connect" hide-nav-bar="true">
+<ion-view title="Connect" hide-nav-bar="true" cache-view="false">
 
   <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
@@ -10,34 +10,14 @@
 
     <ion-content class="has-header" style="top: 44px;">
         <div ng-if="waiting == true" style="text-align:center;margin-top:40px;">
-          <ion-spinner icon="spiral"></ion-spinner>
+          <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
         </div>
+        <partners friend="{{connections}}" ng-repeat="connections in orderByLocation2(users,myLocation)"></partners>
 
-        <div class = "list card" style="background: transparent; box-shadow: none">
-          <div class="item item-avatar item-button-right followers" ng-repeat="connections in orderByLocation2(users,myLocation)"  ui-sref="friend({contact: connections.userId})" style="border: none; border-style: none">
-              <img ng-src="{{connections.userPhoto}}" fallback-src="img/profile-picture.png">
-              <h2 style="font-weight: 400">{{connections.userName}}</h2>
-              <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': connections.partnered, 'button-balanced ion-ios-undo-outline':!connections.partnered }" ng-click="togglePartner(person.userId)">
-                  <span ng-if="!connections.partnered"> Friend</span>
-                  <span ng-if="connections.partnered"> Friend</span>
-              </button>
-          </div>
-        </div>
-
-      <div ng-if = "usersLength == 0">
-        <div ng-if="loading == true" style="text-align:center;margin-top:40px;">
-          <ion-spinner icon="spiral"></ion-spinner>
-        </div>
-        <div style="text-align: center;top: 0;position: fixed;">There are no people in your area that selected that interest. Here are some people that you share interests with.</div>
-        <div class = "list card" style="background: transparent; box-shadow: none;margin-top: 40px;">
-          <div class="item item-avatar item-button-right followers" ng-repeat="user in scrollPeople"  ui-sref="friend({contact: user.userId})" style="border: none; border-style: none">
-              <img ng-src="{{user.userPhoto}}" fallback-src="img/profile-picture.png">
-              <h2 style="font-weight: 400">{{user.userName}}</h2>
-              <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': user.partnered, 'button-balanced ion-ios-undo-outline':!user.partnered }" ng-click="togglePartner(person.userId)">
-                  <span ng-if="!user.partnered"> Friend</span>
-                  <span ng-if="user.partnered"> Friend</span>
-              </button>
-          </div>
-        </div>
+        <div ng-if = "users == null" style="text-align: center;top: 0;color: black;margin-top: 20px;">There are no people in your area that selected that interest. Here are some people that you share interests with.</div>
+      <div ng-if = "users == null">
+        <partners friend="{{user}}" ng-if ="user.status == 'person'" style = "margin-top: 40px;" ng-repeat="user in scrollPeople"></partners>
       </div>
+      <ion-infinite-scroll ng-if="!noMoreItemsAvailable" icon="spiral" class="spinner-positive" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
     </ion-content>
+</ion-view>

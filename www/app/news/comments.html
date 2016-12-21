@@ -1,14 +1,53 @@
-<ion-view title="Comments">
+<ion-view hide-nav-bar="true" class="bg-lightgrey" cache-view="false">
+
+    <ion-header-bar class="no-bg" style="box-shadow: none;top: 0 !important;">
+        <h1 class="title"></h1>
+        <button class="button button-icon button-clear button-light ion-android-close" ng-click="goBack('tabs.post-detail')"></button>
+    </ion-header-bar>
+
     <ion-content class="has-header">
-        <div class="list">
-            <div class="item item-avatar item-text-wrap" ng-repeat="comment in comments" ng-if="comment.comment">
-                <img ng-src="{{comment.userPhoto}}">
-                <h2 class="lead" style="text-transform: none !important">{{comment.userName}}</h2>
+
+        <div class="row text-center">
+            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Commits'}" ng-click="viewType = 'Commits'">Commits</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Likes'}" ng-click="viewType = 'Likes'">Likes</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Comment'}" ng-click="viewType = 'Comment'">Comments</div>
+        </div>
+        <div class="list" ng-if = "viewType == 'Comment'">
+          <div ng-show="waiting == true" style="text-align:center;margin-top:40px;">
+            <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
+          </div>
+          <div ng-if = "commentsLength == 0" style="text-align: center;color: black;margin-top: 20px;">There are no comments on this post.</div>
+            <div class="item item-avatar item-text-wrap" ng-repeat="comment in comments" ng-if="comment.comment" style = "border: none">
+                <img ng-src="{{comment.userPhoto}}" fallback-src="img/profile-picture.png">
+                <h2 class = "lead" style="font-weight: 400 !important;">{{comment.userName}}</h2>
                 <p>{{comment.comment}}</p>
-                <p class="text-smaller" am-time-ago="{{comment.created}}"></p>
+                <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{comment.created}}" class="font-thin"></p>
             </div>
         </div>
-        <ion-infinite-scroll on-infinite="loadMore()" ng-if="!moreToScroll" distance="1%"></ion-infinite-scroll>
+
+        <div class="list" ng-if = "viewType == 'Likes'">
+          <div ng-show="faster == true" style="text-align:center;margin-top:40px;">
+            <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
+          </div>
+          <div ng-if = "likesLength == 0" style="text-align: center;color: black;margin-top: 20px;">There are no likes on this post.</div>
+            <div class="item item-avatar item-button-right followers" ng-repeat="liker in likes" style = "border: none">
+                <img ng-src="{{liker.userPhoto}}" fallback-src="img/profile-picture.png">
+                <h2 class = "lead" style="font-weight: 400 !important;">{{liker.userName}}</h2>
+                <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{liker.created}}" class="font-thin"></p>
+            </div>
+        </div>
+
+        <div class="list" ng-if = "viewType == 'Commits'">
+          <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
+            <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
+          </div>
+          <div ng-if = "commitsLength == 0" style="text-align: center;color: black;margin-top: 20px;">There are no commits on this post.</div>
+            <div class="item item-avatar item-button-right followers" ng-repeat="commiter in commits" style = "border: none">
+                <img ng-src="{{commiter.userPhoto}}" fallback-src="img/profile-picture.png">
+                <h2 class="lead" style="font-weight: 400 !important;">{{commiter.userName}}</h2>
+                <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{commiter.created}}" class="font-thin"></p>
+            </div>
+        </div>
     </ion-content>
 
     <ion-footer-bar class="bar-light item-input-inset" style="border-top:1px solid #ccc;" ng-form="chatForm" novalidate>

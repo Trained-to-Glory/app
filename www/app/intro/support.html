@@ -1,9 +1,17 @@
-<ion-view title="Support" class="font-thin">
+<ion-view hide-nav-bar = "true" cache-view="false">
 
   <ion-nav-bar>
     <ion-nav-back-button style="display: block">
     </ion-nav-back-button>
   </ion-nav-bar>
+
+  <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
+    <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
+      <i class="icon ion-ios-arrow-back"></i>
+      <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
+    </button>
+    <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Support</div>
+  </ion-header-bar>
 
     <ion-content scroll="true" overflow-scroll="true" class="iframe-wrapper" style="width: 100%; height:100%; min-height: 100%">
     <!-- <div class="list">
@@ -16,7 +24,7 @@
            <!-- <div class="item item-divider" style="background-color: white; color: #F10707;font-family: limbus;">Help</div> -->
             <!-- <div> -->
               <!-- Privacy Policy -->
-              <iframe src="https://www.trainedtoglory.com/" style="width: 100%; height:100%; min-height: 100%">
+              <iframe src="http://www.trainedtoglory.com/" style="width: 100%; height:100%; min-height: 100%">
             </iframe>
             <!-- </div> -->
             <!-- <div class="item" ng-click="support()" ng-click="view.type = 2">

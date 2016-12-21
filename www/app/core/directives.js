@@ -1,4 +1,4 @@
-angular.module('full_starter.directives', ['directive.checklist','directive.partners'])
+angular.module('full_starter.directives', ['directive.checklist','directive.partners', 'directive.friends'])
 
     .directive('sideMenu', [function () {
         return {

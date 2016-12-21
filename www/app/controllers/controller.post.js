@@ -2,6 +2,7 @@ angular.module('module.view.post', [])
 	.controller('postCtrl', ['$scope','$rootScope','$ionicActionSheet','$state','$ionicPopover','$ionicSideMenuDelegate','postService','$localStorage', 'appService', '$cordovaSocialSharing', '$ionicHistory','$ionicPopup','$cordovaSocialSharing','postService','engagementService','$stateParams',
 		function($scope,$rootScope,$ionicActionSheet,$state,$ionicPopover,$ionicSideMenuDelegate,postService,$localStorage, appService, $cordovaSocialSharing, $ionicHistory,$ionicPopup,$cordovaSocialSharing,postService,engagementService,$stateParams) {
 		$scope.postId = $stateParams.post;
+		$scope.loading = true;
 		$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
                     var backView = $ionicHistory.backView();
@@ -25,6 +26,7 @@ angular.module('module.view.post', [])
 
 			if($stateParams.post){
 				postService.getOnePosts($stateParams.post).then(function(results) {
+					$scope.loading = false;
 					var arr = [];
 					for(var key in results){
 						results[key].key = key;
@@ -55,16 +57,17 @@ angular.module('module.view.post', [])
              engagementService.totalComments({category: 'post',categoryId: $stateParams.post}).then(function(totalComments){
                items.totalComments = totalComments;
              });
-
            })(id, data.items[id]);
+					 $scope.$apply();
           }
 					$scope.post = results;
-					console.log(results);
+					$scope.$apply();
 				});
 			}
 
 			if($stateParams.plan){
 				postService.getOnePlan($stateParams.plan).then(function(results) {
+					$scope.loading = false
 					var arr = [];
 					for(var key in results){
 						results[key].key = key;
@@ -75,11 +78,9 @@ angular.module('module.view.post', [])
 						itemsArr: arr
 					}
 					$scope.plan = results;
-					console.log(results);
+					$scope.$apply();
 				});
 			}
-
-		console.log($stateParams.plan);
 
 		if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
       	$stateParams.post === null ? $scope.post = postService.get() : $scope.post = $stateParams.post;
@@ -91,10 +92,8 @@ angular.module('module.view.post', [])
                 $cordovaSocialSharing.share(post.description, post.postType, post.owner, post.location, post.date,post.photo)
                     .then(function (result) {
                         appService.showAlert('Post Shared', result, 'Ok', 'button-balanced', null);
-                    }, function (err) {
-                        appService.showAlert('Error Occured', err, 'Ok', 'button-assertive', null);
                     });
-            }, false);
+						}, false);
         }
 
 		$scope.showConfirm = function() {
@@ -109,18 +108,6 @@ angular.module('module.view.post', [])
                }
              });
         };
-
-				$scope.formData = {};
-				//type, category, categoryId, itemId, userId, comment,
-				$scope.createComment = function (comment) {
-						//create a location in the table
-						postService.createComment({comment: comment, postId: $stateParams.post})
-						.then(function(results){
-							$scope.comments.push(results);
-							$scope.formData.comment = '';
-							$scope.$apply();
-						});
-				};
 
         $scope.gotoFriend = function(){
         	$state.go('tabs.friend');
@@ -143,33 +130,6 @@ angular.module('module.view.post', [])
         };
 
 				$scope.profile = $localStorage.account;
-				$scope.formData = {};
-				//type, category, categoryId, itemId, userId, comment,
-				$scope.createComment = function () {
-            //create a location in the table
-            var obj = {
-								"comment": $scope.formData.searchText,
-								"created": firebase.database.ServerValue.TIMESTAMP,
-								"userPhoto": $localStorage.account.userPhoto,
-								"userName": $localStorage.account.userName,
-								"state": {
-										"actionable": true,
-										"visible": true,
-										"active": true
-								}
-            };
-            var db = firebase.database().ref();
-            var posts = db.child('posts');
-            var postsKey = posts.push(obj).key;
-            var userId = firebase.auth().currentUser.uid;
-
-       // Write the new post's data simultaneously in the posts list and the user's post list.
-         var updates = {};
-         updates[['engagementComments', 'post', $stateParams.post].join('/')] = obj;
-         updates[['accounts', userId , 'engagementComments' , $stateParams.post , userId].join('/')] = obj;
-
-         return firebase.database().ref().push(updates);
-        };
 
 				$scope.toggleLike = function(postId, userId){
             var post = $stateParams.post;
@@ -191,26 +151,42 @@ angular.module('module.view.post', [])
 					 $scope.menuPopover.hide();
 				};
 
-				$scope.limit = 5;
+				postService.getCommits($stateParams.post).then(function(results) {
+					$scope.commits = [];
+					$scope.loading = false;
 
-        $scope.loadMore = function(){
-          if($scope.comments){
-            var max = $scope.comments.length;
-            if($scope.limit <  max){
-              $scope.moreToScroll = true;
-              if($scope.limit - max < 10 && $scope.limit - max > 0){
-                $scope.limit += Math.abs($scope.limit - max);
-                $scope.moreToScroll = false;
-                return;
-              }
-              $scope.limit += 10;
-            }else{
-              $scope.moreToScroll = false;
-            }
-          }
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
+					for(var key in results){
+						results[key].key = key;
+						$scope.commits.push(results[key]);
+					}
+					var commits = {
+							items: results
+					};
 
+					var array = $.map(results, function(value, index) {
+							return [value];
+					});
+					$scope.commitsLength = array.length;
+					$scope.$apply();
+				});
+
+				postService.getLikes($stateParams.post).then(function(results) {
+					$scope.likes = [];
+					$scope.faster = false;
+					for(var key in results){
+						results[key].key = key;
+						$scope.likes.push(results[key]);
+					}
+					var likes = {
+							items: results
+					};
+
+					var array = $.map(results, function(value, index) {
+							return [value];
+					});
+					$scope.likesLength = array.length;
+					$scope.$apply();
+				});
 
 				postService.getComments($stateParams.post).then(function(results) {
 					$scope.comments = [];
@@ -221,9 +197,20 @@ angular.module('module.view.post', [])
 					var comments = {
 							items: results
 					};
-
 					$scope.commmentsNumber = $scope.comments.length;
+					$scope.$apply();
 				});
+
+				$scope.formData = {};
+
+				$scope.createComment = function (comment) {
+						//create a location in the table
+						postService.createComment({comment: comment, postId: $stateParams.post, type: 'post'})
+						.then(function(results){
+							$scope.comments.push(results);
+							$scope.formData.comment = '';
+						});
+				};
 
 				$scope.activateCommentMode = function(){
 					$scope.commentMode = true;
@@ -233,16 +220,6 @@ angular.module('module.view.post', [])
 					$scope.commentMode = false;
 				};
 
-				$ionicSideMenuDelegate.canDragContent(false);
-
-				$scope.fullscreenPopover = $ionicPopover.fromTemplate(popoverTemplate, {
-						scope: $scope
-				});
-
-				$scope.menuPopover = $ionicPopover.fromTemplate(menuTemplate, {
-            scope: $scope
-        });
-
 				$scope.showPopup = function() {
 					$ionicActionSheet.show({
 							titleText: 'Post',
@@ -250,9 +227,9 @@ angular.module('module.view.post', [])
 								cancel: function() {
 								},
 							buttons: [{
-									 text: '<i class="icon ion-ios-flag"></i> Report'
+									 text: 'Report'
 							}, {
-											text: '<i class="icon ion-ios-undo"></i> Share'
+											text: 'Share'
 								}],buttonClicked: function (index) {
 	                  switch (index) {
 	                      case 0: // Take Picture

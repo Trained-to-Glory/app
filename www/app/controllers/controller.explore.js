@@ -6,60 +6,6 @@ angular.module('module.view.explore', ['angular.filter'])
 			$scope.noMoreItemsAvailable = false;
 			$scope.loading = true;
 
-			// var posts = firebase.database().ref(['posts'].join('/'));
-			// if ($scope.lastId == undefined) {
-			// 	posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
-			// 		$scope.loading = false;
-			// 		var currentObj = snapshot.val();
-			// 		var array = $.map(currentObj, function(value, index) {
-			// 				return [value];
-			// 		});
-			//
-			// 		var arr = [];
-			// 		 for(var key in currentObj){
-			// 				currentObj[key].key = key;
-			// 				arr.push(currentObj[key]);
-			// 			}
-			//
-			// 			var news = {
-			// 				itemsArr: arr
-			// 			}
-			//
-			// 			$scope.news = $scope.news.concat(news.itemsArr);
-			// 			$scope.lastId = $scope.news[$scope.news.length - 1].key;
-			//
-			// 			if ( array.length != 20 ) {
-			// 				 $scope.noMoreItemsAvailable = true;
-			// 			}
-			// 		$scope.$broadcast('scroll.infiniteScrollComplete');
-			// 		$scope.$apply();
-			// 	});
-			// };
-
-			$scope.doRefresh = function (){
-				var posts = firebase.database().ref(['posts'].join('/'));
-				posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
-					var currentObj = snapshot.val();
-					var array = $.map(currentObj, function(value, index) {
-							return [value];
-					});
-					var arr = [];
-					 for(var key in currentObj){
-							currentObj[key].key = key;
-							arr.push(currentObj[key]);
-						}
-						arr.shift();
-						var news = {
-							itemsArr: arr
-						}
-
-						$scope.news = news.itemsArr.concat($scope.news);
-						$scope.lastId = $scope.news[$scope.news.length - 1].key;
-
-					$scope.$broadcast('scroll.refreshComplete');
-					$scope.$apply();
-				});
-			};
 
 			$scope.loadMore = function(){
 				var posts = firebase.database().ref(['posts'].join('/'));
@@ -117,6 +63,30 @@ angular.module('module.view.explore', ['angular.filter'])
 						$scope.$apply();
 					});
 				}
+			};
+
+			$scope.doRefresh = function (){
+				var posts = firebase.database().ref(['posts'].join('/'));
+				posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+						arr.shift();
+						var news = {
+							itemsArr: arr
+						}
+
+						$scope.news = news.itemsArr.concat($scope.news);
+
+					$scope.$broadcast('scroll.refreshComplete');
+					$scope.$apply();
+				});
 			};
 
 

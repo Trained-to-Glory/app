@@ -2,10 +2,10 @@
 
 'use strict';
 
-angular.module('directive.partners', [])
-  .directive('partners', ['usersService', 'engagementService','$localStorage', function (usersService, engagementService, $localStorage) {
+angular.module('directive.friends', [])
+  .directive('friends', ['usersService', 'engagementService','$stateParams', function (usersService, engagementService, $stateParams) {
     return {
-      templateUrl :'app/directives/directive.partners.html',
+      templateUrl :'app/directives/directive.friends.html',
       restrict: 'E',
       scope: {
         arr: '='
@@ -25,15 +25,16 @@ angular.module('directive.partners', [])
             }else {
               scope.value.partnered = false;
             }
-  					return engagementService[state]({category:'partners', categoryId:$localStorage.account.userId,userId: partnerId});
+  					return engagementService[state]({category:'partners', categoryId:$stateParams.contact,userId: partnerId});
   			}
 
-        scope.profile = $localStorage.account;
+        scope.profile = $stateParams.contact;
 
-        engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:scope.value.userId }).then(function(partnered){
+        engagementService.partnered({category:'partners', categoryId:$stateParams.contact, userId:scope.value.userId }).then(function(partnered){
          scope.value.partnered = partnered;
          scope.$apply();
        });
+
       }
     };
   }]);

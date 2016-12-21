@@ -6,11 +6,11 @@
     </ion-nav-buttons>
 
     <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
-      <ion-refresher on-refresh="doRefresh()" icon="spiral"></ion-refresher>
+      <ion-refresher on-refresh="doRefresh()" icon="spiral" class="spinner-positive"></ion-refresher>
       <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
         <label class="item item-input" ng-click="view.type = 2">
-          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);"></i>
-          <input type="text" ng-model="lookUp" class="search-people" placeholder="Search People" style = "margin-left: 40px;color: gray; font-size: 16px;width: 75%;position:absolute;padding-right:0px;">
+          <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);display: inline-flex"></i>
+          <input type="text" ng-model="lookUp" class="search-people" placeholder="Search People" style = "margin-left: 2%;color: gray; font-size: 16px;width: 75%;padding-right:0px;display: inline-flex;height: 2.25em;line-height: 2.28em;">
         </label>
         <a class="clear" ng-click="lookUp = null">
         <i  ng-if = "view.type === 2" class = "ion-ios-close-empty placeholder-icon" style="font-size: 24px;font-size: 32px;right: 12px;position: absolute;z-index: 999;top: 9px;" ng-click="clearSearch()"></i>
@@ -26,7 +26,7 @@
       </div>
 
       <div ng-show="loading == true" style="text-align:center;margin-top:80px;">
-        <ion-spinner icon="spiral"></ion-spinner>
+        <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
       </div>
 
       <div ng-if="view.type === 1" style="top: 120px;margin-top: 80px;">

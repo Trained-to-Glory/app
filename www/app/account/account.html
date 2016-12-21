@@ -1,17 +1,14 @@
-<ion-view view-title="Profile" class="font-thin" style="background:#fafafc;margin-left: 0 !important" cache-view="false" hide-nav-bar="true">
+<ion-view view-title="Profile" class="font-thin" style="background:#fafafc;margin-left: 0 !important" hide-nav-bar="true">
 
     <ion-nav-buttons side="right">
           <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 20px;z-index: 999;" ui-sref="settings"></button>
       </ion-nav-buttons>
 
     <ion-content class="has-tabs-top" style="top: 32px !important;">
-    <div style="height:100%; margin-top: 10px;" class="bg-lightgrey" on-swipe-right="onSwipeRight()">
-      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 419px;">
-        <div class="item profile item-image bg-image" style="max-height: 400px;margin-top: 17px;background-image: url({{profile.userPhoto}})">
+    <div style="height:100%;" class="bg-lightgrey" on-swipe-right="onSwipeRight()">
+      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;margin: 0;height: 500px;">
+        <div class="item profile item-image bg-image" style="max-height: 490px;margin-top: 17px;background-image: url({{profile.userPhoto}})">
           <div class = "row" style="position: inherit;bottom: 9px;">
-          <!-- <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;left: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ui-sref="settings">
-            <i class="icons ion-ios-gear" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>
-          </a> -->
           <ion-list>
             <ion-item ng-if= "!profile.fullName" style="border:none;padding-bottom: 5px;background-color: transparent !important;left: 0;font-size: 20px;color:white; font-weight: 700;letter-spacing: 1.2px;">
               {{profile.firstName + " " + profile.lastName }}
@@ -23,7 +20,7 @@
               {{profile.userName }}
             </ion-item>
           </ion-list>
-          <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;right: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;" ng-click="uploadUserPhoto()">
+          <a class="col btn-floating btn-small waves-effect waves-light lighten-1" style="z-index: 5;position: inherit;right: 8px;background-color: white;display: inline-block;color: black;font-size: 24px;width:42px;height:42px;bottom: 5%;line-height: 42px;" ng-click="uploadUserPhoto()">
             <i class="icons ion-ios-camera" style="color: black;display: inherit;font-size: 24px;margin:auto;position: inherit;margin-top: -7%;margin-left: -12%"></i>
           </a>
           </div>
@@ -44,7 +41,7 @@
           You have not post any pictures yet
           </div>
                 <div style="height: 700px">
-                    <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr" ng-if="$index % 3 == 0">
+                    <div class="row row-no-padding category-2-outer" ng-repeat="userPost in userPosts.itemsArr | orderBy: 'created': true" ng-if="$index % 3 == 0">
                       <div class="col" style="padding: 5px !important">
                         <a ui-sref="post-detail({post:userPosts.itemsArr[$index].key})">
                           <div class="category-2-item-wrapper">
@@ -83,7 +80,7 @@
             <div ng-if="userTotalCommits == 0" class = "noCommits">
               You have not commited to any events yet.
             </div>
-                      <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr" ng-if="$index % 3 == 0">
+                      <div class="row row-no-padding category-2-outer" ng-repeat="userCommit in userCommits.itemsArr | orderBy: 'created': true" ng-if="$index % 3 == 0">
                         <div class="col" style="padding: 5px !important">
                           <a ui-sref="post-detail({post:userCommits.itemsArr[$index].key})">
                             <div class="category-2-item-wrapper">
@@ -121,24 +118,15 @@
             <div ng-if="userPartners == 0" style="display: block;position: relative;margin: 0 auto;width: 40%;border-radius: 50px;text-align: center;">
               You have no friends yet
             </div>
-              <button ng-if="userPartners == 0" ui-sref = "friendPartners({friendPartner:profile})" class="button button-calm profile"
+              <button ng-if="userPartners == 0" ui-sref = "partners({partner:profile.userId, mode: 'Add'})" class="button button-calm profile"
               style="border-color: #F10707; background-color: #F10707;display: block;position: relative;margin: 0 auto;width: 40%;border-radius: 50px;margin-top: 20px;">Find Friends</button>
               </button>
             <div class="item item-divider">
                 FRIENDS
-                <span class="item-note" ui-sref = "partners({partner:profile.userId})">
+                <span class="item-note" ui-sref = "partners({partner:profile.userId, mode: 'Add'})">
                     <a class="button button-calm profile" style="border-color: #F10707; background-color: #F10707;">Find More</a>
                 </span>
             </div>
-              <!-- <div class="item item-avatar item-button-right followers" ng-if="userPartners > 0" style = "border: none" ng-repeat="value in contacts.itemsArr">
-                <img ng-src="{{value.userPhoto}}" fallback-src="img/profile-picture.png" ui-sref="friend({contact:value.userId})" >
-                <h2 class = "lead" style="font-weight: 400 !important;" ui-sref="friend({contact:value.userId})" >{{value.userName}}</h2>
-                <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': value.partnered, 'button-balanced ion-ios-undo-outline':!value.partnered }" ng-click="togglePartner(profile.userId)">
-                    <span ng-if="value.partnered"> Friend</span>
-                    <span ng-if="!value.partnered"> Friend</span>
-                </button>
-            </div> -->
-
             <partners friend="{{value}}" ng-repeat="value in contacts.itemsArr"></partners>
             </div>
         </div>

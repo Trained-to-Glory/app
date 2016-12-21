@@ -1,4 +1,4 @@
-<ion-view title="Settings" hide-nav-bar="true">
+<ion-view title="Settings" hide-nav-bar="true" cache-view="false">
 
   <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
@@ -9,7 +9,7 @@
   </ion-header-bar>
 
     <ion-content class="has-header" style="top: 44px;">
-    <div class="list" style="margin-bottom: 10px">
+    <div class="list" style="margin-bottom: 10px; border: none">
         <div class="item item-divider" style="background-color: white; color: #F10707;" style="border: none">Profile</div>
         <div class="item" ui-sref="edit-profile" style="border: none">Edit profile</div>
           <div class="item" ng-click="interests()" style="border: none">Update interest</div>

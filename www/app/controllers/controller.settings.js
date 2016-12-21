@@ -1,17 +1,13 @@
 angular.module('module.view.settings', [])
-	.controller('settingsCtrl',['$scope','$rootScope','$cordovaInAppBrowser','$state','$ionicPopover','$stateParams','$ionicLoading','$timeout','Popup','$localStorage',
-		function($scope,$rootScope,$cordovaInAppBrowser,$state,$ionicPopover,$stateParams,$ionicLoading,$timeout,Popup,$localStorage) {
-				$scope.service = function(){
-					$cordovaInAppBrowser.open('https://www.trainedtoglory.com/terms-of-service','_blank', 'location=yes');return false;
-					$state.go('service');
-				}
-
+	.controller('settingsCtrl',['$scope','$rootScope','$cordovaInAppBrowser','$state','$ionicPopover','$stateParams','$ionicLoading','$timeout','Popup','$localStorage','$cordovaSocialSharing', 'appService',
+		function($scope,$rootScope,$cordovaInAppBrowser,$state,$ionicPopover,$stateParams,$ionicLoading,$timeout,Popup,$localStorage,$cordovaSocialSharing, appService) {
 				var options = {
 		      location: 'yes',
 		      clearcache: 'yes',
 		      toolbar: 'yes',
 		      closebuttoncaption: 'DONE?'
 		    };
+
 
 				$scope.goBack = function (ui_sref) {
                     var currentView = $ionicHistory.currentView();
@@ -34,14 +30,8 @@ angular.module('module.view.settings', [])
 								$scope.profile = $localStorage.account;
 
 								$scope.share = function (post) {
-									$scope.closePopover();
 				            document.addEventListener("deviceready", function () {
-				                $cordovaSocialSharing.share('Search me on the Glory app', $scope.profile.userName)
-				                    .then(function (result) {
-				                        appService.showAlert('Account Shared', result, 'Ok', 'button-balanced', null);
-				                    }, function (err) {
-				                        appService.showAlert('Error Occured', err, 'Ok', 'button-assertive', null);
-				                    });
+				                $cordovaSocialSharing.share('Add me on Glory it\'s amazing. Download the app by going to http://www.trainedtoglory.com/ then find me by my username:', $scope.profile.userName);
 				            }, false);
 				        }
 
@@ -54,24 +44,6 @@ angular.module('module.view.settings', [])
 										$state.go('roleRather');
 									}
 								}
-
-								$scope.openPopover = function($event) {
-			             $scope.fullscreenPopover.show($event);
-			          };
-
-			          $scope.closePopover = function($event) {
-			             $scope.fullscreenPopover.hide();
-			          };
-
-			          // Execute action on hide popover
-			          $scope.$on('popover.hidden', function() {
-			             // Execute action
-			          });
-
-			          // Execute action on remove popover
-			          $scope.$on('popover.removed', function() {
-			             // Execute action
-			          });
 
 				$scope.profile = $localStorage.account;
 

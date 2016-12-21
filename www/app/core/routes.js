@@ -26,6 +26,7 @@ angular.module('full_starter.routes', [])
   })
 
   .config(['$stateProvider', '$urlRouterProvider','$ionicConfigProvider', '$logProvider', 'calendarConfig', function ($stateProvider, $urlRouterProvider,$ionicConfigProvider, $logProvider, calendarConfig) {
+
     $ionicConfigProvider.backButton.previousTitleText(false);
     $ionicConfigProvider.backButton.text("");
     $ionicConfigProvider.navBar.alignTitle("left");
@@ -34,7 +35,7 @@ angular.module('full_starter.routes', [])
     $ionicConfigProvider.scrolling.jsScrolling(false);
   }
 
-    calendarConfig.titleFormats.week = 'MMMM';
+  calendarConfig.titleFormats.week = 'MMMM';
     calendarConfig.dateFormatter = 'moment';
     calendarConfig.allDateFormats.moment.date.hour = 'h:mm a';
     calendarConfig.allDateFormats.moment.title.day = 'MMM D ddd';
@@ -144,7 +145,7 @@ angular.module('full_starter.routes', [])
 
       .state('comments', {
         url: '/comments',
-        params: { post: null },
+        params: { post: null, type: null },
         templateUrl: 'app/news/comments.html',
         controller: 'commentsCtrl'
       })

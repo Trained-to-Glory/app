@@ -144,13 +144,15 @@ angular.module('module.view.editProfile', [])
 					ref.orderByChild('userId').equalTo($localStorage.account.userId).on("child_added", function(snapshot) {
 						firebase.database().ref('/accounts/' + snapshot.key ).update({
 							email: data.email,
-							firstName: data.firstName,
-							lastName: data.lastName,
+							firstName: data.firstName || '',
+							lastName: data.lastName || '',
+							fullName: data.fullName || '',
 							userName: data.userName,
 							userDescription: data.userDescription
 						}).then( function() {
 							$localStorage.account.email = data.email;
 							$localStorage.account.firstName = data.firstName;
+							$localStorage.account.fullName = data.fullName;
 							$localStorage.account.lastName = data.lastName;
 							$localStorage.account.userName = data.userName;
 							$localStorage.account.userDescription = data.userDescription;

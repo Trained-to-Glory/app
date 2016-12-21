@@ -1,4 +1,4 @@
-<ion-view title="Find Friends" class="font-thin" hide-nav-bar="true">
+<ion-view title="Find Friends" hide-nav-bar="true" cache-view="false">
 
   <ion-header-bar align-title="left" class="bar signup-bar-clear bar-header has-tabs-top" style="top: 0 !important;box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
@@ -6,19 +6,19 @@
       <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
     </button>
     <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);margin-left: 0;">Add Friends</div>
+    <div class="buttons" class="bar signup-bar-clear bar-header has-tabs-top" ui-sref="intro">
+      <button class="button" style="background: transparent;color: gray;min-height: 50px;line-height: 50px;font-size: 20px;">Next</button>
+    </div>
   </ion-header-bar>
 
     <ion-content class="has-header">
-    <div class = "list card" style="background: transparent; box-shadow: none">
-      <div class="item item-avatar item-button-right followers" ng-repeat="person in people" ng-if="person.partnered === false" style="border: none; border-style: none">
-          <img ng-src="{{person.userPhoto}}">
-          <h2 style="font-weight: 400">{{person.userName}}</h2>
-          <button class="button button-small icon " ng-class="{'button-balanced button-outline ion-ios-personadd-outline': !person.partnered, 'button-balanced ion-ios-undo-outline':person.partnered }" ng-click="togglePartner(person.userId)">
-              <span ng-if="!person.partnered"> Friend</span>
-              <span ng-if="person.partnered"> Friend</span>
-          </button>
-      </div>
-    </div>
+      <!-- <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
+        <ion-spinner></ion-spinner>
+      </div> -->
+    <partners friend="{{person}}" ng-if = "modeType == 'Regular'" ng-repeat="person in people"></partners>
+    <ion-infinite-scroll ng-if="!noMoreItemsAvailable && modeType == 'Regular'" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
 
+    <partners friend="{{person}}" ng-if ="modeType == 'Add' && !person.partnered" ng-repeat="person in people"></partners>
+    <ion-infinite-scroll ng-if="!noMoreItemsAvailable && modeType == 'Add'" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

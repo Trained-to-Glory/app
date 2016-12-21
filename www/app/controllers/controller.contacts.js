@@ -20,33 +20,182 @@ angular.module('module.view.contacts', [])
                 }
 
 		$scope.loading = true;
+		$scope.usersLength;
 
-			usersService.getAllUsers($localStorage.account.userId).then(function(results){
-				$scope.loading = false;
-				var arr = [];
-				for(var key in results){
-					results[key].key = key;
-					arr.push(results[key]);
-				}
-				var contacts = {
-						items: results,
-						itemsArr: arr
-				};
-
-				delete results[$localStorage.account.userId];
-
-				for(var id in contacts.items){
-				 //check to see if there is a like on this post
-				 (function(id){
-					 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
-						contacts.items[id].partnered = partnered;
+		$scope.loadMore = function(){
+			var users = firebase.database().ref(['accounts'].join('/'));
+			if ($scope.lastId == undefined) {
+				users.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+					$scope.waiting = false;
+					$scope.faster = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
 					});
-				})(id,contacts.items);
-				}
-				$scope.scrollPeople = contacts.itemsArr;
-				$scope.$apply();
 
-			});
+					delete currentObj[$localStorage.account.userId];
+
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
+
+						for(var id in contacts.items){
+						 //check to see if there is a like on this post
+						 (function(id){
+							 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId: id}).then(function(partnered){
+								contacts.items[id].partnered = partnered;
+							});
+						})(id,contacts.items);
+						}
+
+						$scope.scrollPeople = [];
+						$scope.scrollPeople = $scope.scrollPeople.concat(contacts.itemsArr);
+						console.log($scope.scrollPeople);
+						$scope.lastId = $scope.scrollPeople[$scope.scrollPeople.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}else{
+				users.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					$scope.waiting = false;
+					$scope.faster = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+
+					delete currentObj[$localStorage.account.userId];
+
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+						arr.shift();
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
+
+						for(var id in contacts.items){
+						 //check to see if there is a like on this post
+						 (function(id){
+							 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId: id}).then(function(partnered){
+								contacts.items[id].partnered = partnered;
+							});
+						})(id,contacts.items);
+						}
+
+						$scope.scrollPeople = $scope.scrollPeople.concat(contacts.itemsArr);
+						console.log($scope.scrollPeople);
+						$scope.lastId = $scope.scrollPeople[$scope.scrollPeople.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}
+		};
+
+		$scope.loadMoreContacts = function(){
+			var users = firebase.database().ref(['accounts'].join('/'));
+			if ($scope.lastId == undefined) {
+				users.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+					$scope.loading = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+
+					delete currentObj[$localStorage.account.userId];
+
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
+
+						for(var id in contacts.items){
+						 //check to see if there is a like on this post
+						 (function(id){
+							 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId: id}).then(function(partnered){
+								contacts.items[id].partnered = partnered;
+							});
+						})(id,contacts.items);
+						}
+
+						$scope.scrollPeople = [];
+						$scope.scrollPeople = $scope.scrollPeople.concat(contacts.itemsArr);
+						console.log($scope.scrollPeople);
+						$scope.lastId = $scope.scrollPeople[$scope.scrollPeople.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}else{
+				users.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					$scope.loading = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+
+					delete currentObj[$localStorage.account.userId];
+
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+						arr.shift();
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
+
+						for(var id in contacts.items){
+						 //check to see if there is a like on this post
+						 (function(id){
+							 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId: id}).then(function(partnered){
+								contacts.items[id].partnered = partnered;
+							});
+						})(id,contacts.items);
+						}
+
+						$scope.scrollPeople = $scope.scrollPeople.concat(contacts.itemsArr);
+						console.log($scope.scrollPeople);
+						$scope.lastId = $scope.scrollPeople[$scope.scrollPeople.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
+			}
+		};
+
 
 				$scope.togglePartner = function(partnerId){
 						var partner = $scope.ones;
@@ -109,9 +258,8 @@ angular.module('module.view.contacts', [])
 								}
 
 								$scope.usersArr = array;
-								console.log(array);
 								$scope.usersLength = array.length;
-								$scope.$apply();
+								console.log($scope.users);
 						});
 				};
 
@@ -182,25 +330,6 @@ angular.module('module.view.contacts', [])
 	 	     return output;
 	 	   }
 
-			 $scope.limit = 10;
-
-			 $scope.loadMore = function(){
-				 if($scope.users && $scope.users.itemsArr){
-					 var max = $scope.users.itemsArr.length;
-					 if($scope.limit <  max){
-						 $scope.moreToScroll = true;
-						 if($scope.limit - max < 10 && $scope.limit - max > 0){
-							 $scope.limit += Math.abs($scope.limit - max);
-							 $scope.moreToScroll = false;
-							 return;
-						 }
-						 $scope.limit += 10;
-					 }else{
-						 $scope.moreToScroll = false;
-					 }
-				 }
-				 $scope.$broadcast('scroll.infiniteScrollComplete');
-			 };
 
 }]).filter('orderByLocation', function() {
 

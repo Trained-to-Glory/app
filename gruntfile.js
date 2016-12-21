@@ -20,6 +20,11 @@ module.exports = function(grunt) {
        'www/lib/ngstorage/ngStorage.js',
        'www/lib/angular-img-fallback/angular.dcb-img-fallback.min.js',
         'www/lib/ngCordova/dist/ng-cordova.js',
+        'www/lib/moment/moment.js',
+        'www/lib/angular-moment/angular-moment.js',
+        'www/lib/moment-range/dist/moment-range.js',
+        'www/lib/ng-material-floating-button/src/mfb-directive.js',
+        'www/lib/ionic-native-transitions/dist/ionic-native-transitions.js',
         'www/app/services/service.interest.js',
          'www/app/services/service.post.js',
       //   //users is the broken file
@@ -30,6 +35,7 @@ module.exports = function(grunt) {
          'www/app/core/*.js',
          'www/app/directives/directive.checklist.js',
          'www/app/directives/directive.partners.js',
+         'www/app/directives/directive.friends.js',
          'www/app/*.js'
       //  'www/app/services/*.js',
        //Second Half
@@ -41,7 +47,8 @@ module.exports = function(grunt) {
         'www/css/design.css',
         'www/css/match.css',
         'www/css/feed.css',
-        'www/lib/ion-floating-menu/dist/ion-floating-menu.css'],
+        'www/lib/ion-floating-menu/dist/ion-floating-menu.css',
+        'www/lib/ng-material-floating-button/mfb/dist/mfb.css'],
         concat: {
           options: {
             separator: ';',
@@ -72,7 +79,7 @@ module.exports = function(grunt) {
                   transform: function (filePath) {
                       filePath = filePath.replace('/www/', '');
                       var isCss = filePath.indexOf('.css') > -1;
-                      return isCss ? '<link href="dist/trained-to-glory-app.min.css" rel="stylesheet"/>': '<script src="dist/trained-to-glory-app.min.js"></script>';
+                      return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
                   }
 
                 }
@@ -85,7 +92,7 @@ module.exports = function(grunt) {
                    transform: function (filePath) {
                        filePath = filePath.replace('/www/', '');
                        var isCss = filePath.indexOf('.css') > -1;
-                       return isCss ? '<link href="dist/trained-to-glory-app.min.css" rel="stylesheet"/>': '<script src="dist/trained-to-glory-app.min.js"></script>';
+                       return isCss ? '<link rel="stylesheet" type="text/css" href="' + filePath + '" />': '<script src="' + filePath + '"></script>';
                    },
                      ignorePath:[
                          'www/'

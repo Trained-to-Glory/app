@@ -1,60 +1,103 @@
 angular.module('module.view.partners', [])
 	.controller('partnersCtrl', ['$scope','$rootScope', 'postService','$ionicPopover','$state','$ionicHistory','$localStorage','$stateParams','usersService','engagementService',
 		function($scope,$rootScope, postService,$ionicPopover,$state,$ionicHistory,$localStorage,$stateParams,usersService,engagementService) {
-		usersService.getPartners($localStorage.account.userId).then(function(results){
-			var arr = [];
-			for(var key in results){
-				results[key].key = key;
-				arr.push(results[key]);
-			}
-			var contacts = {
-					items: results,
-					itemsArr: arr
-			};
-			delete results[$localStorage.account.userId];
+
+		$scope.loading = true;
+		$scope.noMoreItemsAvailable = false;
+		$scope.people = [];
+		console.log($localStorage.account);
 
 
-			for(var id in contacts.items){
-			 //check to see if there is a like on this post
-			 (function(id, items){
-				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
-	 				items.partnered = partnered;
-	 			});
-			})(id, contacts.items[id]);
-			}
+		$scope.loadMore = function(){
+			var posts = firebase.database().ref(['accounts'].join('/'));
+			if ($scope.lastId == undefined) {
+				posts.orderByKey().limitToFirst(20).once("value", function(snapshot) {
+					$scope.loading = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
 
-			$scope.contacts = contacts.items;
-		});
+					delete currentObj[$localStorage.account.userId];
 
-		usersService.getAllUsers($localStorage.account.userId).then(function(results){
-			var arr = [];
-			for(var key in results){
-				results[key].key = key;
-				arr.push(results[key]);
-			}
-			var contacts = {
-					items: results,
-					itemsArr: arr
-			};
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
 
-			delete results[$localStorage.account.userId];
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
 
-			for(var id in contacts.items){
-			 //check to see if there is a like on this post
-			 (function(id){
-				 engagementService.partnered({category:'partners', categoryId:id, userId: $localStorage.account.userId}).then(function(partnered){
-					contacts.items[id].partnered = partnered;
+	        		for(var id in contacts.items){
+		        		 (function(id, items){
+		        			 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:id }).then(function(partnered){
+		         				items.partnered = partnered;
+		         			});
+		        		})(id, contacts.items[id]);
+	        		};
+
+						$scope.people = [];
+						$scope.people = $scope.people.concat(contacts.itemsArr);
+						console.log($scope.people);
+						$scope.lastId = $scope.people[$scope.people.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
 				});
-			})(id,contacts.items);
+			}else{
+				posts.orderByKey().startAt($scope.lastId).limitToFirst(21).on("value", function(snapshot) {
+					$scope.loading = false;
+					var currentObj = snapshot.val();
+					var array = $.map(currentObj, function(value, index) {
+							return [value];
+					});
+
+					delete currentObj[$localStorage.account.userId];
+
+					var arr = [];
+					 for(var key in currentObj){
+							currentObj[key].key = key;
+							arr.push(currentObj[key]);
+						}
+						arr.shift();
+						var contacts = {
+							itemsArr: arr,
+							items: currentObj
+						}
+
+						for(var id in contacts.items){
+						 //check to see if there is a like on this post
+						 (function(id, items){
+							 engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:id }).then(function(partnered){
+								items.partnered = partnered;
+							});
+						})(id, contacts.items[id]);
+						}
+						console.log(contacts.itemsArr);
+						$scope.people = $scope.people.concat(contacts.itemsArr);
+						console.log($scope.people);
+						$scope.lastId = $scope.people[$scope.people.length - 1].key;
+
+						if ( array.length != 20 ) {
+							 $scope.noMoreItemsAvailable = true;
+						}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+					$scope.$apply();
+				});
 			}
-			$scope.people = contacts.items;
-			console.log($scope.people);
-		});
+		};
 
 		$scope.openPopover = function($event) {
 			 $scope.fullscreenPopover.show($event);
 		};
 
+		$scope.modeType = $stateParams.mode;
 		$scope.closePopover = function($event) {
 			 $scope.fullscreenPopover.hide();
 		};
@@ -87,13 +130,6 @@ angular.module('module.view.partners', [])
 		                    }
 	        }
 
-	        $scope.news = {
-	            type: 'image',
-	            items: postService.getNews()
-	        }
-
-
-
 			$scope.togglePartner = function(partnerId){
 					var partner = $scope.people;
  				   if(!partner){
@@ -113,7 +149,7 @@ angular.module('module.view.partners', [])
 	        };
 
 	       $scope.gotoBrowse = function () {
-	                    $state.go('tabs.news');
+	                    $state.go('tabs.contacts');
 
 	        };
 
@@ -128,7 +164,7 @@ angular.module('module.view.partners', [])
 
 					$scope.browse = function () {
 						$scope.closePopover();
-							$state.go('tabs.news');
+							$state.go('tabs.contacts');
 					};
 
 					$scope.explore = function () {

@@ -54,19 +54,16 @@ angular.module('service.users', [])
           return myPartnersPromise.orderByKey().limitToFirst(20).once("value").then(function(snapshot) {
              var obj = {};
              var myPartners = snapshot.val();
-             console.log(myPartners);
              if (myPartners) {
                 var accountsPromise = firebase.database().ref(['accounts'].join('/'));
                 return accountsPromise.once('value').then(function(snapshot){
                   var accounts = snapshot.val();
-                  console.log(accounts);
                   var key;
                   if(accounts){
                     for(key in myPartners){
                       obj[key] = accounts[key].posts;
                       //Goes back to the account table and adds posts table to the id that matches
                     }
-                    console.log(obj[key]);
                     return obj[key];
                   }
                   return obj[key];

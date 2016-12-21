@@ -34,30 +34,51 @@ angular.module('service.post', [])
                 });
           };
 
+          this.createComment = function (data) {
+              //create a location in the table
+              var obj = {
+  								"comment": data.comment,
+  								"created": firebase.database.ServerValue.TIMESTAMP,
+  								"userPhoto": $localStorage.account.userPhoto,
+  								"userName": $localStorage.account.userName,
+  								"state": {
+  										"actionable": true,
+  										"visible": true,
+  										"active": true
+  								}
+              };
 
-        this.createComment = function (data) {
-            //create a location in the table
-            var obj = {
-								"comment": data.comment,
-								"created": firebase.database.ServerValue.TIMESTAMP,
-								"userPhoto": $localStorage.account.userPhoto,
-								"userName": $localStorage.account.userName,
-								"state": {
-										"actionable": true,
-										"visible": true,
-										"active": true
-								}
-            };
+              var db = firebase.database().ref(['engagementComments', 'post', data.postId].join('/'));
+              var key = db.push(obj).key;
+  						return db.child(key).once('value').then(function(snapshot){
+  							var data = snapshot.val();
+  							if(data){
+  								return data;
+  							}
+  						});
+          };
 
-            var db = firebase.database().ref(['engagementComments', data.postId].join('/'));
-            var key = db.push(obj).key;
-						return db.child(key).once('value').then(function(snapshot){
-							var data = snapshot.val();
-							if(data){
-								return data;
-							}
-						});
-        };
+        // this.createComment = function (data) {
+        //     //create a location in the table
+        //     var obj = {
+				// 				"comment": data.comment,
+				// 				"created": firebase.database.ServerValue.TIMESTAMP,
+				// 				"userPhoto": $localStorage.account.userPhoto,
+				// 				"userName": $localStorage.account.userName,
+				// 				"state": {
+				// 						"actionable": true,
+				// 						"visible": true,
+				// 						"active": true
+				// 				}
+        //     };
+        //     var db = firebase.database().ref();
+        //     var posts = db.child('engagementComments');
+        //     var postsKey = posts.push(obj).key;
+        //     var userId = firebase.auth().currentUser.uid;
+        //     var updates = {};
+        //     updates['/engagementComments/' + '/' + 'post'   data.postId + '/' + postsKey] = obj;
+        //     return firebase.database().ref().update(updates);
+        // };
 
         this.getPlans = function (plansId) {
             var plans = (plansId) ? firebase.database().ref('plans/' + plansId) : firebase.database().ref('plans');
@@ -93,7 +114,7 @@ angular.module('service.post', [])
         };
 
         this.getComments = function (postId,userId) {
-            var comments = (postId) ? firebase.database().ref(['engagementComments', postId,userId].join('/')) : firebase.database().ref('engagementComments');
+            var comments = (postId) ? firebase.database().ref(['engagementComments', 'post', postId].join('/')) : firebase.database().ref('engagementComments');
             return comments.once('value').then(function (snapshot) {
                   var currentObj = snapshot.val();
                   if (currentObj) {
@@ -102,6 +123,39 @@ angular.module('service.post', [])
                   return undefined;
               });
         };
+
+        this.getLikes = function (postId,userId) {
+            var comments = (postId) ? firebase.database().ref(['engagementLikes', 'post', postId].join('/')) : firebase.database().ref('engagementComments');
+            return comments.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
+        this.getCommits = function (postId,userId) {
+            var comments = (postId) ? firebase.database().ref(['engagementCommits', 'post', postId].join('/')) : firebase.database().ref('engagementComments');
+            return comments.once('value').then(function (snapshot) {
+                  var currentObj = snapshot.val();
+                  if (currentObj) {
+                      return currentObj;
+                  }
+                  return undefined;
+              });
+        };
+
+        // this.getComments = function (postId) {
+        //     var comments = firebase.database().ref(['engagementComments', 'posts', postId].join('/'));
+        //     return comments.once('value').then(function (snapshot) {
+        //           var currentObj = snapshot.val();
+        //           if (currentObj) {
+        //               return currentObj;
+        //           }
+        //           return undefined;
+        //       });
+        // };
 
         this.getCommentsNumber = function (postId) {
             var comments = (postId) ? firebase.database().ref(['engagementComments', postId].join('/')) : firebase.database().ref('engagementComments');

@@ -1,5 +1,5 @@
 
-angular.module('full_starter', ['ionic','firebase','angular.filter', 'ion-floating-menu','dcbImgFallback','views.glory','ngStorage', 'ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
+angular.module('full_starter', ['ionic','firebase','angular.filter', 'dcbImgFallback','views.glory','ng-mfb','ion-floating-menu','ngStorage', 'ngCordovaOauth', 'ngCordova', 'full_starter.controllers', 'full_starter.routes', 'full_starter.services', 'full_starter.directives','full_starter.factory'])
 
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.
@@ -9,6 +9,7 @@ angular.module('full_starter', ['ionic','firebase','angular.filter', 'ion-floati
     successIcon: "ion-happy-outline",
     errorIcon: "ion-sad-outline",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
+    success: "Congratulations! Keep up the great work.",
     emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email address.",
     userNameAlreadyExists: "Sorry, but an account with that username already exists. Please register with a different username.",
     accountAlreadyExists: "Sorry, but an account with the same credential already exists. Please check your account and try again.",
@@ -34,12 +35,12 @@ angular.module('full_starter', ['ionic','firebase','angular.filter', 'ion-floati
 
   .run(['$ionicPlatform', function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
       if (window.StatusBar) {
-        // org.apache.cordova.statusbar required
-        StatusBar.styleDefault();
+        if (ionic.Platform.isAndroid()) {
+          StatusBar.backgroundColorByHexString("#D3D3D3");
+        } else {
+          StatusBar.backgroundColorByHexString("#D3D3D3");
+        }
       }
 
       if (window.cordova && ionic.Platform.isIOS()) {

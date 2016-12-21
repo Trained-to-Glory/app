@@ -1,4 +1,4 @@
-<ion-view hide-nav-bar = "true">
+<ion-view hide-nav-bar = "true" cache-view="false">
 
   <ion-nav-bar>
     <ion-nav-back-button style="display: block">
@@ -14,35 +14,42 @@
   </ion-header-bar>
 
     <ion-content class="has-header" style="top: 0;" padding="false">
-      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;">
-        <div class="item item-image" style="max-height: 500px;">
-            <img ng-src="{{post.photo}}" fallback-src = "img/grayBackground.jpg">
+      <div class="list card" style="box-shadow: none;margin-left:0;margin-right:0;" ng-show="loading == true">
+        <div class="item item-image">
+          <!-- <ion-spinner icon="spiral"></ion-spinner> -->
+          <img src="img/grayBackground.jpg" style="height: 500px;left: 0; position: absolute">
+        </div>
+      </div>
+      <div class="list card post" style="box-shadow: none;margin-left:0;margin-right:0;">
+        <div class="item item-image" style="max-height: 500px;background-color: gray !important;height: 500px;">
+            <img ng-src="{{post.photo}}">
           </div>
         <div class="item item-avatar" style="border: none; padding-bottom: 0px;">
-          <img ng-src="{{post.avatar}}" style="background-color: transparent" fallback-src="img/profile-picture.png">
+          <img ng-src="{{post.avatar}}" style="background-color: transparent" fallback-src="img/profile-picture.png" ui-sref="friend({contact:post.createdBy})">
           <div class="button button-dark button-clear icon ion-android-more-vertical" style="display: block;right: 0;position: fixed;margin-top: -11px" ng-click="showPopup()"></div>
-          <h2 class = "lead" style="font-weight: 400 !important;">{{post.owner}}</h2>
+          <h2 class = "lead" style="font-weight: 400 !important;" ui-sref="friend({contact:post.createdBy})">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>
         </div>
-        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;" ng-click="toggleCommit(post.key,profile.userId)">
-          {{post.state.totalCommits}} Commit
+        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;color: black;" ng-click="toggleCommit(post.key,profile.userId)">
+          {{commitsLength}} Commits
         </a>
-        <a class="item" ng-click="toggleLike(posts.key, profile.userId)" style = "display: inline-flex;font-size: 14px;border: none;letter-spacing: 1px;">
-          {{post.state.totalLikes}} Likes
+        <a class="item" ng-click="toggleLike(posts.key, profile.userId)" style = "display: inline-flex;font-size: 14px;border: none;color: black;letter-spacing: 1px;">
+          {{likesLength}} Likes
         </a>
-        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;">
+        <a class="item" style = "display: inline-flex;font-size: 14px; border: none;letter-spacing: 1px;color: black;" ui-sref="comments({post: postId, type: 'Comment' })">
           {{commmentsNumber}} Comments
         </a>
       </div>
 
       <div class="item comments" style="margin-bottom: 21vh;border-top: 1px solid rgba(128, 128, 128, 0.43);margin-top: -18px;border-bottom: none;">
-          <div class="item item-avatar" ng-repeat="comment in comments | limitTo:5" ng-if="comment.comment" style="border: none;font-weight: 300;">
+          <div class="item item-avatar" ng-repeat="comment in comments" ng-if="comment.comment" style="border: none;font-weight: 300;">
               <img ng-src="{{comment.userPhoto}}" fallback-src="img/profile-picture.png"/>
-              <h2 class="text-small">{{comment.userName}}</h2>
+              <h2 class = "lead" style="font-weight: 400 !important;">{{comment.userName}}</h2>
               <p class="text-smaller" style = "font-size: 14px !important;">{{comment.comment}}</p>
+              <p class="text-smaller" am-time-ago="{{comment.created}}"></p>
           </div>
           <p ng-if="commmentsNumber > 5" class="text-smaller" style="margin-left: 20px;"><a ui-sref="comments({post: postId })" style="color:black">View more</a></p>
           <p ng-if="commmentsNumber == 0" ui-sref="comments({post: postId })" >No comments. be the first to <a ui-sref="comments({post: postId })">leave a comment</a></p>

@@ -6,6 +6,7 @@
         'mwl.calendar',
         'ngCordova',
         'ngLodash',
+        'angularMoment',
         'angular.filter',
         'module.view.login',
         'module.view.communicate',
@@ -38,3 +39,14 @@
     ])
 
 })();
+
+moment.locale('en', {
+    calendar: {
+        lastDay: '[Yesterday]',
+        sameDay: '[Today]',
+        nextDay: '[Tomorrow, ] dddd Do MMM',
+        lastWeek: '[Last] dddd Do MMM',
+        nextWeek: 'dddd Do MMM',
+        sameElse: 'L'
+    }
+})

@@ -2,6 +2,18 @@ angular.module('module.view.friend', [])
 	.controller('friendCtrl',['$scope','$log','engagementService','$localStorage', '$rootScope','$state','postService', 'usersService','$stateParams',
 		 function($scope,$log,engagementService,$localStorage, $rootScope,$state,postService, usersService,$stateParams) {
 		 $scope.profile = $localStorage.account;
+		 usersService.get($stateParams.contact).then(function(results) {
+ 			//create a local object so we can create the datastructure we want
+ 			var ones = {
+ 					items: results
+ 			};
+ 			engagementService.partnered({category:'partners', categoryId:$localStorage.account.userId, userId:$stateParams.contact }).then(function(partnered){
+ 			 $scope.ones.partnered = partnered;
+ 		 });
+ 			$scope.ones = ones.items;
+ 			$scope.$apply();
+ 				//check to see if there is a like on this post
+ 		});
 
 		$scope.togglePartner = function(partnerId){
 				var partner = $scope.ones;
@@ -84,27 +96,6 @@ angular.module('module.view.friend', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		};
 
-		usersService.get($stateParams.contact).then(function(results) {
-			//create a local object so we can create the datastructure we want
-			var ones = {
-					items: results
-			};
-			 for(var id in ones.items){
-			  //check to see if there is a like on this post
-		  	(function(id, items){
-			 	 engagementService.partnered({category:'partners',categoryId:id, userId: $stateParams.contact}).then(function(partnered){
-					 items.committed = partnered;
-					 console.log(partnered);
-			 	 });
-			  })(id, ones.items[id]);
-			 }
-			$scope.ones = ones.items;
-			console.log(ones.items.partnered);
-			console.log($scope.ones);
-			$scope.$apply();
-				//check to see if there is a like on this post
-		});
-
 		usersService.getUserPost($stateParams.contact).then(function(results) {
 			//create a local object so we can create the datastructure we want
 			//so we can use it to show/hide, toggle ui items
@@ -172,14 +163,9 @@ angular.module('module.view.friend', [])
 					itemsArr: arr
 			};
 
-			for(var id in contacts.items){
-			 //check to see if there is a like on this post
-			 (function(id, items){
-				 engagementService.partnered({category:'partners', categoryId:$stateParams.contact, userId:id }).then(function(partnered){
-	 				items.partnered = partnered;
+				 engagementService.partnered({category:'partners', categoryId:$stateParams.contact, userId: $localStorage.account.user}).then(function(partnered){
+	 				$scope.contacts.partnered = partnered;
 	 			});
-			})(id, contacts.items[id]);
-			}
 
 			$scope.contacts = contacts;
 			console.log(contacts);

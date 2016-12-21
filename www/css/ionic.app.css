@@ -3420,47 +3420,71 @@ body.grade-c {
 
 .scroll-bar {
   position: absolute;
-  z-index: 9999; }
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important}
 
 .ng-animate .scroll-bar {
-  visibility: hidden; }
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important}
 
 .scroll-bar-h {
   right: 2px;
   bottom: 3px;
   left: 2px;
-  height: 3px; }
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important;
+  height: 3px;}
   .scroll-bar-h .scroll-bar-indicator {
-    height: 100%; }
+    height: 100%;
+    background: rgba(0, 0, 0, 0) !important;
+    color: rgba(0, 0, 0, 0) !important;}
 
 .scroll-bar-v {
   top: 2px;
   right: 3px;
   bottom: 2px;
-  width: 3px; }
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important;
+  width: 3px;}
   .scroll-bar-v .scroll-bar-indicator {
-    width: 100%; }
+    width: 100%;
+    color: rgba(0, 0, 0, 0) !important;
+    background: rgba(0, 0, 0, 0) !important;}
+    .scroll-bar-indicator
+      {
+      	display: none;
+      }
 
 .scroll-bar-indicator {
   position: absolute;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important;
   opacity: 1;
   -webkit-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear; }
   .scroll-bar-indicator.scroll-bar-fade-out {
-    opacity: 0; }
+    opacity: 0;
+    background: rgba(0, 0, 0, 0) !important;
+    color: rgba(0, 0, 0, 0) !important;}
 
 .platform-android .scroll-bar-indicator {
-  border-radius: 0; }
+  border-radius: 0;
+  color: rgba(0, 0, 0, 0) !important;
+  background: rgba(0, 0, 0, 0) !important;}
 
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
-  background: #aaa; }
+  background: rgba(0, 0, 0, 0) !important;
+  color: rgba(0, 0, 0, 0) !important;}
   .grade-b .scroll-bar-indicator.scroll-bar-fade-out,
   .grade-c .scroll-bar-indicator.scroll-bar-fade-out {
     -webkit-transition: none;
-    transition: none; }
+    transition: none;
+    background: rgba(0, 0, 0, 0) !important;
+    color: rgba(0, 0, 0, 0) !important;}
 
 ion-infinite-scroll {
   height: 60px;
@@ -4030,8 +4054,9 @@ a.subdued {
       color: gray;
     	font-weight:300;
     	margin:0;
-      margin-left: 20px;
+      margin-left: 0;
       font-size: 20px;
+      margin-top: .5%;
       transform: translate3d(0px, 0px, 0px) !important;
       left: 31px !important;}
     .bar .title.title-right {
@@ -4508,7 +4533,6 @@ a.subdued {
 
 .tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {
   margin-top: 0px;
-  border-style: solid;
   border-width: 2px 0 0 0;
   border-top: none
   border-color: #F10707; }
@@ -5032,7 +5056,7 @@ ion-tabs.tabs-striped.tabs-color-active-calm .tab-item.tab-item-active, ion-tabs
 ion-tabs.tabs-color-active-assertive .tab-item {
   color: #444; }
   ion-tabs.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-color-active-assertive .tab-item.activated {
-    color: #C91914; }
+    color: #F10707; }
 
 ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-assertive .tab-item.activated {
   /*border-color: #F10707;*/
@@ -5084,9 +5108,9 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
     -o-transition: color .1s ease;
     transition: color .1s ease; }
     .tabs-top.tabs-striped .tab-item.tab-item-active, .tabs-top.tabs-striped .tab-item.active, .tabs-top.tabs-striped .tab-item.activated {
-      margin-top: 1px;
-      border-width: 0px 0px 3px 0px !important;
-      border-style: solid; }
+      margin-top: .1em;
+      border-width: 0em 0em .3em 0em !important;
+      border-bottom: .5px solid #F10707;}
       .tabs-top.tabs-striped .tab-item.tab-item-active > .badge, .tabs-top.tabs-striped .tab-item.tab-item-active > i, .tabs-top.tabs-striped .tab-item.active > .badge, .tabs-top.tabs-striped .tab-item.active > i, .tabs-top.tabs-striped .tab-item.activated > .badge, .tabs-top.tabs-striped .tab-item.activated > i {
         margin-top: -1px; }
     .tabs-top.tabs-striped .tab-item .badge {
@@ -5161,7 +5185,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   display: block;
   margin: 0 auto;
   height: 32px;
-  font-size: 32px; }
+  font-size: 26px; }
 
 .tabs-icon-left.tabs .tab-item,
 .tabs-icon-left > .tabs .tab-item,
@@ -5375,7 +5399,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
     width: 60%; }
   .modal.ng-leave-active {
     bottom: 0; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) {
+  .platform-ios.platform-cordova .modal-wrapper .modal .bar-header.has-tabs-top:not(.bar-subheader) {
     height: 44px; }
     .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
       margin-top: 0; }
@@ -5388,7 +5412,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   .platform-ios.platform-cordova .modal-wrapper .modal .has-subheader {
     top: 88px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-tabs-top {
-    top: 93px; }
+    top: 44px; }
   .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top {
     top: 137px; }
   .modal-backdrop-bg {
@@ -9619,15 +9643,22 @@ a.button {
  * Platform specific tweaks
  */
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
-  height: 64px; }
+  height: 84px; }
   .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper {
-    margin-top: 19px !important; }
+    margin-top: 9px !important; }
   .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
-    margin-top: 20px; }
+    margin-top: 40px; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .tabs-top > .tabs,
 .platform-ios.platform-cordova:not(.fullscreen) .tabs.tabs-top {
-  top: 64px; }
+  top: 12px !important; }
+
+
+  .platform-ios.platform-cordova:not(.fullscreen) .tabs.icon-top  {
+    margin-top: 12px !important; }
+
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header.has-tabs-top {
+  top: 12px !important; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-header,
 .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader {
@@ -9652,6 +9683,18 @@ a.button {
 .platform-ios.platform-cordova .popover .has-header,
 .platform-ios.platform-cordova .popover .bar-subheader {
   top: 44px; }
+
+  /* iOS Specific Overrides to fix logo overlap */
+.platform-ios7.platform-cordova:not(.fullscreen) .bar-header.has-tabs-top:not(.bar-subheader) > * {
+  margin-top: 25px;
+}
+.platform-ios7.platform-cordova:not(.fullscreen) .bar-header.has-tabs-top:not(.bar-subheader) {
+  height: 90px;
+}
+.platform-ios7.platform-cordova:not(.fullscreen) .has-header {
+  top: 90px;
+}
+
 
 .platform-ios.platform-cordova .popover .has-subheader {
   top: 88px; }

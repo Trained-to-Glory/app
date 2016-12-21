@@ -20,7 +20,13 @@ angular.module('module.view.comments', [])
                     }
         };
 
+				$scope.waiting = true;
+				$scope.loading = true;
+				$scope.faster = true;
+
+
 				postService.getComments($stateParams.post).then(function(results) {
+					$scope.waiting = false;
 					$scope.comments = [];
 					for(var key in results){
 						results[key].key = key;
@@ -29,7 +35,49 @@ angular.module('module.view.comments', [])
 					var comments = {
 							items: results
 					};
+
+					var array = $.map(results, function(value, index) {
+							return [value];
+					});
+					$scope.commentsLength = array.length;
 				});
+
+				postService.getLikes($stateParams.post).then(function(results) {
+					$scope.likes = [];
+					$scope.faster = false;
+					for(var key in results){
+						results[key].key = key;
+						$scope.likes.push(results[key]);
+					}
+					var likes = {
+							items: results
+					};
+
+					var array = $.map(results, function(value, index) {
+							return [value];
+					});
+					$scope.likesLength = array.length;
+				});
+
+				postService.getCommits($stateParams.post).then(function(results) {
+					$scope.commits = [];
+					$scope.loading = false;
+
+					for(var key in results){
+						results[key].key = key;
+						$scope.commits.push(results[key]);
+					}
+					var commits = {
+							items: results
+					};
+
+					var array = $.map(results, function(value, index) {
+							return [value];
+					});
+					$scope.commitsLength = array.length;
+				});
+				$scope.viewType = $stateParams.type;
+				console.log($stateParams);
 
 
         if ($state.is('tabs.post-detail') || $state.is('tabs.commits') || $state.is('tabs.comments') || $state.is('tabs.likes')) {
@@ -65,7 +113,7 @@ angular.module('module.view.comments', [])
 				//type, category, categoryId, itemId, userId, comment,
 				$scope.createComment = function (comment) {
             //create a location in the table
-						postService.createComment({comment: comment, postId: $stateParams.post})
+						postService.createComment({comment: comment, postId: $stateParams.post, type: 'post'})
 						.then(function(results){
 							$scope.comments.push(results);
 							$scope.formData.comment = '';

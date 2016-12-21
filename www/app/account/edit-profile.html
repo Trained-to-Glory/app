@@ -1,4 +1,4 @@
-<ion-view hide-nav-bar="true" class="bg-lightgrey">
+<ion-view hide-nav-bar="true" class="bg-lightgrey" cache-view="false">
 
     <ion-header-bar style="background-color: transparent;top: 0 !important;">
         <div class="row text-center">
@@ -8,13 +8,17 @@
     </ion-header-bar>
 
     <ion-content class="profile has-header bt-grey">
-        <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid">info</p>
+        <p class="bb text-smaller padding-horizontal uppercase" style="border-bottom: 2px solid;margin-top: 8%;">info</p>
         <div class="edit padding-horizontal">
-            <label class="item item-input profile__input">
+          <label class="item item-input profile__input" ng-if = "profile.fullName">
+              <input type="text" value="{{ profile.fullName }}" name="fullName">
+              <span class="input-label">Full name</span>
+          </label>
+            <label class="item item-input profile__input" ng-if = "!profile.fullName">
                 <input type="text" value="{{ profile.firstName }}" name="firstName">
                 <span class="input-label">First name</span>
             </label>
-            <label class="item item-input profile__input">
+            <label class="item item-input profile__input" ng-if = "!profile.fullName">
                 <input type="text" value="{{ profile.lastName }}"  name="lastName">
                 <span class="input-label">Last name</span>
             </label>
