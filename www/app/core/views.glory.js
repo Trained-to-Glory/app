@@ -1394,11 +1394,11 @@ angular.module('views.glory', []).run(['$templateCache', function($templateCache
     '            <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{posts.description}}</p>\n' +
     '            <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{posts.created}}" class="font-thin"></p>\n' +
     '          </div>\n' +
-    '          <a class="item" style = "display: inline-flex;font-size: 18px;border: none;letter-spacing: 1px;">\n' +
-    '            <i class = "ion-heart" ng-class="{\'ion-heart\': !posts.liked, \'ion-heart liked-red\':posts.liked }" style="margin-right: .5em;"></i>{{posts.totalLikes}}\n' +
+    '          <a ng-class="{\'ion-heart unliked-black\': !posts.liked, \'ion-heart liked-red\':posts.liked }" ng-click="toggleLike(posts.key, userId)">\n' +
+    '            {{posts.totalLikes}}\n' +
     '          </a>\n' +
-    '          <a class="item" ng-click="toggleLike(posts.key, userId)" style = "display: inline-flex;font-size: 18px; border: none;letter-spacing: 1px;">\n' +
-    '            <i class = "ion-ios-chatbubble" style="margin-right: .5em;"></i>{{posts.totalComments}}\n' +
+    '          <a class="ion-ios-chatbubble" style = "display: inline-flex;font-size: 18px; border: none;letter-spacing: 7px;line-height: 1;margin-left: 1em;color: black;">\n' +
+    '            {{posts.totalComments}}\n' +
     '          </a>\n' +
     '        </div>\n' +
     '        <!--connect-->\n' +

@@ -897,7 +897,23 @@ h2.lead
 }
 
 .liked-red {
+	display: inline-flex;
 	color: #F10707;
+	font-size: 18px;
+	border: none;
+	letter-spacing: 7px;
+	line-height: 1;
+	margin-left: 1em;
+}
+
+.unliked-black{
+	display: inline-flex;
+	color:black;
+	font-size: 18px;
+	border: none;
+	letter-spacing: 7px;
+	line-height: 1;
+	margin-left: 1em;
 }
 
 .c2.menu:first-child
