@@ -285,7 +285,7 @@ angular.module('service.engagements', [])
 
         this.liked = function (data) {
             var type = 'engagementLikes';
-            var data = get(type, data.category, data.categoryId, data.itemId);
+            var data = get(type, data.category, data.categoryId, data.userId);
             //check if engagement item is already in hash
             return data.then(function(result){
                 return (result && result.state)?result.state.active: false;

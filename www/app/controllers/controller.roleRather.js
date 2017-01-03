@@ -1,9 +1,10 @@
 angular.module('module.view.roleRather', [])
-	.controller('roleRatherCtrl', ['$scope','$rootScope','$ionicHistory','$state','interestService','$localStorage', 'engagementService',
-		function($scope,$rootScope,$ionicHistory,$state,interestService,$localStorage, engagementService) {
+	.controller('roleRatherCtrl', ['$scope','$rootScope','$ionicHistory','$state','interestService','$localStorage', '$stateParams', 'engagementService',
+		function($scope,$rootScope,$ionicHistory,$state,interestService,$localStorage,$stateParams, engagementService) {
 		$scope.data = {};
 		$scope.data.editProfile = $state.prevScope == 'user' ? true : false;
 
+		$scope.hideNext = $stateParams.location;
 		$scope.goBack = function (ui_sref) {
 					var currentView = $ionicHistory.currentView();
 					var backView = $ionicHistory.backView();
@@ -20,6 +21,8 @@ angular.module('module.view.roleRather', [])
 							$state.go(ui_sref);
 					}
 			}
+
+			$scope.hideNext = $stateParams.location;
 
 			$scope.limit = 10;
 

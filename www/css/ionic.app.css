@@ -4051,11 +4051,11 @@ a.subdued {
     .bar .title.title-left {
       text-align: left;
       font-weight: 400 !important;
-      color: gray;
+      color: black;
     	font-weight:300;
     	margin:0;
-      margin-left: 0;
-      font-size: 20px;
+      margin-left: 1em;
+      font-size: 18px;
       margin-top: .5%;
       transform: translate3d(0px, 0px, 0px) !important;
       left: 31px !important;}
@@ -4090,7 +4090,7 @@ a.subdued {
       font-weight: 300;
       font-size: 17px; }
       .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before, .bar button.button-clear .icon:before, .bar button.button-clear.icon:before, .bar button.button-clear.icon-left:before, .bar button.button-clear.icon-right:before {
-        font-size: 32px;
+        font-size: 26px;
         line-height: 32px; }
     .bar .button.back-button, .bar button.back-button {
       display: block;
@@ -7806,7 +7806,9 @@ input[type="color"] {
   width: 100%; }
 
 textarea {
-  padding-left: 0; }
+  padding-left: 0;
+  padding-top: .25em;
+  padding-bottom: .25em;}
   textarea::-moz-placeholder {
     color: #aaaaaa; }
   textarea:-ms-input-placeholder {

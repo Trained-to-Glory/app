@@ -7,7 +7,7 @@
 
   <ion-header-bar align-title="left" class="bar bar-header has-tabs-top" style="top: 0 !important;background: #fafafc !important;">
     <button style="display: block; transition-duration: 0ms;" ng-click="$ionicGoBack()" class="button back-button hide buttons  button-clear header-item">
-      <i class="icon ion-ios-arrow-back"></i>
+      <i class="icon ion-android-arrow-back"></i>
       <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
     </button>
     <div class="title title-left header-item" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">Post</div>
@@ -30,12 +30,8 @@
           <h2 class = "lead" style="font-weight: 400 !important;" ui-sref="friend({contact:post.createdBy})">{{post.owner}}</h2>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.description}}</p>
           <p style="color:black !important;letter-spacing: 1.5px;font-size: 12px;" class="font-thin">{{post.location}}</p>
-          <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px" class="font-thin">{{post.postType}}</p>
           <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{post.created}}" class="font-thin"></p>
         </div>
-        <a class="item" ng-if = "post.postType === 'Event'" style = "display: inline-flex;font-size:14px;border: none;letter-spacing: 1px;color: black;" ng-click="toggleCommit(post.key,profile.userId)">
-          {{commitsLength}} Commits
-        </a>
         <a class="item" ng-click="toggleLike(posts.key, profile.userId)" style = "display: inline-flex;font-size: 14px;border: none;color: black;letter-spacing: 1px;">
           {{likesLength}} Likes
         </a>
@@ -55,9 +51,9 @@
           <p ng-if="commmentsNumber == 0" ui-sref="comments({post: postId })" >No comments. be the first to <a ui-sref="comments({post: postId })">leave a comment</a></p>
       </div>
     </ion-content>
-    <ion-footer-bar class="bar-light item-input-inset" style="border-top:1px solid #ccc;" ng-form="chatForm" novalidate>
+    <ion-footer-bar class="bar-light item-input-inset" style="border-top:1px solid #ccc;padding: 0" ng-form="chatForm" novalidate>
         <label class="item-input-wrapper no-bg">
-        <textarea id="textChat" ng-model="formData.comment" placeholder="Comment" required minlength="1" maxlength="1500" style="width:100%;resize: none;" msd-elastic></textarea>
+        <textarea id="textChat" ng-model="formData.comment" placeholder="Add a comment" required minlength="1" maxlength="1500" style="width:100%;resize: none;line-height: 3px;" msd-elastic></textarea>
     </label>
       <button class="button button-clear button-icon ion-android-send" ng-click="createComment(formData.comment)"></button>
     </button>

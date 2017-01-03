@@ -12,6 +12,14 @@
     overflow: hidden;
 }
 
+.explore-name {
+    color: black;
+    border: .5px solid gray;
+    margin: 5px;
+    height: 40px;
+    line-height: 27px
+}
+
 .multi-bg-outer-goals {
     /* position: relative; */
     /* background-color: rgba(199, 199, 199, 0.7); */

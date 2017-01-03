@@ -59,23 +59,6 @@ angular.module('module.view.comments', [])
 					$scope.likesLength = array.length;
 				});
 
-				postService.getCommits($stateParams.post).then(function(results) {
-					$scope.commits = [];
-					$scope.loading = false;
-
-					for(var key in results){
-						results[key].key = key;
-						$scope.commits.push(results[key]);
-					}
-					var commits = {
-							items: results
-					};
-
-					var array = $.map(results, function(value, index) {
-							return [value];
-					});
-					$scope.commitsLength = array.length;
-				});
 				$scope.viewType = $stateParams.type;
 				console.log($stateParams);
 
@@ -84,22 +67,6 @@ angular.module('module.view.comments', [])
             $stateParams.post === null ? $scope.post = postService.getRandomObject($scope.news.items) : $scope.post = $stateParams.post;
 
         }
-
-        $scope.gotoLikes = function () {
-                    $state.go('tabs.likes');
-                    $ionicHistory.nextViewOptions({
-                        disableAnimate: true,
-                        disableBack: true
-                    });
-        };
-
-        $scope.gotoCommit = function () {
-                    $state.go('tabs.commits');
-                    $ionicHistory.nextViewOptions({
-                        disableAnimate: true,
-                        disableBack: true
-                    });
-        };
 
 				$scope.activateCommentMode = function(){
 					$scope.commentMode = true;

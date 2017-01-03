@@ -90,6 +90,7 @@ angular.module('module.view.news', [])
                 }
 
                 $scope.totalPost.photos = $scope.totalPost.photos.concat(news.itemsArr);
+                console.log($scope.totalPost.photos);
                 $scope.totalPostItems = news.items;
                 $scope.refreshId = $scope.totalPost.photos[$scope.totalPost.photos.length - 1].key;
                 $scope.lastId = $scope.totalPost.photos[$scope.totalPost.photos.length - $scope.totalPost.photos.length].key;
@@ -395,10 +396,12 @@ $scope.totalPost.mentor = $scope.totalPost.mentor.concat($scope.mentorImages);
         };
 
 
-        $scope.toggleLike = function(postId, userId){
+        $scope.toggleLike = function(key, userId){
           var posts = $scope.totalPostItems;
-          if(postId in posts){
-            var post = $scope.totalPostItems[postId];
+          console.log(posts);
+          if(key in posts){
+            var post = $scope.totalPostItems[key];
+            console.log(post);
             var actionable = post.state.actionable;
             if(actionable){
               post.liked = !post.liked;
@@ -408,7 +411,7 @@ $scope.totalPost.mentor = $scope.totalPost.mentor.concat($scope.mentorImages);
               }else if(post.totalLikes > 0){
                 --post.totalLikes;
               }
-              return engagementService[state]({category:'post', categoryId:postId, userId: $sce.userId});
+              return engagementService[state]({category:'post', categoryId:key, userId: $sce.userId});
             }
           }
             return false;

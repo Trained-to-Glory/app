@@ -5,9 +5,23 @@
         <button class="button button-dark button-clear icon ion-android-more-vertical" style="margin-right: 10px;" style="z-index: 999" ui-sref="settings"></button>
     </ion-nav-buttons>
 
-    <ion-content style="top:9px !important" on-swipe-left="onSwipeLeft()" on-swipe-right="onSwipeRight()">
+    <ion-content style="top:9px !important">
+
       <ion-refresher on-refresh="doRefresh()" icon="spiral" class="spinner-positive"></ion-refresher>
-      <div class="list list-inset" style="top: 60px;margin-bottom: 20px;z-index: 1; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
+
+      <ion-scroll direction="x"  style="margin-top: 5em" ng-if="view.type === 1">
+        <div class="row" style="padding-top: 0;height: 16em;width: 80em;">
+          <div ui-sref="post-detail({post:posts.key})" class="col item-image card" ng-repeat = "connections in news" style="padding: 0;margin-right: 2px;" ng-if="connections.photo">
+            <img ng-src="{{connections.photo}}" fallback-src = "img/grayBackground.jpg" />
+          </div>
+        </div>
+      </ion-scroll>
+
+      <!-- <div ng-show="loading == true" style="text-align:center;margin-top:80px;">
+        <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
+      </div> -->
+
+      <div class="list list-inset" style="margin-bottom: 20px;z-index: 1;margin-top: 1em; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);">
         <label class="item item-input" ng-click="view.type = 2">
           <i class="icon ion-ios-search placeholder-icon" style="font-size: 24px;color: rgba(17, 17, 17, 0.54);display: inline-flex"></i>
           <input type="text" ng-model="lookUp" class="search-people" placeholder="Search People" style = "margin-left: 2%;color: gray; font-size: 16px;width: 75%;padding-right:0px;display: inline-flex;height: 2.25em;line-height: 2.28em;">
@@ -16,7 +30,7 @@
         <i  ng-if = "view.type === 2" class = "ion-ios-close-empty placeholder-icon" style="font-size: 24px;font-size: 32px;right: 12px;position: absolute;z-index: 999;top: 9px;" ng-click="clearSearch()"></i>
       </a>
       </div>
-      <div ng-if="view.type === 2" style="top: 120px;margin-top: 80px;">
+      <div ng-if="view.type === 2" style="top: 120px;">
         <div class="list card" style="background: transparent; box-shadow: none;">
             <div class="item item-avatar item-text-wrap" style="border-color: #fafafc;" ng-repeat="user in users | fuzzyBy: 'userName': lookUp " ui-sref="friend({contact: user.userId})">
                 <img ng-src="{{user.userPhoto}}" fallback-src="img/profile-picture.png">
@@ -25,36 +39,27 @@
         </div>
       </div>
 
-      <div ng-show="loading == true" style="text-align:center;margin-top:80px;">
-        <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
-      </div>
+      <div style="border: none;font-weight: 300 !important;color: #444;font-size: 14px;" class = "item item-divider">People you may like</div>
+      <ion-scroll direction="x" ng-if="view.type === 1">
+        <div class="row" style="padding-top: 0; margin-left: .25em;">
+          <div ui-sref="post-detail({post:posts.key})" class="col item-image" ng-repeat = "user in fewUsers | limitTo: 7" style="padding: 0;margin-right: 1.5em;min-width: 65px; min-height: 65px;margin-top: .4em" ng-if="user.userPhoto && !users.partnered">
+            <img ng-src="{{user.userPhoto}}" style = " border-radius: 50%;max-height: 65px; max-width: 65px;" fallback-src = "img/profile-picture.png" />
+          </div>
+        </div>
+      </ion-scroll>
 
-      <div ng-if="view.type === 1" style="top: 120px;margin-top: 80px;">
-        <div style="height:100%;margin-top: 50px;" >
-            <div class="row row-no-padding category-2-outer" ng-repeat="value in news" ng-if="$index % 2 == 0 && news[$index].photo">
-              <div class="col" style="padding: 5px !important">
-                <a ui-sref="post-detail({post:news[$index].key})">
-                  <div class="category-2-item-wrapper">
-                    <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" style="background-image: url({{news[$index].photo}}); background-color: transparent;z-index:5">
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="col" style="padding: 5px !important ">
-                <a ui-sref="post-detail({post:news[$index+1].key})">
-                  <div class="category-2-item-wrapper">
-                    <div class="category-2-item-content">
-                      <div class = "multi-bg-outer" style="background-image: url({{news[$index+1].photo}}); background-color: transparent;z-index:5">
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
+      <div style="border: none;font-weight: 300 !important;color: #444;font-size: 14px;margin-top: 1em;" class = "item item-divider" ng-if ="items.photo">Goals</div>
+      <div class="row" style="margin-left: .25em;margin-left: .8em;padding-top: 0;" ng-repeat = "items in viewGoals" ng-if ="items.photo" ui-sref="plan-detail({plan:items.key})">
+        <div class="item item-body col-md-12" style="padding: 0;height: 12em;border: none;">
+          <img style="float:left;width: 65%;margin-left: 0;margin-right:10px;padding-bottom: 0;padding-top: 0;" class="full-image card" ng-src="{{items.photo}}">
+          <p style="font-size: 24px;font-weight: bold !important; color: #444 !important;margin-bottom: .25em;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{items.owner}}</p>
+          <p style="margin-top: 0; color: #444 !important;margin-right: 1em;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{items.description}}</p>
+          <p style="margin-top: 5em;margin-bottom: 0;"><i class = "ion-heart" style="margin-right: .5em;"></i>{{items.totalLikes}}</p>
+          <p style="margin-top: 0;margin-bottom: 0;"><i class = "ion-checkmark" style="margin-right: .5em;"></i>{{items.totalCommits}}</p>
+          <p style="margin-top: 0;"><i class = "ion-ios-chatbubble" style="margin-right: .5em;"></i>{{items.totalComments}}</p>
         </div>
       </div>
-        <ion-infinite-scroll ng-if="!noMoreItemsAvailable" icon="spiral" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+
+        <ion-infinite-scroll ng-if="!noMoreItemsAvailable" icon="spiral" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

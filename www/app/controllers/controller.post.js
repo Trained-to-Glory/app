@@ -147,6 +147,38 @@ angular.module('module.view.post', [])
             return false;
         };
 
+				$scope.toggleGoalCommit = function(postId, userId){
+						var post = $stateParams.plan;
+						var actionable = $stateParams.actionable.actionable;
+						if(actionable){
+							post.committed = !post.committed;
+							var state = (post.committed)?'commit':'decommit';
+							if(!post.committed){
+								++post.totalCommits;
+							}else if(post.totalCommits > 0){
+								--post.totalCommits;
+							}
+							return engagementService[state]({category:'plans', categoryId:postId, userId: $localStorage.account.userId});
+						}
+						return false;
+				};
+
+				$scope.toggleGoalLike = function(postId, userId){
+            var post = $stateParams.plan;
+            var actionable = $stateParams.actionable.actionable;
+            if(actionable){
+              post.liked = !post.liked;
+              var state = (post.liked)?'like':'unlike';
+              if(!post.liked){
+                ++post.totalLikes;
+              }else if(post.totalLikes > 0){
+                --post.totalLikes;
+              }
+              return engagementService[state]({category:'plans', categoryId:postId, userId: $localStorage.account.userId});
+            }
+            return false;
+        };
+
 				$scope.closePopover = function($event) {
 					 $scope.menuPopover.hide();
 				};

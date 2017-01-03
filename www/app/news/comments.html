@@ -8,9 +8,8 @@
     <ion-content class="has-header">
 
         <div class="row text-center">
-            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Commits'}" ng-click="viewType = 'Commits'">Commits</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Likes'}" ng-click="viewType = 'Likes'">Likes</div>
-            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Comment'}" ng-click="viewType = 'Comment'">Comments</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Likes'}" ng-click="viewType = 'Likes'" style="font-size: 1.35em !important;">Likes</div>
+            <div class="col font-thin" ng-class="{'text-medium balanced' : viewType === 'Comment'}" ng-click="viewType = 'Comment'" style="font-size: 1.35em !important;">Comments</div>
         </div>
         <div class="list" ng-if = "viewType == 'Comment'">
           <div ng-show="waiting == true" style="text-align:center;margin-top:40px;">
@@ -37,24 +36,13 @@
             </div>
         </div>
 
-        <div class="list" ng-if = "viewType == 'Commits'">
-          <div ng-show="loading == true" style="text-align:center;margin-top:40px;">
-            <ion-spinner icon="spiral" class="spinner-positive"></ion-spinner>
-          </div>
-          <div ng-if = "commitsLength == 0" style="text-align: center;color: black;margin-top: 20px;">There are no commits on this post.</div>
-            <div class="item item-avatar item-button-right followers" ng-repeat="commiter in commits" style = "border: none">
-                <img ng-src="{{commiter.userPhoto}}" fallback-src="img/profile-picture.png">
-                <h2 class="lead" style="font-weight: 400 !important;">{{commiter.userName}}</h2>
-                <p style="color:black !important; letter-spacing: 1.5px;font-size: 12px;" am-time-ago="{{commiter.created}}" class="font-thin"></p>
-            </div>
-        </div>
     </ion-content>
 
     <ion-footer-bar class="bar-light item-input-inset" style="border-top:1px solid #ccc;" ng-form="chatForm" novalidate>
         <label class="item-input-wrapper no-bg">
-        <textarea id="textChat" ng-model="formData.comment" placeholder="Comment" required minlength="1" maxlength="1500" style="width:100%;resize: none;" msd-elastic></textarea>
+        <textarea id="textChat" ng-model="formData.comment" placeholder="Add a comment" required minlength="1" maxlength="1500" style="width:100%;resize: none;" msd-elastic></textarea>
     </label>
-      <button class="button button-clear button-icon ion-android-send button-calm" ng-click="createComment(formData.comment)"></button>
+      <button class="button button-clear button-icon ion-android-send" ng-click="createComment(formData.comment)"></button>
     </button>
     </ion-footer-bar>
 

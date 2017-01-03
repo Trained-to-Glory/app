@@ -1,9 +1,10 @@
 angular.module('module.view.interest', [])
-	.controller('interestCtrl', ['$scope','$rootScope','$state','$ionicPopover','usersService','interestService','$localStorage', 'engagementService',
-		function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, engagementService) {
+	.controller('interestCtrl', ['$scope','$rootScope','$state','$ionicPopover','usersService','interestService','$localStorage', '$stateParams', 'engagementService',
+		function($scope,$rootScope,$state,$ionicPopover,usersService,interestService,$localStorage, $stateParams, engagementService) {
 		$scope.getInterest = function(id){
 			return interestService.get(id);
 		};
+		$scope.hideNext = $stateParams.location;
 
 		$scope.interestImages = [{
 			src: 'img/interest/animal.jpg',

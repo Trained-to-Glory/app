@@ -9,7 +9,7 @@
 }
 
 .ion-android-arrow-back {
-	color: grey;
+	color: black;
 }
 
 .ion-record {
@@ -834,7 +834,32 @@
 
 h2.lead
 {
-	color: gray !important;
+	color: #444 !important;
+}
+.icon-circle, .icon-circle-large, .icon-circle-small{
+  position: relative;
+  display: inline-block;
+  margin: -1px;
+  /*padding: 16px;*/
+
+
+  width: 45px; /* 60*/
+	height: 45px;
+  font-size:40px;
+
+   -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+	border-radius: 50%;
+
+
+
+  border: 1px solid #ebebeb;
+
+  background: rgb(0, 161, 225); /*#ececec;ebebeb*/
+  color: #fff;
+
+  text-align:center;
+  /*vertical-align: middle;*/
 }
 
 .platform-android .checkbox-platform input:before, .platform-android .checkbox-platform .checkbox-icon:before, .checkbox-square input:before, .checkbox-square .checkbox-icon:before
@@ -869,6 +894,10 @@ h2.lead
 	color:#F10707;
 	font-size: 18px;
 	text-align: center;
+}
+
+.liked-red {
+	color: #F10707;
 }
 
 .c2.menu:first-child

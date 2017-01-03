@@ -149,12 +149,6 @@ angular.module('full_starter.routes', [])
         templateUrl: 'app/news/comments.html',
         controller: 'commentsCtrl'
       })
-      .state('likes', {
-        url: '/likes',
-        params: { post: null },
-        templateUrl: 'app/news/likes.html',
-        controller: 'likesCtrl'
-      })
 
       .state('forgot', {
         url: '/forgot',
@@ -162,12 +156,6 @@ angular.module('full_starter.routes', [])
         controller: 'forgotCtrl'
       })
 
-      .state('commits', {
-        url: '/commits',
-        params: { post: null },
-        templateUrl: 'app/news/commits.html',
-        controller: 'commitsCtrl'
-      })
 
       .state('contacts', {
         url: '/contacts',
@@ -183,23 +171,11 @@ angular.module('full_starter.routes', [])
         controller: 'contactsCtrl'
       })
 
-      .state('lead', {
-        url: '/lead',
-        params: {activity: null},
-        templateUrl: 'app/dashboard/lead.html',
-        controller: 'leadCtrl'
-      })
-
       .state('roleRather', {
         url: '/roleRather',
+        params: { location: null },
         templateUrl: 'app/shop/roleRather.html',
         controller: 'roleRatherCtrl'
-      })
-
-      .state('status', {
-        url: '/status',
-        templateUrl: 'app/settings/status.html',
-        controller: 'statusCtrl'
       })
 
       .state('partners', {
@@ -218,6 +194,7 @@ angular.module('full_starter.routes', [])
 
       .state('interest', {
         url: '/interest',
+        params: { location: null },
         templateUrl: 'app/shop/interest.html',
         controller: 'interestCtrl'
       })
@@ -259,12 +236,6 @@ angular.module('full_starter.routes', [])
       .state('authentication', {
         url: '/authentication',
         templateUrl: 'app/intro/authentication.html',
-        controller: 'loginCtrl',
-      })
-
-      .state('passwords', {
-        url: '/passwords',
-        templateUrl: 'app/intro/passwords.html',
         controller: 'loginCtrl',
       })
 

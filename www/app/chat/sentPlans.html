@@ -7,7 +7,6 @@
          active-icon="ion-close-round" resting-icon="ion-plus-round"
          toggling-method="click">
       <button mfb-button icon="ion-ios-camera" label="Create Post"  ui-sref="regular"></button>
-      <button mfb-button icon="ion-ios-bell" label="Create Event"  ui-sref="event"></button>
       <button mfb-button icon="ion-ios-star" label="Create Goal"  ui-sref="create-plan"></button>
     </nav>
 
@@ -21,21 +20,15 @@
               <div class="item item-image">
                   <img src="img/bg-image-2.jpeg" fallback-src = "img/grayBackground.jpg">
                   <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">
-                    <ion-list>
-                      <ion-item style="text-align:center">
-                        Welcome
-                      </ion-item>
-                      <ion-item>
-                        Create Your First Goal
-                      </ion-item>
-                    </ion-list>
+                    <div style="text-align: left;margin-left: 20px;font-size: 24px;font-weight: bold;">Welcome</div>
+                    <div style="text-align: left;margin-left: 20px;margin-top: .5em;font-size: 14px;">Create Your First Goal</div>
                   </div>
               </div>
           </div>
-          <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;" class = "font-thin" >Checklist</div>
-          <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;position: fixed;right: 20px;color: green;" class = "font-thin"
+          <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;color: #444;font-weight: 300;" >Checklist</div>
+          <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;position: fixed;right: 20px;color: green;"
             ng-if="totalfakeChecked == -3">Complete</div>
-            <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2) !important;" class="sentPlans-list">
+            <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2) !important;" class="sentPlans-list card">
               <ion-item style="border: none;background-color: white !important;" ng-repeat = "item in fakeGoals" ng-class="{'text-color sentPlans' : item.isChecked}">
                 <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ item.id }}" ng-model="item.isChecked"
                   ng-change="fakedCheckedOrNot(item, $index, fakeGoals.length)" ng-class="{'text-color sentPlans' : item.isChecked}">
@@ -50,20 +43,14 @@
             <div class="item item-image">
                 <img ng-src="{{plan.photo}}"  ng-if= "{{plan.photo}}" fallback-src = "img/grayBackground.jpg">
                 <div class="item item-avatar" style="padding-left: 0; padding-right: 0;">
-                  <ion-list>
-                    <ion-item>
-                      {{plan.title}}
-                    </ion-item>
-                    <ion-item>
-                      {{plan.description}}
-                    </ion-item>
-                  </ion-list>
+                  <div style="text-align: left;margin-left: 20px;font-size: 24px;font-weight: bold;">{{plan.title}}</div>
+                  <div style="text-align: left;margin-left: 20px;margin-top: .5em;font-size: 14px;">{{plan.description}}</div>
                 </div>
             </div>
         </div>
-        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;" class = "font-thin">Checklist</div>
+        <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;color: #444;" class = "font-thin">Checklist</div>
         <!-- <div style="margin-left: 20px;margin-top: 30px;font-size: 16px;margin-bottom: 20px;display: inline-flex;position: fixed;right: 20px;color: green;" class = "font-thin" ng-show = "item.isChecked ==  plan.checklist.length">Complete</div> -->
-        <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" class="sentPlans-list">
+        <ion-list style="box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.2);" class="sentPlans-list card">
           <ion-item style="border: none;background-color: white !important;" ng-repeat = "item in plan.checklist" ng-hide = "!item.displayName" ng-class="{'text-color sentPlans' : item.isChecked}">
             <ion-checkbox style="color: #F10707;background-color: transparent;border-color: transparent"data-interest-id="{{ plan.key }}" ng-model="item.isChecked"
               ng-change="checkedOrNot(item, $index, plan.checklist.length, plan.key)" ng-class="{'text-color sentPlans' : item.isChecked}">

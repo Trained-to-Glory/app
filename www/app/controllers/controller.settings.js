@@ -38,10 +38,10 @@ angular.module('module.view.settings', [])
 								$scope.interests = function (){
 									var profile = $scope.profile;
 									if(profile.status == 'person' ){
-										$state.go('interests');
+										$state.go('interests' ,{ location: 'Profile'});
 									}
 									else if ( profile.status == 'leader' ){
-										$state.go('roleRather');
+										$state.go('roleRather', { location: 'Profile'});
 									}
 								}
 
